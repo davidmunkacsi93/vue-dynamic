@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import {} from "vue-interact";
+
 export default {
   name: "GridItem",
   props: {
@@ -35,7 +37,25 @@ export default {
       //style: {}
     };
   },
-  mounted: function() {}
+  mounted: function() {
+    const self = this;
+  },
+  methods: {
+    handleDrag(event) {
+      console.log("Dragging");
+      switch (event.type) {
+        case "dragstart": {
+          console.log("Starting to drag...");
+        }
+        case "drag": {
+          console.log("Dragging..");
+        }
+        case "dragend": {
+          console.log("Ending drag..");
+        }
+      }
+    }
+  }
 };
 </script>
 
