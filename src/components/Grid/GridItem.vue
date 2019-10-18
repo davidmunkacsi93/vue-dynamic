@@ -3,7 +3,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "GridItem",
+  props: {
+    x: {
+      type: Number,
+      required: true
+    },
+    y: {
+      type: Number,
+      required: true
+    },
+    width: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    }
+  }
+};
 </script>
 
 <style>
