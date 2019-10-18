@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <nav class="main-nav">
-      <Burger />
+      <burger />
     </nav>
-    <Sidebar>
+    <sidebar>
       <ul class="sidebar-panel-nav">
         <li>
           <a href="#home">Home</a>
@@ -15,17 +15,20 @@
           <a href="#contact">Contact</a>
         </li>
       </ul>
-    </Sidebar>
+    </sidebar>
+    <grid-item></grid-item>
   </div>
 </template>
 
 <script>
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
+import GridItem from "./components/Grid/GridItem.vue";
 
 export default {
   name: "app",
   components: {
+    GridItem,
     Burger,
     Sidebar
   }
