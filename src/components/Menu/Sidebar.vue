@@ -12,7 +12,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    isPanelOpen: true
+  }),
+  methods: {
+    closeSidebarPanel() {
+      this.isPanelOpen = false;
+    }
+  }
+};
 </script>
 
 <style>
