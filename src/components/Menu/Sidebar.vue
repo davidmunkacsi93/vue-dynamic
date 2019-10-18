@@ -12,13 +12,16 @@
 </template>
 
 <script>
+import { store, mutations } from "@/store.js";
 export default {
-  data: () => ({
-    isPanelOpen: true
-  }),
+  computed: {
+    isPanelOpen() {
+      return store.isNavOpen;
+    }
+  },
   methods: {
     closeSidebarPanel() {
-      this.isPanelOpen = false;
+      mutations.toggleNav();
     }
   }
 };
