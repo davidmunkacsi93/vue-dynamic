@@ -16,21 +16,26 @@
         </li>
       </ul>
     </sidebar>
-    <grid-item :x="100" :y="100" :width="100" :height="100" :draggable="true"></grid-item>
+    <grid-layout>
+      <grid-item :x="100" :y="100" :width="100" :height="100" :draggable="true"></grid-item>
+    </grid-layout>
   </div>
 </template>
 
 <script>
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
+
 import GridItem from "./components/Grid/GridItem.vue";
+import GridLayout from "./components/Grid/GridLayout.vue";
 
 export default {
   name: "app",
   components: {
-    GridItem,
     Burger,
-    Sidebar
+    Sidebar,
+    GridItem,
+    GridLayout
   }
 };
 </script>
