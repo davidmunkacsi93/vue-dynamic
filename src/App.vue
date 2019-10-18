@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <Sidebar msg="Welcome to Your Vue.js App" />
+    <Burger msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-import Sidebar from "./components/Sidebar/Sidebar.vue";
+import Burger from "./components/Menu/Burger.vue";
+import Sidebar from "./components/Menu/Sidebar.vue";
 
 export default {
   name: "app",
   components: {
+    Burger,
     Sidebar
   }
 };
