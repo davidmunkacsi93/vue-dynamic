@@ -29,7 +29,13 @@ export default {
       required: false,
       default: null
     }
-  }
+  },
+  data: function() {
+    return {
+      style: {}
+    };
+  },
+  mounted: function() {}
 };
 </script>
 
