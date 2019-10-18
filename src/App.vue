@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <Burger />
+    <nav class="main-nav">
+      <Burger />
+    </nav>
     <Sidebar>
       <ul class="sidebar-panel-nav">
         <li>
@@ -31,12 +33,41 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-family: "Lato";
+  height: 100%;
+  background: rgb(101, 31, 87);
+  background: linear-gradient(
+    45deg,
+    rgb(241, 4, 4) 0%,
+    rgba(225, 113, 87, 1) 48%,
+    rgba(249, 248, 113, 1) 100%
+  );
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+}
+
+ul.sidebar-panel-nav {
+  list-style-type: none;
+}
+
+ul.sidebar-panel-nav > li > a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  display: block;
+  padding-bottom: 0.5em;
 }
 </style>
