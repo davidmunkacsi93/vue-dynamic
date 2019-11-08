@@ -43,6 +43,7 @@ export default {
   methods: {
     handleDrag(event) {
       const currentPosition = this.getCurrentPosition(event);
+      console.log(currentPosition);
 
       switch (event.type) {
         case "dragstart": {
@@ -69,7 +70,21 @@ export default {
         self.handleDrag(event);
       });
     },
-    getCurrentPosition(event) {}
+    getCurrentPosition(event) {
+      const offsetParent = event.target.offsetParent;
+      const offsetParentBoundingRectangle = offsetParent.getBoundingClientRect();
+
+      const x =
+        event.clientX +
+        offsetParent.scrollLeft -
+        offsetParentBoundingRectangle.left;
+      const y =
+        event.clientY +
+        offsetParent.scrollTop -
+        offsetParentBoundingRectangle.top;
+
+      return { x, y };
+    }
   }
 };
 </script>
