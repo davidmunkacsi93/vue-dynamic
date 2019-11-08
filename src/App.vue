@@ -17,7 +17,13 @@
       </ul>
     </sidebar>
     <grid-layout>
-      <grid-item :x="100" :y="100" :width="100" :height="100" :draggable="true"></grid-item>
+      <grid-item
+        :x="100"
+        :y="100"
+        :width="100"
+        :height="100"
+        :draggable="true"
+      ></grid-item>
     </grid-layout>
   </div>
 </template>

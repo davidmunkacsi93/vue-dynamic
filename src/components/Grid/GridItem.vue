@@ -1,11 +1,11 @@
 <template>
-  <div class="grid-item">
+  <div ref="item" class="grid-item">
     <slot>Placeholder</slot>
   </div>
 </template>
 
 <script>
-let interact = require("interact.js");
+let interact = require("interactjs");
 
 export default {
   name: "GridItem",
@@ -59,7 +59,10 @@ export default {
       }
     },
     makeDraggable() {
-      interact();
+      if (this.interactObject === null || this.interactObject === undefined) {
+        this.interactObject = interact(this.$refs.item);
+        console.log(this.interactObject);
+      }
     }
   }
 };

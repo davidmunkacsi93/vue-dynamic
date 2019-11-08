@@ -1,7 +1,11 @@
 <template>
   <div>
     <div>
-      <div @click="closeSidebarPanel" v-if="isPanelOpen" class="sidebar-backdrop"></div>
+      <div
+        @click="closeSidebarPanel"
+        v-if="isPanelOpen"
+        class="sidebar-backdrop"
+      ></div>
     </div>
     <transition name="slide">
       <div v-if="isPanelOpen" class="sidebar-panel">

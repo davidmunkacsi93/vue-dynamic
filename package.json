@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "interact.js": "^1.2.8",
+    "interactjs": "^1.6.3",
     "vue": "^2.6.10"
   },
   "devDependencies": {
