@@ -63,6 +63,13 @@ export default {
         this.interactObject = interact(this.$refs.item);
         console.log(this.interactObject);
       }
+
+      this.interactObject.draggable({});
+
+      this.interactObject.on("dragstart dragmove dragend", function(event) {
+        this.handleDrag(event);
+        console.log("handleDrag was set.");
+      });
     }
   }
 };
