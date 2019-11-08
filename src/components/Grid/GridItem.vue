@@ -45,15 +45,12 @@ export default {
       console.log("Dragging");
       switch (event.type) {
         case "dragstart": {
-          console.log("Starting to drag...");
           break;
         }
         case "drag": {
-          console.log("Dragging..");
           break;
         }
         case "dragend": {
-          console.log("Ending drag..");
           break;
         }
       }
@@ -63,14 +60,12 @@ export default {
 
       if (this.interactObject === null || this.interactObject === undefined) {
         this.interactObject = interact(this.$refs.item);
-        console.log(this.interactObject);
       }
 
       this.interactObject.draggable({});
 
       this.interactObject.on("dragstart dragmove dragend", function(event) {
         self.handleDrag(event);
-        console.log("handleDrag was set.");
       });
     }
   }
