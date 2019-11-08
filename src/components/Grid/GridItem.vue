@@ -42,6 +42,8 @@ export default {
   },
   methods: {
     handleDrag(event) {
+      const currentPosition = this.getCurrentPosition(event);
+
       switch (event.type) {
         case "dragstart": {
           break;
@@ -66,7 +68,8 @@ export default {
       this.interactObject.on("dragstart dragmove dragend", function(event) {
         self.handleDrag(event);
       });
-    }
+    },
+    getCurrentPosition(event) {}
   }
 };
 </script>
