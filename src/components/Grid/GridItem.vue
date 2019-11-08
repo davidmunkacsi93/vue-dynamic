@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     handleDrag(event) {
-      console.log("Dragging");
       switch (event.type) {
         case "dragstart": {
           break;
