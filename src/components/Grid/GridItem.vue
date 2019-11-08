@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {} from "vue-interact";
+let interact = require("interact.js");
 
 export default {
   name: "GridItem",
@@ -38,7 +38,7 @@ export default {
     };
   },
   mounted: function() {
-    const self = this;
+    this.makeDraggable();
   },
   methods: {
     handleDrag(event) {
@@ -46,14 +46,20 @@ export default {
       switch (event.type) {
         case "dragstart": {
           console.log("Starting to drag...");
+          break;
         }
         case "drag": {
           console.log("Dragging..");
+          break;
         }
         case "dragend": {
           console.log("Ending drag..");
+          break;
         }
       }
+    },
+    makeDraggable() {
+      interact();
     }
   }
 };
