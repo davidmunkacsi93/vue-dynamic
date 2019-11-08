@@ -59,6 +59,8 @@ export default {
       }
     },
     makeDraggable() {
+      const self = this;
+
       if (this.interactObject === null || this.interactObject === undefined) {
         this.interactObject = interact(this.$refs.item);
         console.log(this.interactObject);
@@ -67,7 +69,7 @@ export default {
       this.interactObject.draggable({});
 
       this.interactObject.on("dragstart dragmove dragend", function(event) {
-        this.handleDrag(event);
+        self.handleDrag(event);
         console.log("handleDrag was set.");
       });
     }
