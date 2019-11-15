@@ -40,7 +40,7 @@ export default {
       default: null
     }
   },
-  data: function() {
+  data() {
     return {
       columns: 1,
       containerWidth: 100,
@@ -63,26 +63,32 @@ export default {
   },
   methods: {
     handleDrag(event) {
-      //const position = this.getCurrentPosition(event);
-
       switch (event.type) {
         case "dragstart": {
           this.isDragging = true;
           this.draggedPosition = this.getNewPosition(event);
-
           break;
         }
         case "dragend": {
           this.isDragging = false;
-          this.draggedPosition = this.getNewPosition(event);
+          this.draggedPosition = null;
           break;
         }
         case "drag": {
+          this.draggedPosition = this.getNewPosition(event);
           break;
         }
       }
 
-      EventBus.$emit("dragEvent", event, this.id);
+      const currentPosition = this.getCurrentPosition(event);
+
+      EventBus.$emit(
+        "dragEvent",
+        event,
+        this.id,
+        currentPosition.x,
+        currentPosition.y
+      );
     },
     makeDraggable() {
       const that = this;
@@ -132,6 +138,18 @@ export default {
         height: this.rowHeight + "px",
         position: "absolute"
       };
+    }
+  },
+  watch: {
+    x: function(value) {
+      console("Watch for x: " + this.x);
+      this.innerX = value;
+      this.createStyle();
+    },
+    y: function(value) {
+      console("Watch for x: " + this.y);
+      this.innerY = value;
+      this.createStyle();
     }
   }
 };

@@ -16,14 +16,16 @@
         </li>
       </ul>
     </sidebar>
-    <grid-layout>
+    <grid-layout :layoutItems.sync="layoutItems">
       <grid-item
-        :id="'First Test Item'"
-        :x="100"
-        :y="100"
-        :width="100"
-        :height="100"
-        :draggable="true"
+        v-for="item in layoutItems"
+        :key="item.id"
+        :id="item.id"
+        :x="item.x"
+        :y="item.y"
+        :width="item.width"
+        :height="item.height"
+        :draggable="item.draggable"
         @moved="moved"
       ></grid-item>
     </grid-layout>
@@ -37,6 +39,11 @@ import Sidebar from "./components/Menu/Sidebar.vue";
 import GridItem from "./components/Grid/GridItem.vue";
 import GridLayout from "./components/Grid/GridLayout.vue";
 
+let layoutItems = [
+  { x: 0, y: 0, width: 100, height: 100, id: "0", draggable: true },
+  { x: 200, y: 200, width: 100, height: 100, id: "1", draggable: true }
+];
+
 export default {
   name: "app",
   components: {
@@ -49,6 +56,11 @@ export default {
     moved: function(id, newX, newY) {
       console.log("Moved " + id + " X=" + newX + ", Y=" + newY);
     }
+  },
+  data() {
+    return {
+      layoutItems: JSON.parse(JSON.stringify(layoutItems))
+    };
   }
 };
 </script>

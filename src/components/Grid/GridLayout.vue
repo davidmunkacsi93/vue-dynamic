@@ -9,11 +9,16 @@ import EventBus from "../../utils/event-bus.js";
 
 export default {
   name: "GridLayout",
-
+  props: {
+    layoutItems: {
+      type: Array,
+      required: true
+    }
+  },
   created() {
     const that = this;
-    that.dragEventHandler = function(event, id) {
-      that.dragEvent(event, id);
+    that.dragEventHandler = function(event, id, x, y) {
+      that.dragEvent(event, id, x, y);
     };
 
     EventBus.$on("dragEvent", this.dragEventHandler);
@@ -22,8 +27,8 @@ export default {
     EventBus.$off("dragEvent", this.dragEventHandler);
   },
   methods: {
-    dragEvent: function(event, id) {
-      console.log("GridLayout: " + id + " dragged.");
+    dragEvent: function(event, id, x, y) {
+      //moveElement(x, y);
     }
   }
 };
