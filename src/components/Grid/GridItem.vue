@@ -1,6 +1,8 @@
 <template>
-  <div ref="item" class="grid-item">
-    <slot>Placeholder</slot>
+  <div ref="item" class="grid-item" :style="style">
+    <slot>
+      <span>Drag & Drop</span>
+    </slot>
   </div>
 </template>
 
@@ -34,27 +36,40 @@ export default {
   },
   data: function() {
     return {
+      columns: 1,
+      containerWidth: 100,
+      rowHeight: 100,
+
       isDragging: false,
-      draggedPosition: null
+      draggedPosition: null,
+
+      style: {},
+
+      innerX: this.x,
+      innerY: this.y,
+      innerWidth: this.width,
+      innerHeight: this.height
     };
   },
   mounted: function() {
     this.makeDraggable();
+    this.createStyle();
   },
   methods: {
     handleDrag(event) {
       const startingPosition = this.getCurrentPosition(event);
+      console.log(startingPosition);
 
       switch (event.type) {
         case "dragstart": {
           this.isDragging = true;
-          this.draggedPosition = getNewPosition(event);
+          this.draggedPosition = this.getNewPosition(event);
 
           break;
         }
         case "dragend": {
           this.isDragging = false;
-          this.draggedPosition = getNewPosition(event);
+          this.draggedPosition = this.getNewPosition(event);
 
           break;
         }
@@ -102,6 +117,15 @@ export default {
       newPosition.top = clientRectangle.top - parentRectangle.top;
 
       return newPosition;
+    },
+    createStyle() {
+      this.style = {
+        top: this.innerX + "px",
+        left: this.innerY + "px",
+        width: this.containerWidth + "px",
+        height: this.rowHeight + "px",
+        position: "absolute"
+      };
     }
   }
 };
@@ -109,6 +133,9 @@ export default {
 
 <style>
 .grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top;
   display: block;
+  background: green;
 }
 </style>
