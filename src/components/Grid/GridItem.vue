@@ -1,7 +1,7 @@
 <template>
   <div ref="item" class="grid-item" :style="style">
     <slot>
-      <span>Drag & Drop</span>
+      <span>{{ this.id }}</span>
     </slot>
   </div>
 </template>
@@ -12,6 +12,10 @@ let interact = require("interactjs");
 export default {
   name: "GridItem",
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     x: {
       type: Number,
       required: true
@@ -57,8 +61,7 @@ export default {
   },
   methods: {
     handleDrag(event) {
-      const startingPosition = this.getCurrentPosition(event);
-      console.log(startingPosition);
+      //const position = this.getCurrentPosition(event);
 
       switch (event.type) {
         case "dragstart": {
@@ -70,13 +73,18 @@ export default {
         case "dragend": {
           this.isDragging = false;
           this.draggedPosition = this.getNewPosition(event);
-
           break;
         }
         case "drag": {
           break;
         }
       }
+      this.$emit(
+        "moved",
+        this.id,
+        this.draggedPosition.top,
+        this.draggedPosition.left
+      );
     },
     makeDraggable() {
       const self = this;
