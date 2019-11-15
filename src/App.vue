@@ -78,12 +78,7 @@ body {
   font-family: "Lato";
   height: 100%;
   background: rgb(101, 31, 87);
-  background: linear-gradient(
-    45deg,
-    rgb(241, 4, 4) 0%,
-    rgba(225, 113, 87, 1) 48%,
-    rgba(249, 248, 113, 1) 100%
-  );
+  background: linear-gradient(to right, rgb(58, 123, 213), rgb(58, 96, 115));
 }
 
 .main-nav {

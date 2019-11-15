@@ -91,8 +91,6 @@ export default {
           let deltaX = currentPosition.x - this.lastX;
           let deltaY = currentPosition.y - this.lastY;
 
-          console.log("Delta x " + deltaX);
-
           newPosition.left = this.draggedPosition.left + deltaX;
           newPosition.top = this.draggedPosition.top + deltaY;
 
@@ -107,9 +105,15 @@ export default {
       let x = Math.round(newPosition.left);
       let y = Math.round(newPosition.top);
 
-      console.log(x);
-
-      EventBus.$emit("dragEvent", event, this.id, x, s);
+      EventBus.$emit(
+        "dragEvent",
+        event,
+        this.id,
+        x,
+        y,
+        this.innerWidth,
+        this.innerHeight
+      );
     },
     makeDraggable() {
       const that = this;
