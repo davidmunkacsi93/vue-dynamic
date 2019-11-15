@@ -53,6 +53,8 @@ export default {
 
       previousX: null,
       previousY: null,
+      lastX: null,
+      lastY: null,
 
       innerX: this.x,
       innerY: this.y,
@@ -68,30 +70,46 @@ export default {
     handleDrag(event) {
       const currentPosition = this.getCurrentPosition(event);
 
+      let newPosition = { top: 0, left: 0 };
       switch (event.type) {
         case "dragstart": {
+          this.previousX = this.innerX;
+          this.previousY = this.innerY;
+
+          newPosition = this.getNewPosition(event);
+          this.draggedPosition = newPosition;
           this.isDragging = true;
-          this.draggedPosition = this.getNewPosition(event);
           break;
         }
         case "dragend": {
+          newPosition = this.getNewPosition(event);
           this.isDragging = false;
           this.draggedPosition = null;
           break;
         }
-        case "drag": {
-          this.draggedPosition = this.getNewPosition(event);
+        case "dragmove": {
+          let deltaX = currentPosition.x - this.lastX;
+          let deltaY = currentPosition.y - this.lastY;
+
+          console.log("Delta x " + deltaX);
+
+          newPosition.left = this.draggedPosition.left + deltaX;
+          newPosition.top = this.draggedPosition.top + deltaY;
+
+          this.draggedPosition = newPosition;
           break;
         }
       }
 
-      EventBus.$emit(
-        "dragEvent",
-        event,
-        this.id,
-        currentPosition.x,
-        currentPosition.y
-      );
+      this.lastX = currentPosition.x;
+      this.lastY = currentPosition.y;
+
+      let x = Math.round(newPosition.left);
+      let y = Math.round(newPosition.top);
+
+      console.log(x);
+
+      EventBus.$emit("dragEvent", event, this.id, x, s);
     },
     makeDraggable() {
       const that = this;
