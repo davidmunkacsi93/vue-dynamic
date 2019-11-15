@@ -34,7 +34,8 @@ export default {
   },
   data: function() {
     return {
-      //style: {}
+      isDragging: false,
+      draggedPosition: null
     };
   },
   mounted: function() {
@@ -42,17 +43,22 @@ export default {
   },
   methods: {
     handleDrag(event) {
-      const currentPosition = this.getCurrentPosition(event);
-      console.log(currentPosition);
+      const startingPosition = this.getCurrentPosition(event);
 
       switch (event.type) {
         case "dragstart": {
-          break;
-        }
-        case "drag": {
+          this.isDragging = true;
+          this.draggedPosition = getNewPosition(event);
+
           break;
         }
         case "dragend": {
+          this.isDragging = false;
+          this.draggedPosition = getNewPosition(event);
+
+          break;
+        }
+        case "drag": {
           break;
         }
       }
@@ -84,6 +90,18 @@ export default {
         offsetParentBoundingRectangle.top;
 
       return { x, y };
+    },
+
+    getNewPosition(event) {
+      let newPosition = { top: 0, left: 0 };
+
+      let parentRectangle = event.target.offsetParent.getBoundingClientRect();
+      let clientRectangle = event.target.getBoundingClientRect();
+
+      newPosition.left = clientRectangle.left - parentRectangle.left;
+      newPosition.top = clientRectangle.top - parentRectangle.top;
+
+      return newPosition;
     }
   }
 };
