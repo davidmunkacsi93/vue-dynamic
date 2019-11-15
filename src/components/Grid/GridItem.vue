@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import EventBus from "../../utils/event-bus.js";
+
 let interact = require("interactjs");
 
 export default {
@@ -79,15 +81,11 @@ export default {
           break;
         }
       }
-      this.$emit(
-        "moved",
-        this.id,
-        this.draggedPosition.top,
-        this.draggedPosition.left
-      );
+
+      EventBus.$emit("dragEvent", event, this.id);
     },
     makeDraggable() {
-      const self = this;
+      const that = this;
 
       if (this.interactObject === null || this.interactObject === undefined) {
         this.interactObject = interact(this.$refs.item);
@@ -96,7 +94,7 @@ export default {
       this.interactObject.draggable({});
 
       this.interactObject.on("dragstart dragmove dragend", function(event) {
-        self.handleDrag(event);
+        that.handleDrag(event);
       });
     },
     getCurrentPosition(event) {
