@@ -15,7 +15,7 @@ export default {
   name: "GridItem",
   props: {
     id: {
-      type: String,
+      type: Number,
       required: true
     },
     x: {

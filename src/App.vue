@@ -40,8 +40,8 @@ import GridItem from "./components/Grid/GridItem.vue";
 import GridLayout from "./components/Grid/GridLayout.vue";
 
 let layoutItems = [
-  { x: 0, y: 0, width: 100, height: 100, id: "0", draggable: true },
-  { x: 200, y: 200, width: 100, height: 100, id: "1", draggable: true }
+  { x: 0, y: 0, width: 100, height: 100, id: 0, draggable: true },
+  { x: 200, y: 200, width: 100, height: 100, id: 1, draggable: true }
 ];
 
 export default {
