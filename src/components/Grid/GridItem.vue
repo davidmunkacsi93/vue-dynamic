@@ -142,8 +142,6 @@ export default {
         MozTransform: translate,
         msTransform: translate,
         OTransform: translate,
-        top: this.innerY + "px",
-        left: this.innerX + "px",
         width: this.containerWidth + "px",
         height: this.rowHeight + "px",
         position: "absolute"
