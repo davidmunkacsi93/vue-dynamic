@@ -142,12 +142,10 @@ export default {
   },
   watch: {
     x: function(value) {
-      console.log("Watch for id " + this.id + " x: " + this.x);
       this.innerX = value;
       this.createStyle();
     },
     y: function(value) {
-      console.log("Watch for id " + this.id + " y: " + this.y);
       this.innerY = value;
       this.createStyle();
     }
