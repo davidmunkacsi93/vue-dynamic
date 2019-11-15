@@ -51,6 +51,9 @@ export default {
 
       style: {},
 
+      previousX: null,
+      previousY: null,
+
       innerX: this.x,
       innerY: this.y,
       innerWidth: this.width,
@@ -63,6 +66,8 @@ export default {
   },
   methods: {
     handleDrag(event) {
+      const currentPosition = this.getCurrentPosition(event);
+
       switch (event.type) {
         case "dragstart": {
           this.isDragging = true;
@@ -79,8 +84,6 @@ export default {
           break;
         }
       }
-
-      const currentPosition = this.getCurrentPosition(event);
 
       EventBus.$emit(
         "dragEvent",
@@ -131,7 +134,14 @@ export default {
       return newPosition;
     },
     createStyle() {
+      const translate =
+        "translate3d(" + this.innerX + "px," + this.innerY + "px, 0)";
       this.style = {
+        transform: translate,
+        WebkitTransform: translate,
+        MozTransform: translate,
+        msTransform: translate,
+        OTransform: translate,
         top: this.innerY + "px",
         left: this.innerX + "px",
         width: this.containerWidth + "px",
