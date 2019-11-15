@@ -1,5 +1,10 @@
 {
   "name": "generic-customizable-web-ui",
+  "author": "David Munkacsi",
+  "keywords": [
+    "vuejs",
+    "dragabble"
+  ],
   "version": "0.1.0",
   "private": true,
   "scripts": {
