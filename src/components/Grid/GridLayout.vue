@@ -34,6 +34,17 @@ export default {
   beforeDestroy() {
     EventBus.$off("dragEvent", this.dragEventHandler);
   },
+  data() {
+    return {
+      placeholder: {
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+        i: -1
+      }
+    };
+  },
   methods: {
     dragEvent: function(event, id, x, y) {
       let layoutItem = this.getLayoutItemById(id);
