@@ -18,11 +18,13 @@
     </sidebar>
     <grid-layout>
       <grid-item
+        :id="'First Test Item'"
         :x="100"
         :y="100"
         :width="100"
         :height="100"
         :draggable="true"
+        @moved="moved"
       ></grid-item>
     </grid-layout>
   </div>
@@ -42,6 +44,11 @@ export default {
     Sidebar,
     GridItem,
     GridLayout
+  },
+  methods: {
+    moved: function(id, newX, newY) {
+      console.log("Moved " + id + " X=" + newX + ", Y=" + newY);
+    }
   }
 };
 </script>
