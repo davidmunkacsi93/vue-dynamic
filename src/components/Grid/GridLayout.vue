@@ -10,6 +10,14 @@ import EventBus from "../../utils/event-bus.js";
 export default {
   name: "GridLayout",
   props: {
+    columnNumber: {
+      type: Number,
+      default: 12
+    },
+    rowHeight: {
+      type: Number,
+      default: 150
+    },
     layoutItems: {
       type: Array,
       required: true
