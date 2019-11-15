@@ -132,8 +132,8 @@ export default {
     },
     createStyle() {
       this.style = {
-        top: this.innerX + "px",
-        left: this.innerY + "px",
+        top: this.innerY + "px",
+        left: this.innerX + "px",
         width: this.containerWidth + "px",
         height: this.rowHeight + "px",
         position: "absolute"
@@ -142,12 +142,12 @@ export default {
   },
   watch: {
     x: function(value) {
-      console("Watch for x: " + this.x);
+      console.log("Watch for id " + this.id + " x: " + this.x);
       this.innerX = value;
       this.createStyle();
     },
     y: function(value) {
-      console("Watch for x: " + this.y);
+      console.log("Watch for id " + this.id + " y: " + this.y);
       this.innerY = value;
       this.createStyle();
     }

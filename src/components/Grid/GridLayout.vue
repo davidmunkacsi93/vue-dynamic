@@ -28,7 +28,14 @@ export default {
   },
   methods: {
     dragEvent: function(event, id, x, y) {
-      //moveElement(x, y);
+      let layoutItem = this.getLayoutItemById(id);
+      layoutItem.x = x;
+      layoutItem.y = y;
+    },
+    getLayoutItemById: function(id) {
+      for (let i = 0, length = this.layoutItems.length; i < length; i++) {
+        if (this.layoutItems[i].id === id) return this.layoutItems[i];
+      }
     }
   }
 };
