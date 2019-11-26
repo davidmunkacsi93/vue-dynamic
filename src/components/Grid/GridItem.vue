@@ -42,8 +42,6 @@ export default {
   },
   data() {
     return {
-      columns: 1,
-
       isDragging: false,
       draggedPosition: null,
 
