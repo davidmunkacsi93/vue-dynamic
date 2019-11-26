@@ -70,11 +70,19 @@ export default {
       let layoutItem = this.getLayoutItemById(id);
       layoutItem.x = x;
       layoutItem.y = y;
+      console.log(this.isItemColliding(layoutItem));
     },
     getLayoutItemById(id) {
       for (let i = 0, length = this.layoutItems.length; i < length; i++) {
         if (this.layoutItems[i].id === id) return this.layoutItems[i];
       }
+    },
+    isItemColliding(layoutItem) {
+      return this.layoutItems.some(l => this.areItemsColliding(layoutItem, l));
+    },
+    areItemsColliding(layoutItem, layoutItemToCompare) {
+      if (layoutItem.id == layoutItemToCompare.id) return false;
+      return true;
     }
     // setPlaceholderValues(id, x, y, width, height) {
     //   this.placeholder.id = id;
