@@ -43,8 +43,6 @@ export default {
   data() {
     return {
       columns: 1,
-      containerWidth: 100,
-      rowHeight: 100,
 
       isDragging: false,
       draggedPosition: null,
@@ -164,8 +162,8 @@ export default {
         MozTransform: translate,
         msTransform: translate,
         OTransform: translate,
-        width: this.containerWidth + "px",
-        height: this.rowHeight + "px",
+        width: this.innerWidth + "px",
+        height: this.innerHeight + "px",
         position: "absolute"
       };
     }
@@ -177,6 +175,14 @@ export default {
     },
     y: function(value) {
       this.innerY = value;
+      this.createStyle();
+    },
+    width: function(value) {
+      this.innerWidth = value;
+      this.createStyle();
+    },
+    height: function(value) {
+      this.innerHeight = value;
       this.createStyle();
     }
   }

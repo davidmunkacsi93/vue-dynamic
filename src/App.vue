@@ -42,8 +42,8 @@ import GridLayout from "./components/Grid/GridLayout.vue";
 let layoutItems = [
   { x: 0, y: 0, width: 100, height: 100, id: 0, draggable: true },
   { x: 200, y: 200, width: 100, height: 100, id: 1, draggable: true },
-  { x: 400, y: 400, width: 100, height: 100, id: 2, draggable: true },
-  { x: 600, y: 600, width: 100, height: 100, id: 3, draggable: true }
+  { x: 400, y: 400, width: 200, height: 200, id: 2, draggable: true },
+  { x: 600, y: 600, width: 300, height: 300, id: 3, draggable: true }
 ];
 
 export default {
