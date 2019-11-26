@@ -78,7 +78,7 @@ export default {
       }
     },
     isLayoutItemColliding(layoutItem) {
-      return this.layoutItems.some(l => this.areItemsColliding(layoutItem, l));
+      return this.layoutItems.some(l => this.areLayoutItemsColliding(layoutItem, l));
     },
     areLayoutItemsColliding(layoutItem, layoutItemToCompare) {
       if (layoutItem.id == layoutItemToCompare.id) return false;
