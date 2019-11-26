@@ -82,6 +82,14 @@ export default {
     },
     areItemsColliding(layoutItem, layoutItemToCompare) {
       if (layoutItem.id == layoutItemToCompare.id) return false;
+      if (layoutItem.x + layoutItem.width <= layoutItemToCompare.x)
+        return false;
+      if (layoutItem.x >= layoutItemToCompare.x + layoutItemToCompare.width)
+        return false;
+      if (layoutItem.y + layoutItem.height <= layoutItemToCompare.y)
+        return false;
+      if (layoutItem.y >= layoutItemToCompare.y + layoutItemToCompare.height)
+        return false;
       return true;
     }
     // setPlaceholderValues(id, x, y, width, height) {
