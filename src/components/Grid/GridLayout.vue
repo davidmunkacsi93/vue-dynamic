@@ -68,6 +68,9 @@ export default {
       }
 
       let layoutItem = this.getLayoutItemById(id);
+      this.moveElement(layoutItem, x, y);
+    },
+    moveElement(layoutItem, x, y) {
       layoutItem.x = x;
       layoutItem.y = y;
       console.log(this.isLayoutItemColliding(layoutItem));
@@ -78,7 +81,9 @@ export default {
       }
     },
     isLayoutItemColliding(layoutItem) {
-      return this.layoutItems.some(l => this.areLayoutItemsColliding(layoutItem, l));
+      return this.layoutItems.some(l =>
+        this.areLayoutItemsColliding(layoutItem, l)
+      );
     },
     areLayoutItemsColliding(layoutItem, layoutItemToCompare) {
       if (layoutItem.id == layoutItemToCompare.id) return false;
