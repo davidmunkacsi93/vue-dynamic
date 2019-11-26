@@ -26,7 +26,6 @@
         :width="item.width"
         :height="item.height"
         :draggable="item.draggable"
-        @moved="moved"
       ></grid-item>
     </grid-layout>
   </div>
@@ -53,11 +52,6 @@ export default {
     Sidebar,
     GridItem,
     GridLayout
-  },
-  methods: {
-    moved: function(id, newX, newY) {
-      console.log("Moved " + id + " X=" + newX + ", Y=" + newY);
-    }
   },
   data() {
     return {
