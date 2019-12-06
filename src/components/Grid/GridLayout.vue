@@ -66,41 +66,57 @@ export default {
       }
     };
   },
+  computed: {
+    columnWidth: function() {
+      return this.width / this.columnNumber;
+    }
+  },
   methods: {
-    dragEvent(event, id, x, y) {
+    dragEvent(event, id, x, y, width, height) {
       if (event.type === "drag" || event.type === "dragstart") {
         //this.setPlaceholderValues(id, x, y, width, height);
         this.isDragging = true;
       } else {
         this.isDragging = false;
       }
-
+      console.log(width);
       let layoutItem = this.getLayoutItemById(id);
-      this.moveElement(layoutItem, x, y);
+      this.moveElement(layoutItem, x, y, width, height);
     },
     moveElement(layoutItem, x, y) {
+      const oldX = layoutItem.x;
+      const oldY = layoutItem.y;
+
       layoutItem.x = x;
       layoutItem.y = y;
+
+      var collisions = this.getAllCollisions(layoutItem);
     },
     getLayoutItemById(id) {
       for (let i = 0, length = this.layoutItems.length; i < length; i++) {
         if (this.layoutItems[i].id === id) return this.layoutItems[i];
       }
     },
-    isLayoutItemColliding(layoutItem) {
-      return this.layoutItems.some(l =>
-        this.areLayoutItemsColliding(layoutItem, l)
+    getAllCollisions(layoutItem) {
+      return this.layoutItems.filter(item =>
+        this.areLayoutItemsColliding(layoutItem, item)
       );
     },
     areLayoutItemsColliding(layoutItem, layoutItemToCompare) {
+      var layoutItemWidth = layoutItem.width * this.columnWidth;
+      var layoutItemHeight = layoutItem.height * this.rowHeight;
+      var layoutItemToCompareWidth =
+        layoutItemToCompare.width * this.columnWidth;
+      var layoutItemToCompareHeight =
+        layoutItemToCompare.height * this.rowHeight;
+
       if (layoutItem.id == layoutItemToCompare.id) return false;
-      if (layoutItem.x + layoutItem.width <= layoutItemToCompare.x)
+      if (layoutItem.x + layoutItemWidth <= layoutItemToCompare.x) return false;
+      if (layoutItem.x >= layoutItemToCompare.x + layoutItemToCompareWidth)
         return false;
-      if (layoutItem.x >= layoutItemToCompare.x + layoutItemToCompare.width)
+      if (layoutItem.y + layoutItemHeight <= layoutItemToCompare.y)
         return false;
-      if (layoutItem.y + layoutItem.height <= layoutItemToCompare.y)
-        return false;
-      if (layoutItem.y >= layoutItemToCompare.y + layoutItemToCompare.height)
+      if (layoutItem.y >= layoutItemToCompare.y + layoutItemToCompareHeight)
         return false;
       return true;
     },

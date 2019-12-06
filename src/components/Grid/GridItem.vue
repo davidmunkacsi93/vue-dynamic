@@ -74,6 +74,11 @@ export default {
   beforeDestroy: function() {
     EventBus.$off("updateLayoutWidth", this.handleUpdateLayoutWidth);
   },
+  computed: {
+    columnWidth: function() {
+      return this.layoutWidth / this.columnNumber;
+    }
+  },
   methods: {
     handleDrag(event) {
       const currentPosition = this.getCurrentPosition(event);
@@ -113,15 +118,7 @@ export default {
       let x = Math.round(newPosition.left);
       let y = Math.round(newPosition.top);
 
-      EventBus.$emit(
-        "dragEvent",
-        event,
-        this.id,
-        x,
-        y,
-        this.innerWidth,
-        this.innerHeight
-      );
+      EventBus.$emit("dragEvent", event, this.id, x, y);
     },
     handleUpdateLayoutWidth(value) {
       this.layoutWidth = value;
@@ -168,7 +165,9 @@ export default {
       return newPosition;
     },
     createStyle() {
-      const columnWidth = this.calculateColumnWidth();
+      var width = this.width * this.columnWidth;
+      var height = this.height * this.rowHeight;
+
       const translate =
         "translate3d(" + this.innerX + "px," + this.innerY + "px, 0)";
       this.style = {
@@ -177,8 +176,8 @@ export default {
         MozTransform: translate,
         msTransform: translate,
         OTransform: translate,
-        width: this.innerWidth * columnWidth + "px",
-        height: this.innerHeight * this.rowHeight + "px",
+        width: width + "px",
+        height: height + "px",
         position: "absolute"
       };
     },
