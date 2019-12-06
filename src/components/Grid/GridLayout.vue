@@ -39,9 +39,14 @@ export default {
     that.dragEventHandler = function(event, id, x, y) {
       that.dragEvent(event, id, x, y);
     };
+
+    window.addEventListener("resize", this.onWindowResize);
+
     EventBus.$on("dragEvent", this.dragEventHandler);
   },
   beforeDestroy() {
+    window.removeEventListener("resize", this.onWindowResize);
+
     EventBus.$off("dragEvent", this.dragEventHandler);
   },
   data() {
@@ -94,6 +99,9 @@ export default {
       if (layoutItem.y >= layoutItemToCompare.y + layoutItemToCompare.height)
         return false;
       return true;
+    },
+    onWindowResize() {
+      console.log(this.$refs);
     }
     // setPlaceholderValues(id, x, y, width, height) {
     //   this.placeholder.id = id;
