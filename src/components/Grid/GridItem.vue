@@ -44,6 +44,7 @@ export default {
     return {
       columnNumber: 12,
       layoutWidth: null,
+      rowHeight: null,
 
       isDragging: false,
       draggedPosition: null,
@@ -63,6 +64,7 @@ export default {
   },
   mounted: function() {
     this.columnNumber = this.$parent.columnNumber;
+    this.rowHeight = this.$parent.rowHeight;
     this.makeDraggable();
     this.createStyle();
   },
@@ -176,7 +178,7 @@ export default {
         msTransform: translate,
         OTransform: translate,
         width: this.innerWidth * columnWidth + "px",
-        height: this.innerHeight * t + "px",
+        height: this.innerHeight * this.rowHeight + "px",
         position: "absolute"
       };
     },
