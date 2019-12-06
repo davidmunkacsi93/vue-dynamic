@@ -63,8 +63,6 @@ export default {
   },
   mounted: function() {
     this.columnNumber = this.$parent.columnNumber;
-    this.layoutWidth = this.$parent.width;
-    console.log(this.layoutWidth);
     this.makeDraggable();
     this.createStyle();
   },
@@ -125,7 +123,7 @@ export default {
     },
     handleUpdateLayoutWidth(value) {
       this.layoutWidth = value;
-      console.log("Layout width updated: " + this.layoutWidth);
+      this.createStyle();
     },
     makeDraggable() {
       const that = this;
@@ -169,7 +167,6 @@ export default {
     },
     createStyle() {
       const columnWidth = this.calculateColumnWidth();
-      //this.innerWidth =
       const translate =
         "translate3d(" + this.innerX + "px," + this.innerY + "px, 0)";
       this.style = {
@@ -178,8 +175,8 @@ export default {
         MozTransform: translate,
         msTransform: translate,
         OTransform: translate,
-        width: this.innerWidth + "px",
-        height: this.innerHeight + "px",
+        width: this.innerWidth * columnWidth + "px",
+        height: this.innerHeight * t + "px",
         position: "absolute"
       };
     },

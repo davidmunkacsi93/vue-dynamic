@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-layout">
+  <div class="grid-layout" ref="layout">
     <slot></slot>
     <grid-item
       class="grid-placeholder"
@@ -34,6 +34,9 @@ export default {
       required: true
     }
   },
+  mounted() {
+    this.onWindowResize();
+  },
   created() {
     const that = this;
     that.dragEventHandler = function(event, id, x, y) {
@@ -52,6 +55,7 @@ export default {
   data() {
     return {
       isDragging: false,
+      width: null,
 
       placeholder: {
         x: 0,
@@ -101,7 +105,7 @@ export default {
       return true;
     },
     onWindowResize() {
-      console.log(this.$refs);
+      this.width = this.$refs.layout.offsetWidth;
     }
     // setPlaceholderValues(id, x, y, width, height) {
     //   this.placeholder.id = id;
@@ -113,7 +117,8 @@ export default {
   },
   watch: {
     width: function(value) {
-      this.EventBus.$emit("updateLayoutWidth", this.width);
+      this.width = value;
+      EventBus.$emit("updateLayoutWidth", this.width);
     }
   }
 };
