@@ -39,7 +39,6 @@ export default {
     that.dragEventHandler = function(event, id, x, y) {
       that.dragEvent(event, id, x, y);
     };
-
     EventBus.$on("dragEvent", this.dragEventHandler);
   },
   beforeDestroy() {
@@ -73,7 +72,6 @@ export default {
     moveElement(layoutItem, x, y) {
       layoutItem.x = x;
       layoutItem.y = y;
-      console.log(this.isLayoutItemColliding(layoutItem));
     },
     getLayoutItemById(id) {
       for (let i = 0, length = this.layoutItems.length; i < length; i++) {
@@ -104,6 +102,11 @@ export default {
     //   this.placeholder.width = width;
     //   this.placeholder.height = height;
     // }
+  },
+  watch: {
+    width: function(value) {
+      this.EventBus.$emit("updateLayoutWidth", this.width);
+    }
   }
 };
 </script>

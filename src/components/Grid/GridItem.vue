@@ -42,6 +42,9 @@ export default {
   },
   data() {
     return {
+      columnNumber: 12,
+      layoutWidth: null,
+
       isDragging: false,
       draggedPosition: null,
 
@@ -59,8 +62,17 @@ export default {
     };
   },
   mounted: function() {
+    this.columnNumber = this.$parent.columnNumber;
+    this.layoutWidth = this.$parent.width;
+    console.log(this.layoutWidth);
     this.makeDraggable();
     this.createStyle();
+  },
+  created: function() {
+    EventBus.$on("updateLayoutWidth", this.handleUpdateLayoutWidth);
+  },
+  beforeDestroy: function() {
+    EventBus.$off("updateLayoutWidth", this.handleUpdateLayoutWidth);
   },
   methods: {
     handleDrag(event) {
@@ -111,6 +123,10 @@ export default {
         this.innerHeight
       );
     },
+    handleUpdateLayoutWidth(value) {
+      this.layoutWidth = value;
+      console.log("Layout width updated: " + this.layoutWidth);
+    },
     makeDraggable() {
       const that = this;
 
@@ -152,6 +168,8 @@ export default {
       return newPosition;
     },
     createStyle() {
+      const columnWidth = this.calculateColumnWidth();
+      //this.innerWidth =
       const translate =
         "translate3d(" + this.innerX + "px," + this.innerY + "px, 0)";
       this.style = {
@@ -164,6 +182,9 @@ export default {
         height: this.innerHeight + "px",
         position: "absolute"
       };
+    },
+    calculateColumnWidth() {
+      return this.layoutWidth / this.columnNumber;
     }
   },
   watch: {
