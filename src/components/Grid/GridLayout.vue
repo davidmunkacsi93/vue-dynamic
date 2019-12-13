@@ -85,13 +85,18 @@ export default {
     moveElement(layoutItem, x, y) {
       layoutItem.x = x;
       layoutItem.y = y;
+      layoutItem.moved = true;
 
       var collisions = this.getAllCollisions(layoutItem);
-
+      console.log(collisions);
       if (collisions.length > 0) {
-        collisions.forEach(collision => {
+        for (var id in collisions) {
+          const collision = collisions[id];
+          console.log(collision)
+          if (collision.moved) continue;
+
           this.moveElement(collision, collision.x, layoutItem.y + 1);
-        });
+        }
       }
     },
     getLayoutItemById(id) {
