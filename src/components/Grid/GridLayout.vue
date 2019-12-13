@@ -88,8 +88,11 @@ export default {
 
       var collisions = this.getAllCollisions(layoutItem);
 
-      if (collisions.length > 0)
-        this.moveElement(layoutItem, collisions[0].x, collisions[0].y + 1);
+      if (collisions.length > 0) {
+        collisions.forEach(collision => {
+          this.moveElement(collision, collision.x, layoutItem.y + 1);
+        });
+      }
     },
     getLayoutItemById(id) {
       for (let i = 0, length = this.layoutItems.length; i < length; i++) {
