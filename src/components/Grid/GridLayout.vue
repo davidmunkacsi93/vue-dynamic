@@ -79,6 +79,8 @@ export default {
       } else {
         this.isDragging = false;
       }
+
+      this.resetMoved();
       let layoutItem = this.getLayoutItemById(id);
       this.moveElement(layoutItem, x, y, width, height);
     },
@@ -88,15 +90,18 @@ export default {
       layoutItem.moved = true;
 
       var collisions = this.getAllCollisions(layoutItem);
-      console.log(collisions);
       if (collisions.length > 0) {
         for (var id in collisions) {
           const collision = collisions[id];
-          console.log(collision)
           if (collision.moved) continue;
 
-          this.moveElement(collision, collision.x, layoutItem.y + 1);
+          this.moveElement(collision, collision.x, layoutItem.y + this.rowHeight + 1);
         }
+      }
+    },
+    resetMoved() {
+      for (var id in this.layoutItems) {
+        this.layoutItems[id].moved = false;
       }
     },
     getLayoutItemById(id) {
