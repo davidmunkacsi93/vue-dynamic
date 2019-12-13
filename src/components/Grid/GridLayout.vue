@@ -79,18 +79,17 @@ export default {
       } else {
         this.isDragging = false;
       }
-      console.log(width);
       let layoutItem = this.getLayoutItemById(id);
       this.moveElement(layoutItem, x, y, width, height);
     },
     moveElement(layoutItem, x, y) {
-      const oldX = layoutItem.x;
-      const oldY = layoutItem.y;
-
       layoutItem.x = x;
       layoutItem.y = y;
 
       var collisions = this.getAllCollisions(layoutItem);
+
+      if (collisions.length > 0)
+        this.moveElement(layoutItem, collisions[0].x, collisions[0].y + 1);
     },
     getLayoutItemById(id) {
       for (let i = 0, length = this.layoutItems.length; i < length; i++) {
