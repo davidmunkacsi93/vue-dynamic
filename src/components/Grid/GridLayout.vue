@@ -79,7 +79,6 @@ export default {
         layoutItem.width
       );
       if (event.type === "dragmove" || event.type === "dragstart") {
-        //this.setPlaceholderValues(id, x, y, width, height);
         this.moveElement(layoutItem, x, y);
         this.isDragging = true;
       } else if (event.type === "dragend") {
@@ -88,11 +87,18 @@ export default {
       } else {
         console.error(
           "Uknown event type(" +
-            even.type +
+            event.type +
             ") in GridLayout.dragEvent event handler."
         );
       }
 
+      this.setPlaceholderValues(
+        layoutItem,
+        beginningOfTheClosestColumn,
+        y,
+        layoutItem.width,
+        layoutItem.height
+      );
       this.resetMoved();
       // this.adjustGridLayout();
     },
@@ -120,7 +126,7 @@ export default {
         }
       }
     },
-    getBeginningOfTheClosestColumn: function(x, widthInColumns) {
+    getBeginningOfTheClosestColumn: function(x) {
       return Math.floor(x / this.columnWidth) * this.columnWidth;
     },
     resetMoved() {
@@ -158,14 +164,13 @@ export default {
     },
     onWindowResize() {
       this.width = this.$refs.layout.offsetWidth;
+    },
+    setPlaceholderValues(x, y, width, height) {
+      this.placeholder.x = x;
+      this.placeholder.y = y;
+      this.placeholder.width = width;
+      this.placeholder.height = height;
     }
-    // setPlaceholderValues(id, x, y, width, height) {
-    //   this.placeholder.id = id;
-    //   this.placeholder.x = x;
-    //   this.placeholder.y = y;
-    //   this.placeholder.width = width;
-    //   this.placeholder.height = height;
-    // }
   },
   watch: {
     width: function(value) {
