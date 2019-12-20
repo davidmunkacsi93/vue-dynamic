@@ -84,6 +84,9 @@ export default {
           x,
           layoutItem.width
         );
+        console.log(
+          `X: ${x} Beginning of the column: ${beginningOfTheClosestColumn}`
+        );
         this.moveElement(
           layoutItem,
           beginningOfTheClosestColumn,
@@ -108,6 +111,8 @@ export default {
     //   }
     // },
     moveElement(layoutItem, x, y) {
+      if (x < 0 || y < 0) return;
+
       layoutItem.x = x;
       layoutItem.y = y;
       layoutItem.moved = true;
@@ -126,9 +131,12 @@ export default {
       }
     },
     getBeginningOfTheClosestColumn: function(x, widthInColumns) {
-      return (
-        Math.floor(x / this.columnWidth) * (widthInColumns * this.columnWidth)
+      console.log(
+        `Division: ${Math.floor(
+          x / this.columnWidth
+        )} Width in Columns: ${widthInColumns}`
       );
+      return Math.floor(x / this.columnWidth) * this.columnWidth;
     },
     resetMoved() {
       for (var id in this.layoutItems) {
