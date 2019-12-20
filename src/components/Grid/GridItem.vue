@@ -212,5 +212,11 @@ export default {
   transition-property: left, top;
   display: block;
   background: green;
+  z-index: 1;
+}
+
+.grid-placeholder {
+  background: rgb(230, 96, 105);
+  z-index: 0;
 }
 </style>
