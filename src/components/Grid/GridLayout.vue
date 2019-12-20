@@ -61,8 +61,7 @@ export default {
         x: 0,
         y: 0,
         width: 0,
-        height: 0,
-        id: -1
+        height: 0
       }
     };
   },
@@ -89,9 +88,8 @@ export default {
           `Unknown event type ${event.type} in GridLayout.dragEvent`
         );
       }
-
+      console.log(layoutItem);
       this.setPlaceholderValues(
-        layoutItem,
         beginningOfTheClosestColumn,
         y,
         layoutItem.width,

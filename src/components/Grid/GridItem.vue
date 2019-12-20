@@ -16,7 +16,7 @@ export default {
   props: {
     id: {
       type: Number,
-      required: true
+      required: false
     },
     x: {
       type: Number,
