@@ -73,17 +73,40 @@ export default {
   },
   methods: {
     dragEvent(event, id, x, y, width, height) {
-      if (event.type === "drag" || event.type === "dragstart") {
+      let layoutItem = this.getLayoutItemById(id);
+
+      if (event.type === "dragmove" || event.type === "dragstart") {
         //this.setPlaceholderValues(id, x, y, width, height);
+        this.moveElement(layoutItem, x, y, width, height);
         this.isDragging = true;
-      } else {
+      } else if (event.type === "dragend") {
+        const beginningOfTheClosestColumn = this.getBeginningOfTheClosestColumn(
+          x,
+          layoutItem.width
+        );
+        this.moveElement(
+          layoutItem,
+          beginningOfTheClosestColumn,
+          y,
+          width,
+          height
+        );
         this.isDragging = false;
+      } else {
+        console.error(
+          "Uknown event type(" +
+            even.type +
+            ") in GridLayout.dragEvent event handler."
+        );
       }
 
       this.resetMoved();
-      let layoutItem = this.getLayoutItemById(id);
-      this.moveElement(layoutItem, x, y, width, height);
+      // this.adjustGridLayout();
     },
+    // adjustGridLayout() {
+    //   for (var layoutItem of this.layoutItems) {
+    //   }
+    // },
     moveElement(layoutItem, x, y) {
       layoutItem.x = x;
       layoutItem.y = y;
@@ -101,6 +124,11 @@ export default {
           );
         }
       }
+    },
+    getBeginningOfTheClosestColumn: function(x, widthInColumns) {
+      return (
+        Math.floor(x / this.columnWidth) * (widthInColumns * this.columnWidth)
+      );
     },
     resetMoved() {
       for (var id in this.layoutItems) {
