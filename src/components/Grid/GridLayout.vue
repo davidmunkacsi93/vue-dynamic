@@ -86,9 +86,7 @@ export default {
         this.isDragging = false;
       } else {
         console.error(
-          "Uknown event type(" +
-            event.type +
-            ") in GridLayout.dragEvent event handler."
+          `Unknown event type ${event.type} in GridLayout.dragEvent`
         );
       }
 
