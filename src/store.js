@@ -1,11 +1,12 @@
-import Vue from "vue";
+import Vuex from "vuex";
 
-export const store = Vue.observable({
-  isNavOpen: false
-});
-
-export const mutations = {
-  toggleNav() {
-    store.isNavOpen = !store.isNavOpen;
+const store = Vuex.Store({
+  state: {
+    isNavOpen: false
+  },
+  mutations: {
+    toggleNav(state) {
+      state.isNavOpen = !state.isNavOpen;
+    }
   }
-};
+});
