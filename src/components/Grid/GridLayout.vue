@@ -72,28 +72,18 @@ export default {
     }
   },
   methods: {
-    dragEvent(event, id, x, y, width, height) {
-      let layoutItem = this.getLayoutItemById(id);
-
+    dragEvent(event, id, x, y) {
+      const layoutItem = this.getLayoutItemById(id);
+      const beginningOfTheClosestColumn = this.getBeginningOfTheClosestColumn(
+        x,
+        layoutItem.width
+      );
       if (event.type === "dragmove" || event.type === "dragstart") {
         //this.setPlaceholderValues(id, x, y, width, height);
-        this.moveElement(layoutItem, x, y, width, height);
+        this.moveElement(layoutItem, x, y);
         this.isDragging = true;
       } else if (event.type === "dragend") {
-        const beginningOfTheClosestColumn = this.getBeginningOfTheClosestColumn(
-          x,
-          layoutItem.width
-        );
-        console.log(
-          `X: ${x} Beginning of the column: ${beginningOfTheClosestColumn}`
-        );
-        this.moveElement(
-          layoutItem,
-          beginningOfTheClosestColumn,
-          y,
-          width,
-          height
-        );
+        this.moveElement(layoutItem, beginningOfTheClosestColumn, y);
         this.isDragging = false;
       } else {
         console.error(
@@ -131,11 +121,6 @@ export default {
       }
     },
     getBeginningOfTheClosestColumn: function(x, widthInColumns) {
-      console.log(
-        `Division: ${Math.floor(
-          x / this.columnWidth
-        )} Width in Columns: ${widthInColumns}`
-      );
       return Math.floor(x / this.columnWidth) * this.columnWidth;
     },
     resetMoved() {
