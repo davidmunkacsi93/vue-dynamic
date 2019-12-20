@@ -95,14 +95,16 @@ export default {
         layoutItem.height
       );
       this.resetMoved();
-      this.adjustGridLayout();
+      // this.adjustGridLayout();
     },
-    adjustGridLayout() {
-      this.removeGaps();
-    },
-    removeGaps() {
-      for (var i = 0; i < this.columnNumber; i++) {}
-    },
+    // adjustGridLayout() {
+    //   this.removeGaps();
+    // },
+    // removeGaps() {
+    //   for (var i = 0; i < this.columnNumber; i++) {
+
+    //   }
+    // },
     moveElement(layoutItem, x, y) {
       if (x < 0 || y < 0) return;
 
