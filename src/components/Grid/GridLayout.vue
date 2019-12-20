@@ -91,11 +91,14 @@ export default {
 
       var collisions = this.getAllCollisions(layoutItem);
       if (collisions.length > 0) {
-        for (var id in collisions) {
-          const collision = collisions[id];
+        for (const collision of collisions) {
           if (collision.moved) continue;
 
-          this.moveElement(collision, collision.x, layoutItem.y + this.rowHeight + 1);
+          this.moveElement(
+            collision,
+            collision.x,
+            layoutItem.y + this.rowHeight + 1
+          );
         }
       }
     },
