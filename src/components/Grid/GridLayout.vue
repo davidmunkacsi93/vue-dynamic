@@ -88,7 +88,6 @@ export default {
           `Unknown event type ${event.type} in GridLayout.dragEvent`
         );
       }
-      console.log(layoutItem);
       this.setPlaceholderValues(
         beginningOfTheClosestColumn,
         y,
@@ -96,12 +95,14 @@ export default {
         layoutItem.height
       );
       this.resetMoved();
-      // this.adjustGridLayout();
+      this.adjustGridLayout();
     },
-    // adjustGridLayout() {
-    //   for (var layoutItem of this.layoutItems) {
-    //   }
-    // },
+    adjustGridLayout() {
+      this.removeGaps();
+    },
+    removeGaps() {
+      for (var i = 0; i < this.columnNumber; i++) {}
+    },
     moveElement(layoutItem, x, y) {
       if (x < 0 || y < 0) return;
 

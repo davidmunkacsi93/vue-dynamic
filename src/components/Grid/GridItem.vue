@@ -77,6 +77,9 @@ export default {
   computed: {
     columnWidth: function() {
       return this.layoutWidth / this.columnNumber;
+    },
+    currentColumn: function() {
+      return Math.floor(this.innerX / this.innerWidth);
     }
   },
   methods: {
@@ -117,7 +120,6 @@ export default {
 
       let x = Math.round(newPosition.left);
       let y = Math.round(newPosition.top);
-
       EventBus.$emit("dragEvent", event, this.id, x, y);
     },
     handleUpdateLayoutWidth(value) {
@@ -187,6 +189,7 @@ export default {
   },
   watch: {
     x: function(value) {
+      console.log(this.currentColumn);
       this.innerX = value;
       this.createStyle();
     },
