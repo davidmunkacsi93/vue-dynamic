@@ -1,6 +1,6 @@
 import Vuex from "vuex";
 
-const store = Vuex.Store({
+export const store = Vuex.Store({
   state: {
     isNavOpen: false
   },
