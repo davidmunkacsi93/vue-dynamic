@@ -16,15 +16,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   computed: {
-    isPanelOpen() {
-      return this.$store.isNavOpen;
-    }
+    ...mapState({
+      isPanelOpen: state => state.menu.isNavOpen
+    })
   },
   methods: {
     closeSidebarPanel() {
-      this.$store.mutations.toggleNav();
+      this.$store.dispatch("toggleNav");
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div id="burger" :class="{ active: isBurgerActive }" @click.prevent="toggle">
+  <div id="burger" :class="{ active: isNavOpen }" @click.prevent="toggle">
     <slot>
       <button type="button" class="burger-button" title="Menu">
         <span class="burger-bar burger-bar--1"></span>
@@ -16,12 +16,8 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
-      isNavOpen: state => state.isNavOpen
-    }),
-    isBurgerActive() {
-      console.log(this.state);
-      return this.isNavOpen;
-    }
+      isNavOpen: state => state.menu.isNavOpen
+    })
   },
   methods: {
     toggle() {
