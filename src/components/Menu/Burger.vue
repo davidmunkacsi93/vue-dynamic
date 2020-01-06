@@ -11,17 +11,21 @@
 </template>
 
 <script>
-import { store, mutations } from "@/store.js";
+import { mapState } from "vuex";
 
 export default {
   computed: {
+    ...mapState({
+      isNavOpen: state => state.isNavOpen
+    }),
     isBurgerActive() {
-      return store.isNavOpen;
+      console.log(this.state);
+      return this.isNavOpen;
     }
   },
   methods: {
     toggle() {
-      mutations.toggleNav();
+      this.$store.dispatch("toggleNav");
     }
   }
 };

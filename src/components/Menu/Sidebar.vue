@@ -16,16 +16,15 @@
 </template>
 
 <script>
-import { store, mutations } from "@/store.js";
 export default {
   computed: {
     isPanelOpen() {
-      return store.isNavOpen;
+      return this.$store.isNavOpen;
     }
   },
   methods: {
     closeSidebarPanel() {
-      mutations.toggleNav();
+      this.$store.mutations.toggleNav();
     }
   }
 };
