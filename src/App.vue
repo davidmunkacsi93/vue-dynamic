@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="main-nav">
-      <burger />
+      <menu-bar />
     </nav>
     <sidebar>
       <ul class="sidebar-panel-nav">
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Burger from "./components/Menu/Burger.vue";
+import MenuBar from "./components/Menu/MenuBar.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 
 import GridItem from "./components/Grid/GridItem.vue";
@@ -48,7 +48,7 @@ let layoutItems = [
 export default {
   name: "app",
   components: {
-    Burger,
+    MenuBar,
     Sidebar,
     GridItem,
     GridLayout
