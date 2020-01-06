@@ -1,18 +1,34 @@
 <template>
-  <div id="menu-bar" :class="{ active: isNavOpen }">
-    <slot>
-      <button
-        type="button"
-        class="fa fa-bars menu-item"
-        title="Menu"
-        @click.prevent="toggle"
-      ></button>
-      <button
-        type="button"
-        class="menu-item fa fa-plus add-panel-button"
-      ></button>
-    </slot>
-  </div>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
+    <button
+      type="button"
+      class="menu-item fa fa-bars fa-3x"
+      title="Menu"
+      @click.prevent="toggle"
+    ></button>
+    <div class="ml-auto mr-1"></div>
+    <div
+      class="collapse navbar-collapse flex-grow-0"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav text-right">
+        <li class="nav-item">
+          <button
+            type="button"
+            class="menu-item add-panel-button fa fa-plus fa-3x text-right"
+            @click.prevent="addGridItem"
+          ></button>
+        </li>
+        <li class="nav-item">
+          <button
+            type="button"
+            class="menu-item add-panel-button fa fa-pencil fa-3x text-right"
+            @click.prevent="editGridLayout"
+          ></button>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -27,6 +43,12 @@ export default {
   methods: {
     toggle() {
       this.$store.dispatch("toggleNav");
+    },
+    addGridItem() {
+      console.log("Adding new item...");
+    },
+    editGridLayout() {
+      console.log("Editing grid layout...");
     }
   }
 };
@@ -47,7 +69,7 @@ button:focus {
 }
 
 .menu-item {
-  position: relative;
+  color: white;
   display: inline;
   z-index: 999;
   border: 0;
@@ -55,7 +77,7 @@ button:focus {
   background-color: transparent;
 }
 
-.add-panel-button {
+.add-grid-item-button {
   float: right !important;
   right: 0;
 }

@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <nav class="main-nav">
-      <menu-bar />
-    </nav>
+    <menu-bar />
     <sidebar>
       <ul class="sidebar-panel-nav">
         <li>
@@ -32,6 +30,9 @@
 </template>
 
 <script>
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import MenuBar from "./components/Menu/MenuBar.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 
