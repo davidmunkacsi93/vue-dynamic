@@ -189,7 +189,6 @@ export default {
   },
   watch: {
     x: function(value) {
-      console.log(this.currentColumn);
       this.innerX = value;
       this.createStyle();
     },
