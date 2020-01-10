@@ -95,16 +95,18 @@ export default {
         layoutItem.height
       );
       this.resetMoved();
-      // this.adjustGridLayout();
+      this.adjustGridLayout();
     },
-    // adjustGridLayout() {
-    //   this.removeGaps();
-    // },
-    // removeGaps() {
-    //   for (var i = 0; i < this.columnNumber; i++) {
-
-    //   }
-    // },
+    adjustGridLayout() {
+      this.removeGaps();
+    },
+    removeGaps() {
+      for (var layoutItem of this.layoutItems) {
+        while (layoutItem.y > 0 && !this.isColliding(layoutItem)) {
+          layoutItem.y--;
+        }
+      }
+    },
     moveElement(itemToMove, x, y) {
       if (x < 0 || y < 0) return;
 
@@ -145,6 +147,10 @@ export default {
       return this.layoutItems.filter(item =>
         this.areLayoutItemsColliding(layoutItem, item)
       );
+    },
+    isColliding(layoutItem) {
+      const collisions = this.getAllCollisions(layoutItem);
+      return collisions && collisions.length > 0;
     },
     areLayoutItemsColliding(layoutItem, layoutItemToCompare) {
       var layoutItemWidth = layoutItem.width * this.columnWidth;
