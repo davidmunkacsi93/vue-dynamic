@@ -1,5 +1,10 @@
 <template>
-  <div ref="item" class="grid-item" :style="style">
+  <div
+    ref="item"
+    class="grid-item"
+    :style="style"
+    v-bind:class="{ editing: isEditable }"
+  >
     <slot>
       <span>{{ this.id }}</span>
     </slot>
@@ -85,6 +90,9 @@ export default {
     },
     currentColumn: function() {
       return Math.floor(this.innerX / this.innerWidth);
+    },
+    isEditable: function() {
+      return this.isDraggable && this.isResizable;
     }
   },
   methods: {
@@ -222,6 +230,10 @@ export default {
   display: block;
   background: green;
   z-index: 1;
+}
+
+.editing {
+  background: yellow !important;
 }
 
 .grid-placeholder {
