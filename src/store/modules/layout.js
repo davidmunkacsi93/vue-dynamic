@@ -6,7 +6,6 @@ function getNextId(state) {
   const layoutItem = state.layoutItems.reduce((previous, current) =>
     previous.id > current.id ? previous : current
   );
-
   return layoutItem.id + 1;
 }
 
@@ -43,7 +42,6 @@ const mutations = {
   },
   loadLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
-    
     if (!layoutString) return;
 
     const parsedLayout = JSON.parse(layoutString);

@@ -117,6 +117,8 @@ export default {
         for (const collision of collisions) {
           if (collision.moved) continue;
 
+          // Swap only if by moving above the element.
+          if (itemToMove.y > collision.y) continue;
 
           this.moveElement(
             collision,
