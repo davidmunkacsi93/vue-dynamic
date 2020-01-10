@@ -19,14 +19,14 @@
             @click.prevent="addGridItem"
           ></button>
         </li>
-        <li class="nav-item" v-if="!isEditModeActive">
+        <li class="nav-item" v-if="!isEditModeEnabled">
           <button
             type="button"
             class="menu-item add-panel-button fa fa-pencil fa-3x text-right"
             @click.prevent="editGridLayout"
           ></button>
         </li>
-        <li class="nav-item" v-if="isEditModeActive">
+        <li class="nav-item" v-if="isEditModeEnabled">
           <button
             type="button"
             class="menu-item add-panel-button fa fa-floppy-o fa-3x text-right"
@@ -44,8 +44,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      isEditModeActive: false
-    }
+      isEditModeEnabled: false
+    };
   },
   computed: {
     ...mapState({
@@ -60,10 +60,11 @@ export default {
       this.$store.dispatch("addGridItem");
     },
     editGridLayout() {
-      this.isEditModeActive = true;
+      this.$store.dispatch("enableEditMode");
+      this.isEditModeEnabled = true;
     },
     saveLayout() {
-      this.isEditModeActive = false;
+      this.isEditModeEnabled = false;
       console.log("Saving current layout...");
     }
   }

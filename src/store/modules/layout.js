@@ -25,12 +25,22 @@ const mutations = {
       isResizable: false
     };
     state.layoutItems.push(newItem);
+  },
+  enableEditMode(state) {
+    for (var layoutItem of state.layoutItems) {
+      layoutItem.isResizable = true;
+      layoutItem.isDraggable = true;
+      console.log(layoutItem);
+    }
   }
 };
 
 const actions = {
   addGridItem({ commit }) {
     commit("addGridItem");
+  },
+  enableEditMode({ commit }) {
+    commit("enableEditMode");
   }
 };
 

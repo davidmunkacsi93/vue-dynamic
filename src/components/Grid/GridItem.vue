@@ -38,6 +38,11 @@ export default {
       type: Boolean,
       required: false,
       default: null
+    },
+    isResizable: {
+      type: Boolean,
+      required: false,
+      default: null
     }
   },
   data() {
@@ -84,6 +89,9 @@ export default {
   },
   methods: {
     handleDrag(event) {
+      console.log(this.isDraggable);
+      if (!this.isDraggable) return;
+
       const currentPosition = this.getCurrentPosition(event);
 
       let newPosition = { top: 0, left: 0 };
