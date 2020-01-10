@@ -23,7 +23,8 @@
         :y="item.y"
         :width="item.width"
         :height="item.height"
-        :draggable="item.draggable"
+        :isDraggable="item.isDraggable"
+        :isResizable="item.isResizable"
       ></grid-item>
     </grid-layout>
   </div>
