@@ -3,10 +3,11 @@ const LOCAL_STORAGE_LAYOUT_KEY = "layout";
 function getNextId(state) {
   if (!state.layoutItems || state.layoutItems.length === 0) return 0;
 
-  var newId = state.layoutItems.reduce((previous, current) =>
-    previous.id > current.id ? previous.id : current.id
+  const layoutItem = state.layoutItems.reduce((previous, current) =>
+    previous.id > current.id ? previous : current
   );
-  return ++newId;
+
+  return layoutItem.id + 1;
 }
 
 const state = {
@@ -16,12 +17,13 @@ const state = {
 
 const mutations = {
   addGridItem(state) {
+    const newId = getNextId(state);
     const newItem = {
-      x: 0,
-      y: 0,
+      x: 1,
+      y: 1,
       width: 2,
       height: 1,
-      id: getNextId(state),
+      id: newId,
       isDraggable: false,
       isResizable: false
     };
@@ -45,7 +47,6 @@ const mutations = {
     if (!layoutString) return;
 
     const parsedLayout = JSON.parse(layoutString);
-    console.log(parsedLayout);
     state.layoutItems = parsedLayout;
   },
   saveLayout(state) {
