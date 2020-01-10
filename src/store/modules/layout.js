@@ -1,5 +1,14 @@
 const LOCAL_STORAGE_LAYOUT_KEY = "layout";
 
+function getNextId(state) {
+  if (!state.layoutItems || state.layoutItems.length === 0) return 0;
+
+  var newId = state.layoutItems.reduce((previous, current) =>
+    previous.id > current.id ? previous.id : current.id
+  );
+  return ++newId;
+}
+
 const state = {
   layouts: [],
   layoutItems: []
@@ -7,15 +16,12 @@ const state = {
 
 const mutations = {
   addGridItem(state) {
-    var newId = state.layoutItems.reduce((previous, current) =>
-      previous.id > current.id ? previous.id : current.id
-    );
     const newItem = {
       x: 0,
       y: 0,
       width: 2,
       height: 1,
-      id: ++newId,
+      id: getNextId(state),
       isDraggable: false,
       isResizable: false
     };
@@ -34,13 +40,19 @@ const mutations = {
     }
   },
   loadLayout(state) {
-    const layoutString = localStorage.get(LOCAL_STORAGE_LAYOUT_KEY);
+    const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
+    
+    if (!layoutString) return;
+
     const parsedLayout = JSON.parse(layoutString);
     console.log(parsedLayout);
     state.layoutItems = parsedLayout;
   },
   saveLayout(state) {
-    localStorage.setItem(LOCAL_STORAGE_LAYOUT_KEY, JSON.stringify(state.layoutItems));
+    localStorage.setItem(
+      LOCAL_STORAGE_LAYOUT_KEY,
+      JSON.stringify(state.layoutItems)
+    );
   }
 };
 

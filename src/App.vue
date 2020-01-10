@@ -54,6 +54,9 @@ export default {
     ...mapState({
       layoutItems: state => state.layout.layoutItems
     })
+  },
+  mounted() {
+    this.$store.dispatch("loadLayout");
   }
 };
 </script>
