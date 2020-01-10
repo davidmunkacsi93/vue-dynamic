@@ -30,7 +30,12 @@ const mutations = {
     for (var layoutItem of state.layoutItems) {
       layoutItem.isResizable = true;
       layoutItem.isDraggable = true;
-      console.log(layoutItem);
+    }
+  },
+  disableEditMode(state) {
+    for (var layoutItem of state.layoutItems) {
+      layoutItem.isResizable = false;
+      layoutItem.isDraggable = false;
     }
   }
 };
@@ -41,6 +46,9 @@ const actions = {
   },
   enableEditMode({ commit }) {
     commit("enableEditMode");
+  },
+  disableEditMode({ commit }) {
+    commit("disableEditMode");
   }
 };
 

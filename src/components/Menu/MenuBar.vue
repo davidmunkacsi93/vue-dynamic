@@ -64,6 +64,7 @@ export default {
       this.isEditModeEnabled = true;
     },
     saveLayout() {
+      this.$store.dispatch("disableEditMode");
       this.isEditModeEnabled = false;
       console.log("Saving current layout...");
     }
