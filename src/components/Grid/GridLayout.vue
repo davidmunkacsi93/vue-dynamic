@@ -105,22 +105,23 @@ export default {
 
     //   }
     // },
-    moveElement(layoutItem, x, y) {
+    moveElement(itemToMove, x, y) {
       if (x < 0 || y < 0) return;
 
-      layoutItem.x = x;
-      layoutItem.y = y;
-      layoutItem.moved = true;
+      itemToMove.x = x;
+      itemToMove.y = y;
+      itemToMove.moved = true;
 
-      var collisions = this.getAllCollisions(layoutItem);
+      const collisions = this.getAllCollisions(itemToMove);
       if (collisions.length > 0) {
         for (const collision of collisions) {
           if (collision.moved) continue;
 
+
           this.moveElement(
             collision,
             collision.x,
-            layoutItem.y + this.rowHeight + 1
+            itemToMove.y + this.rowHeight + 1
           );
         }
       }
