@@ -1,15 +1,8 @@
 const LOCAL_STORAGE_LAYOUT_KEY = "layout";
 
-const defaultItems = [
-  { x: 0, y: 0, width: 2, height: 1, id: 0, isDraggable: false },
-  { x: 200, y: 200, width: 2, height: 1, id: 1, isDraggable: false },
-  { x: 400, y: 400, width: 4, height: 1, id: 2, isDraggable: false },
-  { x: 600, y: 600, width: 6, height: 1, id: 3, isDraggable: false }
-];
-
 const state = {
   layouts: [],
-  layoutItems: defaultItems
+  layoutItems: []
 };
 
 const mutations = {
