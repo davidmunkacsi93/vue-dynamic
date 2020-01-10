@@ -55,7 +55,7 @@ export default {
       layoutItems: state => state.layout.layoutItems
     })
   },
-  mounted() {
+  beforeCreate() {
     this.$store.dispatch("loadLayout");
   }
 };
