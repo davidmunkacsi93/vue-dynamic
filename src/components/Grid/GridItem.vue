@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     handleDrag(event) {
-      console.log(this.isDraggable);
       if (!this.isDraggable) return;
 
       const currentPosition = this.getCurrentPosition(event);

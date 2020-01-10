@@ -1,3 +1,5 @@
+const LOCAL_STORAGE_LAYOUT_KEY = "layout";
+
 const defaultItems = [
   { x: 0, y: 0, width: 2, height: 1, id: 0, isDraggable: false },
   { x: 200, y: 200, width: 2, height: 1, id: 1, isDraggable: false },
@@ -37,6 +39,15 @@ const mutations = {
       layoutItem.isResizable = false;
       layoutItem.isDraggable = false;
     }
+  },
+  loadLayout(state) {
+    const layoutString = localStorage.get(LOCAL_STORAGE_LAYOUT_KEY);
+    const parsedLayout = JSON.parse(layoutString);
+    console.log(parsedLayout);
+    state.layoutItems = parsedLayout;
+  },
+  saveLayout(state) {
+    localStorage.setItem(LOCAL_STORAGE_LAYOUT_KEY, JSON.stringify(state.layoutItems));
   }
 };
 
@@ -49,6 +60,12 @@ const actions = {
   },
   disableEditMode({ commit }) {
     commit("disableEditMode");
+  },
+  loadLayout({ commit }) {
+    commit("loadLayout");
+  },
+  saveLayout({ commit }) {
+    commit("saveLayout");
   }
 };
 
