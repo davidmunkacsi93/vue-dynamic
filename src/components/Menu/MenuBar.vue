@@ -45,7 +45,7 @@ export default {
       this.$store.dispatch("toggleNav");
     },
     addGridItem() {
-      console.log("Adding new item...");
+      this.$store.dispatch("addGridItem");
     },
     editGridLayout() {
       console.log("Editing grid layout...");

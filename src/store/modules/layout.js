@@ -11,14 +11,25 @@ const state = {
 };
 
 const mutations = {
-  addItem(state, item) {
-    state.items.push(item);
+  addGridItem(state) {
+    var newId = state.layoutItems.reduce((previous, current) =>
+      previous.id > current.id ? previous.id : current.id
+    );
+    const newItem = {
+      x: 0,
+      y: 0,
+      width: 2,
+      height: 1,
+      id: ++newId,
+      draggable: true
+    };
+    state.layoutItems.push(newItem);
   }
 };
 
 const actions = {
-  addItem({ commit }, item) {
-    commit("addGridItem", item);
+  addGridItem({ commit }) {
+    commit("addGridItem");
   }
 };
 
