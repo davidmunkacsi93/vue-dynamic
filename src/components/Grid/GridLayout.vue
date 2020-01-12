@@ -100,15 +100,14 @@ export default {
     },
     removeGaps() {
       for (var layoutItem of this.layoutItems) {
-        // while (this.isColliding(layoutItem)) {
-        //   let collision = this.getFirstCollision(layoutItem);
-        //   layoutItem.y = collision.y + collision.height;
-        // }
         while (layoutItem.y > 0 && !this.isColliding(layoutItem)) {
           layoutItem.y--;
         }
 
-        this.getFirstCollision(layoutItem);
+        while (this.isColliding(layoutItem)) {
+          let collision = this.getFirstCollision(layoutItem);
+          layoutItem.y = collision.y + collision.height;
+        }
       }
     },
     moveElement(itemToMove, x, y) {
@@ -149,9 +148,7 @@ export default {
       );
     },
     getFirstCollision(layoutItem) {
-      console.log(`${layoutItem.id}`)
-      console.log(this.getAllCollisions(layoutItem));
-      // return this.getAllCollisions(layoutItem)[0];
+      return this.getAllCollisions(layoutItem)[0];
     },
     isColliding(layoutItem) {
       const collisions = this.getAllCollisions(layoutItem);
