@@ -1,10 +1,5 @@
 <template>
-  <div
-    ref="item"
-    class="grid-item"
-    :style="style"
-    v-bind:class="{ editing: isEditable, dragging: isDragging }"
-  >
+  <div ref="item" class="grid-item" :style="style" v-bind:class="classObject">
     <slot>
       <span>{{ this.id }}</span>
     </slot>
@@ -60,6 +55,7 @@ export default {
 
       style: {},
 
+
       previousX: null,
       previousY: null,
       lastX: null,
@@ -91,6 +87,13 @@ export default {
     },
     isEditable: function() {
       return this.isDraggable && this.isResizable;
+    },
+    classObject: function() {
+      return {
+        editing: this.isEditable,
+        dragging: this.isDragging,
+        "no-touch": !this.isEditable
+      };
     }
   },
   methods: {
@@ -237,6 +240,12 @@ export default {
 
 .dragging {
   z-index: 2;
+}
+
+.no-touch {
+  -ms-touch-action: none;
+  touch-action: none;
+  cursor: default !important;
 }
 
 .editing {
