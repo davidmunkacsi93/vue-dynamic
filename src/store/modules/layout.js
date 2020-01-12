@@ -30,6 +30,7 @@ const mutations = {
     };
     state.layoutItems.push(newItem);
     EventBus.$emit("initializeComponent");
+    EventBus.$emit("gridItemAdded");
   },
   enableEditMode(state) {
     for (var layoutItem of state.layoutItems) {

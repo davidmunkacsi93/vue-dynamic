@@ -46,11 +46,13 @@ export default {
     window.addEventListener("resize", this.onWindowResize);
 
     EventBus.$on("dragEvent", this.dragEventHandler);
+    EventBus.$on("gridItemAdded", this.handleGridItemAdded);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
 
     EventBus.$off("dragEvent", this.dragEventHandler);
+    EventBus.$off("gridItemAdded", this.handleGridItemAdded);
   },
   data() {
     return {
@@ -169,6 +171,9 @@ export default {
       if (layoutItem.y >= layoutItemToCompare.y + layoutItemToCompareHeight)
         return false;
       return true;
+    },
+    handleGridItemAdded() {
+      this.adjustGridLayout();
     },
     onWindowResize() {
       this.width = this.$refs.layout.offsetWidth;
