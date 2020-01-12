@@ -25,10 +25,6 @@ export default {
       type: Number,
       default: 12
     },
-    rowHeight: {
-      type: Number,
-      default: 150
-    },
     layoutItems: {
       type: Array,
       required: true
@@ -130,11 +126,7 @@ export default {
           // Swap only if moving above the element.
           if (itemToMove.y > collision.y) continue;
 
-          this.moveElement(
-            collision,
-            collision.x,
-            itemToMove.y + this.rowHeight + 1
-          );
+          this.moveElement(collision, collision.x, itemToMove.y + 1);
         }
       }
     },
@@ -167,19 +159,16 @@ export default {
     },
     areLayoutItemsColliding(layoutItem, layoutItemToCompare) {
       var layoutItemWidth = layoutItem.width * this.columnWidth;
-      var layoutItemHeight = layoutItem.height * this.rowHeight;
       var layoutItemToCompareWidth =
         layoutItemToCompare.width * this.columnWidth;
-      var layoutItemToCompareHeight =
-        layoutItemToCompare.height * this.rowHeight;
 
       if (layoutItem.id === layoutItemToCompare.id) return false;
       if (layoutItem.x + layoutItemWidth <= layoutItemToCompare.x) return false;
       if (layoutItem.x >= layoutItemToCompare.x + layoutItemToCompareWidth)
         return false;
-      if (layoutItem.y + layoutItemHeight <= layoutItemToCompare.y)
+      if (layoutItem.y + layoutItem.height <= layoutItemToCompare.y)
         return false;
-      if (layoutItem.y >= layoutItemToCompare.y + layoutItemToCompareHeight)
+      if (layoutItem.y >= layoutItemToCompare.y + layoutItemToCompare.height)
         return false;
       return true;
     },
