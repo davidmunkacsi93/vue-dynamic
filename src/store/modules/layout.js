@@ -1,3 +1,5 @@
+import EventBus from "../../utils/event-bus.js";
+
 const LOCAL_STORAGE_LAYOUT_KEY = "layout";
 
 function getNextId(state) {
@@ -27,6 +29,7 @@ const mutations = {
       isResizable: false
     };
     state.layoutItems.push(newItem);
+    EventBus.$emit("initializeComponent");
   },
   enableEditMode(state) {
     for (var layoutItem of state.layoutItems) {

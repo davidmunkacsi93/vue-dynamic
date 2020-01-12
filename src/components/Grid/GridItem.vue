@@ -73,16 +73,15 @@ export default {
     };
   },
   mounted: function() {
-    this.columnNumber = this.$parent.columnNumber;
-    this.rowHeight = this.$parent.rowHeight;
-    this.makeDraggable();
-    this.createStyle();
+    this.initializeComponent();
   },
   created: function() {
     EventBus.$on("updateLayoutWidth", this.handleUpdateLayoutWidth);
+    EventBus.$on("initializeComponent", this.initializeComponent);
   },
   beforeDestroy: function() {
     EventBus.$off("updateLayoutWidth", this.handleUpdateLayoutWidth);
+    EventBus.$off("initializeComponent", this.initializeComponent);
   },
   computed: {
     columnWidth: function() {
@@ -96,6 +95,13 @@ export default {
     }
   },
   methods: {
+    initializeComponent() {
+      this.layoutWidth = this.$parent.width;
+      this.columnNumber = this.$parent.columnNumber;
+      this.rowHeight = this.$parent.rowHeight;
+      this.makeDraggable();
+      this.createStyle();
+    },
     handleDrag(event) {
       if (!this.isDraggable) return;
 
@@ -182,6 +188,7 @@ export default {
       return newPosition;
     },
     createStyle() {
+      console.log(`Column width ${this.columnWidth}`);
       var width = this.width * this.columnWidth;
       var height = this.height * this.rowHeight;
 
