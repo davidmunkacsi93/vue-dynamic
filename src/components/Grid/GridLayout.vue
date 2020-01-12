@@ -81,19 +81,14 @@ export default {
       } else if (event.type === "dragend") {
         this.moveElement(layoutItem, beginningOfTheClosestColumn, y);
         this.isDragging = false;
+        this.adjustGridLayout();
       } else {
         console.error(
           `Unknown event type ${event.type} in GridLayout.dragEvent`
         );
       }
-      this.setPlaceholderValues(
-        beginningOfTheClosestColumn,
-        y,
-        layoutItem.width,
-        layoutItem.height
-      );
+      this.setPlaceholderValues(beginningOfTheClosestColumn, y, layoutItem.width, layoutItem.height);
       this.resetMoved();
-      this.adjustGridLayout();
     },
     adjustGridLayout() {
       this.removeGaps();

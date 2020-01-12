@@ -3,7 +3,7 @@
     ref="item"
     class="grid-item"
     :style="style"
-    v-bind:class="{ editing: isEditable }"
+    v-bind:class="{ editing: isEditable, dragging: isDragging }"
   >
     <slot>
       <span>{{ this.id }}</span>
@@ -233,6 +233,10 @@ export default {
   display: block;
   background: green;
   z-index: 1;
+}
+
+.dragging {
+  z-index: 2;
 }
 
 .editing {
