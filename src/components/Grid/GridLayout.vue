@@ -104,9 +104,15 @@ export default {
     },
     removeGaps() {
       for (var layoutItem of this.layoutItems) {
+        // while (this.isColliding(layoutItem)) {
+        //   let collision = this.getFirstCollision(layoutItem);
+        //   layoutItem.y = collision.y + collision.height;
+        // }
         while (layoutItem.y > 0 && !this.isColliding(layoutItem)) {
           layoutItem.y--;
         }
+
+        this.getFirstCollision(layoutItem);
       }
     },
     moveElement(itemToMove, x, y) {
@@ -121,7 +127,7 @@ export default {
         for (const collision of collisions) {
           if (collision.moved) continue;
 
-          // Swap only if by moving above the element.
+          // Swap only if moving above the element.
           if (itemToMove.y > collision.y) continue;
 
           this.moveElement(
@@ -150,6 +156,11 @@ export default {
         this.areLayoutItemsColliding(layoutItem, item)
       );
     },
+    getFirstCollision(layoutItem) {
+      console.log(`${layoutItem.id}`)
+      console.log(this.getAllCollisions(layoutItem));
+      // return this.getAllCollisions(layoutItem)[0];
+    },
     isColliding(layoutItem) {
       const collisions = this.getAllCollisions(layoutItem);
       return collisions && collisions.length > 0;
@@ -162,7 +173,7 @@ export default {
       var layoutItemToCompareHeight =
         layoutItemToCompare.height * this.rowHeight;
 
-      if (layoutItem.id == layoutItemToCompare.id) return false;
+      if (layoutItem.id === layoutItemToCompare.id) return false;
       if (layoutItem.x + layoutItemWidth <= layoutItemToCompare.x) return false;
       if (layoutItem.x >= layoutItemToCompare.x + layoutItemToCompareWidth)
         return false;

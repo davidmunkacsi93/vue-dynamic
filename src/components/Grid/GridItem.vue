@@ -54,7 +54,6 @@ export default {
     return {
       columnNumber: 12,
       layoutWidth: null,
-      rowHeight: null,
 
       isDragging: false,
       draggedPosition: null,
@@ -98,7 +97,6 @@ export default {
     initializeComponent() {
       this.layoutWidth = this.$parent.width;
       this.columnNumber = this.$parent.columnNumber;
-      this.rowHeight = this.$parent.rowHeight;
       this.makeDraggable();
       this.createStyle();
     },
@@ -188,9 +186,7 @@ export default {
       return newPosition;
     },
     createStyle() {
-      console.log(`Column width ${this.columnWidth}`);
       var width = this.width * this.columnWidth;
-      var height = this.height * this.rowHeight;
 
       const translate =
         "translate3d(" + this.innerX + "px," + this.innerY + "px, 0)";
@@ -201,7 +197,7 @@ export default {
         msTransform: translate,
         OTransform: translate,
         width: width + "px",
-        height: height + "px",
+        height: this.height + "px",
         position: "absolute"
       };
     },

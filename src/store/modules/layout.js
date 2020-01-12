@@ -23,7 +23,7 @@ const mutations = {
       x: 1,
       y: 1,
       width: 2,
-      height: 1,
+      height: 150,
       id: newId,
       isDraggable: false,
       isResizable: false
