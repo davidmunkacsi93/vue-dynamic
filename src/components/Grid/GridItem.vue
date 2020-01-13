@@ -55,7 +55,6 @@ export default {
 
       style: {},
 
-
       previousX: null,
       previousY: null,
       lastX: null,

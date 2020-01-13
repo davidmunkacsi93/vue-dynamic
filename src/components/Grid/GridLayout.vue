@@ -87,7 +87,12 @@ export default {
           `Unknown event type ${event.type} in GridLayout.dragEvent`
         );
       }
-      this.setPlaceholderValues(beginningOfTheClosestColumn, y, layoutItem.width, layoutItem.height);
+      this.setPlaceholderValues(
+        beginningOfTheClosestColumn,
+        y,
+        layoutItem.width,
+        layoutItem.height
+      );
       this.resetMoved();
     },
     adjustGridLayout() {
