@@ -71,28 +71,18 @@ export default {
   methods: {
     dragEvent(event, id, x, y) {
       const layoutItem = this.getLayoutItemById(id);
-      const beginningOfTheClosestColumn = this.getBeginningOfTheClosestColumn(
-        x,
-        layoutItem.width
-      );
       if (event.type === "dragmove" || event.type === "dragstart") {
-        this.moveElement(layoutItem, x, y);
         this.isDragging = true;
+        this.setPlaceholderValues(x, y, layoutItem.width, layoutItem.height);
       } else if (event.type === "dragend") {
-        this.moveElement(layoutItem, beginningOfTheClosestColumn, y);
         this.isDragging = false;
-        this.adjustGridLayout();
       } else {
         console.error(
           `Unknown event type ${event.type} in GridLayout.dragEvent`
         );
       }
-      this.setPlaceholderValues(
-        beginningOfTheClosestColumn,
-        y,
-        layoutItem.width,
-        layoutItem.height
-      );
+      this.moveElement(layoutItem, x, y);
+      this.adjustGridLayout();
       this.resetMoved();
     },
     adjustGridLayout() {
@@ -123,7 +113,11 @@ export default {
           if (collision.moved) continue;
 
           // Swap only if moving above the element.
-          if (itemToMove.y > collision.y) continue;
+          if (
+            itemToMove.y > collision.y &&
+            itemToMove.y - collision.y > collision.h / 4
+          )
+            continue;
 
           this.moveElement(collision, collision.x, itemToMove.y + 1);
         }
