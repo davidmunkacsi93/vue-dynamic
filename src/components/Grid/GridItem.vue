@@ -233,7 +233,8 @@ export default {
   transition: all 200ms ease;
   transition-property: left, top;
   display: block;
-  background: green;
+  border: 1px solid black;
+  background: grey;
   z-index: 1;
 }
 
