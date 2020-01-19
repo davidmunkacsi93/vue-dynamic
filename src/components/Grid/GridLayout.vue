@@ -91,21 +91,6 @@ export default {
       this.adjustGridLayout();
       this.resetMoved();
     },
-    adjustGridLayout() {
-      this.removeGaps();
-    },
-    removeGaps() {
-      for (var layoutItem of this.layoutItems) {
-        while (layoutItem.y > 0 && !this.isColliding(layoutItem)) {
-          layoutItem.y--;
-        }
-
-        while (this.isColliding(layoutItem)) {
-          let collision = this.getFirstCollision(layoutItem);
-          layoutItem.y = collision.y + collision.height;
-        }
-      }
-    },
     moveElement(itemToMove, x, y) {
       if (x < 0 || y < 0) return;
 
@@ -118,10 +103,11 @@ export default {
         return -1;
       });
       if (collisions.length) {
+        console.log(collisions)
         for (const collision of collisions) {
           if (collision.moved) continue;
 
-          // Swap only if moving considerably above the element.
+          // Swap only if moving considerably above element.
           if (
             itemToMove.y > collision.y &&
             itemToMove.y - collision.y > collision.h / 2
@@ -129,6 +115,22 @@ export default {
             continue;
 
           this.moveElement(collision, collision.x, itemToMove.y + 1);
+          console.log(`Moved ${collision.id} away from ${itemToMove.id}`);
+        }
+      }
+    },
+    adjustGridLayout() {
+      this.removeGaps();
+    },
+    removeGaps() {
+      for (var layoutItem of this.layoutItems) {
+        while (layoutItem.y > 0 && !this.isColliding(layoutItem)) {
+          layoutItem.y--;
+        }
+
+        while (this.isColliding(layoutItem)) {
+          let collision = this.getFirstCollision(layoutItem);
+          layoutItem.y = collision.y + collision.height;
         }
       }
     },
