@@ -98,21 +98,13 @@ export default {
       itemToMove.y = y;
       itemToMove.moved = true;
 
-      const collisions = this.getAllCollisions(itemToMove).sort((a, b) => {
-        if (a.y > b.y && (a.y == b.y && a.x > b.x)) return 1;
-        return -1;
-      });
+      const collisions = this.getAllCollisions(this.layoutItems, itemToMove);
       if (collisions.length) {
-        console.log(collisions)
         for (const collision of collisions) {
           if (collision.moved) continue;
 
           // Swap only if moving considerably above element.
-          if (
-            itemToMove.y > collision.y &&
-            itemToMove.y - collision.y > collision.h / 2
-          )
-            continue;
+          if (itemToMove.y > collision.y) continue;
 
           this.moveElement(collision, collision.x, itemToMove.y + 1);
           console.log(`Moved ${collision.id} away from ${itemToMove.id}`);
@@ -124,12 +116,15 @@ export default {
     },
     removeGaps() {
       for (var layoutItem of this.layoutItems) {
-        while (layoutItem.y > 0 && !this.isColliding(layoutItem)) {
+        while (
+          layoutItem.y > 0 &&
+          !this.isColliding(this.layoutItems, layoutItem)
+        ) {
           layoutItem.y--;
         }
 
-        while (this.isColliding(layoutItem)) {
-          let collision = this.getFirstCollision(layoutItem);
+        while (this.isColliding(this.layoutItems, layoutItem)) {
+          let collision = this.getFirstCollision(this.layoutItems, layoutItem);
           layoutItem.y = collision.y + collision.height;
         }
       }
@@ -147,16 +142,16 @@ export default {
         if (this.layoutItems[i].id === id) return this.layoutItems[i];
       }
     },
-    getAllCollisions(layoutItem) {
-      return this.layoutItems.filter(item =>
+    getAllCollisions(layout, layoutItem) {
+      return layout.filter(item =>
         this.areLayoutItemsColliding(layoutItem, item)
       );
     },
-    getFirstCollision(layoutItem) {
-      return this.getAllCollisions(layoutItem)[0];
+    getFirstCollision(layout, layoutItem) {
+      return this.getAllCollisions(layout, layoutItem)[0];
     },
-    isColliding(layoutItem) {
-      const collisions = this.getAllCollisions(layoutItem);
+    isColliding(layout, layoutItem) {
+      const collisions = this.getAllCollisions(layout, layoutItem);
       return collisions && collisions.length > 0;
     },
     areLayoutItemsColliding(layoutItem, layoutItemToCompare) {
