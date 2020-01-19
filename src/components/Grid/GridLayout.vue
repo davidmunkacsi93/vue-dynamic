@@ -113,7 +113,10 @@ export default {
       itemToMove.y = y;
       itemToMove.moved = true;
 
-      const collisions = this.getAllCollisions(itemToMove);
+      const collisions = this.getAllCollisions(itemToMove).sort((a, b) => {
+        if (a.y > b.y && (a.y == b.y && a.x > b.x)) return 1;
+        return -1;
+      });
       if (collisions.length) {
         for (const collision of collisions) {
           if (collision.moved) continue;
@@ -121,7 +124,7 @@ export default {
           // Swap only if moving considerably above the element.
           if (
             itemToMove.y > collision.y &&
-            itemToMove.y - collision.y > collision.h / 4
+            itemToMove.y - collision.y > collision.h / 2
           )
             continue;
 
