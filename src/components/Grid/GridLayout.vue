@@ -73,7 +73,13 @@ export default {
       const layoutItem = this.getLayoutItemById(id);
       if (event.type === "dragmove" || event.type === "dragstart") {
         this.isDragging = true;
-        this.setPlaceholderValues(x, y, layoutItem.width, layoutItem.height);
+        this.setPlaceholderValues(
+          id,
+          layoutItem.x,
+          layoutItem.y,
+          layoutItem.width,
+          layoutItem.height
+        );
       } else if (event.type === "dragend") {
         this.isDragging = false;
       } else {
@@ -169,7 +175,8 @@ export default {
     onWindowResize() {
       this.width = this.$refs.layout.offsetWidth;
     },
-    setPlaceholderValues(x, y, width, height) {
+    setPlaceholderValues(id, x, y, width, height) {
+      this.placeholder.id = id;
       this.placeholder.x = x;
       this.placeholder.y = y;
       this.placeholder.width = width;
