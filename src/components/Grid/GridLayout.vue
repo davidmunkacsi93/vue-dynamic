@@ -114,7 +114,7 @@ export default {
       itemToMove.moved = true;
 
       const collisions = this.getAllCollisions(itemToMove);
-      if (collisions.length > 0) {
+      if (collisions.length) {
         for (const collision of collisions) {
           if (collision.moved) continue;
 
