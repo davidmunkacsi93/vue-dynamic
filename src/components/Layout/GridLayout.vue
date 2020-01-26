@@ -14,7 +14,6 @@ export default {
   methods: {
     handleGridItemAdded() {
       this.layoutUpdate();
-        console.log(this.originalLayout);
     }
   }
 };

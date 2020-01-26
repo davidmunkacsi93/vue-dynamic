@@ -55,6 +55,10 @@ const mutations = {
       LOCAL_STORAGE_LAYOUT_KEY,
       JSON.stringify(state.layoutItems)
     );
+  },
+  setLayoutItems(state, layoutItems) {
+    state.layoutItems = layoutItems;
+    console.log(state.layoutItems);
   }
 };
 
@@ -73,6 +77,9 @@ const actions = {
   },
   saveLayout({ commit }) {
     commit("saveLayout");
+  },
+  setLayoutItems({ commit }, layoutItems) {
+    commit("setLayoutItems", layoutItems);
   }
 };
 
