@@ -103,16 +103,24 @@ export default {
         for (const collision of collisions) {
           if (collision.moved) continue;
 
-          // Swap only if moving considerably above element.
-          if (itemToMove.y > collision.y) continue;
+          if (itemToMove.y > collision.y + collision.height / 2) {
+            this.swapVertically(itemToMove, collision);
+          }
 
-          this.moveElement(collision, collision.x, itemToMove.y + 1);
-          console.log(`Moved ${collision.id} away from ${itemToMove.id}`);
+          //this.moveElement(collision, collision.x, itemToMove.y + 1);
         }
       }
     },
+    swapVertically(layoutItemA, layoutItemB) {
+      console.log(layoutItemA.y);
+      layoutItemA.y = layoutItemB.y;
+      console.log(layoutItemA.y);
+      layoutItemB.y = layoutItemA.y + layoutItemB.height;
+      console.log(layoutItemB.y);
+      console.log(this.layoutItems);
+    },
     compactGridLayout() {
-      this.resolveCollisions();
+      //this.resolveCollisions();
     },
     resolveCollisions() {
       for (var layoutItem of this.layoutItems) {
