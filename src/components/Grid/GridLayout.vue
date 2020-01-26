@@ -88,7 +88,7 @@ export default {
         );
       }
       this.moveElement(layoutItem, x, y);
-      this.adjustGridLayout();
+      this.compactGridLayout();
       this.resetMoved();
     },
     moveElement(itemToMove, x, y) {
@@ -111,18 +111,11 @@ export default {
         }
       }
     },
-    adjustGridLayout() {
-      this.removeGaps();
+    compactGridLayout() {
+      this.resolveCollisions();
     },
-    removeGaps() {
+    resolveCollisions() {
       for (var layoutItem of this.layoutItems) {
-        while (
-          layoutItem.y > 0 &&
-          !this.isColliding(this.layoutItems, layoutItem)
-        ) {
-          layoutItem.y--;
-        }
-
         while (this.isColliding(this.layoutItems, layoutItem)) {
           let collision = this.getFirstCollision(this.layoutItems, layoutItem);
           layoutItem.y = collision.y + collision.height;
@@ -170,7 +163,7 @@ export default {
       return true;
     },
     handleGridItemAdded() {
-      this.adjustGridLayout();
+      this.compactGridLayout();
     },
     onWindowResize() {
       this.width = this.$refs.layout.offsetWidth;
