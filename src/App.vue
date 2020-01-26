@@ -68,7 +68,7 @@ export default {
         return this.$store.state.layout.layoutItems;
       },
       set: function(layoutItems) {
-        console.log(layoutItems);
+        this.$store.dispatch("setLayoutItems", layoutItems);
       }
     }
   },

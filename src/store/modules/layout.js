@@ -27,9 +27,7 @@ const mutations = {
       h: 1,
       i: newId.toString(),
       id: newId,
-      static: true,
-      isDraggable: false,
-      isResizable: false
+      static: true
     };
     state.layoutItems.push(newItem);
     EventBus.$emit("compact");
@@ -37,14 +35,12 @@ const mutations = {
   },
   enableEditMode(state) {
     for (var layoutItem of state.layoutItems) {
-      layoutItem.isResizable = true;
-      layoutItem.isDraggable = true;
+      layoutItem.static = true;
     }
   },
   disableEditMode(state) {
     for (var layoutItem of state.layoutItems) {
-      layoutItem.isResizable = false;
-      layoutItem.isDraggable = false;
+      layoutItem.static = true;
     }
   },
   loadLayout(state) {
