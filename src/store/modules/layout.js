@@ -8,7 +8,8 @@ function getNextId(state) {
   const layoutItem = state.layoutItems.reduce((previous, current) =>
     previous.id > current.id ? previous : current
   );
-  return layoutItem.id + 1;
+  console.log(layoutItem.id);
+  return (layoutItem.id + 1).toString();
 }
 
 const state = {
@@ -20,16 +21,17 @@ const mutations = {
   addGridItem(state) {
     const newId = getNextId(state);
     const newItem = {
-      x: 1,
-      y: 1,
-      width: 2,
-      height: 150,
-      id: newId,
+      x: 0,
+      y: 0,
+      w: 1,
+      h: 1,
+      i: newId,
+      static: true,
       isDraggable: false,
       isResizable: false
     };
     state.layoutItems.push(newItem);
-    EventBus.$emit("initializeComponent");
+    EventBus.$emit("compact");
     EventBus.$emit("gridItemAdded");
   },
   enableEditMode(state) {
