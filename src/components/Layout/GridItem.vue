@@ -10,6 +10,5 @@ export default {
 <style>
 .vue-grid-item {
   background: grey;
-  margin: 0;
 }
 </style>

@@ -18,6 +18,7 @@
       :layout.sync="layout"
       :col-num="12"
       :row-height="30"
+      :margin="[1, 1]"
       :is-draggable="true"
       :is-resizable="true"
       :is-mirrored="false"
