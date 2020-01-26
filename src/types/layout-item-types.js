@@ -1,2 +1,2 @@
-export const MENU = "MENU";
 export const FORM = "FORM";
+export const MENU = "MENU";

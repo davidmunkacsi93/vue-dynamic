@@ -1,4 +1,13 @@
 import EventBus from "../../utils/event-bus.js";
+import {
+  ADD_GRID_ITEM,
+  DISABLE_EDIT_MODE,
+  ENABLE_EDIT_MODE,
+  LOAD_LAYOUT,
+  SAVE_LAYOUT,
+  SET_LAYOUT_ITEMS
+} from "../../types/action-types";
+import { FORM, MENU } from "../../types/layout-item-types";
 
 const LOCAL_STORAGE_LAYOUT_KEY = "layout";
 
@@ -29,7 +38,8 @@ const mutations = {
       id: newId,
       isDraggable: true,
       isResizable: true,
-      static: true
+      static: true,
+      layoutItemType: FORM
     };
     state.layoutItems.push(newItem);
     EventBus.$emit("compact");
@@ -47,7 +57,21 @@ const mutations = {
   },
   loadLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
-    if (!layoutString) return;
+    if (!layoutString) {
+      const menu = {
+        x: 0,
+        y: 0,
+        w: 1,
+        h: 1,
+        i: "0",
+        id: 0,
+        isDraggable: true,
+        isResizable: true,
+        static: true,
+        layoutItemType: MENU
+      };
+      state.layoutItems.push(menu);
+    }
 
     const parsedLayout = JSON.parse(layoutString);
     state.layoutItems = parsedLayout;
@@ -66,22 +90,22 @@ const mutations = {
 
 const actions = {
   addGridItem({ commit }) {
-    commit("addGridItem");
-  },
-  enableEditMode({ commit }) {
-    commit("enableEditMode");
+    commit(ADD_GRID_ITEM);
   },
   disableEditMode({ commit }) {
-    commit("disableEditMode");
+    commit(DISABLE_EDIT_MODE);
+  },
+  enableEditMode({ commit }) {
+    commit(ENABLE_EDIT_MODE);
   },
   loadLayout({ commit }) {
-    commit("loadLayout");
+    commit(LOAD_LAYOUT);
   },
   saveLayout({ commit }) {
-    commit("saveLayout");
+    commit(SAVE_LAYOUT);
   },
   setLayoutItems({ commit }, layoutItems) {
-    commit("setLayoutItems", layoutItems);
+    commit(SET_LAYOUT_ITEMS, layoutItems);
   }
 };
 
