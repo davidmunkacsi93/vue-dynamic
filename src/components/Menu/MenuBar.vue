@@ -8,7 +8,7 @@
     :key="0"
     :isDraggable="true"
     :isResizable="true"
-    :static="true"
+    :static="false"
   >
     <nav
       class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end"
@@ -54,6 +54,13 @@
 
 <script>
 import { mapState } from "vuex";
+import {
+  ADD_GRID_ITEM,
+  DISABLE_EDIT_MODE,
+  ENABLE_EDIT_MODE,
+  SAVE_LAYOUT,
+  TOGGLE_NAV
+} from "../../types/action-types";
 
 export default {
   data() {
@@ -68,19 +75,19 @@ export default {
   },
   methods: {
     toggle() {
-      this.$store.dispatch("toggleNav");
+      this.$store.dispatch(TOGGLE_NAV);
     },
     addGridItem() {
-      this.$store.dispatch("addGridItem");
+      this.$store.dispatch(ADD_GRID_ITEM);
     },
     editGridLayout() {
-      this.$store.dispatch("enableEditMode");
+      this.$store.dispatch(ENABLE_EDIT_MODE);
       this.isEditModeEnabled = true;
     },
     saveLayout() {
-      this.$store.dispatch("disableEditMode");
+      this.$store.dispatch(DISABLE_EDIT_MODE);
       this.isEditModeEnabled = false;
-      this.$store.dispatch("saveLayout");
+      this.$store.dispatch(SAVE_LAYOUT);
     }
   }
 };

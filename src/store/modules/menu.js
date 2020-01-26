@@ -1,3 +1,5 @@
+import { TOGGLE_NAV } from "../../types/action-types";
+
 const state = {
   isNavOpen: false
 };
@@ -10,7 +12,7 @@ const mutations = {
 
 const actions = {
   toggleNav({ commit }) {
-    commit("toggleNav");
+    commit(TOGGLE_NAV);
   }
 };
 

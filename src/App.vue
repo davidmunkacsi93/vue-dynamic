@@ -53,7 +53,7 @@ import Sidebar from "./components/Menu/Sidebar.vue";
 import GridItem from "./components/Layout/GridItem.vue";
 import GridLayout from "./components/Layout/GridLayout.vue";
 
-//import { mapState } from "vuex";
+import { LOAD_LAYOUT, SET_LAYOUT_ITEMS } from "./types/action-types";
 
 export default {
   name: "app",
@@ -69,12 +69,12 @@ export default {
         return this.$store.state.layout.layoutItems;
       },
       set: function(layoutItems) {
-        this.$store.dispatch("setLayoutItems", layoutItems);
+        this.$store.dispatch(SET_LAYOUT_ITEMS, layoutItems);
       }
     }
   },
   beforeCreate() {
-    this.$store.dispatch("loadLayout");
+    this.$store.dispatch(LOAD_LAYOUT);
   }
 };
 </script>
