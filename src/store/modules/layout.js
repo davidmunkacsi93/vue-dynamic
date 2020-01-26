@@ -61,7 +61,7 @@ const mutations = {
       const menu = {
         x: 0,
         y: 0,
-        w: 1,
+        w: 12,
         h: 1,
         i: "0",
         id: 0,
@@ -71,6 +71,7 @@ const mutations = {
         layoutItemType: MENU
       };
       state.layoutItems.push(menu);
+      return;
     }
 
     const parsedLayout = JSON.parse(layoutString);

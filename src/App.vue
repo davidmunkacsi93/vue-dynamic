@@ -25,20 +25,22 @@
       :vertical-compact="true"
       :use-css-transforms="true"
     >
-      <menu-bar />
-      <grid-item
-        v-for="item in layoutItems"
-        :x="item.x"
-        :y="item.y"
-        :w="item.w"
-        :h="item.h"
-        :i="item.i"
-        :key="item.i"
-        :isDraggable="item.isDraggable"
-        :isResizable="item.isResizable"
-        :static="item.static"
-      >
-      </grid-item>
+      <template v-for="item in layoutItems">
+        <menu-bar v-if="item.layoutItemType === MENU" :key="item.id" />
+        <grid-item
+          v-else-if="item.layoutItemType === FORM"
+          :x="item.x"
+          :y="item.y"
+          :w="item.w"
+          :h="item.h"
+          :i="item.i"
+          :isDraggable="item.isDraggable"
+          :isResizable="item.isResizable"
+          :static="item.static"
+          :key="item.id"
+        >
+        </grid-item>
+      </template>
     </grid-layout>
   </div>
 </template>
@@ -54,6 +56,7 @@ import GridItem from "./components/Layout/GridItem.vue";
 import GridLayout from "./components/Layout/GridLayout.vue";
 
 import { LOAD_LAYOUT, SET_LAYOUT_ITEMS } from "./types/action-types";
+import { FORM, MENU } from "./types/layout-item-types";
 
 export default {
   name: "app",
@@ -62,6 +65,12 @@ export default {
     Sidebar,
     GridItem,
     GridLayout
+  },
+  data() {
+    return {
+      FORM: FORM,
+      MENU: MENU
+    };
   },
   computed: {
     layoutItems: {
