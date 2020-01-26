@@ -21,6 +21,7 @@
       :is-draggable="true"
       :is-resizable="true"
       :is-mirrored="false"
+      :responsive="true"
       :vertical-compact="true"
       :use-css-transforms="true"
     >

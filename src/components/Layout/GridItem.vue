@@ -8,7 +8,8 @@ export default {
 </script>
 
 <style>
-.vue-grid.item {
-  background: grey !important;
+.vue-grid-item {
+  background: grey;
+  margin: 0;
 }
 </style>
