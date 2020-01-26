@@ -9,7 +9,7 @@ function getNextId(state) {
     previous.id > current.id ? previous : current
   );
   console.log(layoutItem.id);
-  return (layoutItem.id + 1).toString();
+  return layoutItem.id + 1;
 }
 
 const state = {
@@ -25,7 +25,8 @@ const mutations = {
       y: 0,
       w: 1,
       h: 1,
-      i: newId,
+      i: newId.toString(),
+      id: newId,
       static: true,
       isDraggable: false,
       isResizable: false
