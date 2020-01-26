@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <menu-bar />
     <sidebar>
       <ul class="sidebar-panel-nav">
         <li>
@@ -26,6 +25,7 @@
       :vertical-compact="true"
       :use-css-transforms="true"
     >
+      <menu-bar />
       <grid-item
         v-for="item in layoutItems"
         :x="item.x"
