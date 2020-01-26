@@ -22,7 +22,6 @@
       :is-resizable="true"
       :is-mirrored="false"
       :vertical-compact="true"
-      :margin="[10, 10]"
       :use-css-transforms="true"
     >
       <grid-item
@@ -47,7 +46,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MenuBar from "./components/Menu/MenuBar.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 
-import VueGridLayout from "vue-grid-layout";
+import GridItem from "./components/Layout/GridItem.vue";
+import GridLayout from "./components/Layout/GridLayout.vue";
 
 import { mapState } from "vuex";
 
@@ -79,8 +79,8 @@ export default {
   components: {
     MenuBar,
     Sidebar,
-    GridItem: VueGridLayout.GridItem,
-    GridLayout: VueGridLayout.GridLayout
+    GridItem,
+    GridLayout
   },
   data() {
     return {
