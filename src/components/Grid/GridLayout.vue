@@ -56,6 +56,7 @@ export default {
       width: null,
 
       placeholder: {
+        id: -1,
         x: 0,
         y: 0,
         width: 0,
@@ -72,7 +73,7 @@ export default {
     dragEvent(event, id, x, y) {
       const layoutItem = this.getLayoutItemById(id);
       if (event.type === "dragmove" || event.type === "dragstart") {
-        this.isDragging = true;
+        this.$nextTick(() => (this.isDragging = true));
         this.setPlaceholderValues(
           id,
           layoutItem.x,
@@ -94,6 +95,11 @@ export default {
     moveElement(itemToMove, x, y) {
       if (x < 0 || y < 0) return;
 
+      const movingUp = itemToMove.y > y;
+      const movingDown = itemToMove.y < y;
+      const movingLeft = itemToMove.x > x;
+      const movingRight = itemToMove.x < x;
+
       itemToMove.x = x;
       itemToMove.y = y;
       itemToMove.moved = true;
@@ -113,7 +119,7 @@ export default {
     },
     swapVertically(layoutItemA, layoutItemB) {
       console.log(layoutItemA.y);
-      layoutItemA.y = layoutItemB.y;
+      this.placeholder.y = layoutItemB.y;
       console.log(layoutItemA.y);
       layoutItemB.y = layoutItemA.y + layoutItemB.height;
       console.log(layoutItemB.y);
