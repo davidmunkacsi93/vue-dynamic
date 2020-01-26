@@ -27,6 +27,8 @@ const mutations = {
       h: 1,
       i: newId.toString(),
       id: newId,
+      isDraggable: true,
+      isResizable: true,
       static: true
     };
     state.layoutItems.push(newItem);
@@ -35,7 +37,7 @@ const mutations = {
   },
   enableEditMode(state) {
     for (var layoutItem of state.layoutItems) {
-      layoutItem.static = true;
+      layoutItem.static = false;
     }
   },
   disableEditMode(state) {

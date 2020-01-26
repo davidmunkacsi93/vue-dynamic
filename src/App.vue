@@ -34,9 +34,10 @@
         :h="item.h"
         :i="item.i"
         :key="item.i"
-        :static="true"
+        :isDraggable="item.isDraggable"
+        :isResizable="item.isResizable"
+        :static="item.static"
       >
-        {{ item.i }}
       </grid-item>
     </grid-layout>
   </div>
