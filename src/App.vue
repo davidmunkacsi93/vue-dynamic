@@ -37,8 +37,8 @@
           :static="item.static"
           :key="item.id"
         >
-          <menu-bar v-if="item.layoutItemType === MENU">Menu</menu-bar>
-          <div v-else-if="item.layoutItemType === FORM">Form</div>
+          <menu-bar v-if="item.layoutItemType === MENU" />
+          <dynamic-form v-else-if="item.layoutItemType === FORM" />
         </grid-item>
       </template>
     </grid-layout>
@@ -49,11 +49,11 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import MenuBar from "./components/MenuBar.vue";
-import Sidebar from "./components/Sidebar.vue";
-
+import DynamicForm from "./components/DynamicForm.vue";
 import GridItem from "./components/GridItem.vue";
 import GridLayout from "./components/GridLayout.vue";
+import MenuBar from "./components/MenuBar.vue";
+import Sidebar from "./components/Sidebar.vue";
 
 import { LOAD_LAYOUT, SET_LAYOUT_ITEMS } from "./types/action-types";
 import { FORM, MENU } from "./types/layout-item-types";
@@ -61,10 +61,11 @@ import { FORM, MENU } from "./types/layout-item-types";
 export default {
   name: "app",
   components: {
-    MenuBar,
-    Sidebar,
+    DynamicForm,
     GridItem,
-    GridLayout
+    GridLayout,
+    MenuBar,
+    Sidebar
   },
   data() {
     return {
