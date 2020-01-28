@@ -1,17 +1,19 @@
 <template>
   <div>
-    <button type="button" class="menu-item fa fa-bars fa-3x" title="Menu" @click.prevent="toggle"></button> -->
-    <ul>
-      <li>
-        <button type="button" class="menu-item fa fa-plus fa-3x" @click.prevent="addGridItem"></button>
-      </li>
-      <li v-if="!isEditModeEnabled">
-        <button type="button" class="menu-item fa fa-pencil fa-3x" @click.prevent="editGridLayout"></button>
-      </li>
-      <li v-if="isEditModeEnabled">
-        <button type="button" class="menu-item fa fa-floppy-o fa-3x" @click.prevent="saveLayout"></button>
-      </li>
-    </ul>
+    <button type="button" class="menu-item fa fa-bars fa-3x" title="Menu" @click.prevent="toggle"></button>
+    <button type="button" class="menu-item fa fa-plus fa-3x" @click.prevent="addGridItem"></button>
+    <button
+      v-if="!isEditModeEnabled"
+      type="button"
+      class="menu-item fa fa-pencil fa-3x"
+      @click.prevent="editGridLayout"
+    ></button>
+    <button
+      v-if="isEditModeEnabled"
+      type="button"
+      class="menu-item fa fa-floppy-o fa-3x"
+      @click.prevent="saveLayout"
+    ></button>
   </div>
 </template>
 
