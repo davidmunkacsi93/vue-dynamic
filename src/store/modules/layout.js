@@ -32,8 +32,8 @@ const mutations = {
     const newItem = {
       x: 0,
       y: 0,
-      w: 1,
-      h: 1,
+      w: 2,
+      h: 2,
       i: newId.toString(),
       id: newId,
       isDraggable: true,
@@ -62,7 +62,7 @@ const mutations = {
         x: 0,
         y: 0,
         w: 12,
-        h: 1,
+        h: 2,
         i: "0",
         id: 0,
         isDraggable: true,
@@ -70,12 +70,15 @@ const mutations = {
         static: true,
         layoutItemType: MENU
       };
+
       state.layoutItems.push(menu);
       return;
     }
 
     const parsedLayout = JSON.parse(layoutString);
     state.layoutItems = parsedLayout;
+    EventBus.$emit("layoutUpdated");
+    EventBus.$emit("compact");
   },
   saveLayout(state) {
     localStorage.setItem(
@@ -85,6 +88,7 @@ const mutations = {
   },
   setLayoutItems(state, layoutItems) {
     state.layoutItems = layoutItems;
+    EventBus.$emit("layoutUpdated");
     console.log(state.layoutItems);
   }
 };

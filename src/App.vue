@@ -26,9 +26,7 @@
       :use-css-transforms="true"
     >
       <template v-for="item in layoutItems">
-        <menu-bar v-if="item.layoutItemType === MENU" :key="item.id" />
         <grid-item
-          v-else-if="item.layoutItemType === FORM"
           :x="item.x"
           :y="item.y"
           :w="item.w"
@@ -39,6 +37,8 @@
           :static="item.static"
           :key="item.id"
         >
+          <menu-bar v-if="item.layoutItemType === MENU">Menu</menu-bar>
+          <div v-else-if="item.layoutItemType === FORM">Form</div>
         </grid-item>
       </template>
     </grid-layout>
