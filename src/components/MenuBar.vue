@@ -25,7 +25,7 @@ import {
   ENABLE_EDIT_MODE,
   SAVE_LAYOUT,
   TOGGLE_NAV
-} from "../../types/action-types";
+} from "../types/action-types";
 
 export default {
   data() {

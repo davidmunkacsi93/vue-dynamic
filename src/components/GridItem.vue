@@ -1,6 +1,6 @@
 <script>
 import { GridItem } from "vue-grid-layout";
-import EventBus from "../../utils/event-bus.js";
+import EventBus from "../utils/event-bus.js";
 
 export default {
   name: "GridItem",

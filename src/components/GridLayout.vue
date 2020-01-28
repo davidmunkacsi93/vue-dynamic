@@ -1,6 +1,6 @@
 <script>
 import { GridLayout } from "vue-grid-layout";
-import EventBus from "../../utils/event-bus.js";
+import EventBus from "../utils/event-bus.js";
 
 export default {
   name: "GridLayout",
