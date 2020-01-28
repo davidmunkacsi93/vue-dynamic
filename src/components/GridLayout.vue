@@ -13,7 +13,6 @@ export default {
   },
   methods: {
     handleLayoutUpdated() {
-      console.log(this.$data);
       this.layoutUpdate();
     }
   }

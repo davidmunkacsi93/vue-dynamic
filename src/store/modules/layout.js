@@ -11,28 +11,37 @@ import { FORM, MENU } from "../../types/layout-item-types";
 
 const LOCAL_STORAGE_LAYOUT_KEY = "layout";
 
-function getNextId(state) {
-  if (!state.layoutItems || state.layoutItems.length === 0) return 0;
-
-  const layoutItem = state.layoutItems.reduce((previous, current) =>
-    previous.id > current.id ? previous : current
-  );
-  console.log(layoutItem.id);
-  return layoutItem.id + 1;
-}
-
 const state = {
   isEditModeActive: false,
   layouts: [],
   layoutItems: []
 };
 
+function getNextId() {
+  if (!state.layoutItems || state.layoutItems.length === 0) return 0;
+
+  const layoutItem = state.layoutItems.reduce((previous, current) =>
+    previous.id > current.id ? previous : current
+  );
+  return layoutItem.id + 1;
+}
+
+function getBottom() {
+  return Math.max.apply(
+    Math,
+    state.layoutItems.map(function(layoutItem) {
+      return layoutItem.y + layoutItem.h;
+    })
+  );
+}
+
 const mutations = {
   addGridItem(state) {
-    const newId = getNextId(state);
+    const newId = getNextId();
+    const bottom = getBottom();
     const newItem = {
       x: 0,
-      y: 0,
+      y: bottom,
       w: 2,
       h: 2,
       i: newId.toString(),
@@ -94,13 +103,13 @@ const mutations = {
   setLayoutItems(state, layoutItems) {
     state.layoutItems = layoutItems;
     EventBus.$emit("layoutUpdated");
-    console.log(state.layoutItems);
   }
 };
 
 const actions = {
   addGridItem({ commit }) {
     commit(ADD_GRID_ITEM);
+    commit(SAVE_LAYOUT);
   },
   disableEditMode({ commit }) {
     commit(DISABLE_EDIT_MODE);
