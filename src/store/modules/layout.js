@@ -22,6 +22,7 @@ function getNextId(state) {
 }
 
 const state = {
+  isEditModeActive: false,
   layouts: [],
   layoutItems: []
 };
@@ -38,22 +39,26 @@ const mutations = {
       id: newId,
       isDraggable: true,
       isResizable: true,
-      static: true,
+      static: !state.isEditModeActive,
       layoutItemType: FORM
     };
     state.layoutItems.push(newItem);
+    EventBus.$emit("layoutUpdated");
     EventBus.$emit("compact");
-    EventBus.$emit("gridItemAdded");
   },
   enableEditMode(state) {
     for (var layoutItem of state.layoutItems) {
       layoutItem.static = false;
     }
+
+    state.isEditModeActive = true;
   },
   disableEditMode(state) {
     for (var layoutItem of state.layoutItems) {
       layoutItem.static = true;
     }
+
+    state.isEditModeActive = false;
   },
   loadLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);

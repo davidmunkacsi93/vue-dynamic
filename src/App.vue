@@ -49,11 +49,11 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import MenuBar from "./components/Menu/MenuBar.vue";
-import Sidebar from "./components/Menu/Sidebar.vue";
+import MenuBar from "./components/MenuBar.vue";
+import Sidebar from "./components/Sidebar.vue";
 
-import GridItem from "./components/Layout/GridItem.vue";
-import GridLayout from "./components/Layout/GridLayout.vue";
+import GridItem from "./components/GridItem.vue";
+import GridLayout from "./components/GridLayout.vue";
 
 import { LOAD_LAYOUT, SET_LAYOUT_ITEMS } from "./types/action-types";
 import { FORM, MENU } from "./types/layout-item-types";
