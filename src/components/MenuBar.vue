@@ -1,7 +1,16 @@
 <template>
   <div>
-    <button type="button" class="menu-item fa fa-bars fa-3x" title="Menu" @click.prevent="toggle"></button>
-    <button type="button" class="menu-item fa fa-plus fa-3x" @click.prevent="addGridItem"></button>
+    <button
+      type="button"
+      class="menu-item fa fa-bars fa-3x"
+      title="Menu"
+      @click.prevent="toggle"
+    ></button>
+    <button
+      type="button"
+      class="menu-item fa fa-plus fa-3x"
+      @click.prevent="addGridItem"
+    ></button>
     <button
       v-if="!isEditModeEnabled"
       type="button"
