@@ -3,7 +3,5 @@
     <span>Form</span>
   </div>
 </template>
-<script>
-</script>
-<style>
-</style>
+<script></script>
+<style></style>
