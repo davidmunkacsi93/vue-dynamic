@@ -96,7 +96,8 @@ export default {
 <style lang="scss">
 html {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
