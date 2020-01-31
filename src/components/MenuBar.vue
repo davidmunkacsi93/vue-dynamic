@@ -1,11 +1,12 @@
 <template>
-  <draggable tag="ul" class="menu-list">
+  <draggable tag="ul" class="menu-list" v-model="menuItems">
     <li v-for="menuItem in menuItems" class="menu-item" :key="menuItem.order">
       <button
         type="button"
         class="menu-item fa fa-3x"
+        :order="menuItem.order"
         :class="[menuItem.iconClass]"
-        @click.prevent="menuItem.clickHandler"
+        v-on:click="menuItem.clickHandler"
       ></button>
     </li>
   </draggable>
@@ -43,10 +44,10 @@ export default {
     }),
     menuItems: {
       get() {
-        console.log(this.$store.state.menu.menuItems);
         return this.$store.state.menu.menuItems;
       },
       set(menuItems) {
+        console.log(menuItems);
         this.$store.dispatch(SET_MENU_ITEMS, menuItems);
       }
     }

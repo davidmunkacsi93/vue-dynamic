@@ -22,14 +22,17 @@ const mutations = {
       order: 0
     };
     const addGridItemMenuItem = {
+      clickHandler: TOGGLE_NAV,
       iconClass: "fa-plus",
       order: 1
     };
     const editMainLayoutMenuItem = {
+      clickHandler: TOGGLE_NAV,
       iconClass: "fa-pencil",
       order: 2
     };
     const saveMainLayoutMenuItem = {
+      clickHandler: TOGGLE_NAV,
       iconClass: "fa-floppy-o",
       order: 3
     };
@@ -61,7 +64,10 @@ const mutations = {
     );
   },
   setMenuItems(state, menuItems) {
-    state.menuItems = menuItems;
+    state.menuItems = menuItems.map((item, index) => {
+      item.order = index;
+      return item;
+    });
   },
   toggleNav(state) {
     state.isNavOpen = !state.isNavOpen;
@@ -76,8 +82,8 @@ const actions = {
     commit(INITIALIZE_MENU_ITEMS);
     commit(LOAD_MENU);
   },
-  setMenuLayoutItems({ commit }, layoutItems) {
-    commit(SET_MENU_ITEMS, layoutItems);
+  setMenuItems({ commit }, menuItems) {
+    commit(SET_MENU_ITEMS, menuItems);
   },
   toggleNav({ commit }) {
     commit(TOGGLE_NAV);
