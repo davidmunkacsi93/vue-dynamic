@@ -73,8 +73,8 @@ export default {
   },
   data() {
     return {
-      FORM: FORM,
-      MENU: MENU
+      FORM,
+      MENU
     };
   },
   beforeCreate() {
@@ -108,12 +108,6 @@ body {
   height: 100%;
   background: rgb(101, 31, 87);
   background: linear-gradient(to right, rgb(58, 123, 213), rgb(58, 96, 115));
-}
-
-.main-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 0.8rem;
 }
 
 ul.sidebar-panel-nav {
