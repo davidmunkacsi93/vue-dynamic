@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu-list">
+  <ul class="menu-list" v-drag-and-drop:options="dragAndDropOptions">
     <li class="menu-item">
       <button
         type="button"
@@ -46,7 +46,20 @@ import {
 export default {
   data() {
     return {
-      isEditModeEnabled: false
+      isEditModeEnabled: false,
+      dragAndDropOptions: {
+        dropzoneSelector: "ul",
+        draggableSelector: "li",
+        handlerSelector: null,
+        reactivityEnabled: true,
+        multipleDropzonesItemsDraggingEnabled: true,
+        showDropzoneAreas: true,
+        onDrop: function(event) {},
+        onDragstart: function(event) {},
+        onDragenter: function(event) {},
+        onDragover: function(event) {},
+        onDragend: function(event) {}
+      }
     };
   },
   computed: {
@@ -54,10 +67,10 @@ export default {
       isNavOpen: state => state.menu.isNavOpen
     }),
     menuLayoutItems: {
-      get: function() {
+      get() {
         return this.$store.state.layout.menuLayoutItems;
       },
-      set: function(menuLayoutItems) {
+      set() {
         this.$store.dispatch(SET_MENU_LAYOUT_ITEMS, menuLayoutItems);
       }
     }
@@ -97,6 +110,7 @@ button:focus {
 }
 
 .menu-list {
+  display: flex;
   list-style-type: none;
   margin: 0;
   padding: 0;

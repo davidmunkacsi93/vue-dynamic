@@ -3,5 +3,13 @@
     <span>Form</span>
   </div>
 </template>
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+
+    }
+  }
+}
+</script>
 <style></style>
