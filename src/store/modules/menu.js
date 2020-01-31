@@ -15,32 +15,36 @@ const state = {
 
 const mutations = {
   initializeMenuItems(state) {
-    console.log(state.menuItems);
-    if (state.menuItems || state.menuItems.length > 0) return;
+    if (state.menuItems && state.menuItems.length > 0) return;
 
     const hamburgerMenuItem = {
       clickHandler: TOGGLE_NAV,
       icon: "fa-bars",
       order: 0
     };
-    // const addGridItemMenuItem = {
-    //   icon: "fa-plus"
-    // };
-    // const editMainLayoutMenuItem = {
-    //   icon: "fa-bars"
-    // };
-    // const saveMainLayoutMenuItem = {
-    //   icon: "fa-plus"
-    // };
+    const addGridItemMenuItem = {
+      icon: "fa-plus"
+    };
+    const editMainLayoutMenuItem = {
+      icon: "fa-bars"
+    };
+    const saveMainLayoutMenuItem = {
+      icon: "fa-plus"
+    };
 
     state.menuItems.push(hamburgerMenuItem);
-    console.log(state.menuItems);
-    // state.menuItems.push(addGridItemMenuItem);
-    // state.menuItems.push(editMainLayoutMenuItem);
-    // state.menuItems.push(saveMainLayoutMenuItem);
+    state.menuItems.push(addGridItemMenuItem);
+    state.menuItems.push(editMainLayoutMenuItem);
+    state.menuItems.push(saveMainLayoutMenuItem);
+
+    localStorage.setItem(
+      LOCAL_STORAGE_MENU_KEY,
+      JSON.stringify(state.menuItems)
+    );
   },
   loadMenu() {
     const menuString = localStorage.getItem(LOCAL_STORAGE_MENU_KEY);
+    console.log(menuString);
     if (!menuString) {
       return;
     }
@@ -69,7 +73,6 @@ const actions = {
   loadMenu({ commit }) {
     commit(INITIALIZE_MENU_ITEMS);
     commit(LOAD_MENU);
-    commit(SAVE_MENU);
   },
   setMenuLayoutItems({ commit }, layoutItems) {
     commit(SET_MENU_ITEMS, layoutItems);
