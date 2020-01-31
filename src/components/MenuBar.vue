@@ -1,34 +1,34 @@
 <template>
   <draggable tag="ul" class="menu-list">
-      <li class="menu-item">
-        <button
-          type="button"
-          class="menu-item fa fa-bars fa-3x"
-          title="Menu"
-          @click.prevent="toggle"
-        ></button>
-      </li>
-      <li class="menu-item">
-        <button
-          type="button"
-          class="menu-item fa fa-plus fa-3x"
-          @click.prevent="addGridItem"
-        ></button>
-      </li>
-      <li class="menu-item">
-        <button
-          v-if="!isEditModeEnabled"
-          type="button"
-          class="menu-item fa fa-pencil fa-3x"
-          @click.prevent="editGridLayout"
-        ></button>
-        <button
-          v-if="isEditModeEnabled"
-          type="button"
-          class="menu-item fa fa-floppy-o fa-3x"
-          @click.prevent="saveLayout"
-        ></button>
-      </li>
+    <li class="menu-item">
+      <button
+        type="button"
+        class="menu-item fa fa-bars fa-3x"
+        title="Menu"
+        @click.prevent="toggle"
+      ></button>
+    </li>
+    <li class="menu-item">
+      <button
+        type="button"
+        class="menu-item fa fa-plus fa-3x"
+        @click.prevent="addGridItem"
+      ></button>
+    </li>
+    <li class="menu-item">
+      <button
+        v-if="!isEditModeEnabled"
+        type="button"
+        class="menu-item fa fa-pencil fa-3x"
+        @click.prevent="editGridLayout"
+      ></button>
+      <button
+        v-if="isEditModeEnabled"
+        type="button"
+        class="menu-item fa fa-floppy-o fa-3x"
+        @click.prevent="saveLayout"
+      ></button>
+    </li>
   </draggable>
 </template>
 
@@ -40,8 +40,8 @@ import {
   ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
+  SET_MENU_ITEMS,
   SAVE_LAYOUT,
-  SET_MENU_LAYOUT_ITEMS,
   TOGGLE_NAV
 } from "../types/action-types";
 
@@ -58,17 +58,17 @@ export default {
     ...mapState({
       isNavOpen: state => state.menu.isNavOpen
     }),
-    menuLayoutItems: {
+    menuItems: {
       get() {
-        return this.$store.state.layout.menuLayoutItems;
+        return this.$store.state.menu.menuItems;
       },
-      set(menuLayoutItems) {
-        this.$store.dispatch(SET_MENU_LAYOUT_ITEMS, menuLayoutItems);
+      set(menuItems) {
+        this.$store.dispatch(SET_MENU_ITEMS, menuItems);
       }
     }
   },
   methods: {
-    toggle() {
+    toggleNav() {
       this.$store.dispatch(TOGGLE_NAV);
     },
     addGridItem() {

@@ -15,8 +15,7 @@ const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "layout";
 const state = {
   isEditModeActive: false,
   layouts: [],
-  layoutItems: [],
-  menuLayoutItems: []
+  layoutItems: []
 };
 
 function getNextId() {
