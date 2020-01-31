@@ -6,31 +6,32 @@ import {
 
 const state = {
   isNavOpen: false,
-  menuItems: null
+  menuItems: []
 };
 
 const mutations = {
   initializeMenuItems(state) {
-    if (state.menuItems) return;
+    if (state.menuItems || state.menuItems.length > 0) return;
 
     const hamburgerMenuItem = {
+      clickHandler: TOGGLE_NAV,
       icon: "fa-bars",
-      clickHandler: TOGGLE_NAV
+      order: 0
     };
-    const addGridItemMenuItem = {
-      icon: "fa-plus"
-    };
-    const editMainLayoutMenuItem = {
-      icon: "fa-bars"
-    };
-    const saveMainLayoutMenuItem = {
-      icon: "fa-plus"
-    };
+    // const addGridItemMenuItem = {
+    //   icon: "fa-plus"
+    // };
+    // const editMainLayoutMenuItem = {
+    //   icon: "fa-bars"
+    // };
+    // const saveMainLayoutMenuItem = {
+    //   icon: "fa-plus"
+    // };
 
     state.menuItems.push(hamburgerMenuItem);
-    state.menuItems.push(addGridItemMenuItem);
-    state.menuItems.push(editMainLayoutMenuItem);
-    state.menuItems.push(saveMainLayoutMenuItem);
+    // state.menuItems.push(addGridItemMenuItem);
+    // state.menuItems.push(editMainLayoutMenuItem);
+    // state.menuItems.push(saveMainLayoutMenuItem);
   },
   setMenuItems(state, menuItems) {
     state.menuItems = menuItems;

@@ -1,32 +1,10 @@
 <template>
   <draggable tag="ul" class="menu-list">
-    <li class="menu-item">
-      <button
-        type="button"
-        class="menu-item fa fa-bars fa-3x"
-        title="Menu"
-        @click.prevent="toggle"
-      ></button>
-    </li>
-    <li class="menu-item">
+    <li v-for="menuItem in menuItems" class="menu-item" :key="menuItem.order">
       <button
         type="button"
         class="menu-item fa fa-plus fa-3x"
-        @click.prevent="addGridItem"
-      ></button>
-    </li>
-    <li class="menu-item">
-      <button
-        v-if="!isEditModeEnabled"
-        type="button"
-        class="menu-item fa fa-pencil fa-3x"
-        @click.prevent="editGridLayout"
-      ></button>
-      <button
-        v-if="isEditModeEnabled"
-        type="button"
-        class="menu-item fa fa-floppy-o fa-3x"
-        @click.prevent="saveLayout"
+        @click.prevent="menuItem.clickHandler"
       ></button>
     </li>
   </draggable>
@@ -40,8 +18,9 @@ import {
   ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
+  INITIALIZE_MENU_ITEMS,
   SET_MENU_ITEMS,
-  SAVE_LAYOUT,
+  SAVE_MAIN_LAYOUT,
   TOGGLE_NAV
 } from "../types/action-types";
 
@@ -54,12 +33,16 @@ export default {
       isEditModeEnabled: false
     };
   },
+  beforeCreate() {
+    this.$store.dispatch(INITIALIZE_MENU_ITEMS);
+  },
   computed: {
     ...mapState({
       isNavOpen: state => state.menu.isNavOpen
     }),
     menuItems: {
       get() {
+        console.log(this.$store.state.menu.menuItems);
         return this.$store.state.menu.menuItems;
       },
       set(menuItems) {
@@ -78,10 +61,10 @@ export default {
       this.$store.dispatch(ENABLE_EDIT_MODE);
       this.isEditModeEnabled = true;
     },
-    saveLayout() {
+    saveMainLayout() {
       this.$store.dispatch(DISABLE_EDIT_MODE);
       this.isEditModeEnabled = false;
-      this.$store.dispatch(SAVE_LAYOUT);
+      this.$store.dispatch(SAVE_MAIN_LAYOUT);
     }
   }
 };

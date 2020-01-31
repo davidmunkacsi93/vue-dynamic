@@ -4,13 +4,13 @@ import {
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
   INITIALIZE_MENU,
-  LOAD_LAYOUT,
-  SAVE_LAYOUT,
-  SET_LAYOUT_ITEMS
+  LOAD_MAIN_LAYOUT,
+  SAVE_MAIN_LAYOUT,
+  SET_MAIN_LAYOUT_ITEMS
 } from "../../types/action-types";
 import { FORM, MENU } from "../../types/layout-item-types";
 
-const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "layout";
+const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
 
 const state = {
   isEditModeActive: false,
@@ -92,7 +92,7 @@ const mutations = {
     state.layoutItems.push(menu);
     return;
   },
-  loadLayout(state) {
+  loadMainLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
     if (!layoutString) {
       return;
@@ -103,13 +103,13 @@ const mutations = {
     EventBus.$emit("layoutUpdated");
     EventBus.$emit("compact");
   },
-  saveLayout(state) {
+  saveMainLayout(state) {
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUT_KEY,
       JSON.stringify(state.layoutItems)
     );
   },
-  setLayoutItems(state, layoutItems) {
+  setMainLayoutItems(state, layoutItems) {
     state.layoutItems = layoutItems;
     EventBus.$emit("layoutUpdated");
   }
@@ -118,7 +118,7 @@ const mutations = {
 const actions = {
   addGridItem({ commit }) {
     commit(ADD_GRID_ITEM);
-    commit(SAVE_LAYOUT);
+    commit(SAVE_MAIN_LAYOUT);
   },
   disableEditMode({ commit }) {
     commit(DISABLE_EDIT_MODE);
@@ -126,15 +126,16 @@ const actions = {
   enableEditMode({ commit }) {
     commit(ENABLE_EDIT_MODE);
   },
-  loadLayout({ commit }) {
+  loadMainLayout({ commit }) {
     commit(INITIALIZE_MENU);
-    commit(LOAD_LAYOUT);
+    commit(LOAD_MAIN_LAYOUT);
+    commit(SAVE_MAIN_LAYOUT);
   },
-  saveLayout({ commit }) {
-    commit(SAVE_LAYOUT);
+  saveMainLayout({ commit }) {
+    commit(SAVE_MAIN_LAYOUT);
   },
-  setLayoutItems({ commit }, layoutItems) {
-    commit(SET_LAYOUT_ITEMS, layoutItems);
+  setMainLayoutItems({ commit }, layoutItems) {
+    commit(SET_MAIN_LAYOUT_ITEMS, layoutItems);
   }
 };
 

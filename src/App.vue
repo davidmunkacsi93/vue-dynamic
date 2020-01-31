@@ -59,7 +59,7 @@ import GridLayout from "./components/GridLayout.vue";
 import MenuBar from "./components/MenuBar.vue";
 import Sidebar from "./components/Sidebar.vue";
 
-import { LOAD_LAYOUT, SET_LAYOUT_ITEMS } from "./types/action-types";
+import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
 import { FORM, MENU } from "./types/layout-item-types";
 
 export default {
@@ -77,18 +77,18 @@ export default {
       MENU: MENU
     };
   },
+  beforeCreate() {
+    this.$store.dispatch(LOAD_MAIN_LAYOUT);
+  },
   computed: {
     layoutItems: {
       get() {
         return this.$store.state.mainLayout.layoutItems;
       },
       set(layoutItems) {
-        this.$store.dispatch(SET_LAYOUT_ITEMS, layoutItems);
+        this.$store.dispatch(SET_MAIN_LAYOUT_ITEMS, layoutItems);
       }
     }
-  },
-  beforeCreate() {
-    this.$store.dispatch(LOAD_LAYOUT);
   }
 };
 </script>
