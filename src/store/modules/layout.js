@@ -5,6 +5,7 @@ import {
   ENABLE_EDIT_MODE,
   LOAD_LAYOUT,
   SAVE_LAYOUT,
+  SET_MENU_LAYOUT_ITEMS,
   SET_LAYOUT_ITEMS
 } from "../../types/action-types";
 import { FORM, MENU } from "../../types/layout-item-types";
@@ -14,7 +15,8 @@ const LOCAL_STORAGE_LAYOUT_KEY = "layout";
 const state = {
   isEditModeActive: false,
   layouts: [],
-  layoutItems: []
+  layoutItems: [],
+  menuLayoutItems: []
 };
 
 function getNextId() {
@@ -69,24 +71,27 @@ const mutations = {
 
     state.isEditModeActive = false;
   },
+  initializeMenu() {
+    const menu = {
+      x: 0,
+      y: 0,
+      w: 12,
+      h: 2,
+      i: "0",
+      id: 0,
+      isDraggable: true,
+      isResizable: true,
+      static: true,
+      layoutItemType: MENU
+    };
+
+    state.layoutItems.push(menu);
+    return;
+  },
   loadLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
     if (!layoutString) {
-      const menu = {
-        x: 0,
-        y: 0,
-        w: 12,
-        h: 2,
-        i: "0",
-        id: 0,
-        isDraggable: true,
-        isResizable: true,
-        static: true,
-        layoutItemType: MENU
-      };
-
-      state.layoutItems.push(menu);
-      return;
+      this.initializeMenu();
     }
 
     const parsedLayout = JSON.parse(layoutString);
@@ -99,6 +104,10 @@ const mutations = {
       LOCAL_STORAGE_LAYOUT_KEY,
       JSON.stringify(state.layoutItems)
     );
+  },
+  setMenuLayoutItems(state, menuLayoutItems) {
+    state.menuLayoutItems = menuLayoutItems;
+    EventBus.$emit("layoutUpdated");
   },
   setLayoutItems(state, layoutItems) {
     state.layoutItems = layoutItems;
@@ -122,6 +131,9 @@ const actions = {
   },
   saveLayout({ commit }) {
     commit(SAVE_LAYOUT);
+  },
+  setMenuLayoutItems({ commit }, layoutItems) {
+    commit(SET_MENU_LAYOUT_ITEMS, layoutItems);
   },
   setLayoutItems({ commit }, layoutItems) {
     commit(SET_LAYOUT_ITEMS, layoutItems);
