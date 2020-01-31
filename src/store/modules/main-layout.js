@@ -6,12 +6,11 @@ import {
   INITIALIZE_MENU,
   LOAD_LAYOUT,
   SAVE_LAYOUT,
-  SET_MENU_LAYOUT_ITEMS,
   SET_LAYOUT_ITEMS
 } from "../../types/action-types";
 import { FORM, MENU } from "../../types/layout-item-types";
 
-const LOCAL_STORAGE_LAYOUT_KEY = "layout";
+const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "layout";
 
 const state = {
   isEditModeActive: false,
@@ -73,7 +72,7 @@ const mutations = {
     state.isEditModeActive = false;
   },
   initializeMenu(state) {
-    const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
+    const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
     if (layoutString) {
       return;
     }
@@ -95,7 +94,7 @@ const mutations = {
     return;
   },
   loadLayout(state) {
-    const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
+    const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
     if (!layoutString) {
       return;
     }
@@ -107,13 +106,9 @@ const mutations = {
   },
   saveLayout(state) {
     localStorage.setItem(
-      LOCAL_STORAGE_LAYOUT_KEY,
+      LOCAL_STORAGE_MAIN_LAYOUT_KEY,
       JSON.stringify(state.layoutItems)
     );
-  },
-  setMenuLayoutItems(state, menuLayoutItems) {
-    state.menuLayoutItems = menuLayoutItems;
-    EventBus.$emit("layoutUpdated");
   },
   setLayoutItems(state, layoutItems) {
     state.layoutItems = layoutItems;
@@ -138,9 +133,6 @@ const actions = {
   },
   saveLayout({ commit }) {
     commit(SAVE_LAYOUT);
-  },
-  setMenuLayoutItems({ commit }, layoutItems) {
-    commit(SET_MENU_LAYOUT_ITEMS, layoutItems);
   },
   setLayoutItems({ commit }, layoutItems) {
     commit(SET_LAYOUT_ITEMS, layoutItems);

@@ -80,7 +80,7 @@ export default {
   computed: {
     layoutItems: {
       get() {
-        return this.$store.state.layout.layoutItems;
+        return this.$store.state.mainLayout.layoutItems;
       },
       set(layoutItems) {
         this.$store.dispatch(SET_LAYOUT_ITEMS, layoutItems);
