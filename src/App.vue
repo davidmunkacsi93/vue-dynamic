@@ -20,7 +20,7 @@
     <grid-layout
       :layout.sync="layoutItems"
       :col-num="12"
-      :row-height="30"
+      :row-height="40"
       :margin="[0, 0]"
       :is-draggable="true"
       :is-resizable="true"

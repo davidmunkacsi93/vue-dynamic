@@ -1,29 +1,35 @@
 <template>
-  <div>
-    <button
-      type="button"
-      class="menu-item fa fa-bars fa-3x"
-      title="Menu"
-      @click.prevent="toggle"
-    ></button>
-    <button
-      type="button"
-      class="menu-item fa fa-plus fa-3x"
-      @click.prevent="addGridItem"
-    ></button>
-    <button
-      v-if="!isEditModeEnabled"
-      type="button"
-      class="menu-item fa fa-pencil fa-3x"
-      @click.prevent="editGridLayout"
-    ></button>
-    <button
-      v-if="isEditModeEnabled"
-      type="button"
-      class="menu-item fa fa-floppy-o fa-3x"
-      @click.prevent="saveLayout"
-    ></button>
-  </div>
+  <ul class="menu-list">
+    <li class="menu-item">
+      <button
+        type="button"
+        class="menu-item fa fa-bars fa-3x"
+        title="Menu"
+        @click.prevent="toggle"
+      ></button>
+    </li>
+    <li class="menu-item">
+      <button
+        type="button"
+        class="menu-item fa fa-plus fa-3x"
+        @click.prevent="addGridItem"
+      ></button>
+    </li>
+    <li class="menu-item">
+      <button
+        v-if="!isEditModeEnabled"
+        type="button"
+        class="menu-item fa fa-pencil fa-3x"
+        @click.prevent="editGridLayout"
+      ></button>
+      <button
+        v-if="isEditModeEnabled"
+        type="button"
+        class="menu-item fa fa-floppy-o fa-3x"
+        @click.prevent="saveLayout"
+      ></button>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -90,13 +96,28 @@ button:focus {
   outline: 0;
 }
 
+.menu-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+
 .menu-item {
   color: white;
   display: inline;
-  z-index: 999;
   border: 0;
   border-radius: 0;
   background-color: transparent;
+}
+
+.menu-item button {
+  display: inline;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
 }
 
 .add-grid-item-button {
