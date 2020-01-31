@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import VueDraggable from 'vue-draggable'
+import Vue from "vue";
+import VueDraggable from "vue-draggable";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
