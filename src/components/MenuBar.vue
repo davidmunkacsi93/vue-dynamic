@@ -190,8 +190,6 @@ button:focus {
   display: inline;
   list-style-type: none;
   margin: 0;
-  padding-left: 10px;
-  padding-right: 10px;
   overflow: hidden;
 }
 
