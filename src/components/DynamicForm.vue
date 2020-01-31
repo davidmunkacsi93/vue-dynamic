@@ -8,15 +8,8 @@
   >
     <transition-group type="transition" :name="'flip-list'">
       <li class="list-group-item" v-for="element in list" :key="element.order">
-        <i
-          :class="
-            element.fixed ? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'
-          "
-          @click="element.fixed = !element.fixed"
-          aria-hidden="true"
-        ></i>
         {{ element.name }}
-        <span class="badge">{{ element.order }}</span>
+        <span>{{ element.order }}</span>
       </li>
     </transition-group>
   </draggable>

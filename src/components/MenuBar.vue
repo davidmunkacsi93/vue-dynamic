@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <ul class="menu-list">
+  <draggable tag="ul" class="menu-list">
       <li class="menu-item">
         <button
           type="button"
@@ -30,12 +29,13 @@
           @click.prevent="saveLayout"
         ></button>
       </li>
-    </ul>
-  </div>
+  </draggable>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import draggable from "vuedraggable";
+
 import {
   ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
@@ -46,6 +46,9 @@ import {
 } from "../types/action-types";
 
 export default {
+  components: {
+    draggable
+  },
   data() {
     return {
       isEditModeEnabled: false
