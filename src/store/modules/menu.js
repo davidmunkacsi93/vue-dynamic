@@ -1,8 +1,11 @@
 import {
   INITIALIZE_MENU_ITEMS,
+  LOAD_MENU,
   SET_MENU_ITEMS,
   TOGGLE_NAV
 } from "../../types/action-types";
+
+const LOCAL_STORAGE_MENU_KEY = "menu";
 
 const state = {
   isNavOpen: false,
@@ -33,6 +36,15 @@ const mutations = {
     // state.menuItems.push(editMainLayoutMenuItem);
     // state.menuItems.push(saveMainLayoutMenuItem);
   },
+  loadMenu() {
+    const menuString = localStorage.getItem(LOCAL_STORAGE_MENU_KEY);
+    if (!menuString) {
+      return;
+    }
+
+    const parsedLayout = JSON.parse(menuString);
+    state.menuItems = parsedLayout;
+  },
   setMenuItems(state, menuItems) {
     state.menuItems = menuItems;
   },
@@ -44,6 +56,9 @@ const mutations = {
 const actions = {
   initializeMenuItems({ commit }) {
     commit(INITIALIZE_MENU_ITEMS);
+  },
+  loadMenu({ commit }) {
+    commit(LOAD_MENU);
   },
   setMenuLayoutItems({ commit }, layoutItems) {
     commit(SET_MENU_ITEMS, layoutItems);

@@ -18,7 +18,7 @@ import {
   ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
-  INITIALIZE_MENU_ITEMS,
+  LOAD_MENU,
   SET_MENU_ITEMS,
   SAVE_MAIN_LAYOUT,
   TOGGLE_NAV
@@ -34,7 +34,7 @@ export default {
     };
   },
   beforeCreate() {
-    this.$store.dispatch(INITIALIZE_MENU_ITEMS);
+    this.$store.dispatch(LOAD_MENU);
   },
   computed: {
     ...mapState({
