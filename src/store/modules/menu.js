@@ -18,17 +18,20 @@ const mutations = {
 
     const hamburgerMenuItem = {
       clickHandler: TOGGLE_NAV,
-      icon: "fa-bars",
+      iconClass: "fa-bars",
       order: 0
     };
     const addGridItemMenuItem = {
-      icon: "fa-plus"
+      iconClass: "fa-plus",
+      order: 1
     };
     const editMainLayoutMenuItem = {
-      icon: "fa-bars"
+      iconClass: "fa-pencil",
+      order: 2
     };
     const saveMainLayoutMenuItem = {
-      icon: "fa-plus"
+      iconClass: "fa-floppy-o",
+      order: 3
     };
 
     state.menuItems.push(hamburgerMenuItem);

@@ -3,7 +3,8 @@
     <li v-for="menuItem in menuItems" class="menu-item" :key="menuItem.order">
       <button
         type="button"
-        class="menu-item fa fa-plus fa-3x"
+        class="menu-item fa fa-3x"
+        :class="[menuItem.iconClass]"
         @click.prevent="menuItem.clickHandler"
       ></button>
     </li>
