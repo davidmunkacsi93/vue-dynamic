@@ -1,6 +1,7 @@
 import {
   INITIALIZE_MENU_ITEMS,
   LOAD_MENU,
+  SAVE_MENU,
   SET_MENU_ITEMS,
   TOGGLE_NAV
 } from "../../types/action-types";
@@ -14,6 +15,7 @@ const state = {
 
 const mutations = {
   initializeMenuItems(state) {
+    console.log(state.menuItems);
     if (state.menuItems || state.menuItems.length > 0) return;
 
     const hamburgerMenuItem = {
@@ -32,6 +34,7 @@ const mutations = {
     // };
 
     state.menuItems.push(hamburgerMenuItem);
+    console.log(state.menuItems);
     // state.menuItems.push(addGridItemMenuItem);
     // state.menuItems.push(editMainLayoutMenuItem);
     // state.menuItems.push(saveMainLayoutMenuItem);
@@ -44,6 +47,12 @@ const mutations = {
 
     const parsedLayout = JSON.parse(menuString);
     state.menuItems = parsedLayout;
+  },
+  saveMenu() {
+    localStorage.setItem(
+      LOCAL_STORAGE_MENU_KEY,
+      JSON.stringify(state.menuItems)
+    );
   },
   setMenuItems(state, menuItems) {
     state.menuItems = menuItems;
@@ -58,7 +67,9 @@ const actions = {
     commit(INITIALIZE_MENU_ITEMS);
   },
   loadMenu({ commit }) {
+    commit(INITIALIZE_MENU_ITEMS);
     commit(LOAD_MENU);
+    commit(SAVE_MENU);
   },
   setMenuLayoutItems({ commit }, layoutItems) {
     commit(SET_MENU_ITEMS, layoutItems);
