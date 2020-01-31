@@ -3,6 +3,7 @@ import {
   ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
+  INITIALIZE_MENU,
   LOAD_LAYOUT,
   SAVE_LAYOUT,
   SET_MENU_LAYOUT_ITEMS,
@@ -71,7 +72,12 @@ const mutations = {
 
     state.isEditModeActive = false;
   },
-  initializeMenu() {
+  initializeMenu(state) {
+    const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
+    if (layoutString) {
+      return;
+    }
+
     const menu = {
       x: 0,
       y: 0,
@@ -91,7 +97,7 @@ const mutations = {
   loadLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_LAYOUT_KEY);
     if (!layoutString) {
-      this.initializeMenu();
+      return;
     }
 
     const parsedLayout = JSON.parse(layoutString);
@@ -127,6 +133,7 @@ const actions = {
     commit(ENABLE_EDIT_MODE);
   },
   loadLayout({ commit }) {
+    commit(INITIALIZE_MENU);
     commit(LOAD_LAYOUT);
   },
   saveLayout({ commit }) {
