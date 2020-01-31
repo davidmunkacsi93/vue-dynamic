@@ -50,9 +50,6 @@
 </template>
 
 <script>
-import Vue from "vue";
-import VueDraggable from "vue-draggable";
-
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -64,8 +61,6 @@ import Sidebar from "./components/Sidebar.vue";
 
 import { LOAD_LAYOUT, SET_LAYOUT_ITEMS } from "./types/action-types";
 import { FORM, MENU } from "./types/layout-item-types";
-
-Vue.use(VueDraggable);
 
 export default {
   name: "app",

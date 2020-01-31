@@ -1,35 +1,37 @@
 <template>
-  <ul class="menu-list" v-drag-and-drop:options="dragAndDropOptions">
-    <li class="menu-item">
-      <button
-        type="button"
-        class="menu-item fa fa-bars fa-3x"
-        title="Menu"
-        @click.prevent="toggle"
-      ></button>
-    </li>
-    <li class="menu-item">
-      <button
-        type="button"
-        class="menu-item fa fa-plus fa-3x"
-        @click.prevent="addGridItem"
-      ></button>
-    </li>
-    <li class="menu-item">
-      <button
-        v-if="!isEditModeEnabled"
-        type="button"
-        class="menu-item fa fa-pencil fa-3x"
-        @click.prevent="editGridLayout"
-      ></button>
-      <button
-        v-if="isEditModeEnabled"
-        type="button"
-        class="menu-item fa fa-floppy-o fa-3x"
-        @click.prevent="saveLayout"
-      ></button>
-    </li>
-  </ul>
+  <div>
+    <ul class="menu-list">
+      <li class="menu-item">
+        <button
+          type="button"
+          class="menu-item fa fa-bars fa-3x"
+          title="Menu"
+          @click.prevent="toggle"
+        ></button>
+      </li>
+      <li class="menu-item">
+        <button
+          type="button"
+          class="menu-item fa fa-plus fa-3x"
+          @click.prevent="addGridItem"
+        ></button>
+      </li>
+      <li class="menu-item">
+        <button
+          v-if="!isEditModeEnabled"
+          type="button"
+          class="menu-item fa fa-pencil fa-3x"
+          @click.prevent="editGridLayout"
+        ></button>
+        <button
+          v-if="isEditModeEnabled"
+          type="button"
+          class="menu-item fa fa-floppy-o fa-3x"
+          @click.prevent="saveLayout"
+        ></button>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -46,20 +48,7 @@ import {
 export default {
   data() {
     return {
-      isEditModeEnabled: false,
-      dragAndDropOptions: {
-        dropzoneSelector: "ul",
-        draggableSelector: "li",
-        handlerSelector: null,
-        reactivityEnabled: true,
-        multipleDropzonesItemsDraggingEnabled: true,
-        showDropzoneAreas: true,
-        onDrop: function(event) {},
-        onDragstart: function(event) {},
-        onDragenter: function(event) {},
-        onDragover: function(event) {},
-        onDragend: function(event) {}
-      }
+      isEditModeEnabled: false
     };
   },
   computed: {
@@ -70,7 +59,7 @@ export default {
       get() {
         return this.$store.state.layout.menuLayoutItems;
       },
-      set() {
+      set(menuLayoutItems) {
         this.$store.dispatch(SET_MENU_LAYOUT_ITEMS, menuLayoutItems);
       }
     }
