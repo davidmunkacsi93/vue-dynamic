@@ -1,7 +1,6 @@
 import {
   INITIALIZE_MENU_ITEMS,
   LOAD_MENU,
-  SAVE_MENU,
   SET_MENU_ITEMS,
   TOGGLE_NAV
 } from "../../types/action-types";

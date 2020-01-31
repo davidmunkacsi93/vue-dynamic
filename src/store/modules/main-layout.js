@@ -72,9 +72,7 @@ const mutations = {
   },
   initializeMenu(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
-    if (layoutString) {
-      return;
-    }
+    if (layoutString) return;
 
     const menu = {
       x: 0,
@@ -90,7 +88,10 @@ const mutations = {
     };
 
     state.layoutItems.push(menu);
-    return;
+    localStorage.setItem(
+      LOCAL_STORAGE_MAIN_LAYOUT_KEY,
+      JSON.stringify(state.layoutItems)
+    );
   },
   loadMainLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
@@ -129,7 +130,6 @@ const actions = {
   loadMainLayout({ commit }) {
     commit(INITIALIZE_MENU);
     commit(LOAD_MAIN_LAYOUT);
-    commit(SAVE_MAIN_LAYOUT);
   },
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
