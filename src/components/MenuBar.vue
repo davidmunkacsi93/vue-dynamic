@@ -26,6 +26,13 @@ import {
   TOGGLE_NAV
 } from "../types/action-types";
 
+import {
+  ADD_GRID_ITEM_MENU_ITEM,
+  DISABLE_EDIT_MODE_MENU_ITEM,
+  ENABLE_EDIT_MODE_MENU_ITEM,
+  SAVE_MAIN_LAYOUT_MENU_ITEM
+} from "../types/menu-item-types";
+
 export default {
   components: {
     draggable
