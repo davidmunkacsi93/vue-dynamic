@@ -12,7 +12,11 @@
       @end="isDragging = false"
     >
       <transition-group type="transition" :name="'flip-list'">
-        <li class="list-group-item" v-for="element in list" :key="element.order">
+        <li
+          class="list-group-item"
+          v-for="element in list"
+          :key="element.order"
+        >
           {{ element.name }}
           <span>{{ element.order }}</span>
         </li>
@@ -22,6 +26,7 @@
 </template>
 <script>
 import draggable from "vuedraggable";
+import { REMOVE_GRID_ITEM } from "../types/action-types";
 
 const message = [
   "vue.draggable",
@@ -38,6 +43,12 @@ export default {
   components: {
     draggable
   },
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
       list: message.map((name, index) => {
@@ -50,7 +61,8 @@ export default {
   },
   methods: {
     removeGridItem() {
-      console.log("Remove grid item...");
+      console.log(this.id);
+      //this.$store.dispatch(REMOVE_GRID_ITEM);
     }
   }
 };

@@ -42,7 +42,10 @@
           :key="item.id"
         >
           <menu-bar v-if="item.layoutItemType === MENU" />
-          <dynamic-form v-else-if="item.layoutItemType === FORM" />
+          <dynamic-form
+            :id="item.id"
+            v-else-if="item.layoutItemType === FORM"
+          />
         </grid-item>
       </template>
     </grid-layout>

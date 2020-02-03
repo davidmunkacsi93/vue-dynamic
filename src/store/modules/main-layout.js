@@ -6,7 +6,8 @@ import {
   INITIALIZE_MENU,
   LOAD_MAIN_LAYOUT,
   SAVE_MAIN_LAYOUT,
-  SET_MAIN_LAYOUT_ITEMS
+  SET_MAIN_LAYOUT_ITEMS,
+  REMOVE_GRID_ITEM
 } from "../../types/action-types";
 import { FORM, MENU } from "../../types/layout-item-types";
 
@@ -136,6 +137,10 @@ const actions = {
   },
   setMainLayoutItems({ commit }, layoutItems) {
     commit(SET_MAIN_LAYOUT_ITEMS, layoutItems);
+  },
+  removeGridItem({ commit }) {
+    commit(REMOVE_GRID_ITEM);
+    commit(SAVE_MAIN_LAYOUT);
   }
 };
 
