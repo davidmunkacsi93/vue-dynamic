@@ -19,4 +19,8 @@ export default {
   background: grey;
   border: 1px solid;
 }
+
+.vue-resizable-handle {
+  z-index: 2;
+}
 </style>

@@ -1,46 +1,36 @@
 <template>
   <div>
-    <div>
-      <md-card>
-        <md-card-header>
-          <div class="md-title">Card without hover effect</div>
-        </md-card-header>
+    <md-card>
+      <md-card-header>
+        <div class="md-title">Form {{ id }}</div>
+      </md-card-header>
 
-        <md-card-content>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque
-          ea, nostrum odio. Dolores, sed accusantium quasi non.
-        </md-card-content>
-
-        <md-card-actions>
-          <md-button>Action</md-button>
-          <md-button>Action</md-button>
-        </md-card-actions>
-      </md-card>
-      <span>Header</span>
-      <button
-        class="fa fa-times pull-right"
-        v-show="isEditModeActive"
-        @click="removeGridItem"
-      ></button>
-    </div>
-    <draggable
-      class="row list-group"
-      tag="ul"
-      v-model="list"
-      @start="isDragging = true"
-      @end="isDragging = false"
-    >
-      <transition-group type="transition" :name="'flip-list'">
-        <li
-          class="list-group-item"
-          v-for="element in list"
-          :key="element.order"
+      <md-card-content>
+        <draggable
+          class="row list-group"
+          tag="ul"
+          v-model="list"
+          @start="isDragging = true"
+          @end="isDragging = false"
         >
-          <span>Control {{ element.order }}</span>
-          <input type="text" class="form-control" />
-        </li>
-      </transition-group>
-    </draggable>
+          <transition-group type="transition" :name="'flip-list'">
+            <li
+              class="list-group-item"
+              v-for="element in list"
+              :key="element.order"
+            >
+              <span>Control {{ element.order }}</span>
+              <input type="text" class="form-control" />
+            </li>
+          </transition-group>
+        </draggable>
+      </md-card-content>
+      <md-card-actions>
+        <md-button v-show="isEditModeActive" @click="removeGridItem"
+          >Remove
+        </md-button>
+      </md-card-actions>
+    </md-card>
   </div>
 </template>
 <script>
