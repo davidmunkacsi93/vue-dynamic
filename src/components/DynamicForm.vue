@@ -21,8 +21,8 @@
           v-for="element in list"
           :key="element.order"
         >
-          {{ element.name }}
-          <span>{{ element.order }}</span>
+          <span>Control {{ element.order }}</span>
+          <input type="text" class="form-control" />
         </li>
       </transition-group>
     </draggable>
@@ -33,16 +33,7 @@ import draggable from "vuedraggable";
 import { mapState } from "vuex";
 import { REMOVE_GRID_ITEM } from "../types/action-types";
 
-const message = [
-  "vue.draggable",
-  "draggable",
-  "component",
-  "for",
-  "vue.js 2.0",
-  "based",
-  "on",
-  "Sortablejs"
-];
+const controlList = ["text-box", "text-box", "text-box"];
 
 export default {
   components: {
@@ -61,7 +52,7 @@ export default {
   },
   data() {
     return {
-      list: message.map((name, index) => {
+      list: controlList.map((name, index) => {
         return { name, order: index + 1, fixed: false };
       }),
       editable: true,
@@ -92,6 +83,8 @@ export default {
 }
 .list-group-item {
   cursor: move;
+  background: transparent;
+  border: none;
 }
 .list-group-item i {
   cursor: pointer;
