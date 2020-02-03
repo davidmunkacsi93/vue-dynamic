@@ -114,6 +114,10 @@ const mutations = {
   setMainLayoutItems(state, layoutItems) {
     state.layoutItems = layoutItems;
     EventBus.$emit("layoutUpdated");
+  },
+  removeGridItem(state, itemId) {
+    state.layoutItems = state.layoutItems.filter(item => item.id != itemId);
+    EventBus.$emit("layoutUpdated");
   }
 };
 
@@ -138,8 +142,8 @@ const actions = {
   setMainLayoutItems({ commit }, layoutItems) {
     commit(SET_MAIN_LAYOUT_ITEMS, layoutItems);
   },
-  removeGridItem({ commit }) {
-    commit(REMOVE_GRID_ITEM);
+  removeGridItem({ commit }, itemId) {
+    commit(REMOVE_GRID_ITEM, itemId);
     commit(SAVE_MAIN_LAYOUT);
   }
 };

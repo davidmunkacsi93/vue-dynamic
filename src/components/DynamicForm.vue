@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     removeGridItem() {
-      this.$store.dispatch(REMOVE_GRID_ITEM);
+      this.$store.dispatch(REMOVE_GRID_ITEM, this.id);
     }
   }
 };
