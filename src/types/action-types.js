@@ -9,4 +9,5 @@ export const SAVE_MAIN_LAYOUT = "saveMainLayout";
 export const SAVE_MENU = "saveMenu";
 export const SET_MENU_ITEMS = "setMenuItems";
 export const SET_MAIN_LAYOUT_ITEMS = "setMainLayoutItems";
+export const REMOVE_GRID_ITEM = "removeGridItem";
 export const TOGGLE_NAV = "toggleNav";
