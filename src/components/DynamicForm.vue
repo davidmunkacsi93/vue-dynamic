@@ -9,7 +9,7 @@
       ></button>
     </div>
     <draggable
-      class="col-md-10 list-group"
+      class="row list-group"
       tag="ul"
       v-model="list"
       @start="isDragging = true"
