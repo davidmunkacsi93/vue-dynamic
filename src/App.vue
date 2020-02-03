@@ -53,6 +53,11 @@
 </template>
 
 <script>
+import Vue from "vue";
+import VueMaterial from "vue-material";
+import "vue-material/dist/vue-material.min.css";
+import "vue-material/dist/theme/default-dark.css";
+
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -64,6 +69,8 @@ import Sidebar from "./components/Sidebar.vue";
 
 import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
 import { FORM, MENU } from "./types/layout-item-types";
+
+Vue.use(VueMaterial);
 
 export default {
   name: "app",
