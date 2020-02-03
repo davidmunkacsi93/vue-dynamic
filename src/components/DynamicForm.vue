@@ -2,7 +2,11 @@
   <div>
     <div>
       <span>Header</span>
-      <button class="fa fa-times pull-right" @click="removeGridItem"></button>
+      <button
+        class="fa fa-times pull-right"
+        v-show="isEditModeActive"
+        @click="removeGridItem"
+      ></button>
     </div>
     <draggable
       class="col-md-10 list-group"
