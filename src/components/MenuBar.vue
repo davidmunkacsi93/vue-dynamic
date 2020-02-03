@@ -133,6 +133,7 @@ export default {
   },
   computed: {
     ...mapState({
+      isEditModeActive: state => state.mainLayout.isEditModeActive,
       isNavOpen: state => state.menu.isNavOpen
     }),
     menuItems: {
@@ -140,7 +141,6 @@ export default {
         return this.$store.state.menu.menuItems;
       },
       set(menuItems) {
-        console.log(menuItems);
         this.$store.dispatch(SET_MENU_ITEMS, menuItems);
       }
     }

@@ -26,6 +26,7 @@
 </template>
 <script>
 import draggable from "vuedraggable";
+import { mapState } from "vuex";
 import { REMOVE_GRID_ITEM } from "../types/action-types";
 
 const message = [
@@ -49,6 +50,11 @@ export default {
       required: true
     }
   },
+  computed: {
+    ...mapState({
+      isEditModeActive: state => state.mainLayout.isEditModeActive
+    })
+  },
   data() {
     return {
       list: message.map((name, index) => {
@@ -61,8 +67,7 @@ export default {
   },
   methods: {
     removeGridItem() {
-      console.log(this.id);
-      //this.$store.dispatch(REMOVE_GRID_ITEM);
+      this.$store.dispatch(REMOVE_GRID_ITEM);
     }
   }
 };
