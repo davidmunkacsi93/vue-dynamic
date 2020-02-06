@@ -1,26 +1,13 @@
 <template>
-  <div id="app">
+  <div id="app" class="page-container">
     <link
       rel="stylesheet"
       href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css"
     />
-    <sidebar>
-      <ul class="sidebar-panel-nav">
-        <li>
-          <a href="#home">Home</a>
-        </li>
-        <li>
-          <a href="#about">About</a>
-        </li>
-        <li>
-          <a href="#contact">Contact</a>
-        </li>
-      </ul>
-    </sidebar>
     <grid-layout
       :layout.sync="layoutItems"
       :col-num="12"
-      :row-height="40"
+      :row-height="35"
       :margin="[0, 0]"
       :is-draggable="true"
       :is-resizable="true"
@@ -49,6 +36,19 @@
         </grid-item>
       </template>
     </grid-layout>
+    <sidebar>
+      <ul class="sidebar-panel-nav">
+        <li>
+          <a href="#home">Home</a>
+        </li>
+        <li>
+          <a href="#about">About</a>
+        </li>
+        <li>
+          <a href="#contact">Contact</a>
+        </li>
+      </ul>
+    </sidebar>
   </div>
 </template>
 
@@ -56,7 +56,7 @@
 import Vue from "vue";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/default.css";
+import "vue-material/dist/theme/default-dark.css";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -105,8 +105,16 @@ export default {
 
 <style lang="scss">
 html {
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 ul.sidebar-panel-nav {

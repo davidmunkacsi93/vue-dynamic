@@ -1,96 +1,23 @@
 <template>
-  <div class="row menu-bar">
-    <draggable tag="ul" class="menu-list col-xs-6 col-sm-4" v-model="menuItems">
-      <li v-for="menuItem in menuItems" class="menu-item" :key="menuItem.order">
-        <template v-if="menuItem.alignment === LEFT">
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-if="menuItem.type === ADD_GRID_ITEM_MENU_ITEM"
-            v-on:click="addGridItem"
-          ></button>
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-show="!isEditModeEnabled"
-            v-else-if="menuItem.type === ENABLE_EDIT_MODE_MENU_ITEM"
-            v-on:click="editGridLayout"
-          ></button>
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-else-if="menuItem.type === HAMBURGER_MENU_ITEM"
-            v-on:click="toggleNav"
-          ></button>
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-show="isEditModeEnabled"
-            v-if="menuItem.type === SAVE_MAIN_LAYOUT_MENU_ITEM"
-            v-on:click="saveMainLayout"
-          ></button>
-        </template>
-      </li>
-    </draggable>
-    <div class="placeholder hidden-xs col-sm-4"></div>
-    <draggable tag="ul" class="menu-list col-xs-6 col-sm-4" v-model="menuItems">
-      <li
-        v-for="menuItem in menuItems"
-        class="menu-item float-right"
-        :key="menuItem.order"
-      >
-        <template v-if="menuItem.alignment === RIGHT">
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-if="menuItem.type === ADD_GRID_ITEM_MENU_ITEM"
-            v-on:click="addGridItem"
-          ></button>
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-show="!isEditModeEnabled"
-            v-else-if="menuItem.type === ENABLE_EDIT_MODE_MENU_ITEM"
-            v-on:click="editGridLayout"
-          ></button>
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-else-if="menuItem.type === HAMBURGER_MENU_ITEM"
-            v-on:click="toggleNav"
-          ></button>
-          <button
-            type="button"
-            class="menu-item fa fa-3x"
-            :order="menuItem.order"
-            :class="[menuItem.iconClass]"
-            v-show="isEditModeEnabled"
-            v-if="menuItem.type === SAVE_MAIN_LAYOUT_MENU_ITEM"
-            v-on:click="saveMainLayout"
-          ></button>
-        </template>
-      </li>
-    </draggable>
-  </div>
+  <md-toolbar>
+    <span>VueGenericUI</span>
+    <md-button v-on:click="toggleNav">
+      <md-icon>menu</md-icon>
+    </md-button>
+    <md-button v-on:click="addGridItem">
+      <md-icon>add</md-icon>
+    </md-button>
+    <md-button v-on:click="editGridLayout" v-show="!isEditModeEnabled">
+      <md-icon>edit</md-icon>
+    </md-button>
+    <md-button v-on:click="saveMainLayout" v-show="isEditModeEnabled">
+      <md-icon>save</md-icon>
+    </md-button>
+  </md-toolbar>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import draggable from "vuedraggable";
 
 import {
   ADD_GRID_ITEM,
@@ -112,9 +39,6 @@ import {
 import { LEFT, RIGHT } from "../types/alignment-types";
 
 export default {
-  components: {
-    draggable
-  },
   data() {
     return {
       isEditModeEnabled: false,
