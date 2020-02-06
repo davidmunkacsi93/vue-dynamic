@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="page-container">
     <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
-      href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css"
     />
     <grid-layout
       :layout.sync="layoutItems"
