@@ -114,10 +114,7 @@ body {
   border: 0;
   margin: 0;
   padding: 0;
-  font-family: "Lato";
   height: 100%;
-  background: rgb(101, 31, 87);
-  background: linear-gradient(to right, rgb(58, 123, 213), rgb(58, 96, 115));
 }
 
 ul.sidebar-panel-nav {
