@@ -105,16 +105,8 @@ export default {
 
 <style lang="scss">
 html {
-  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-body {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  height: 100%;
 }
 
 ul.sidebar-panel-nav {
