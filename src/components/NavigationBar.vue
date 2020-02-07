@@ -1,12 +1,14 @@
 <template>
   <md-toolbar layout="column" class="navigation-bar">
-    Navigation
-    <md-list>
-      <md-list-item>
-        <md-icon>build</md-icon>
-        <span class="md-list-item-text">My APIs</span>
-      </md-list-item>
-    </md-list>
+    <div class="md-toolbar-column">
+      <h3 class="md-title">Navigation</h3>
+      <md-list>
+        <md-list-item>
+          <md-icon>build</md-icon>
+          <span class="md-list-item-text">My APIs</span>
+        </md-list-item>
+      </md-list>
+    </div>
   </md-toolbar>
 </template>
 
