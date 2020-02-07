@@ -51,11 +51,6 @@ export default {
   components: {
     draggable
   },
-  mounted() {
-    this.clientHeight = this.$parent.$el.clientHeight;
-    console.log(this.$parent.$el.clientHeight);
-    console.log(this.$parent.$el.clientHeight);
-  },
   props: {
     id: {
       type: Number,

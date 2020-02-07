@@ -9,7 +9,7 @@ import {
   SET_MAIN_LAYOUT_ITEMS,
   REMOVE_GRID_ITEM
 } from "../../types/action-types";
-import { FORM, MENU } from "../../types/layout-item-types";
+import { FORM, MENU, SIDEBAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
 const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
@@ -22,29 +22,36 @@ const state = {
 
 function getNextId() {
   if (!state.layoutItems || state.layoutItems.length === 0) return 0;
-
+  console.log(state.layoutItems);
   const layoutItem = state.layoutItems.reduce((previous, current) =>
     previous.id > current.id ? previous : current
   );
   return layoutItem.id + 1;
 }
 
-function getBottom() {
-  return Math.max.apply(
+function getNextFreePosition() {
+  const x = Math.max.apply(
     Math,
     state.layoutItems.map(function(layoutItem) {
       return layoutItem.y + layoutItem.h;
     })
   );
+  const y = Math.max.apply(
+    Math,
+    state.layoutItems.map(function(layoutItem) {
+      return layoutItem.y + layoutItem.h;
+    })
+  );
+  return { x, y };
 }
 
 const mutations = {
   addGridItem(state) {
     const newId = getNextId();
-    const bottom = getBottom();
+    const position = getNextFreePosition();
     const newItem = {
-      x: 0,
-      y: bottom,
+      x: position.x,
+      y: position.y,
       w: 2,
       h: 13,
       i: newId.toString(),
@@ -77,9 +84,9 @@ const mutations = {
     if (layoutString) return;
 
     const menu = {
-      x: 0,
+      x: 2,
       y: 0,
-      w: 12,
+      w: 10,
       h: 2,
       i: "0",
       id: 0,
@@ -89,7 +96,22 @@ const mutations = {
       layoutItemType: MENU
     };
 
+    const sidebar = {
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 20,
+      i: "1",
+      id: 1,
+      isDraggable: true,
+      isResizable: true,
+      static: true,
+      layoutItemType: SIDEBAR
+    };
+
     state.layoutItems.push(menu);
+    state.layoutItems.push(sidebar);
+
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUT_KEY,
       JSON.stringify(state.layoutItems)
