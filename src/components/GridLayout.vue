@@ -1,15 +1,16 @@
 <script>
 import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
+import { LAYOUT_UPDATED } from "../types/event-types";
 
 export default {
   name: "GridLayout",
   extends: GridLayout,
   created: function() {
-    EventBus.$on("layoutUpdated", this.handleLayoutUpdated);
+    EventBus.$on(LAYOUT_UPDATED, this.handleLayoutUpdated);
   },
   beforeDestroy: function() {
-    EventBus.$off("layoutUpdated", this.handleLayoutUpdated);
+    EventBus.$off(LAYOUT_UPDATED, this.handleLayoutUpdated);
   },
   methods: {
     handleLayoutUpdated() {

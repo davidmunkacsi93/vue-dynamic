@@ -103,6 +103,7 @@ const mutations = {
     const parsedLayout = JSON.parse(layoutString);
     state.layoutItems = parsedLayout;
     EventBus.$emit("layoutUpdated");
+    EventBus.$emit("adjustHeight");
     EventBus.$emit("compact");
   },
   saveMainLayout(state) {

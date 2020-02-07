@@ -1,37 +1,35 @@
 <template>
-  <div>
-    <md-card>
-      <md-card-header>
-        <div class="md-title">Form {{ id }}</div>
-      </md-card-header>
+  <md-card ref="dynamic-form-content">
+    <md-card-header>
+      <div class="md-title">Form {{ id }}</div>
+    </md-card-header>
 
-      <md-card-content>
-        <draggable
-          class="row list-group"
-          tag="ul"
-          v-model="list"
-          @start="isDragging = true"
-          @end="isDragging = false"
-        >
-          <transition-group type="transition" :name="'flip-list'">
-            <li
-              class="list-group-item"
-              v-for="element in list"
-              :key="element.order"
-            >
-              <span>Control {{ element.order }}</span>
-              <input type="text" class="form-control" />
-            </li>
-          </transition-group>
-        </draggable>
-      </md-card-content>
-      <md-card-actions>
-        <md-button v-show="isEditModeActive" @click="removeGridItem"
-          >Remove
-        </md-button>
-      </md-card-actions>
-    </md-card>
-  </div>
+    <md-card-content>
+      <draggable
+        class="row list-group"
+        tag="ul"
+        v-model="list"
+        @start="isDragging = true"
+        @end="isDragging = false"
+      >
+        <transition-group type="transition" :name="'flip-list'">
+          <li
+            class="list-group-item"
+            v-for="element in list"
+            :key="element.order"
+          >
+            <span>Control {{ element.order }}</span>
+            <input type="text" class="form-control" />
+          </li>
+        </transition-group>
+      </draggable>
+    </md-card-content>
+    <md-card-actions>
+      <md-button v-show="isEditModeActive" @click="removeGridItem"
+        >Remove
+      </md-button>
+    </md-card-actions>
+  </md-card>
 </template>
 <script>
 import draggable from "vuedraggable";
