@@ -1,18 +1,33 @@
 <template>
-  <md-toolbar>
-    <span>VueGenericUI</span>
-    <md-button v-on:click="toggleNav">
-      <md-icon>menu</md-icon>
-    </md-button>
-    <md-button v-on:click="addGridItem">
-      <md-icon>add</md-icon>
-    </md-button>
-    <md-button v-on:click="editGridLayout" v-show="!isEditModeEnabled">
-      <md-icon>edit</md-icon>
-    </md-button>
-    <md-button v-on:click="saveMainLayout" v-show="isEditModeEnabled">
-      <md-icon>save</md-icon>
-    </md-button>
+  <md-toolbar class="menu-bar md-primary">
+    <div class="md-toolbar-row">
+      <div class="md-toolbar-section-start">
+        <md-button class="md-icon-button" v-on:click="toggleNav">
+          <md-icon>menu</md-icon>
+        </md-button>
+      </div>
+      <h3 class="md-title">VueGenericUI</h3>
+
+      <div class="md-toolbar-section-end">
+        <md-button v-on:click="addGridItem" class="md-icon-button">
+          <md-icon>add</md-icon>
+        </md-button>
+        <md-button
+          v-on:click="editGridLayout"
+          v-show="!isEditModeEnabled"
+          class="md-icon-button"
+        >
+          <md-icon>edit</md-icon>
+        </md-button>
+        <md-button
+          v-on:click="saveMainLayout"
+          v-show="isEditModeEnabled"
+          class="md-icon-button"
+        >
+          <md-icon>save</md-icon>
+        </md-button>
+      </div>
+    </div>
   </md-toolbar>
 </template>
 
@@ -96,51 +111,7 @@ export default {
 </script>
 
 <style>
-.hidden {
-  visibility: hidden;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:focus {
-  outline: 0;
-}
-
-.placeholder {
-  display: inline;
-}
-
 .menu-bar {
-  background-color: #333333;
-}
-
-.menu-list {
-  display: inline;
-  list-style-type: none;
-  margin: 0;
-  overflow: hidden;
-}
-
-.menu-item {
-  color: white;
-  display: inline;
-  border: 0;
-  border-radius: 0;
-  background-color: transparent;
-}
-
-.menu-item button {
-  display: inline;
-  color: white;
-  text-align: center;
-  padding: 16px;
-  text-decoration: none;
-}
-
-.add-grid-item-button {
-  float: right !important;
-  right: 0;
+  height: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <md-card ref="dynamicForm">
+  <md-card ref="dynamicForm" class="dynamic-form">
     <md-card-header>
       <md-card-header-text>
         <div class="md-title">Form {{ id }}</div>
@@ -12,7 +12,7 @@
         <md-menu-content>
           <md-menu-item @click="removeGridItem">
             <span>Remove</span>
-            <md-icon>times</md-icon>
+            <md-icon>clear</md-icon>
           </md-menu-item>
         </md-menu-content>
       </md-menu>
@@ -44,8 +44,6 @@
 import draggable from "vuedraggable";
 import { mapState } from "vuex";
 import { REMOVE_GRID_ITEM } from "../types/action-types";
-import EventBus from "../utils/event-bus";
-import { ADJUST_ITEM } from "../types/event-types";
 
 const controlList = ["text-box", "text-box", "text-box"];
 
@@ -54,11 +52,9 @@ export default {
     draggable
   },
   mounted() {
-    const element = {
-      element: this.$refs.dynamicForm.$el,
-      id: this.id
-    };
-    EventBus.$emit(ADJUST_ITEM, element);
+    this.clientHeight = this.$parent.$el.clientHeight;
+    console.log(this.$parent.$el.clientHeight);
+    console.log(this.$parent.$el.clientHeight);
   },
   props: {
     id: {
@@ -93,6 +89,9 @@ export default {
 };
 </script>
 <style>
+.dynamic-form {
+  height: 100%;
+}
 .flip-list-move {
   transition: transform 0.5s;
 }

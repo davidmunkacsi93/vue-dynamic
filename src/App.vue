@@ -4,11 +4,12 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+
     <grid-layout
       :layout.sync="layoutItems"
       :col-num="12"
       :row-height="30"
-      :margin="[0, 0]"
+      :margin="[3, 3]"
       :is-draggable="true"
       :is-resizable="true"
       :is-mirrored="false"
@@ -34,22 +35,10 @@
             :id="item.id"
             v-else-if="item.layoutItemType === FORM"
           />
+          <sidebar v-else></sidebar>
         </grid-item>
       </template>
     </grid-layout>
-    <sidebar>
-      <ul class="sidebar-panel-nav">
-        <li>
-          <a href="#home">Home</a>
-        </li>
-        <li>
-          <a href="#about">About</a>
-        </li>
-        <li>
-          <a href="#contact">Contact</a>
-        </li>
-      </ul>
-    </sidebar>
   </div>
 </template>
 
@@ -57,7 +46,7 @@
 import Vue from "vue";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/default-dark.css";
+import "vue-material/dist/theme/default.css";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
