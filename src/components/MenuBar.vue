@@ -38,8 +38,7 @@ import {
   ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
-  SAVE_MAIN_LAYOUT,
-  TOGGLE_NAV
+  SAVE_MAIN_LAYOUT
 } from "../types/action-types";
 
 export default {
@@ -50,14 +49,10 @@ export default {
   },
   computed: {
     ...mapState({
-      isEditModeActive: state => state.mainLayout.isEditModeActive,
-      isNavOpen: state => state.menu.isNavOpen
+      isEditModeActive: state => state.mainLayout.isEditModeActive
     })
   },
   methods: {
-    toggleNav() {
-      this.$store.dispatch(TOGGLE_NAV);
-    },
     addGridItem() {
       this.$store.dispatch(ADD_GRID_ITEM);
     },
