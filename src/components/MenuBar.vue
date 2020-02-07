@@ -2,7 +2,7 @@
   <md-toolbar class="menu-bar md-primary">
     <div class="md-toolbar-row">
       <div class="md-toolbar-section-start">
-        <md-button class="md-icon-button" v-on:click="toggleNav">
+        <md-button class="md-icon-button">
           <md-icon>menu</md-icon>
         </md-button>
       </div>
