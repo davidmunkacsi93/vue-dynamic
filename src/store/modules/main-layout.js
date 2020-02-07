@@ -10,6 +10,11 @@ import {
   REMOVE_GRID_ITEM
 } from "../../types/action-types";
 import { FORM, MENU } from "../../types/layout-item-types";
+import {
+  ADJUST_HEIGHT,
+  COMPACT,
+  LAYOUT_UPDATED
+} from "../../types/event-types";
 
 const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
 
@@ -54,8 +59,8 @@ const mutations = {
       layoutItemType: FORM
     };
     state.layoutItems.push(newItem);
-    EventBus.$emit("layoutUpdated");
-    EventBus.$emit("compact");
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(COMPACT);
   },
   enableEditMode(state) {
     for (var layoutItem of state.layoutItems) {
@@ -102,9 +107,9 @@ const mutations = {
 
     const parsedLayout = JSON.parse(layoutString);
     state.layoutItems = parsedLayout;
-    EventBus.$emit("layoutUpdated");
-    EventBus.$emit("adjustHeight");
-    EventBus.$emit("compact");
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(ADJUST_HEIGHT);
+    EventBus.$emit(COMPACT);
   },
   saveMainLayout(state) {
     localStorage.setItem(
@@ -114,11 +119,11 @@ const mutations = {
   },
   setMainLayoutItems(state, layoutItems) {
     state.layoutItems = layoutItems;
-    EventBus.$emit("layoutUpdated");
+    EventBus.$emit(LAYOUT_UPDATED);
   },
   removeGridItem(state, itemId) {
     state.layoutItems = state.layoutItems.filter(item => item.id != itemId);
-    EventBus.$emit("layoutUpdated");
+    EventBus.$emit(LAYOUT_UPDATED);
   }
 };
 
