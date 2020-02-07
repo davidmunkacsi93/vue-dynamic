@@ -38,51 +38,21 @@ import {
   ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
-  LOAD_MENU,
-  SET_MENU_ITEMS,
   SAVE_MAIN_LAYOUT,
   TOGGLE_NAV
 } from "../types/action-types";
 
-import {
-  ADD_GRID_ITEM_MENU_ITEM,
-  ENABLE_EDIT_MODE_MENU_ITEM,
-  HAMBURGER_MENU_ITEM,
-  SAVE_MAIN_LAYOUT_MENU_ITEM
-} from "../types/menu-item-types";
-
-import { LEFT, RIGHT } from "../types/alignment-types";
-
 export default {
   data() {
     return {
-      isEditModeEnabled: false,
-
-      ADD_GRID_ITEM_MENU_ITEM,
-      ENABLE_EDIT_MODE_MENU_ITEM,
-      HAMBURGER_MENU_ITEM,
-      SAVE_MAIN_LAYOUT_MENU_ITEM,
-
-      LEFT,
-      RIGHT
+      isEditModeEnabled: false
     };
-  },
-  beforeCreate() {
-    this.$store.dispatch(LOAD_MENU);
   },
   computed: {
     ...mapState({
       isEditModeActive: state => state.mainLayout.isEditModeActive,
       isNavOpen: state => state.menu.isNavOpen
-    }),
-    menuItems: {
-      get() {
-        return this.$store.state.menu.menuItems;
-      },
-      set(menuItems) {
-        this.$store.dispatch(SET_MENU_ITEMS, menuItems);
-      }
-    }
+    })
   },
   methods: {
     toggleNav() {
