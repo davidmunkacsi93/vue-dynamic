@@ -35,7 +35,9 @@
             :id="item.id"
             v-else-if="item.layoutItemType === FORM"
           />
-          <sidebar v-else></sidebar>
+          <navigation-bar
+            v-else-if="item.layoutItemType === NAVIGATION_BAR"
+          ></navigation-bar>
         </grid-item>
       </template>
     </grid-layout>
@@ -55,10 +57,10 @@ import DynamicForm from "./components/DynamicForm.vue";
 import GridItem from "./components/GridItem.vue";
 import GridLayout from "./components/GridLayout.vue";
 import MenuBar from "./components/MenuBar.vue";
-import Sidebar from "./components/Sidebar.vue";
+import NavigationBar from "./components/NavigationBar.vue";
 
 import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
-import { FORM, MENU } from "./types/layout-item-types";
+import { FORM, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
 Vue.use(VueMaterial);
 
@@ -69,12 +71,13 @@ export default {
     GridItem,
     GridLayout,
     MenuBar,
-    Sidebar
+    NavigationBar
   },
   data() {
     return {
       FORM,
-      MENU
+      MENU,
+      NAVIGATION_BAR
     };
   },
   beforeCreate() {
@@ -105,17 +108,5 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-}
-
-ul.sidebar-panel-nav {
-  list-style-type: none;
-}
-
-ul.sidebar-panel-nav > li > a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.5rem;
-  display: block;
-  padding-bottom: 0.5em;
 }
 </style>

@@ -9,7 +9,7 @@ import {
   SET_MAIN_LAYOUT_ITEMS,
   REMOVE_GRID_ITEM
 } from "../../types/action-types";
-import { FORM, MENU, SIDEBAR } from "../../types/layout-item-types";
+import { FORM, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
 const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
@@ -96,7 +96,7 @@ const mutations = {
       layoutItemType: MENU
     };
 
-    const sidebar = {
+    const NavigationBar = {
       x: 0,
       y: 0,
       w: 2,
@@ -106,11 +106,11 @@ const mutations = {
       isDraggable: true,
       isResizable: true,
       static: true,
-      layoutItemType: SIDEBAR
+      layoutItemType: NAVIGATION_BAR
     };
 
     state.layoutItems.push(menu);
-    state.layoutItems.push(sidebar);
+    state.layoutItems.push(NavigationBar);
 
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUT_KEY,

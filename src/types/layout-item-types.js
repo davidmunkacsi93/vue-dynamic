@@ -1,3 +1,3 @@
 export const FORM = "FORM";
 export const MENU = "MENU";
-export const SIDEBAR = "SIDEBAR";
+export const NAVIGATION_BAR = "NAVIGATION_BAR";
