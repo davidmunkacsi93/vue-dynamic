@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-toolbar class="md-primary" md-elevation="0">
+    <md-toolbar layout="column">
       Navigation
     </md-toolbar>
 
