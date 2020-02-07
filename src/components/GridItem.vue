@@ -16,11 +16,18 @@ export default {
 
 <style>
 .vue-grid-item {
-  background: grey;
-  border: 1px solid;
+  resize: both;
+  background: transparent;
 }
 
-.vue-resizable-handle {
+.vue-grid-item > .vue-resizable-handle {
+  color: white;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+  border-spacing: 10px !important;
+  background: none !important;
+  width: 10px !important;
+  height: 10px !important;
   z-index: 2;
 }
 </style>
