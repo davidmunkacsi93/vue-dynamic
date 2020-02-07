@@ -85,6 +85,12 @@ export default {
       this.isEditModeEnabled = false;
       this.$store.dispatch(SAVE_MAIN_LAYOUT);
     }
+  },
+  props: {
+    type: {
+      type: String,
+      required: true
+    }
   }
 };
 </script>

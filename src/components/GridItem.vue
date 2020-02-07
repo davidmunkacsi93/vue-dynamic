@@ -1,22 +1,23 @@
 <script>
 import { GridItem } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
-import { ADJUST_HEIGHT, COMPACT } from "../types/event-types";
+import { COMPACT, ADJUST_ITEM } from "../types/event-types";
 
 export default {
   name: "GridItem",
   extends: GridItem,
-  before: function() {
+  created: function() {
+    EventBus.$on(ADJUST_ITEM, this.adjustItem);
     EventBus.$on(COMPACT, this.compactHandler);
-    EventBus.$on(ADJUST_HEIGHT, this.adjustHeight);
   },
   beforeDestroy: function() {
+    EventBus.$off(ADJUST_ITEM, this.adjustItem);
     EventBus.$off(COMPACT, this.compactHandler);
-    EventBus.$off(ADJUST_HEIGHT, this.adjustHeight);
   },
   methods: {
-    adjustHeight() {
-      console.log(this.$refs);
+    adjustItem(childComponent) {
+      if (this.i != childComponent.id) return;
+      this.innerH = childComponent.element.clientHeight / this.rowHeight;
     }
   }
 };

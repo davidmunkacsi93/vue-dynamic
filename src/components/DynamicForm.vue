@@ -1,7 +1,21 @@
 <template>
-  <md-card ref="dynamic-form-content">
+  <md-card ref="dynamicForm">
     <md-card-header>
-      <div class="md-title">Form {{ id }}</div>
+      <md-card-header-text>
+        <div class="md-title">Form {{ id }}</div>
+      </md-card-header-text>
+      <md-menu md-size="big" md-direction="bottom-end">
+        <md-button class="md-icon-button" md-menu-trigger>
+          <md-icon>more_vert</md-icon>
+        </md-button>
+
+        <md-menu-content>
+          <md-menu-item @click="removeGridItem">
+            <span>Remove</span>
+            <md-icon>times</md-icon>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
     </md-card-header>
 
     <md-card-content>
@@ -24,17 +38,14 @@
         </transition-group>
       </draggable>
     </md-card-content>
-    <md-card-actions>
-      <md-button v-show="isEditModeActive" @click="removeGridItem"
-        >Remove
-      </md-button>
-    </md-card-actions>
   </md-card>
 </template>
 <script>
 import draggable from "vuedraggable";
 import { mapState } from "vuex";
 import { REMOVE_GRID_ITEM } from "../types/action-types";
+import EventBus from "../utils/event-bus";
+import { ADJUST_ITEM } from "../types/event-types";
 
 const controlList = ["text-box", "text-box", "text-box"];
 
@@ -42,9 +53,20 @@ export default {
   components: {
     draggable
   },
+  mounted() {
+    const element = {
+      element: this.$refs.dynamicForm.$el,
+      id: this.id
+    };
+    EventBus.$emit(ADJUST_ITEM, element);
+  },
   props: {
     id: {
       type: Number,
+      required: true
+    },
+    type: {
+      type: String,
       required: true
     }
   },

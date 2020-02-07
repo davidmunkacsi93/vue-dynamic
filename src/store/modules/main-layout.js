@@ -10,11 +10,7 @@ import {
   REMOVE_GRID_ITEM
 } from "../../types/action-types";
 import { FORM, MENU } from "../../types/layout-item-types";
-import {
-  ADJUST_HEIGHT,
-  COMPACT,
-  LAYOUT_UPDATED
-} from "../../types/event-types";
+import { ADJUST_ITEM, COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
 const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
 
@@ -60,6 +56,7 @@ const mutations = {
     };
     state.layoutItems.push(newItem);
     EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(ADJUST_ITEM);
     EventBus.$emit(COMPACT);
   },
   enableEditMode(state) {
@@ -108,7 +105,6 @@ const mutations = {
     const parsedLayout = JSON.parse(layoutString);
     state.layoutItems = parsedLayout;
     EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(ADJUST_HEIGHT);
     EventBus.$emit(COMPACT);
   },
   saveMainLayout(state) {

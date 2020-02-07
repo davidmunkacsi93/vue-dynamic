@@ -7,7 +7,7 @@
     <grid-layout
       :layout.sync="layoutItems"
       :col-num="12"
-      :row-height="35"
+      :row-height="30"
       :margin="[0, 0]"
       :is-draggable="true"
       :is-resizable="true"
@@ -28,8 +28,9 @@
           :static="item.static"
           :key="item.id"
         >
-          <menu-bar v-if="item.layoutItemType === MENU" />
+          <menu-bar :type="MENU" v-if="item.layoutItemType === MENU" />
           <dynamic-form
+            :type="FORM"
             :id="item.id"
             v-else-if="item.layoutItemType === FORM"
           />
