@@ -2,14 +2,15 @@
   <div>
     <md-toolbar layout="column">
       Navigation
-    </md-toolbar>
-
-    <md-list>
+          <md-list>
       <md-list-item>
         <md-icon>build</md-icon>
         <span class="md-list-item-text">My APIs</span>
       </md-list-item>
     </md-list>
+    </md-toolbar>
+
+
   </div>
 </template>
 
