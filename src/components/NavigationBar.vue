@@ -1,5 +1,5 @@
 <template>
-  <md-app-drawer class="navigation-bar" md-permanent="full">
+  <div class="navigation-bar">
     <h3 class="md-title">Navigation</h3>
     <md-list>
       <md-list-item>
@@ -11,7 +11,7 @@
         <span class="md-list-item-text">Add API</span>
       </md-list-item>
     </md-list>
-  </md-app-drawer>
+  </div>
 </template>
 
 <script>
@@ -24,7 +24,6 @@ export default {
 <style>
 .navigation-bar {
   height: 100%;
-  width: auto !important;
   padding: 10px;
 }
 </style>
