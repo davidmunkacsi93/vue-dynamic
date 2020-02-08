@@ -61,7 +61,6 @@ export default {
   beforeRouteUpdate(to, from, next) {
     const nextApiId = to.params.apiId;
     this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
-    console.log(this.apiLayout);
     next();
   }
 };

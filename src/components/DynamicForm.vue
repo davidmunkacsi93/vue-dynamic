@@ -19,38 +19,24 @@
     </md-card-header>
 
     <md-card-content>
-      <draggable
-        class="row list-group"
-        tag="ul"
-        v-model="list"
-        @start="isDragging = true"
-        @end="isDragging = false"
-      >
-        <transition-group type="transition" :name="'flip-list'">
-          <li
-            class="list-group-item"
-            v-for="element in list"
-            :key="element.order"
-          >
-            <span>Control {{ element.order }}</span>
-            <input type="text" class="form-control" />
-          </li>
-        </transition-group>
-      </draggable>
+      <md-list class="control-list">
+        <md-list-item v-for="element in list" :key="element.order">
+          <md-field>
+            <label>Control {{ element.order }}</label>
+            <md-input></md-input>
+          </md-field>
+        </md-list-item>
+      </md-list>
     </md-card-content>
   </md-card>
 </template>
 <script>
-import draggable from "vuedraggable";
 import { mapState } from "vuex";
 import { REMOVE_FORM } from "../types/action-types";
 
 const controlList = ["text-box", "text-box", "text-box"];
 
 export default {
-  components: {
-    draggable
-  },
   props: {
     id: {
       type: Number,
@@ -59,6 +45,10 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    apiName: {
+      type: String,
+      required: false
     }
   },
   computed: {
@@ -88,25 +78,7 @@ export default {
   height: 100%;
   margin: 0px !important;
 }
-.flip-list-move {
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
-}
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-.list-group {
-  min-height: 20px;
-}
-.list-group-item {
-  cursor: move;
-  background: transparent;
-  border: none;
-}
-.list-group-item i {
-  cursor: pointer;
+.control-list {
+  padding: 0;
 }
 </style>
