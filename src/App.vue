@@ -4,43 +4,46 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-
-    <grid-layout
-      :layout.sync="layoutItems"
-      :col-num="12"
-      :row-height="30"
-      :margin="[3, 3]"
-      :is-draggable="true"
-      :is-resizable="true"
-      :is-mirrored="false"
-      :responsive="true"
-      :vertical-compact="true"
-      :use-css-transforms="true"
-    >
-      <template v-for="item in layoutItems">
-        <grid-item
-          :x="item.x"
-          :y="item.y"
-          :w="item.w"
-          :h="item.h"
-          :i="item.i"
-          :isDraggable="item.isDraggable"
-          :isResizable="item.isResizable"
-          :static="item.static"
-          :key="item.id"
+    <md-app>
+      <md-app-content>
+        <grid-layout
+          :layout.sync="layoutItems"
+          :col-num="12"
+          :row-height="30"
+          :margin="[3, 3]"
+          :is-draggable="true"
+          :is-resizable="true"
+          :is-mirrored="false"
+          :responsive="true"
+          :vertical-compact="true"
+          :use-css-transforms="true"
         >
-          <menu-bar :type="MENU" v-if="item.layoutItemType === MENU" />
-          <dynamic-form
-            :type="FORM"
-            :id="item.id"
-            v-else-if="item.layoutItemType === FORM"
-          />
-          <navigation-bar
-            v-else-if="item.layoutItemType === NAVIGATION_BAR"
-          ></navigation-bar>
-        </grid-item>
-      </template>
-    </grid-layout>
+          <template v-for="item in layoutItems">
+            <grid-item
+              :x="item.x"
+              :y="item.y"
+              :w="item.w"
+              :h="item.h"
+              :i="item.i"
+              :isDraggable="item.isDraggable"
+              :isResizable="item.isResizable"
+              :static="item.static"
+              :key="item.id"
+            >
+              <menu-bar :type="MENU" v-if="item.layoutItemType === MENU" />
+              <dynamic-form
+                :type="FORM"
+                :id="item.id"
+                v-else-if="item.layoutItemType === FORM"
+              />
+              <navigation-bar
+                v-else-if="item.layoutItemType === NAVIGATION_BAR"
+              ></navigation-bar>
+            </grid-item>
+          </template>
+        </grid-layout>
+      </md-app-content>
+    </md-app>
   </div>
 </template>
 
@@ -48,7 +51,7 @@
 import Vue from "vue";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/default.css";
+import "vue-material/dist/theme/default-dark.css";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -108,5 +111,17 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+.md-app {
+  height: 100%;
+}
+
+.page-container {
+  height: 100%;
+}
+
+.md-content {
+  padding: 0px;
 }
 </style>

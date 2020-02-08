@@ -1,5 +1,5 @@
 <template>
-  <md-toolbar layout="column" class="navigation-bar">
+  <md-toolbar>
     <div class="md-toolbar-column">
       <h3 class="md-title">Navigation</h3>
       <md-list>
