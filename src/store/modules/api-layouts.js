@@ -4,12 +4,15 @@ import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
 function getNextId() {
-  if (!state.layoutItems || state.layoutItems.length === 0) return 0;
-  console.log(state.layoutItems);
-  const layoutItem = state.layoutItems.reduce((previous, current) =>
+  if (!state.apiLayouts || state.apiLayouts.length === 0) return 0;
+  const currentLayout = state.apiLayouts.filter(
+    layout => layout.apiId == state.currentApiId
+  );
+  if (!currentLayout) return 0;
+  const layoutItemWithGreatestId = currentLayout.reduce((previous, current) =>
     previous.id > current.id ? previous : current
   );
-  return layoutItem.id + 1;
+  return layoutItemWithGreatestId.id + 1;
 }
 
 function getNextFreePosition() {
