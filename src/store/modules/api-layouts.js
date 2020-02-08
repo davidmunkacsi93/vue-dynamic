@@ -156,6 +156,7 @@ const mutations = {
   setApiLayoutItems(state, layoutItems) {
     state.currentApiMetaData.layout = layoutItems;
     state.currentApiLayout = layoutItems;
+    console.log(state.apis);
   },
 
   setCurrentApiId(state, apiId) {
