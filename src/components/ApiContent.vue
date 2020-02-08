@@ -1,32 +1,36 @@
 <template>
-  <grid-layout
-    :layout.sync="apiLayout"
-    :col-num="12"
-    :row-height="30"
-    :margin="[3, 3]"
-    :is-draggable="true"
-    :is-resizable="true"
-    :is-mirrored="false"
-    :responsive="true"
-    :vertical-compact="true"
-    :use-css-transforms="true"
-  >
-    <template v-for="item in apiLayout">
-      <grid-item
-        :x="item.x"
-        :y="item.y"
-        :w="item.w"
-        :h="item.h"
-        :i="item.i"
-        :isDraggable="item.isDraggable"
-        :isResizable="item.isResizable"
-        :static="item.static"
-        :key="item.id"
-      >
-        <dynamic-form :type="FORM"></dynamic-form>
-      </grid-item>
-    </template>
-  </grid-layout>
+  <div>
+    <grid-layout
+      v-if="apiLayout != null"
+      :layout.sync="apiLayout"
+      :col-num="12"
+      :row-height="30"
+      :margin="[3, 3]"
+      :is-draggable="true"
+      :is-resizable="true"
+      :is-mirrored="false"
+      :responsive="true"
+      :vertical-compact="true"
+      :use-css-transforms="true"
+    >
+      <template v-for="item in apiLayout">
+        <grid-item
+          :x="item.x"
+          :y="item.y"
+          :w="item.w"
+          :h="item.h"
+          :i="item.i"
+          :isDraggable="item.isDraggable"
+          :isResizable="item.isResizable"
+          :static="item.static"
+          :key="item.id"
+        >
+          <dynamic-form :type="FORM"></dynamic-form>
+        </grid-item>
+      </template>
+    </grid-layout>
+    <div v-else>No layout</div>
+  </div>
 </template>
 <script>
 import { FORM } from "../types/layout-item-types";

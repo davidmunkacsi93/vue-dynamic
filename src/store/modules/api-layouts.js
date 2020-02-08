@@ -10,8 +10,8 @@ import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
 function getNextId() {
-  if (!state.apiLayouts || state.apiLayouts.length === 0) return 0;
-  const currentLayout = state.apiLayouts.filter(
+  if (!state.apis || state.apis.length === 0) return 0;
+  const currentLayout = state.apis.filter(
     layout => layout.apiId == state.currentApiId
   );
   if (!currentLayout) return 0;
@@ -108,7 +108,7 @@ const state = {
   currentApiId: -1,
   currentApiMetaData: null,
   isEditModeActive: true,
-  apiLayouts: getDummyData()
+  apis: getDummyData()
 };
 
 const mutations = {
@@ -133,10 +133,8 @@ const mutations = {
   },
 
   loadApiLayout(state, apiId) {
-    console.log(apiId);
-    state.currentApiMetaData = state.apiLayouts.filter(
-      api => api.apiId == apiId
-    );
+    state.currentApiMetaData = state.apis.find(api => api.apiId == apiId);
+    EventBus.$emit(LAYOUT_UPDATED);
   },
 
   setApiLayoutItems(state, layoutItems) {
