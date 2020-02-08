@@ -49,9 +49,12 @@
 
 <script>
 import Vue from "vue";
+
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
+
+import VueRouter from "vue-router";
 
 import DynamicContent from "./components/DynamicContent.vue";
 import GridItem from "./components/GridItem.vue";
@@ -63,6 +66,7 @@ import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
 Vue.use(VueMaterial);
+Vue.use(VueRouter);
 
 export default {
   name: "app",
