@@ -37,6 +37,10 @@ export default {
       layoutItems: [],
       FORM: FORM
     };
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log(to + " " + from);
+    next();
   }
 };
 </script>

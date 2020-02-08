@@ -1,13 +1,14 @@
 import ApiContent from "./components/ApiContent.vue";
-import LandingPage from "./components/LandingPage.vue";
+import Home from "./components/Home.vue";
 
 export default [
   {
     path: "/",
-    component: LandingPage
+    component: Home
   },
   {
     path: "/api/:apiId",
+    name: "api",
     component: ApiContent
   }
 ];
