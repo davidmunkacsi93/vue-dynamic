@@ -7,7 +7,7 @@
     <md-app>
       <md-app-content>
         <grid-layout
-          :layout.sync="layout"
+          :layout.sync="mainLayoutItems"
           :col-num="12"
           :row-height="30"
           :margin="[0, 0]"
@@ -18,7 +18,7 @@
           :vertical-compact="true"
           :use-css-transforms="true"
         >
-          <template v-for="item in layout">
+          <template v-for="item in mainLayoutItems">
             <grid-item
               :x="item.x"
               :y="item.y"
@@ -31,10 +31,10 @@
               :key="item.id"
             >
               <menu-bar :type="MENU" v-if="item.layoutItemType === MENU" />
-              <dynamic-form
-                :type="FORM"
+              <dynamic-content
+                :type="CONTENT"
                 :id="item.id"
-                v-else-if="item.layoutItemType === FORM"
+                v-else-if="item.layoutItemType === CONTENT"
               />
               <navigation-bar
                 v-else-if="item.layoutItemType === NAVIGATION_BAR"
@@ -92,24 +92,21 @@ import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-import DynamicForm from "./components/DynamicForm.vue";
+import DynamicContent from "./components/DynamicContent.vue";
 import GridItem from "./components/GridItem.vue";
 import GridLayout from "./components/GridLayout.vue";
 import MenuBar from "./components/MenuBar.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 
 import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
-import { CONTENT, FORM, MENU } from "./types/layout-item-types";
+import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
 Vue.use(VueMaterial);
 
 export default {
   name: "app",
   components: {
-    DynamicForm,
+    DynamicContent,
     GridItem,
     GridLayout,
     MenuBar,
@@ -118,8 +115,8 @@ export default {
   data() {
     return {
       CONTENT,
-      FORM,
-      MENU
+      MENU,
+      NAVIGATION_BAR
     };
   },
   beforeCreate() {

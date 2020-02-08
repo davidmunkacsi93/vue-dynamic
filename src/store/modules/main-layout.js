@@ -96,7 +96,7 @@ const mutations = {
       JSON.stringify(state.mainLayoutItems)
     );
   },
-  setMainmainLayoutItems(state, mainLayoutItems) {
+  setMainLayoutItems(state, mainLayoutItems) {
     state.mainLayoutItems = mainLayoutItems;
     EventBus.$emit(LAYOUT_UPDATED);
   }
@@ -116,7 +116,7 @@ const actions = {
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
   },
-  setMainmainLayoutItems({ commit }, mainLayoutItems) {
+  setMainLayoutItems({ commit }, mainLayoutItems) {
     commit(SET_MAIN_LAYOUT_ITEMS, mainLayoutItems);
   }
 };
