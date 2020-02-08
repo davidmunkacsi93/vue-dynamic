@@ -149,7 +149,7 @@ const mutations = {
 
     localStorage.setItem(
       LOCAL_STORAGE_API_LAYOUT_KEY,
-      JSON.stringify(state.mainLayoutItems)
+      JSON.stringify(state.apis)
     );
   },
 
