@@ -43,7 +43,7 @@
 <script>
 import draggable from "vuedraggable";
 import { mapState } from "vuex";
-import { REMOVE_GRID_ITEM } from "../types/action-types";
+import { REMOVE_FORM } from "../types/action-types";
 
 const controlList = ["text-box", "text-box", "text-box"];
 
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     removeGridItem() {
-      this.$store.dispatch(REMOVE_GRID_ITEM, this.id);
+      this.$store.dispatch(REMOVE_FORM, this.id);
     }
   }
 };
