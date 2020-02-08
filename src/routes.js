@@ -1,4 +1,4 @@
-import ApiComponent from "./components/ApiComponent.vue";
+import ApiContent from "./components/ApiContent.vue";
 import LandingPage from "./components/LandingPage.vue";
 
 export default [
@@ -8,6 +8,6 @@ export default [
   },
   {
     path: "/api/:apiId",
-    component: ApiComponent
+    component: ApiContent
   }
 ];

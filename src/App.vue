@@ -62,14 +62,22 @@ import GridLayout from "./components/GridLayout.vue";
 import MenuBar from "./components/MenuBar.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 
+import routes from "./routes";
+
 import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
 
+const router = new VueRouter({
+  mode: "history",
+  routes: routes
+});
+
 export default {
   name: "app",
+  router,
   components: {
     DynamicContent,
     GridItem,
