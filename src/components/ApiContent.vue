@@ -24,7 +24,7 @@
           :static="item.static"
           :key="item.id"
         >
-          <dynamic-form :type="FORM"></dynamic-form>
+          <dynamic-form :type="FORM" :id="item.id"></dynamic-form>
         </grid-item>
       </template>
     </grid-layout>
