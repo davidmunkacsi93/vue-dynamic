@@ -106,7 +106,8 @@ function getDummyData() {
 
 const state = {
   currentApiId: -1,
-  currentApiMetaData: null,
+  currentApiLayout: [],
+  currentApiMetaData: [],
   isEditModeActive: true,
   apis: getDummyData()
 };
@@ -134,11 +135,13 @@ const mutations = {
 
   loadApiLayout(state, apiId) {
     state.currentApiMetaData = state.apis.find(api => api.apiId == apiId);
+    state.currentApiLayout = state.currentApiMetaData.layout;
     EventBus.$emit(LAYOUT_UPDATED);
   },
 
   setApiLayoutItems(state, layoutItems) {
     state.currentApiMetaData.layout = layoutItems;
+    state.currentApiLayout = layoutItems;
   },
 
   setCurrentApiId(state, apiId) {

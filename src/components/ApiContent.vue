@@ -38,11 +38,11 @@ import { SET_API_LAYOUT_ITEMS, LOAD_API_LAYOUT } from "../types/action-types";
 export default {
   computed: {
     ...mapState({
-      apiLayout: state => state.apiLayouts.currentApiMetaData.layout
+      apiLayout: state => state.apiLayouts.currentApiLayout
     }),
     apiLayout: {
       get() {
-        return this.$store.state.apiLayouts.currentApiMetaData.layout;
+        return this.$store.state.apiLayouts.currentApiLayout;
       },
       set(layoutItems) {
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
@@ -58,6 +58,7 @@ export default {
   beforeRouteUpdate(to, from, next) {
     const nextApiId = to.params.apiId;
     this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
+    console.log(this.apiLayout);
     next();
   }
 };
