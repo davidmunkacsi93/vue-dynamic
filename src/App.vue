@@ -43,45 +43,6 @@
           </template>
         </grid-layout>
       </md-app-content>
-
-      <!-- <md-app-content>
-        <grid-layout
-          :layout.sync="layoutItems"
-          :col-num="12"
-          :row-height="30"
-          :margin="[3, 3]"
-          :is-draggable="true"
-          :is-resizable="true"
-          :is-mirrored="false"
-          :responsive="true"
-          :vertical-compact="true"
-          :use-css-transforms="true"
-        >
-          <template v-for="item in layoutItems">
-            <grid-item
-              :x="item.x"
-              :y="item.y"
-              :w="item.w"
-              :h="item.h"
-              :i="item.i"
-              :isDraggable="item.isDraggable"
-              :isResizable="item.isResizable"
-              :static="item.static"
-              :key="item.id"
-            >
-              <menu-bar :type="MENU" v-if="item.layoutItemType === MENU" />
-              <dynamic-form
-                :type="FORM"
-                :id="item.id"
-                v-else-if="item.layoutItemType === FORM"
-              />
-              <navigation-bar
-                v-else-if="item.layoutItemType === NAVIGATION_BAR"
-              ></navigation-bar>
-            </grid-item>
-          </template>
-        </grid-layout>
-      </md-app-content> -->
     </md-app>
   </div>
 </template>
