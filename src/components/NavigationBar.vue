@@ -24,7 +24,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
-      availableApis: state => state.apiLayouts.apiLayouts
+      availableApis: state => state.apiLayouts.apis
     })
   },
   methods: {}

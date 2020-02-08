@@ -1,7 +1,6 @@
 <template>
   <div>
     <grid-layout
-      v-if="apiLayout != null"
       :layout.sync="apiLayout"
       :col-num="12"
       :row-height="30"
@@ -29,7 +28,6 @@
         </grid-item>
       </template>
     </grid-layout>
-    <div v-else>No layout</div>
   </div>
 </template>
 <script>
