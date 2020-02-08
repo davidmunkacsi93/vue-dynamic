@@ -1,8 +1,10 @@
 import EventBus from "../../utils/event-bus.js";
 import {
   ADD_NEW_FORM,
+  LOAD_API_LAYOUT,
+  SET_CURRENT_API_ID,
   REMOVE_FORM,
-  SET_CURRENT_API_ID
+  SET_API_LAYOUT_ITEMS
 } from "../../types/action-types";
 import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
@@ -104,7 +106,7 @@ function getDummyData() {
 
 const state = {
   currentApiId: -1,
-  currentLayout: [],
+  currentApiLayout: [],
   isEditModeActive: true,
   apiLayouts: getDummyData()
 };
@@ -130,6 +132,10 @@ const mutations = {
     EventBus.$emit(COMPACT);
   },
 
+  setApiLayoutItems(state, layoutItems) {
+    state.currentApiLayout = layoutItems;
+  },
+
   setCurrentApiId(state, apiId) {
     state.currentApiId = apiId;
   },
@@ -145,6 +151,12 @@ const mutations = {
 const actions = {
   addNewForm({ commit }) {
     commit(ADD_NEW_FORM);
+  },
+  loadApiLayout({ commit }, apiId) {
+    commit(LOAD_API_LAYOUT, apiId);
+  },
+  setApiLayoutItems({ commit }, layoutItems) {
+    commit(SET_API_LAYOUT_ITEMS, layoutItems);
   },
   setCurrentApiId({ commit }, apiId) {
     commit(SET_CURRENT_API_ID, apiId);
