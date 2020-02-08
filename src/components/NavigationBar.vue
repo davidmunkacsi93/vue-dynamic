@@ -1,10 +1,15 @@
 <template>
-  <div class="navigation-bar">
+  <div class="full-control navigation-bar">
     <h3 class="md-title">Navigation</h3>
     <md-list>
-      <md-list-item>
+      <md-list-item md-expand>
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
+        <md-list slot="md-expand">
+          <md-list-item v-for="api in availableApis" :key="api.apiId">
+            {{ api.apiName }}
+          </md-list-item>
+        </md-list>
       </md-list-item>
       <md-list-item>
         <md-icon>http</md-icon>
@@ -15,8 +20,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  computed: {},
+  computed: {
+    ...mapState({
+      availableApis: state => state.apiLayouts.apiLayouts
+    })
+  },
   methods: {}
 };
 </script>
