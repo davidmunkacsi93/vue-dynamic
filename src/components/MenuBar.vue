@@ -9,23 +9,25 @@
       <h3 class="md-title">VueGenericUI</h3>
 
       <div class="md-toolbar-section-end">
-        <md-button v-on:click="addGridItem" class="md-icon-button">
-          <md-icon>add</md-icon>
-        </md-button>
-        <md-button
-          v-on:click="editGridLayout"
-          v-show="!isEditModeEnabled"
-          class="md-icon-button"
-        >
-          <md-icon>edit</md-icon>
-        </md-button>
-        <md-button
-          v-on:click="saveMainLayout"
-          v-show="isEditModeEnabled"
-          class="md-icon-button"
-        >
-          <md-icon>save</md-icon>
-        </md-button>
+        <md-menu md-size="big" md-direction="bottom-end">
+          <md-button class="md-icon-button" md-menu-trigger>
+            <md-icon>more_vert</md-icon>
+          </md-button>
+          <md-menu-content>
+            <md-menu-item @click="addGridItem">
+              <span>Add New Form</span>
+              <md-icon>add</md-icon>
+            </md-menu-item>
+            <md-menu-item @click="editGridLayout" v-show="!isEditModeEnabled">
+              <span>Edit Layout</span>
+              <md-icon>edit</md-icon>
+            </md-menu-item>
+            <md-menu-item @click="saveMainLayout" v-show="isEditModeEnabled">
+              <span>Save Layout</span>
+              <md-icon>save</md-icon>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </div>
     </div>
   </md-toolbar>
