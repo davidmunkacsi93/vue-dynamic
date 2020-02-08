@@ -149,7 +149,7 @@ const mutations = {
   },
 
   removeForm(state, formId) {
-    state.mainLayoutItems = state.mainLayoutItems.filter(
+    state.currentApiLayout = state.currentApiLayout.filter(
       item => item.id != formId
     );
     EventBus.$emit(LAYOUT_UPDATED);
