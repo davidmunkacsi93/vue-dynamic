@@ -1,15 +1,17 @@
 <template>
-  <md-toolbar>
-    <div class="md-toolbar-column">
-      <h3 class="md-title">Navigation</h3>
-      <md-list>
-        <md-list-item>
-          <md-icon>build</md-icon>
-          <span class="md-list-item-text">My APIs</span>
-        </md-list-item>
-      </md-list>
-    </div>
-  </md-toolbar>
+  <md-app-drawer class="navigation-bar" md-permanent="full">
+    <h3 class="md-title">Navigation</h3>
+    <md-list>
+      <md-list-item>
+        <md-icon>list</md-icon>
+        <span class="md-list-item-text">My APIs</span>
+      </md-list-item>
+      <md-list-item>
+        <md-icon>http</md-icon>
+        <span class="md-list-item-text">Add API</span>
+      </md-list-item>
+    </md-list>
+  </md-app-drawer>
 </template>
 
 <script>
@@ -22,5 +24,7 @@ export default {
 <style>
 .navigation-bar {
   height: 100%;
+  width: auto !important;
+  padding: 10px;
 }
 </style>

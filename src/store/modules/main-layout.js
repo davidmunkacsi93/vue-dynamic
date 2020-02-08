@@ -1,85 +1,38 @@
 import EventBus from "../../utils/event-bus.js";
 import {
-  ADD_GRID_ITEM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
-  INITIALIZE_MENU,
+  INITIALIZE_MAIN_LAYOUT,
   LOAD_MAIN_LAYOUT,
   SAVE_MAIN_LAYOUT,
-  SET_MAIN_LAYOUT_ITEMS,
-  REMOVE_GRID_ITEM
+  SET_MAIN_LAYOUT_ITEMS
 } from "../../types/action-types";
-import { FORM, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
+import { CONTENT, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
 const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
 
 const state = {
   isEditModeActive: false,
-  layouts: [],
-  layoutItems: []
+  mainLayoutItems: []
 };
 
-function getNextId() {
-  if (!state.layoutItems || state.layoutItems.length === 0) return 0;
-  console.log(state.layoutItems);
-  const layoutItem = state.layoutItems.reduce((previous, current) =>
-    previous.id > current.id ? previous : current
-  );
-  return layoutItem.id + 1;
-}
-
-function getNextFreePosition() {
-  const x = Math.max.apply(
-    Math,
-    state.layoutItems.map(function(layoutItem) {
-      return layoutItem.y + layoutItem.h;
-    })
-  );
-  const y = Math.max.apply(
-    Math,
-    state.layoutItems.map(function(layoutItem) {
-      return layoutItem.y + layoutItem.h;
-    })
-  );
-  return { x, y };
-}
-
 const mutations = {
-  addGridItem(state) {
-    const newId = getNextId();
-    const position = getNextFreePosition();
-    const newItem = {
-      x: position.x,
-      y: position.y,
-      w: 2,
-      h: 13,
-      i: newId.toString(),
-      id: newId,
-      isDraggable: true,
-      isResizable: true,
-      static: !state.isEditModeActive,
-      layoutItemType: FORM
-    };
-    state.layoutItems.push(newItem);
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(COMPACT);
-  },
   enableEditMode(state) {
-    for (var layoutItem of state.layoutItems) {
+    for (var layoutItem of state.mainLayoutItems) {
       layoutItem.static = false;
     }
 
     state.isEditModeActive = true;
   },
   disableEditMode(state) {
-    for (var layoutItem of state.layoutItems) {
+    for (var layoutItem of state.mainLayoutItems) {
       layoutItem.static = true;
     }
 
     state.isEditModeActive = false;
   },
-  initializeMenu(state) {
+  initializeMainLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
     if (layoutString) return;
 
@@ -88,33 +41,42 @@ const mutations = {
       y: 0,
       w: 10,
       h: 2,
-      i: "0",
-      id: 0,
+      i: 0,
       isDraggable: true,
       isResizable: true,
-      static: true,
+      static: false,
       layoutItemType: MENU
     };
-
-    const NavigationBar = {
+    const content = {
+      x: 2,
+      y: 2,
+      w: 10,
+      h: 10,
+      i: 1,
+      isDraggable: true,
+      isResizable: true,
+      static: false,
+      layoutItemType: CONTENT
+    };
+    const navigationBar = {
       x: 0,
       y: 0,
       w: 2,
-      h: 20,
-      i: "1",
-      id: 1,
+      h: 12,
+      i: 2,
       isDraggable: true,
       isResizable: true,
-      static: true,
+      static: false,
       layoutItemType: NAVIGATION_BAR
     };
 
-    state.layoutItems.push(menu);
-    state.layoutItems.push(NavigationBar);
+    state.mainLayoutItems.push(menu);
+    state.mainLayoutItems.push(content);
+    state.mainLayoutItems.push(navigationBar);
 
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUT_KEY,
-      JSON.stringify(state.layoutItems)
+      JSON.stringify(state.mainLayoutItems)
     );
   },
   loadMainLayout(state) {
@@ -124,31 +86,23 @@ const mutations = {
     }
 
     const parsedLayout = JSON.parse(layoutString);
-    state.layoutItems = parsedLayout;
+    state.mainLayoutItems = parsedLayout;
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
   },
   saveMainLayout(state) {
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUT_KEY,
-      JSON.stringify(state.layoutItems)
+      JSON.stringify(state.mainLayoutItems)
     );
   },
-  setMainLayoutItems(state, layoutItems) {
-    state.layoutItems = layoutItems;
-    EventBus.$emit(LAYOUT_UPDATED);
-  },
-  removeGridItem(state, itemId) {
-    state.layoutItems = state.layoutItems.filter(item => item.id != itemId);
+  setMainmainLayoutItems(state, mainLayoutItems) {
+    state.mainLayoutItems = mainLayoutItems;
     EventBus.$emit(LAYOUT_UPDATED);
   }
 };
 
 const actions = {
-  addGridItem({ commit }) {
-    commit(ADD_GRID_ITEM);
-    commit(SAVE_MAIN_LAYOUT);
-  },
   disableEditMode({ commit }) {
     commit(DISABLE_EDIT_MODE);
   },
@@ -156,18 +110,14 @@ const actions = {
     commit(ENABLE_EDIT_MODE);
   },
   loadMainLayout({ commit }) {
-    commit(INITIALIZE_MENU);
+    commit(INITIALIZE_MAIN_LAYOUT);
     commit(LOAD_MAIN_LAYOUT);
   },
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
   },
-  setMainLayoutItems({ commit }, layoutItems) {
-    commit(SET_MAIN_LAYOUT_ITEMS, layoutItems);
-  },
-  removeGridItem({ commit }, itemId) {
-    commit(REMOVE_GRID_ITEM, itemId);
-    commit(SAVE_MAIN_LAYOUT);
+  setMainmainLayoutItems({ commit }, mainLayoutItems) {
+    commit(SET_MAIN_LAYOUT_ITEMS, mainLayoutItems);
   }
 };
 

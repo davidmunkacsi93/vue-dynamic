@@ -90,7 +90,7 @@
 import Vue from "vue";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/default-dark.css";
+import "vue-material/dist/theme/default.css";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -102,7 +102,7 @@ import MenuBar from "./components/MenuBar.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 
 import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
-import { FORM, MENU, NAVIGATION_BAR, CONTENT } from "./types/layout-item-types";
+import { CONTENT, FORM, MENU } from "./types/layout-item-types";
 
 Vue.use(VueMaterial);
 
@@ -117,53 +117,18 @@ export default {
   },
   data() {
     return {
+      CONTENT,
       FORM,
-      MENU,
-      NAVIGATION_BAR,
-      layout: [
-        {
-          x: 2,
-          y: 0,
-          w: 10,
-          h: 2,
-          i: 0,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: MENU
-        },
-        {
-          x: 2,
-          y: 2,
-          w: 10,
-          h: 10,
-          i: 1,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: CONTENT
-        },
-        {
-          x: 0,
-          y: 0,
-          w: 2,
-          h: 12,
-          i: 2,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: NAVIGATION_BAR
-        }
-      ]
+      MENU
     };
   },
   beforeCreate() {
     this.$store.dispatch(LOAD_MAIN_LAYOUT);
   },
   computed: {
-    layoutItems: {
+    mainLayoutItems: {
       get() {
-        return this.$store.state.mainLayout.layoutItems;
+        return this.$store.state.mainLayout.mainLayoutItems;
       },
       set(layoutItems) {
         this.$store.dispatch(SET_MAIN_LAYOUT_ITEMS, layoutItems);
