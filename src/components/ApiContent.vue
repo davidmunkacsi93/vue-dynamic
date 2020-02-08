@@ -31,19 +31,16 @@
 <script>
 import { FORM } from "../types/layout-item-types";
 import { mapState } from "vuex";
-import { SET_API_LAYOUT_ITEMS } from "../types/action-types";
+import { SET_API_LAYOUT_ITEMS, LOAD_API_LAYOUT } from "../types/action-types";
 
 export default {
-  beforeCreate() {
-    this.$store.dispatch();
-  },
   computed: {
     ...mapState({
-      apiLayout: state => state.apiLayouts.currentApiLayout
+      apiLayout: state => state.apiLayouts.currentApiMetaData.layout
     }),
-    currentApiLayoutItems: {
+    apiLayout: {
       get() {
-        return this.$store.state.apiLayouts.mainLayoutItems;
+        return this.$store.state.apiLayouts.currentApiMetaData.layout;
       },
       set(layoutItems) {
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
@@ -57,7 +54,8 @@ export default {
     };
   },
   beforeRouteUpdate(to, from, next) {
-    console.log(to + " " + from);
+    const nextApiId = to.params.apiId;
+    this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
     next();
   }
 };
