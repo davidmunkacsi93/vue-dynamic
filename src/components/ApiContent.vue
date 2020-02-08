@@ -35,7 +35,10 @@ import { FORM } from "../types/layout-item-types";
 import { mapState } from "vuex";
 import { SET_API_LAYOUT_ITEMS, LOAD_API_LAYOUT } from "../types/action-types";
 
+import DynamicForm from "../components/DynamicForm";
+
 export default {
+  components: { DynamicForm },
   computed: {
     ...mapState({
       apiLayout: state => state.apiLayouts.currentApiLayout
