@@ -4,10 +4,13 @@ import {
   LOAD_API_LAYOUT,
   SET_CURRENT_API_ID,
   REMOVE_FORM,
-  SET_API_LAYOUT_ITEMS
+  SET_API_LAYOUT_ITEMS,
+  SAVE_API_LAYOUT
 } from "../../types/action-types";
 import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
+
+const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layout";
 
 function getNextId() {
   if (!state.apis || state.apis.length === 0) return 0;
@@ -128,7 +131,7 @@ const mutations = {
       static: !state.isEditModeActive,
       layoutItemType: FORM
     };
-    state.layoutItems.push(newItem);
+    state.currentApiLayout.push(newItem);
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
   },
@@ -137,6 +140,17 @@ const mutations = {
     state.currentApiMetaData = state.apis.find(api => api.apiId == apiId);
     state.currentApiLayout = state.currentApiMetaData.layout;
     EventBus.$emit(LAYOUT_UPDATED);
+  },
+
+  saveApiLayout(state) {
+    if (!state.currentApiLayout || !state.currentApiMetaData) return;
+
+    state.apis[state.currentApiMetaData.apiId] = state.currentApiLayout;
+
+    localStorage.setItem(
+      LOCAL_STORAGE_API_LAYOUT_KEY,
+      JSON.stringify(state.mainLayoutItems)
+    );
   },
 
   setApiLayoutItems(state, layoutItems) {
@@ -162,6 +176,9 @@ const actions = {
   },
   loadApiLayout({ commit }, apiId) {
     commit(LOAD_API_LAYOUT, apiId);
+  },
+  saveApiLayout({ commit }) {
+    commit(SAVE_API_LAYOUT);
   },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);

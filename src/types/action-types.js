@@ -4,6 +4,7 @@ export const DISABLE_EDIT_MODE = "disableEditMode";
 export const INITIALIZE_MAIN_LAYOUT = "initializeMainLayout";
 export const LOAD_API_LAYOUT = "loadApiLayout";
 export const LOAD_MAIN_LAYOUT = "loadMainLayout";
+export const SAVE_API_LAYOUT = "saveApiLayout";
 export const SAVE_MAIN_LAYOUT = "saveMainLayout";
 export const SET_CURRENT_API_ID = "setCurrentApiId";
 export const SET_API_LAYOUT_ITEMS = "setApiLayoutItems";
