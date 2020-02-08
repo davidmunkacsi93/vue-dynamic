@@ -86,6 +86,7 @@ export default {
 <style>
 .dynamic-form {
   height: 100%;
+  margin: 0px !important;
 }
 .flip-list-move {
   transition: transform 0.5s;
