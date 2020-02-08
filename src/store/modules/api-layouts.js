@@ -31,9 +31,76 @@ function getNextFreePosition() {
   return { x, y };
 }
 
+function getDummyData() {
+  return [
+    {
+      apiId: 0,
+      apiName: "First API",
+      layout: [
+        {
+          x: 3,
+          y: 2,
+          w: 2,
+          h: 13,
+          i: 0,
+          id: 0,
+          isDraggable: true,
+          isResizable: true,
+          static: false,
+          layoutItemType: FORM
+        },
+        {
+          x: 5,
+          y: 2,
+          w: 2,
+          h: 13,
+          i: 0,
+          id: 1,
+          isDraggable: true,
+          isResizable: true,
+          static: false,
+          layoutItemType: FORM
+        }
+      ]
+    },
+    {
+      apiId: 1,
+      apiName: "Second API",
+      layout: [
+        {
+          x: 3,
+          y: 2,
+          w: 4,
+          h: 13,
+          i: 0,
+          id: 0,
+          isDraggable: true,
+          isResizable: true,
+          static: false,
+          layoutItemType: FORM
+        },
+        {
+          x: 5,
+          y: 2,
+          w: 4,
+          h: 13,
+          i: 0,
+          id: 1,
+          isDraggable: true,
+          isResizable: true,
+          static: false,
+          layoutItemType: FORM
+        }
+      ]
+    }
+  ];
+}
+
 const state = {
   currentApiId: -1,
-  apiLayouts: []
+  currentLayout: [],
+  isEditModeActive: true,
+  apiLayouts: getDummyData()
 };
 
 const mutations = {
