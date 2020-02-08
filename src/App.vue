@@ -87,6 +87,9 @@ export default {
   beforeCreate() {
     this.$store.dispatch(LOAD_MAIN_LAYOUT);
   },
+  created() {
+    console.log(this);
+  },
   computed: {
     mainLayoutItems: {
       get() {

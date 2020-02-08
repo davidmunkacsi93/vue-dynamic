@@ -40,6 +40,7 @@ function getDummyData() {
     {
       apiId: 0,
       apiName: "First API",
+      apiPath: "/api/0",
       layout: [
         {
           x: 3,
@@ -70,6 +71,7 @@ function getDummyData() {
     {
       apiId: 1,
       apiName: "Second API",
+      apiPath: "/api/1",
       layout: [
         {
           x: 3,

@@ -7,7 +7,7 @@
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
           <md-list-item v-for="api in availableApis" :key="api.apiId">
-            <router-link to="/api">{{ api.apiName }}</router-link>
+            <router-link :to="api.apiPath">{{ api.apiName }}</router-link>
           </md-list-item>
         </md-list>
       </md-list-item>
