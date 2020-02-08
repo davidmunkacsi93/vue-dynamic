@@ -1,5 +1,9 @@
 import EventBus from "../../utils/event-bus.js";
-import { ADD_NEW_FORM, REMOVE_FORM } from "../../types/action-types";
+import {
+  ADD_NEW_FORM,
+  REMOVE_FORM,
+  SET_CURRENT_API_ID
+} from "../../types/action-types";
 import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
@@ -124,6 +128,10 @@ const mutations = {
     EventBus.$emit(COMPACT);
   },
 
+  setCurrentApiId(state, apiId) {
+    state.currentApiId = apiId;
+  },
+
   removeForm(state, formId) {
     state.mainLayoutItems = state.mainLayoutItems.filter(
       item => item.id != formId
@@ -135,6 +143,9 @@ const mutations = {
 const actions = {
   addNewForm({ commit }) {
     commit(ADD_NEW_FORM);
+  },
+  setCurrentApiId({ commit }, apiId) {
+    commit(SET_CURRENT_API_ID, apiId);
   },
   removeForm({ commit }, formId) {
     commit(REMOVE_FORM, formId);
