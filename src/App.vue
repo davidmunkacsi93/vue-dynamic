@@ -64,7 +64,11 @@ import NavigationBar from "./components/NavigationBar.vue";
 
 import routes from "./routes";
 
-import { LOAD_MAIN_LAYOUT, SET_MAIN_LAYOUT_ITEMS } from "./types/action-types";
+import {
+  LOAD_MAIN_LAYOUT,
+  SET_MAIN_LAYOUT_ITEMS,
+  LOAD_APIS
+} from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
 Vue.use(VueMaterial);
@@ -94,6 +98,7 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch(LOAD_MAIN_LAYOUT);
+    this.$store.dispatch(LOAD_APIS);
   },
   computed: {
     mainLayoutItems: {

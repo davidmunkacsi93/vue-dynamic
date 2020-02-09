@@ -5,7 +5,8 @@ import {
   SET_CURRENT_API_ID,
   REMOVE_FORM,
   SET_API_LAYOUT_ITEMS,
-  SAVE_API_LAYOUT
+  SAVE_API_LAYOUT,
+  LOAD_APIS
 } from "../../types/action-types";
 import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
@@ -136,6 +137,18 @@ const mutations = {
     EventBus.$emit(COMPACT);
   },
 
+  loadApis(state) {
+    const apiString = localStorage.getItem(LOCAL_STORAGE_API_LAYOUT_KEY);
+    if (!apiString) {
+      return;
+    }
+
+    const parsedApis = JSON.parse(apiString);
+    state.apis = parsedApis;
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(COMPACT);
+  },
+
   loadApiLayout(state, apiId) {
     console.log(apiId);
     state.currentApiMetaData = state.apis.find(api => api.apiId == apiId);
@@ -177,6 +190,9 @@ const mutations = {
 const actions = {
   addNewForm({ commit }) {
     commit(ADD_NEW_FORM);
+  },
+  loadApis({ commit }) {
+    commit(LOAD_APIS);
   },
   loadApiLayout({ commit }, apiId) {
     commit(LOAD_API_LAYOUT, apiId);

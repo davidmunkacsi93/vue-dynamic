@@ -2,6 +2,7 @@ export const ADD_NEW_FORM = "addNewForm";
 export const ENABLE_EDIT_MODE = "enableEditMode";
 export const DISABLE_EDIT_MODE = "disableEditMode";
 export const INITIALIZE_MAIN_LAYOUT = "initializeMainLayout";
+export const LOAD_APIS = "loadApis";
 export const LOAD_API_LAYOUT = "loadApiLayout";
 export const LOAD_MAIN_LAYOUT = "loadMainLayout";
 export const SAVE_API_LAYOUT = "saveApiLayout";
