@@ -50,8 +50,8 @@ function getDummyData() {
         {
           x: 3,
           y: 2,
-          w: 2,
-          h: 13,
+          w: 4,
+          h: 10,
           i: 0,
           id: 0,
           isDraggable: true,
@@ -62,8 +62,8 @@ function getDummyData() {
         {
           x: 5,
           y: 2,
-          w: 2,
-          h: 13,
+          w: 4,
+          h: 10,
           i: 1,
           id: 1,
           isDraggable: true,
@@ -81,10 +81,10 @@ function getDummyData() {
         {
           x: 3,
           y: 2,
-          w: 4,
-          h: 13,
-          i: 0,
-          id: 0,
+          w: 8,
+          h: 12,
+          i: 2,
+          id: 2,
           isDraggable: true,
           isResizable: true,
           static: false,
@@ -93,10 +93,10 @@ function getDummyData() {
         {
           x: 5,
           y: 2,
-          w: 4,
-          h: 13,
-          i: 1,
-          id: 1,
+          w: 8,
+          h: 12,
+          i: 3,
+          id: 3,
           isDraggable: true,
           isResizable: true,
           static: false,
@@ -110,7 +110,7 @@ function getDummyData() {
 const state = {
   currentApiId: -1,
   currentApiLayout: [],
-  currentApiMetaData: [],
+  currentApiMetaData: null,
   isEditModeActive: true,
   apis: getDummyData()
 };
@@ -137,26 +137,29 @@ const mutations = {
   },
 
   loadApiLayout(state, apiId) {
+    console.log(apiId);
     state.currentApiMetaData = state.apis.find(api => api.apiId == apiId);
+    console.log(state.currentApiMetaData);
     state.currentApiLayout = state.currentApiMetaData.layout;
+    console.log(state.currentApiLayout);
     EventBus.$emit(LAYOUT_UPDATED);
   },
 
   saveApiLayout(state) {
     if (!state.currentApiLayout || !state.currentApiMetaData) return;
 
-    state.apis[state.currentApiMetaData.apiId] = state.currentApiLayout;
-
+    state.currentApiMetaData.layout = state.currentApiLayout;
+    state.apis[state.currentApiMetaData.apiId] = state.currentApiMetaData;
     localStorage.setItem(
       LOCAL_STORAGE_API_LAYOUT_KEY,
       JSON.stringify(state.apis)
     );
+    console.log("saved");
   },
 
   setApiLayoutItems(state, layoutItems) {
     state.currentApiMetaData.layout = layoutItems;
     state.currentApiLayout = layoutItems;
-    console.log(state.apis);
   },
 
   setCurrentApiId(state, apiId) {

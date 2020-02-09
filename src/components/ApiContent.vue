@@ -33,7 +33,11 @@
 <script>
 import { FORM } from "../types/layout-item-types";
 import { mapState } from "vuex";
-import { SET_API_LAYOUT_ITEMS, LOAD_API_LAYOUT } from "../types/action-types";
+import {
+  SET_API_LAYOUT_ITEMS,
+  LOAD_API_LAYOUT,
+  SAVE_API_LAYOUT
+} from "../types/action-types";
 
 import DynamicForm from "../components/DynamicForm";
 
@@ -41,7 +45,7 @@ export default {
   components: { DynamicForm },
   computed: {
     ...mapState({
-      apiLayout: state => state.apiLayouts.currentApiLayout
+      apiLayout: state => state.apiLayouts
     }),
     apiLayout: {
       get() {
@@ -58,9 +62,20 @@ export default {
       FORM: FORM
     };
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     const nextApiId = to.params.apiId;
-    this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
+    next(vm => {
+      vm.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
+    });
+  },
+  async beforeRouteUpdate(to, from, next) {
+    const nextApiId = to.params.apiId;
+    await this.$store.dispatch(SAVE_API_LAYOUT);
+    await this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
+    next();
+  },
+  async beforeRouteLeave(to, from, next) {
+    await this.$store.dispatch(SAVE_API_LAYOUT);
     next();
   }
 };
