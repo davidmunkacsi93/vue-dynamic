@@ -64,18 +64,21 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     const nextApiId = to.params.apiId;
+    console.log(nextApiId);
     next(vm => {
+      console.log(nextApiId);
       vm.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
     });
   },
-  async beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     const nextApiId = to.params.apiId;
-    await this.$store.dispatch(SAVE_API_LAYOUT);
-    await this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
+    console.log(nextApiId);
+    this.$store.dispatch(SAVE_API_LAYOUT);
+    this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
     next();
   },
-  async beforeRouteLeave(to, from, next) {
-    await this.$store.dispatch(SAVE_API_LAYOUT);
+  beforeRouteLeave(to, from, next) {
+    this.$store.dispatch(SAVE_API_LAYOUT);
     next();
   }
 };

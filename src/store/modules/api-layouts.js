@@ -138,15 +138,16 @@ const mutations = {
   },
 
   loadApis(state) {
-    const apiString = localStorage.getItem(LOCAL_STORAGE_API_LAYOUT_KEY);
-    if (!apiString) {
-      return;
-    }
+    console.log(state.apis);
+    // const apiString = localStorage.getItem(LOCAL_STORAGE_API_LAYOUT_KEY);
+    // if (!apiString) {
+    //   return;
+    // }
 
-    const parsedApis = JSON.parse(apiString);
-    state.apis = parsedApis;
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(COMPACT);
+    // const parsedApis = JSON.parse(apiString);
+    // state.apis = parsedApis;
+    // EventBus.$emit(LAYOUT_UPDATED);
+    // EventBus.$emit(COMPACT);
   },
 
   loadApiLayout(state, apiId) {
