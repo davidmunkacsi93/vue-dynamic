@@ -1,13 +1,17 @@
 import axios from "axios";
 import SwaggerParser from "swagger-parser";
 
-export default class ApiIntegrationService {
+class ApiIntegrationService {
   getSwaggerSpecification(url) {
     var swaggerSpecification = axios
       .get(url)
       .then(response => console.log(response));
 
-    var parsedSpecification = SwaggerParser.parse(swaggerSpecification);
-    console.log(parsedSpecification);
+    return SwaggerParser.parse(swaggerSpecification);
   }
 }
+
+const instance = new ApiIntegrationService();
+Object.freeze(instance);
+
+export default instance;
