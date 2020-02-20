@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <md-field>
-      <label>API specification URL</label>
-      <md-input v-model="specificationURL" type="text"></md-input>
-    </md-field>
-    <md-button @click="addApi"></md-button>
+  <div class="md-layout">
+    <div class="md-layout-item md-size-25">
+      <md-field>
+        <label>API specification URL</label>
+        <md-input v-model="specificationURL" type="text"></md-input>
+      </md-field>
+      <md-button class="md-raised md-primary" @click="addApi">Add</md-button>
+    </div>
   </div>
 </template>
 <script>
