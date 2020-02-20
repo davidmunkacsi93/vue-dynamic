@@ -8,6 +8,6 @@ export default class ApiIntegrationService {
       .then(response => console.log(response));
 
     var parsedSpecification = SwaggerParser.parse(swaggerSpecification);
-    console.log(parsedSpecification)
+    console.log(parsedSpecification);
   }
 }
