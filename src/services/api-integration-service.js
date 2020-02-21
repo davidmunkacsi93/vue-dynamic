@@ -18,12 +18,24 @@ class ApiIntegrationService {
       });
   }
 
-  processOpenApi2(parsedSpecification) {
-    console.log(parsedSpecification);
+  processOpenApi2(specification) {
+    var uiModel = {
+      apiVersion: specification.info.version,
+      title: specification.info.title,
+      description: specification.info.description,
+      specificationVersion: specification.swagger
+    };
+    console.log(uiModel);
   }
 
-  processOpenApi3(parsedSpecification) {
-    console.log(parsedSpecification);
+  processOpenApi3(specification) {
+    var uiModel = {
+      apiVersion: specification.info.version,
+      title: specification.info.title,
+      description: specification.info.description,
+      specificationVersion: specification.openapi
+    };
+    console.log(uiModel);
   }
 }
 
