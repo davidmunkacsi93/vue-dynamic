@@ -93,6 +93,8 @@ class ApiIntegrationService {
     }
     return result;
   }
+
+  createDynamicComponentsForApi() {}
 }
 
 const instance = new ApiIntegrationService();
