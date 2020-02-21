@@ -32,6 +32,7 @@ class ApiIntegrationService {
   }
 
   processOpenApi3(specification) {
+    console.log(specification);
     var version = {
       specificationVersion: specification.openapi
     };
@@ -39,10 +40,16 @@ class ApiIntegrationService {
     var apiModels = this.createApiModelsFromSchemaObjectss(
       specification.components.schemas
     );
+    var dynamicComponents = this.createDynamicComponentsForApi(
+      specification.paths,
+      apiModels
+    );
+
     var apiModel = {
       ...version,
       ...metadata,
-      ...apiModels
+      ...apiModels,
+      ...dynamicComponents
     };
     return apiModel;
   }
@@ -94,7 +101,7 @@ class ApiIntegrationService {
     return result;
   }
 
-  createDynamicComponentsForApi() {}
+  createDynamicComponentsForApi(apiPaths, apiModels) {}
 }
 
 const instance = new ApiIntegrationService();
