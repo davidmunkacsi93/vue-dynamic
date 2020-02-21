@@ -1,6 +1,6 @@
 <template>
   <div class="md-layout">
-    <div class="md-layout-item md-size-25">
+    <div class="md-layout-item md-size-60">
       <md-field>
         <label>API specification URL</label>
         <md-input v-model="specificationURL" type="text"></md-input>
