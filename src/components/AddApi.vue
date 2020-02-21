@@ -11,6 +11,7 @@
 </template>
 <script>
 import ApiIntegrationService from "../services/api-integration-service";
+import { ADD_NEW_API } from "../types/action-types";
 
 export default {
   data() {
@@ -22,7 +23,9 @@ export default {
   methods: {
     addApi() {
       ApiIntegrationService.integrateNewAPI(this.specificationURL)
-        .then(apiModel => console.log(apiModel))
+        .then(apiModel => {
+          this.$store.dispatch(ADD_NEW_API, apiModel);
+        })
         .catch(reason => console.error(reason));
     }
   }

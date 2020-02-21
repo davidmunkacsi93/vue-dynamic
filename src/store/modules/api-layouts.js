@@ -6,7 +6,8 @@ import {
   REMOVE_FORM,
   SET_API_LAYOUT_ITEMS,
   SAVE_API_LAYOUT,
-  LOAD_APIS
+  LOAD_APIS,
+  ADD_NEW_API
 } from "../../types/action-types";
 import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
@@ -15,14 +16,11 @@ const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layout";
 
 function getNextId() {
   if (!state.apis || state.apis.length === 0) return 0;
-  const currentLayout = state.apis.filter(
-    layout => layout.apiId == state.currentApiId
+
+  const apiWithHighestId = state.apis.reduce((previous, current) =>
+    previous.apiId > current.apiId ? previous : current
   );
-  if (!currentLayout) return 0;
-  const layoutItemWithGreatestId = currentLayout.reduce((previous, current) =>
-    previous.id > current.id ? previous : current
-  );
-  return layoutItemWithGreatestId.id + 1;
+  return apiWithHighestId.apiId + 1;
 }
 
 function getNextFreePosition() {
@@ -50,6 +48,12 @@ const state = {
 };
 
 const mutations = {
+  addNewApi(state, apiModel) {
+    apiModel.apiId = getNextId();
+    apiModel.apiPath = "/api/" + apiModel.apiId;
+    state.apis.push(apiModel);
+  },
+
   addNewForm(state) {
     const newId = getNextId();
     const position = getNextFreePosition();
@@ -120,6 +124,9 @@ const mutations = {
 };
 
 const actions = {
+  addNewApi({ commit }, apiModel) {
+    commit(ADD_NEW_API, apiModel);
+  },
   addNewForm({ commit }) {
     commit(ADD_NEW_FORM);
   },
