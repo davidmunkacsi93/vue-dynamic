@@ -41,79 +41,12 @@ function getNextFreePosition() {
   return { x, y };
 }
 
-function getDummyData() {
-  return [
-    {
-      apiId: 0,
-      apiName: "First API",
-      apiPath: "/api/0",
-      layout: [
-        {
-          x: 3,
-          y: 2,
-          w: 4,
-          h: 10,
-          i: 0,
-          id: 0,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: FORM
-        },
-        {
-          x: 5,
-          y: 2,
-          w: 4,
-          h: 10,
-          i: 1,
-          id: 1,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: FORM
-        }
-      ]
-    },
-    {
-      apiId: 1,
-      apiName: "Second API",
-      apiPath: "/api/1",
-      layout: [
-        {
-          x: 3,
-          y: 2,
-          w: 8,
-          h: 12,
-          i: 2,
-          id: 2,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: FORM
-        },
-        {
-          x: 5,
-          y: 2,
-          w: 8,
-          h: 12,
-          i: 3,
-          id: 3,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: FORM
-        }
-      ]
-    }
-  ];
-}
-
 const state = {
   currentApiId: -1,
   currentApiLayout: [],
   currentApiMetaData: null,
   isEditModeActive: true,
-  apis: getDummyData()
+  apis: []
 };
 
 const mutations = {
@@ -138,16 +71,14 @@ const mutations = {
   },
 
   loadApis(state) {
-    console.log(state.apis);
-    // const apiString = localStorage.getItem(LOCAL_STORAGE_API_LAYOUT_KEY);
-    // if (!apiString) {
-    //   return;
-    // }
-
-    // const parsedApis = JSON.parse(apiString);
-    // state.apis = parsedApis;
-    // EventBus.$emit(LAYOUT_UPDATED);
-    // EventBus.$emit(COMPACT);
+    const apiString = localStorage.getItem(LOCAL_STORAGE_API_LAYOUT_KEY);
+    if (!apiString) {
+      return;
+    }
+    const parsedApis = JSON.parse(apiString);
+    state.apis = parsedApis;
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(COMPACT);
   },
 
   loadApiLayout(state, apiId) {
