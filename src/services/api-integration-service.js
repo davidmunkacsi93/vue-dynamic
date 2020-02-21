@@ -14,16 +14,16 @@ class ApiIntegrationService {
         }
       })
       .catch(reason => {
-        console.log(reason);
+        console.error(reason);
       });
   }
 
   processOpenApi2(parsedSpecification) {
-    console.log("Parsing swagger specificaiton version 2.0");
+    console.log(parsedSpecification);
   }
 
   processOpenApi3(parsedSpecification) {
-    console.log("Parsing swagger specificaiton version 3.0.0");
+    console.log(parsedSpecification);
   }
 }
 
