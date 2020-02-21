@@ -2,13 +2,13 @@ import SwaggerParser from "swagger-parser";
 
 class ApiIntegrationService {
   async integrateNewAPI(url) {
-    SwaggerParser.validate(url)
+    return SwaggerParser.validate(url)
       .then(async () => {
         let parsedSpecification = await SwaggerParser.parse(url);
         if (parsedSpecification.swagger === "2.0") {
-          this.processOpenApi2(parsedSpecification);
+          return this.processOpenApi2(parsedSpecification);
         } else if (parsedSpecification.openapi === "3.0.0") {
-          this.processOpenApi3(parsedSpecification);
+          return this.processOpenApi3(parsedSpecification);
         } else {
           console.error("Unknown specification or version detected.");
         }
@@ -29,7 +29,6 @@ class ApiIntegrationService {
   }
 
   processOpenApi3(specification) {
-    console.log(specification);
     var version = {
       specificationVersion: specification.openapi
     };
@@ -37,14 +36,12 @@ class ApiIntegrationService {
     var apiModels = this.createApiModelsFromSchemaObjectss(
       specification.components.schemas
     );
-    console.log(apiModels);
-    var uiModel = {
+    var apiModel = {
       ...version,
       ...metadata,
       ...apiModels
     };
-    console.log(uiModel);
-    return uiModel;
+    return apiModel;
   }
 
   extractMetadata(info) {

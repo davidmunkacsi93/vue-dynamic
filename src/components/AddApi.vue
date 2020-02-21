@@ -21,7 +21,9 @@ export default {
   },
   methods: {
     addApi() {
-      ApiIntegrationService.integrateNewAPI(this.specificationURL);
+      ApiIntegrationService.integrateNewAPI(this.specificationURL)
+        .then(apiModel => console.log(apiModel))
+        .catch(reason => console.error(reason));
     }
   }
 };
