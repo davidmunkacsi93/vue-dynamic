@@ -24,6 +24,7 @@ export default {
     addApi() {
       ApiIntegrationService.integrateNewAPI(this.specificationURL)
         .then(apiModel => {
+          console.log(apiModel);
           this.$store.dispatch(ADD_NEW_API, apiModel);
         })
         .catch(reason => console.error(reason));

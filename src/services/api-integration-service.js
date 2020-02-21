@@ -20,12 +20,15 @@ class ApiIntegrationService {
 
   processOpenApi2(specification) {
     console.log(specification);
-
-    var uiModel = {
-      specificationVersion: specification.swagger
+    var version = {
+      specificationVersion: specification.openapi
     };
-    this.extractMetadata(uiModel, specification.info);
-    return uiModel;
+    var metadata = this.extractMetadata(specification.info);
+    var apiModel = {
+      ...version,
+      ...metadata
+    };
+    return apiModel;
   }
 
   processOpenApi3(specification) {
