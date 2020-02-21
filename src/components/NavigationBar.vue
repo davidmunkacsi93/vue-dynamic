@@ -2,7 +2,11 @@
   <div class="full-control navigation-bar">
     <h3 class="md-title">Navigation</h3>
     <md-list>
-      <md-list-item md-expand>
+      <md-list-item :to="homePath">
+        <md-icon>home</md-icon>
+        <span class="md-list-item-text">Home</span>
+      </md-list-item>
+      <md-list-item md-expand v-if="availableApis.length > 0">
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
@@ -14,6 +18,10 @@
             <span>{{ api.apiName }}</span>
           </md-list-item>
         </md-list>
+      </md-list-item>
+      <md-list-item v-if="availableApis.length === 0">
+        <md-icon>list</md-icon>
+        <span class="md-list-item-text">My APIs</span>
       </md-list-item>
       <md-list-item :to="addApiPath">
         <md-icon>http</md-icon>
@@ -28,7 +36,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      addApiPath: "/addApi"
+      addApiPath: "/addApi",
+      homePath: "/"
     };
   },
   computed: {
