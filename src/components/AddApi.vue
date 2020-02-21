@@ -15,12 +15,13 @@ import ApiIntegrationService from "../services/api-integration-service";
 export default {
   data() {
     return {
-      specificationURL: null
+      specificationURL:
+        "https://api.swaggerhub.com/apis/davidmunkacsi93/home-iot-api/1.0.0/swagger.json"
     };
   },
   methods: {
     addApi() {
-      ApiIntegrationService.getSwaggerSpecification(this.specificationURL);
+      ApiIntegrationService.integrateNewAPI(this.specificationURL);
     }
   }
 };
