@@ -37,6 +37,7 @@ class ApiIntegrationService {
       specificationVersion: specification.openapi
     };
     var metadata = this.extractMetadata(specification.info);
+    var serverMetadata = this.extractServerMetadataV3(specification.servers);
     var apiModels = this.createApiModelsFromSchemaObjectss(
       specification.components.schemas
     );
@@ -47,6 +48,7 @@ class ApiIntegrationService {
 
     var apiModel = {
       ...version,
+      ...serverMetadata,
       ...metadata,
       ...apiModels,
       ...dynamicComponents
@@ -59,6 +61,13 @@ class ApiIntegrationService {
       apiVersion: info.version,
       title: info.title,
       description: info.description
+    };
+  }
+
+  extractServerMetadataV3(servers) {
+    return {
+      serverDescription: servers[0].description,
+      serverURL: servers[0].url
     };
   }
 
