@@ -95,15 +95,10 @@ const mutations = {
   },
 
   saveApiLayout(state) {
-    if (!state.currentApiLayout || !state.currentApiMetaData) return;
-
-    state.currentApiMetaData.layout = state.currentApiLayout;
-    state.apis[state.currentApiMetaData.apiId] = state.currentApiMetaData;
     localStorage.setItem(
       LOCAL_STORAGE_API_LAYOUT_KEY,
       JSON.stringify(state.apis)
     );
-    console.log("saved");
   },
 
   setApiLayoutItems(state, layoutItems) {
@@ -126,6 +121,7 @@ const mutations = {
 const actions = {
   addNewApi({ commit }, apiModel) {
     commit(ADD_NEW_API, apiModel);
+    commit(SAVE_API_LAYOUT);
   },
   addNewForm({ commit }) {
     commit(ADD_NEW_FORM);
