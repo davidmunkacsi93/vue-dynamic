@@ -110,7 +110,12 @@ class ApiIntegrationService {
     return result;
   }
 
-  createDynamicComponentsForApi(apiPaths, apiModels) {}
+  createDynamicComponentsForApi(apiPaths, apiModels) {
+    for (var apiPath in apiPaths) {
+      console.log(apiPath);
+    }
+    console.log(apiModels);
+  }
 }
 
 const instance = new ApiIntegrationService();
