@@ -1,4 +1,6 @@
 import SwaggerParser from "swagger-parser";
+import { FORM } from "../types/layout-item-types";
+import { HTTP_POST } from "../types/http-methods";
 
 class ApiIntegrationService {
   async integrateNewAPI(url) {
@@ -110,11 +112,49 @@ class ApiIntegrationService {
     return result;
   }
 
-  createDynamicComponentsForApi(apiPaths, apiModels) {
-    for (var apiPath in apiPaths) {
-      console.log(apiPath);
+  createDynamicComponentsForApi(apiEndpoints, apiModels) {
+    var result = {
+      dynamicComponents: []
+    };
+    for (var endpoint in apiEndpoints) {
+      var apiEndpoint = apiEndpoints[endpoint];
+      for (var httpMethod in apiEndpoint) {
+        var apiMethod = apiEndpoint[httpMethod];
+
+        var dynamicComponent = this.getNewDynamicComponent();
+        if (httpMethod === "get") {
+          // Based on the parameters specified generate a search form,
+          // that transform into a grid / list / input based on the response type.
+        } else if (httpMethod === "post") {
+          dynamicComponent.description = apiMethod.description;
+          dynamicComponent.httpMethod = HTTP_POST;
+          dynamicComponent.path = endpoint;
+          dynamicComponent.type = FORM;
+
+          // Generate dynamic form.
+        } else if (httpMethod === "delete") {
+          // Generate dynamic form.
+        } else if (httpMethod === "put") {
+          // Generate dynamic form for the parameters.
+        } else {
+          console.log(httpMethod);
+          console.error("Not supported HTTP method.");
+        }
+
+        result.dynamicComponents.push(dynamicComponent);
+      }
     }
     console.log(apiModels);
+    console.log(result);
+  }
+
+  getNewDynamicComponent() {
+    return {
+      description: null,
+      httpMethod: null,
+      path: null,
+      type: null
+    };
   }
 }
 
