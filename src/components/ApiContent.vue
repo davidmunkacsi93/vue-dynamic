@@ -50,6 +50,8 @@ import {
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import { FORM, HEADER } from "../types/layout-item-types";
+import { COMPACT, LAYOUT_UPDATED } from "../types/event-types";
+import EventBus from "../utils/event-bus.js";
 
 export default {
   components: { DynamicForm, DynamicHeader },
@@ -68,6 +70,8 @@ export default {
     }
     if (!this.apiLayout || this.apiLayout.length === 0) {
       this.apiLayout = this.getDefaultLayout();
+      EventBus.$emit(LAYOUT_UPDATED);
+      EventBus.$emit(COMPACT);
     }
   },
 
