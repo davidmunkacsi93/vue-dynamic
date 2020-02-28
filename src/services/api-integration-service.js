@@ -39,7 +39,6 @@ class ApiIntegrationService {
   }
 
   processOpenApi3(specification) {
-    console.log(specification);
     var version = {
       specificationVersion: specification.openapi
     };
@@ -60,6 +59,7 @@ class ApiIntegrationService {
       ...apiModels,
       ...dynamicComponents
     };
+    console.log(apiModel);
     return apiModel;
   }
 
@@ -175,8 +175,7 @@ class ApiIntegrationService {
         result.dynamicComponents.push(dynamicComponent);
       }
     }
-    console.log(apiModels);
-    console.log(result);
+    return result;
   }
 
   createControlsForSchema(apiMethod, apiModels) {
@@ -238,7 +237,6 @@ class ApiIntegrationService {
   }
 
   getApiModelByType(apiModels, modelType) {
-    console.log(apiModels.find(model => model.type === modelType));
     return apiModels.find(model => model.type === modelType);
   }
 }
