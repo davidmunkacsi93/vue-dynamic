@@ -2,7 +2,7 @@
   <md-card ref="dynamicForm" class="dynamic-form">
     <md-card-header>
       <md-card-header-text>
-        <div class="md-title">Form {{ id }}</div>
+        <div class="md-title">Form</div>
       </md-card-header-text>
       <md-menu md-size="big" md-direction="bottom-end">
         <md-button class="md-icon-button" md-menu-trigger>
