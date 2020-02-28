@@ -1,7 +1,11 @@
 <template>
   <div>
-    <h1>{{ apiModel.title }} - {{ apiModel.apiVersion }}</h1>
-    <h2 v-if="apiModel.description">{{ apiModel.description }}</h2>
+    <div class="md-title">
+      <h1>{{ apiModel.title }} - {{ apiModel.apiVersion }}</h1>
+    </div>
+    <div class="md-subtitle" v-if="apiModel.description">
+      <h3>{{ apiModel.description }}</h3>
+    </div>
     <grid-layout
       :layout.sync="apiLayout"
       :col-num="12"
