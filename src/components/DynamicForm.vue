@@ -38,10 +38,6 @@ const controlList = ["text-box", "text-box", "text-box"];
 
 export default {
   props: {
-    id: {
-      type: Number,
-      required: true
-    },
     type: {
       type: String,
       required: true

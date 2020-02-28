@@ -22,18 +22,16 @@
           :isDraggable="item.isDraggable"
           :isResizable="item.isResizable"
           :static="item.static"
-          :key="item.id"
+          :key="item.i"
         >
           <dynamic-header
             v-if="item.layoutItemType === HEADER"
             :type="HEADER"
             :apiModel="apiModel"
-            :id="item.id"
           ></dynamic-header>
           <dynamic-form
             v-if="item.layoutItemType === FORM"
             :type="FORM"
-            :id="item.id"
           ></dynamic-form>
         </grid-item>
       </template>
@@ -41,6 +39,7 @@
   </div>
 </template>
 <script>
+import { v1 as uuid } from "uuid";
 import { mapState } from "vuex";
 import {
   SET_API_LAYOUT_ITEMS,
@@ -119,8 +118,8 @@ export default {
         y: this.$parent.$parent.y,
         w: 12,
         h: 3,
-        i: 4,
-        id: 4,
+        i: 0,
+        uuid: uuid(),
         isDraggable: true,
         isResizable: true,
         static: false,
@@ -130,23 +129,23 @@ export default {
     createDynamicComponents() {
       var dynamicComponents = [];
       // TODO: Extend to other dynamic components. Currently only supporting forms.
-      for (var dynamicComponent of this.apiModel.dynamicComponents.filter(
-        c => c.type === FORM
-      )) {
-        var component = {
-          x: this.$parent.$parent.x,
-          y: this.$parent.$parent.y,
-          w: 12,
-          h: 3,
-          i: 4,
-          id: 4,
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          layoutItemType: dynamicComponent.type
-        };
-      }
-      dynamicComponents.push(component);
+      this.apiModel.dynamicComponents
+        .filter(c => c.type === FORM)
+        .forEach((c, index) => {
+          var component = {
+            x: this.$parent.$parent.x,
+            y: this.$parent.$parent.y,
+            w: 12,
+            h: 3,
+            i: index + 1,
+            uuid: uuid(),
+            isDraggable: true,
+            isResizable: true,
+            static: false,
+            layoutItemType: c.type
+          };
+          dynamicComponents.push(component);
+        });
     }
   }
 };
