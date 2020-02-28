@@ -99,13 +99,18 @@ class ApiIntegrationService {
         var propertyObject = schemaObject.properties[propertyName];
         if (!propertyObject) continue;
 
-        // TODO: propertyObject.enum ?
         var property = {
           name: propertyName,
           type: propertyObject.type,
           format: propertyObject.format,
-          placeholder: propertyObject.example
+          placeholder: propertyObject.example,
+          isEnum: false
         };
+
+        if (propertyObject.enum) {
+          property.isEnum = true;
+          property.enumValues = propertyObject.enum;
+        }
 
         if (propertyObject.type === "array") {
           property.arrayType = propertyObject.items.$ref.replace(
