@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div class="md-title">
-      <h1>{{ apiModel.title }} - {{ apiModel.apiVersion }}</h1>
-    </div>
-    <div class="md-subtitle" v-if="apiModel.description">
-      <h3>{{ apiModel.description }}</h3>
-    </div>
     <grid-layout
       :layout.sync="apiLayout"
       :col-num="12"
@@ -30,6 +24,7 @@
           :static="item.static"
           :key="item.id"
         >
+          <dynamic-header :type="HEADER" :id="item.id"></dynamic-header>
           <dynamic-form :type="FORM" :id="item.id"></dynamic-form>
         </grid-item>
       </template>
@@ -45,13 +40,16 @@ import {
 } from "../types/action-types";
 
 import DynamicForm from "../components/DynamicForm";
+import { FORM, HEADER } from "../types/layout-item-types";
 
 export default {
   components: { DynamicForm },
 
   data() {
     return {
-      currentApiId: 0
+      currentApiId: 0,
+      FORM: FORM,
+      HEADER: HEADER
     };
   },
 

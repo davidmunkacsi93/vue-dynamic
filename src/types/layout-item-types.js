@@ -1,6 +1,7 @@
 export const CONTENT = "CONTENT";
 export const DROP_DOWN = "DROP_DOWN";
 export const FORM = "FORM";
+export const HEADER = "HEADER";
 export const GRID = "GRID";
 export const INPUT = "INPUT";
 export const LIST = "LIST";
