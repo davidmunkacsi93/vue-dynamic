@@ -9,6 +9,7 @@ import {
 } from "../../types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
+import { v1 as uuid } from "uuid";
 
 const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
 
@@ -41,7 +42,7 @@ const mutations = {
       y: 0,
       w: 10,
       h: 2,
-      i: 0,
+      i: uuid(),
       isDraggable: true,
       isResizable: true,
       static: false,
@@ -52,7 +53,7 @@ const mutations = {
       y: 2,
       w: 10,
       h: 10,
-      i: 1,
+      i: uuid(),
       isDraggable: true,
       isResizable: true,
       static: false,
@@ -63,7 +64,7 @@ const mutations = {
       y: 0,
       w: 2,
       h: 12,
-      i: 2,
+      i: uuid(),
       isDraggable: true,
       isResizable: true,
       static: false,
