@@ -85,7 +85,6 @@ const mutations = {
     if (!layoutString) {
       return;
     }
-
     const parsedLayout = JSON.parse(layoutString);
     state.mainLayoutItems = parsedLayout;
     EventBus.$emit(LAYOUT_UPDATED);

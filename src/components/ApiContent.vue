@@ -30,7 +30,7 @@
             :apiModel="apiModel"
           ></dynamic-header>
           <dynamic-form
-            v-if="item.layoutItemType === FORM"
+            v-else-if="item.layoutItemType === FORM"
             :type="FORM"
           ></dynamic-form>
         </grid-item>
@@ -68,7 +68,6 @@ export default {
     }
     if (!this.apiLayout || this.apiLayout.length === 0) {
       this.apiLayout = this.getDefaultLayout();
-      console.log(this.apiModel);
     }
   },
 
@@ -109,7 +108,9 @@ export default {
     getDefaultLayout() {
       var layout = [];
       layout.push(this.createHeader());
-      layout.push(this.createDynamicComponents());
+      this.createDynamicComponents().forEach(component =>
+        layout.push(component)
+      );
       return layout;
     },
     createHeader() {
@@ -133,9 +134,9 @@ export default {
         .filter(c => c.type === FORM)
         .forEach((c, index) => {
           var component = {
-            x: this.$parent.$parent.x,
-            y: this.$parent.$parent.y,
-            w: 12,
+            x: 3 + index * 3,
+            y: 3,
+            w: 6,
             h: 3,
             i: index + 1,
             uuid: uuid(),
@@ -146,6 +147,7 @@ export default {
           };
           dynamicComponents.push(component);
         });
+      return dynamicComponents;
     }
   }
 };
