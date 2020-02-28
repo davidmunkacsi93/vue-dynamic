@@ -10,4 +10,8 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+.md-content {
+  height: 100%;
+}
+</style>
