@@ -1,6 +1,11 @@
 import SwaggerParser from "swagger-parser";
 import { FORM } from "../types/layout-item-types";
-import { HTTP_POST } from "../types/http-methods";
+import {
+  HTTP_POST,
+  HTTP_DELETE,
+  HTTP_PUT,
+  HTTP_GET
+} from "../types/http-methods";
 
 class ApiIntegrationService {
   async integrateNewAPI(url) {
@@ -122,20 +127,24 @@ class ApiIntegrationService {
         var apiMethod = apiEndpoint[httpMethod];
 
         var dynamicComponent = this.getNewDynamicComponent();
+        dynamicComponent.path = endpoint;
+        dynamicComponent.description = apiMethod.description;
+
         if (httpMethod === "get") {
           // Based on the parameters specified generate a search form,
           // that transform into a grid / list / input based on the response type.
+          dynamicComponent.httpMethod = HTTP_GET;
         } else if (httpMethod === "post") {
-          dynamicComponent.description = apiMethod.description;
           dynamicComponent.httpMethod = HTTP_POST;
-          dynamicComponent.path = endpoint;
           dynamicComponent.type = FORM;
 
           // Generate dynamic form.
         } else if (httpMethod === "delete") {
           // Generate dynamic form.
+          dynamicComponent.httpMethod = HTTP_DELETE;
         } else if (httpMethod === "put") {
           // Generate dynamic form for the parameters.
+          dynamicComponent.httpMethod = HTTP_PUT;
         } else {
           console.log(httpMethod);
           console.error("Not supported HTTP method.");
