@@ -137,7 +137,12 @@ class ApiIntegrationService {
         } else if (httpMethod === "post") {
           dynamicComponent.httpMethod = HTTP_POST;
           dynamicComponent.type = FORM;
-
+          dynamicComponent.controls = [];
+          if (apiMethod.parameters) {
+            console.log("Has params.");
+          } else if (apiMethod.requestBody.content["application/json"].schema) {
+            console.log("Has schema.");
+          }
           // Generate dynamic form.
         } else if (httpMethod === "delete") {
           // Generate dynamic form.
