@@ -86,11 +86,8 @@ const mutations = {
   },
 
   loadApiLayout(state, apiId) {
-    console.log(apiId);
     state.currentApiModel = state.apis.find(api => api.apiId == apiId);
-    console.log(state.currentApiModel);
-    state.currentApiLayout = state.currentApiModel.layout;
-    console.log(state.currentApiLayout);
+    state.currentApiLayout = state.currentApiModel.apiLayout;
     EventBus.$emit(LAYOUT_UPDATED);
   },
 
@@ -102,7 +99,7 @@ const mutations = {
   },
 
   setApiLayoutItems(state, layoutItems) {
-    state.currentApiMetaData.layout = layoutItems;
+    state.curretApiModel.apiLayout = layoutItems;
     state.currentApiLayout = layoutItems;
   },
 
