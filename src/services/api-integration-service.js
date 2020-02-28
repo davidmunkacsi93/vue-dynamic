@@ -1,5 +1,5 @@
 import SwaggerParser from "swagger-parser";
-import { FORM, INPUT } from "../types/layout-item-types";
+import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
 import {
   HTTP_POST,
   HTTP_DELETE,
@@ -188,17 +188,43 @@ class ApiIntegrationService {
       var control = {
         label: property.name,
         element: INPUT,
+        in: "query",
         type: property.type,
         format: property.format,
-        placeholder: property.example
+        placeholder: property.example,
+        isEnum: false
       };
       result.push(control);
     }
     return result;
   }
 
-  createControlsForParameters(apiMethod, apiModels) {
+  createControlsForParameters(apiMethod) {
     var result = [];
+    for (var parameter of apiMethod.parameters) {
+      var control = {
+        label: parameter.name,
+        element: INPUT,
+        in: parameter.in,
+        type: parameter.schema.type,
+        format: parameter.schema.format,
+        placeholder: parameter.schema.example
+      };
+
+      if (parameter.schema.enum) {
+        if (
+          parameter.schema.enum.every(
+            value => value === true || value === false
+          )
+        ) {
+          control.element = SWITCH;
+        } else {
+          control.element = DROP_DOWN;
+          control.values = parameter.schema.enum;
+        }
+      }
+      result.push(control);
+    }
     return result;
   }
 
