@@ -1,7 +1,9 @@
 export const CONTENT = "CONTENT";
-export const GRID = "GRID";
+export const DROP_DOWN = "DROP_DOWN";
 export const FORM = "FORM";
+export const GRID = "GRID";
 export const INPUT = "INPUT";
 export const LIST = "LIST";
 export const MENU = "MENU";
 export const NAVIGATION_BAR = "NAVIGATION_BAR";
+export const SWITCH = "SWITCH";
