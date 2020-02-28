@@ -17,6 +17,7 @@
     "core-js": "^2.6.5",
     "popper.js": "^1.16.0",
     "swagger-parser": "^8.0.4",
+    "uuid": "^7.0.1",
     "vue": "^2.6.10",
     "vue-grid-layout": "^2.3.7",
     "vue-material": "^1.0.0-beta-11",
