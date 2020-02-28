@@ -50,7 +50,7 @@ class ApiIntegrationService {
     );
     var dynamicComponents = this.createDynamicComponentsForApi(
       specification.paths,
-      apiModels
+      apiModels.apiModels
     );
 
     var apiModel = {
@@ -138,10 +138,23 @@ class ApiIntegrationService {
           dynamicComponent.httpMethod = HTTP_POST;
           dynamicComponent.type = FORM;
           dynamicComponent.controls = [];
+
           if (apiMethod.parameters) {
             console.log("Has params.");
-          } else if (apiMethod.requestBody.content["application/json"].schema) {
-            console.log("Has schema.");
+          } else if (apiMethod.requestBody) {
+            var schema =
+              apiMethod.requestBody.content["application/json"].schema;
+            var apiModelKey = schema.$ref.replace("#/components/schemas/", "");
+            var apiModelForSchema = this.getApiModelByType(
+              apiModels,
+              apiModelKey
+            );
+            console.log(apiModelKey);
+            console.log(apiModelForSchema);
+          } else {
+            console.error(
+              `Can't generate dynamic component for endpoint ${endpoint}`
+            );
           }
           // Generate dynamic form.
         } else if (httpMethod === "delete") {
@@ -169,6 +182,11 @@ class ApiIntegrationService {
       path: null,
       type: null
     };
+  }
+
+  getApiModelByType(apiModels, modelType) {
+    console.log(apiModels.find(model => model.type === modelType));
+    return apiModels.find(model => model.type === modelType);
   }
 }
 
