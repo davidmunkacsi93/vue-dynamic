@@ -145,7 +145,6 @@ class ApiIntegrationService {
         } else if (httpMethod === "post") {
           dynamicComponent.httpMethod = HTTP_POST;
           dynamicComponent.type = FORM;
-          dynamicComponent.controls = [];
 
           if (apiMethod.parameters) {
             dynamicComponent.controls.push(
@@ -232,7 +231,8 @@ class ApiIntegrationService {
       description: null,
       httpMethod: null,
       path: null,
-      type: null
+      type: null,
+      controls: []
     };
   }
 
