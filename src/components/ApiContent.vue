@@ -24,8 +24,17 @@
           :static="item.static"
           :key="item.id"
         >
-          <dynamic-header :type="HEADER" :id="item.id"></dynamic-header>
-          <dynamic-form :type="FORM" :id="item.id"></dynamic-form>
+          <dynamic-header
+            v-if="item.type === HEADER"
+            :type="HEADER"
+            :apiModel="apiModel"
+            :id="item.id"
+          ></dynamic-header>
+          <dynamic-form
+            v-if="item.type === FORM"
+            :type="FORM"
+            :id="item.id"
+          ></dynamic-form>
         </grid-item>
       </template>
     </grid-layout>
@@ -40,10 +49,11 @@ import {
 } from "../types/action-types";
 
 import DynamicForm from "../components/DynamicForm";
+import DynamicHeader from "../components/DynamicHeader";
 import { FORM, HEADER } from "../types/layout-item-types";
 
 export default {
-  components: { DynamicForm },
+  components: { DynamicForm, DynamicHeader },
 
   data() {
     return {
@@ -95,7 +105,23 @@ export default {
 
   methods: {
     getDefaultLayout() {
-      return [];
+      var layout = [];
+      layout.push(this.createHeader());
+      return layout;
+    },
+    createHeader() {
+      return {
+        x: 0,
+        y: 0,
+        w: 12,
+        h: 3,
+        i: 4,
+        id: 4,
+        isDraggable: true,
+        isResizable: true,
+        static: false,
+        layoutItemType: HEADER
+      };
     }
   }
 };
