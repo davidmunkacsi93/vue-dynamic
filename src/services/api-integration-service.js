@@ -59,7 +59,8 @@ class ApiIntegrationService {
       ...apiModels,
       ...dynamicComponents
     };
-    console.log(apiModel);
+    apiModel.apiLayout = [];
+
     return apiModel;
   }
 

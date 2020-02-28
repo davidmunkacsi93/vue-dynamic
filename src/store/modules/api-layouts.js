@@ -42,7 +42,7 @@ function getNextFreePosition() {
 const state = {
   currentApiId: -1,
   currentApiLayout: [],
-  currentApiMetaData: null,
+  currentApiModel: {},
   isEditModeActive: true,
   apis: []
 };
@@ -87,9 +87,9 @@ const mutations = {
 
   loadApiLayout(state, apiId) {
     console.log(apiId);
-    state.currentApiMetaData = state.apis.find(api => api.apiId == apiId);
-    console.log(state.currentApiMetaData);
-    state.currentApiLayout = state.currentApiMetaData.layout;
+    state.currentApiModel = state.apis.find(api => api.apiId == apiId);
+    console.log(state.currentApiModel);
+    state.currentApiLayout = state.currentApiModel.layout;
     console.log(state.currentApiLayout);
     EventBus.$emit(LAYOUT_UPDATED);
   },
