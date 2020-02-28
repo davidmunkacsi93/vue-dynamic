@@ -25,13 +25,13 @@
           :key="item.id"
         >
           <dynamic-header
-            v-if="item.type === HEADER"
+            v-if="item.layoutItemType === HEADER"
             :type="HEADER"
             :apiModel="apiModel"
             :id="item.id"
           ></dynamic-header>
           <dynamic-form
-            v-if="item.type === FORM"
+            v-if="item.layoutItemType === FORM"
             :type="FORM"
             :id="item.id"
           ></dynamic-form>
