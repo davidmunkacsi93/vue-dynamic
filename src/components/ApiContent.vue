@@ -48,46 +48,57 @@ import DynamicForm from "../components/DynamicForm";
 
 export default {
   components: { DynamicForm },
-  computed: {
-    ...mapState({
-      apiModel: state => state.apiLayouts.currentApiModel
-    }),
-    apiLayout: {
-      get() {
-        var currentApiLayout = this.$store.state.apiLayouts.currentApiLayout;
-        if (!currentApiLayout || currentApiLayout.length === 0) {
-          //this.initializeLayout();
-        }
-        return currentApiLayout;
-      },
-      set(layoutItems) {
-        this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
-      }
-    }
-  },
+
   data() {
     return {
       currentApiId: 0
     };
   },
+
+  beforeUpdate() {
+    if (!this.apiLayout || this.apiLayout.length === 0) {
+      this.apiLayout = this.getDefaultLayout();
+      console.log(this.apiModel);
+    }
+  },
+
   beforeRouteEnter(to, from, next) {
     const nextApiId = to.params.apiId;
     next(vm => {
       vm.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
     });
   },
+
   beforeRouteUpdate(to, from, next) {
     const nextApiId = to.params.apiId;
     this.$store.dispatch(SAVE_API_LAYOUT);
     this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
     next();
   },
+
   beforeRouteLeave(to, from, next) {
     this.$store.dispatch(SAVE_API_LAYOUT);
     next();
   },
-  initializeLayout() {
-    console.log("Initializing layout...");
+
+  computed: {
+    ...mapState({
+      apiModel: state => state.apiLayouts.currentApiModel
+    }),
+    apiLayout: {
+      get() {
+        return this.$store.state.apiLayouts.currentApiLayout;
+      },
+      set(layoutItems) {
+        this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
+      }
+    }
+  },
+
+  methods: {
+    getDefaultLayout() {
+      return [];
+    }
   }
 };
 </script>
