@@ -1,5 +1,5 @@
 import SwaggerParser from "swagger-parser";
-import { FORM } from "../types/layout-item-types";
+import { FORM, INPUT } from "../types/layout-item-types";
 import {
   HTTP_POST,
   HTTP_DELETE,
@@ -45,7 +45,7 @@ class ApiIntegrationService {
     };
     var metadata = this.extractMetadata(specification.info);
     var serverMetadata = this.extractServerMetadataV3(specification.servers);
-    var apiModels = this.createApiModelsFromSchemaObjectss(
+    var apiModels = this.createApiModelsFromSchemaObjects(
       specification.components.schemas
     );
     var dynamicComponents = this.createDynamicComponentsForApi(
@@ -78,7 +78,7 @@ class ApiIntegrationService {
     };
   }
 
-  createApiModelsFromSchemaObjectss(schemaObjects) {
+  createApiModelsFromSchemaObjects(schemaObjects) {
     var result = {
       apiModels: []
     };
@@ -99,9 +99,12 @@ class ApiIntegrationService {
         var propertyObject = schemaObject.properties[propertyName];
         if (!propertyObject) continue;
 
+        // TODO: propertyObject.enum ?
         var property = {
           name: propertyName,
-          type: propertyObject.type
+          type: propertyObject.type,
+          format: propertyObject.format,
+          placeholder: propertyObject.example
         };
 
         if (propertyObject.type === "array") {
@@ -140,17 +143,13 @@ class ApiIntegrationService {
           dynamicComponent.controls = [];
 
           if (apiMethod.parameters) {
-            console.log("Has params.");
-          } else if (apiMethod.requestBody) {
-            var schema =
-              apiMethod.requestBody.content["application/json"].schema;
-            var apiModelKey = schema.$ref.replace("#/components/schemas/", "");
-            var apiModelForSchema = this.getApiModelByType(
-              apiModels,
-              apiModelKey
+            dynamicComponent.controls.push(
+              this.createControlsForParameters(apiMethod, apiModels)
             );
-            console.log(apiModelKey);
-            console.log(apiModelForSchema);
+          } else if (apiMethod.requestBody) {
+            dynamicComponent.controls.push(
+              this.createControlsForSchema(apiMethod, apiModels)
+            );
           } else {
             console.error(
               `Can't generate dynamic component for endpoint ${endpoint}`
@@ -173,6 +172,29 @@ class ApiIntegrationService {
     }
     console.log(apiModels);
     console.log(result);
+  }
+
+  createControlsForSchema(apiMethod, apiModels) {
+    var result = [];
+    var schema = apiMethod.requestBody.content["application/json"].schema;
+    var apiModelKey = schema.$ref.replace("#/components/schemas/", "");
+    var apiModelForSchema = this.getApiModelByType(apiModels, apiModelKey);
+    for (var property of apiModelForSchema.properties) {
+      var control = {
+        label: property.name,
+        element: INPUT,
+        type: property.type,
+        format: property.format,
+        placeholder: property.example
+      };
+      result.push(control);
+    }
+    return result;
+  }
+
+  createControlsForParameters(apiMethod, apiModels) {
+    var result = [];
+    return result;
   }
 
   getNewDynamicComponent() {
