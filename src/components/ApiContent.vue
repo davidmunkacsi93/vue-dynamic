@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>{{ apiModel.title }} - {{ apiModel.apiVersion }}</h1>
+    <h2 v-if="apiModel.description">{{ apiModel.description }}</h2>
     <grid-layout
       :layout.sync="apiLayout"
       :col-num="12"
@@ -31,7 +33,6 @@
   </div>
 </template>
 <script>
-import { FORM } from "../types/layout-item-types";
 import { mapState } from "vuex";
 import {
   SET_API_LAYOUT_ITEMS,
@@ -45,11 +46,15 @@ export default {
   components: { DynamicForm },
   computed: {
     ...mapState({
-      apiLayout: state => state.apiLayouts
+      apiModel: state => state.apiLayouts.currentApiModel
     }),
     apiLayout: {
       get() {
-        return this.$store.state.apiLayouts.currentApiLayout;
+        var currentApiLayout = this.$store.state.apiLayouts.currentApiLayout;
+        if (!currentApiLayout || currentApiLayout.length === 0) {
+          //this.initializeLayout();
+        }
+        return currentApiLayout;
       },
       set(layoutItems) {
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
@@ -58,8 +63,7 @@ export default {
   },
   data() {
     return {
-      currentApiId: 0,
-      FORM: FORM
+      currentApiId: 0
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -77,6 +81,9 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.$store.dispatch(SAVE_API_LAYOUT);
     next();
+  },
+  initializeLayout() {
+    console.log("Initializing layout...");
   }
 };
 </script>
