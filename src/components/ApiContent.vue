@@ -64,6 +64,9 @@ export default {
   },
 
   beforeUpdate() {
+    if (!this.apiModel) {
+      console.error("API model could not be read.");
+    }
     if (!this.apiLayout || this.apiLayout.length === 0) {
       this.apiLayout = this.getDefaultLayout();
       console.log(this.apiModel);
@@ -107,6 +110,7 @@ export default {
     getDefaultLayout() {
       var layout = [];
       layout.push(this.createHeader());
+      layout.push(this.createDynamicComponents());
       return layout;
     },
     createHeader() {
@@ -122,6 +126,27 @@ export default {
         static: false,
         layoutItemType: HEADER
       };
+    },
+    createDynamicComponents() {
+      var dynamicComponents = [];
+      // TODO: Extend to other dynamic components. Currently only supporting forms.
+      for (var dynamicComponent of this.apiModel.dynamicComponents.filter(
+        c => c.type === FORM
+      )) {
+        var component = {
+          x: this.$parent.$parent.x,
+          y: this.$parent.$parent.y,
+          w: 12,
+          h: 3,
+          i: 4,
+          id: 4,
+          isDraggable: true,
+          isResizable: true,
+          static: false,
+          layoutItemType: dynamicComponent.type
+        };
+      }
+      dynamicComponents.push(component);
     }
   }
 };
