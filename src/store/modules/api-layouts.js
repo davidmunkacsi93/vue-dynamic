@@ -99,7 +99,7 @@ const mutations = {
   },
 
   setApiLayoutItems(state, layoutItems) {
-    state.curretApiModel.apiLayout = layoutItems;
+    state.currentApiModel.apiLayout = layoutItems;
     state.currentApiLayout = layoutItems;
   },
 
