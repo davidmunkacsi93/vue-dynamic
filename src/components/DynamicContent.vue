@@ -5,8 +5,15 @@
 </template>
 <script>
 export default {
-  data() {
-    return {};
+  props: {
+    x: {
+      required: true,
+      type: Number
+    },
+    y: {
+      required: true,
+      type: Number
+    }
   }
 };
 </script>

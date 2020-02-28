@@ -111,8 +111,8 @@ export default {
     },
     createHeader() {
       return {
-        x: 0,
-        y: 0,
+        x: this.$parent.$parent.x,
+        y: this.$parent.$parent.y,
         w: 12,
         h: 3,
         i: 4,
