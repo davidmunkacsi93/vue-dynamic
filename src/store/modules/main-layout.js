@@ -1,7 +1,7 @@
 import EventBus from "../../utils/event-bus.js";
 import {
-  DISABLE_EDIT_MODE,
-  ENABLE_EDIT_MODE,
+  DISABLE_EDIT_MODE_MAIN_LAYOUT,
+  ENABLE_EDIT_MODE_MAIN_LAYOUT,
   INITIALIZE_MAIN_LAYOUT,
   LOAD_MAIN_LAYOUT,
   SAVE_MAIN_LAYOUT,
@@ -19,19 +19,19 @@ const state = {
 };
 
 const mutations = {
-  enableEditMode(state) {
-    for (var layoutItem of state.mainLayoutItems) {
-      layoutItem.static = false;
-    }
-
-    state.isEditModeActive = true;
-  },
-  disableEditMode(state) {
+  disableEditModeMainLayout(state) {
     for (var layoutItem of state.mainLayoutItems) {
       layoutItem.static = true;
     }
 
     state.isEditModeActive = false;
+  },
+  enableEditModeMainLayout(state) {
+    for (var layoutItem of state.mainLayoutItems) {
+      layoutItem.static = false;
+    }
+    console.log(state);
+    state.isEditModeActive = true;
   },
   initializeMainLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
@@ -45,7 +45,7 @@ const mutations = {
       i: uuid(),
       isDraggable: true,
       isResizable: true,
-      static: false,
+      static: true,
       layoutItemType: MENU
     };
     const content = {
@@ -56,18 +56,18 @@ const mutations = {
       i: uuid(),
       isDraggable: true,
       isResizable: true,
-      static: false,
+      static: true,
       layoutItemType: CONTENT
     };
     const navigationBar = {
       x: 0,
       y: 0,
       w: 2,
-      h: 12,
+      h: 15,
       i: uuid(),
       isDraggable: true,
       isResizable: true,
-      static: false,
+      static: true,
       layoutItemType: NAVIGATION_BAR
     };
 
@@ -103,11 +103,11 @@ const mutations = {
 };
 
 const actions = {
-  disableEditMode({ commit }) {
-    commit(DISABLE_EDIT_MODE);
+  disableEditModeMainLayout({ commit }) {
+    commit(DISABLE_EDIT_MODE_MAIN_LAYOUT);
   },
-  enableEditMode({ commit }) {
-    commit(ENABLE_EDIT_MODE);
+  enableEditModeMainLayout({ commit }) {
+    commit(ENABLE_EDIT_MODE_MAIN_LAYOUT);
   },
   loadMainLayout({ commit }) {
     commit(INITIALIZE_MAIN_LAYOUT);

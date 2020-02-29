@@ -1,6 +1,8 @@
 export const ADD_NEW_API = "addNewApi";
-export const ENABLE_EDIT_MODE = "enableEditMode";
-export const DISABLE_EDIT_MODE = "disableEditMode";
+export const ENABLE_EDIT_MODE_API_LAYOUT = "enableEditModeApiLayout";
+export const ENABLE_EDIT_MODE_MAIN_LAYOUT = "enableEditModeMainLayout";
+export const DISABLE_EDIT_MODE_API_LAYOUT = "disableEditModeApiLayout";
+export const DISABLE_EDIT_MODE_MAIN_LAYOUT = "disableEditModeMainLayout";
 export const INITIALIZE_MAIN_LAYOUT = "initializeMainLayout";
 export const LOAD_APIS = "loadApis";
 export const LOAD_API_LAYOUT = "loadApiLayout";

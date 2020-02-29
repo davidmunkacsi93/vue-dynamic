@@ -14,15 +14,14 @@
             <md-icon>more_vert</md-icon>
           </md-button>
           <md-menu-content>
-            <md-menu-item @click="addGridItem">
-              <span>Add New Form</span>
-              <md-icon>add</md-icon>
-            </md-menu-item>
-            <md-menu-item @click="editGridLayout" v-show="!isEditModeEnabled">
-              <span>Edit Layout</span>
+            <md-menu-item
+              @click="editMainLayout"
+              v-show="!isMainLayoutEditable"
+            >
+              <span>Edit Main Layout</span>
               <md-icon>edit</md-icon>
             </md-menu-item>
-            <md-menu-item @click="saveMainLayout" v-show="isEditModeEnabled">
+            <md-menu-item @click="saveMainLayout" v-show="isMainLayoutEditable">
               <span>Save Layout</span>
               <md-icon>save</md-icon>
             </md-menu-item>
@@ -37,30 +36,23 @@
 import { mapState } from "vuex";
 
 import {
-  DISABLE_EDIT_MODE,
-  ENABLE_EDIT_MODE,
+  DISABLE_EDIT_MODE_MAIN_LAYOUT,
+  ENABLE_EDIT_MODE_MAIN_LAYOUT,
   SAVE_MAIN_LAYOUT
 } from "../types/action-types";
 
 export default {
-  data() {
-    return {
-      isEditModeEnabled: false
-    };
-  },
   computed: {
     ...mapState({
-      isEditModeActive: state => state.mainLayout.isEditModeActive
+      isMainLayoutEditable: state => state.mainLayout.isEditModeActive
     })
   },
   methods: {
-    editGridLayout() {
-      this.$store.dispatch(ENABLE_EDIT_MODE);
-      this.isEditModeEnabled = true;
+    editMainLayout() {
+      this.$store.dispatch(ENABLE_EDIT_MODE_MAIN_LAYOUT);
     },
     saveMainLayout() {
-      this.$store.dispatch(DISABLE_EDIT_MODE);
-      this.isEditModeEnabled = false;
+      this.$store.dispatch(DISABLE_EDIT_MODE_MAIN_LAYOUT);
       this.$store.dispatch(SAVE_MAIN_LAYOUT);
     }
   },
