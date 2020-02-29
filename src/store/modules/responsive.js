@@ -34,8 +34,6 @@ const mutations = {
 const actions = {
   setScreenInformation({ commit }, screenWidth) {
     commit(SET_SCREEN_INFORMATION, screenWidth);
-    console.log(state.screenWidth);
-    console.log(state.screenClass);
   }
 };
 
