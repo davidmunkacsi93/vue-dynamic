@@ -100,17 +100,15 @@ export default {
     };
   },
   beforeCreate() {
+    this.$nextTick(function() {
+      window.addEventListener("resize", this.onWindowResize);
+      this.onWindowResize();
+    });
     this.$store.dispatch(LOAD_MAIN_LAYOUT);
     this.$store.dispatch(LOAD_APIS);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
-  },
-  mounted() {
-    this.$nextTick(function() {
-      window.addEventListener("resize", this.onWindowResize);
-      this.onWindowResize();
-    });
   },
   computed: {
     mainLayoutItems: {
