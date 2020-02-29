@@ -64,12 +64,14 @@ const mutations = {
   },
 
   loadApiLayout(state, apiId) {
+    state.currentApiId = apiId;
     state.currentApiModel = state.apis.find(api => api.apiId == apiId);
     state.currentApiLayout = state.currentApiModel.apiLayout;
     EventBus.$emit(LAYOUT_UPDATED);
   },
 
   saveApiLayout(state) {
+    state.apis[state.currentApiId].apiLayout = state.currentApiLayout;
     localStorage.setItem(
       LOCAL_STORAGE_API_LAYOUT_KEY,
       JSON.stringify(state.apis)
