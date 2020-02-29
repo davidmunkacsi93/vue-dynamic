@@ -148,13 +148,17 @@ const mutations = {
       JSON.stringify(state.mainLayouts)
     );
   },
-  loadMainLayout(state) {
+  loadMainLayout(state, screenClass) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (!layoutString) {
       return;
     }
     const parsedLayouts = JSON.parse(layoutString);
     state.mainLayouts = parsedLayouts;
+    console.log(screenClass);
+    state.mainLayout = state.mainLayouts[screenClass];
+    console.log(state.mainLayout);
+
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
   },
@@ -165,6 +169,7 @@ const mutations = {
     );
   },
   setMainLayoutItems(state, mainLayout) {
+    console.log(mainLayout);
     state.mainLayout = mainLayout;
     EventBus.$emit(LAYOUT_UPDATED);
   }

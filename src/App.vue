@@ -94,6 +94,7 @@ export default {
   },
   data() {
     return {
+      screenClass: null,
       CONTENT,
       MENU,
       NAVIGATION_BAR
@@ -130,14 +131,19 @@ export default {
   },
   methods: {
     onWindowResize() {
+      this.screenClass = this.$store.state.responsive.screenClass;
       this.$store.dispatch(
         SET_SCREEN_INFORMATION,
         document.documentElement.clientWidth
       );
-      this.$store.dispatch(
-        LOAD_MAIN_LAYOUT,
-        this.$store.state.responsive.screenClass
-      );
+      var screenClassChanged =
+        this.screenClass !== this.$store.state.responsive.screenClass;
+      if (screenClassChanged) {
+        this.$store.dispatch(
+          LOAD_MAIN_LAYOUT,
+          this.$store.state.responsive.screenClass
+        );
+      }
     }
   }
 };
