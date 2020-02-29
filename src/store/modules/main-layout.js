@@ -23,14 +23,12 @@ const mutations = {
     for (var layoutItem of state.mainLayoutItems) {
       layoutItem.static = true;
     }
-
     state.isEditModeActive = false;
   },
   enableEditModeMainLayout(state) {
     for (var layoutItem of state.mainLayoutItems) {
       layoutItem.static = false;
     }
-    console.log(state);
     state.isEditModeActive = true;
   },
   initializeMainLayout(state) {

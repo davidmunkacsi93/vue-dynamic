@@ -14,6 +14,14 @@
             <md-icon>more_vert</md-icon>
           </md-button>
           <md-menu-content>
+            <md-menu-item @click="editApiLayout" v-show="!isApiLayoutEditable">
+              <span>Edit API Layout</span>
+              <md-icon>edit</md-icon>
+            </md-menu-item>
+            <md-menu-item @click="saveApiLayout" v-show="isApiLayoutEditable">
+              <span>Save API Layout</span>
+              <md-icon>save</md-icon>
+            </md-menu-item>
             <md-menu-item
               @click="editMainLayout"
               v-show="!isMainLayoutEditable"
@@ -22,7 +30,7 @@
               <md-icon>edit</md-icon>
             </md-menu-item>
             <md-menu-item @click="saveMainLayout" v-show="isMainLayoutEditable">
-              <span>Save Layout</span>
+              <span>Save Main Layout</span>
               <md-icon>save</md-icon>
             </md-menu-item>
           </md-menu-content>
@@ -36,18 +44,29 @@
 import { mapState } from "vuex";
 
 import {
+  DISABLE_EDIT_MODE_API_LAYOUT,
+  ENABLE_EDIT_MODE_API_LAYOUT,
   DISABLE_EDIT_MODE_MAIN_LAYOUT,
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
+  SAVE_API_LAYOUT,
   SAVE_MAIN_LAYOUT
 } from "../types/action-types";
 
 export default {
   computed: {
     ...mapState({
+      isApiLayoutEditable: state => state.apiLayouts.isEditModeActive,
       isMainLayoutEditable: state => state.mainLayout.isEditModeActive
     })
   },
   methods: {
+    editApiLayout() {
+      this.$store.dispatch(ENABLE_EDIT_MODE_API_LAYOUT);
+    },
+    saveApiLayout() {
+      this.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT);
+      this.$store.dispatch(SAVE_API_LAYOUT);
+    },
     editMainLayout() {
       this.$store.dispatch(ENABLE_EDIT_MODE_MAIN_LAYOUT);
     },

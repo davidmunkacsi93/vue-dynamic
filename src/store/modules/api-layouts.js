@@ -6,7 +6,9 @@ import {
   SET_API_LAYOUT_ITEMS,
   SAVE_API_LAYOUT,
   LOAD_APIS,
-  ADD_NEW_API
+  ADD_NEW_API,
+  DISABLE_EDIT_MODE_API_LAYOUT,
+  ENABLE_EDIT_MODE_API_LAYOUT
 } from "../../types/action-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
@@ -25,7 +27,7 @@ const state = {
   currentApiId: -1,
   currentApiLayout: [],
   currentApiModel: {},
-  isEditModeActive: true,
+  isEditModeActive: false,
   apis: []
 };
 
@@ -34,6 +36,20 @@ const mutations = {
     apiModel.apiId = getNextId();
     apiModel.apiPath = "/api/" + apiModel.apiId;
     state.apis.push(apiModel);
+  },
+
+  disableEditModeApiLayout(state) {
+    for (var layoutItem of state.currentApiLayout) {
+      layoutItem.static = true;
+    }
+    state.isEditModeActive = false;
+  },
+
+  enableEditModeApiLayout(state) {
+    for (var layoutItem of state.currentApiLayout) {
+      layoutItem.static = false;
+    }
+    state.isEditModeActive = true;
   },
 
   loadApis(state) {
@@ -81,6 +97,12 @@ const actions = {
   addNewApi({ commit }, apiModel) {
     commit(ADD_NEW_API, apiModel);
     commit(SAVE_API_LAYOUT);
+  },
+  disableEditModeApiLayout({ commit }) {
+    commit(DISABLE_EDIT_MODE_API_LAYOUT);
+  },
+  enableEditModeApiLayout({ commit }) {
+    commit(ENABLE_EDIT_MODE_API_LAYOUT);
   },
   loadApis({ commit }) {
     commit(LOAD_APIS);
