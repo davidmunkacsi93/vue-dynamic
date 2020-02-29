@@ -12,4 +12,5 @@ export const SAVE_MAIN_LAYOUT = "saveMainLayout";
 export const SET_CURRENT_API_ID = "setCurrentApiId";
 export const SET_API_LAYOUT_ITEMS = "setApiLayoutItems";
 export const SET_MAIN_LAYOUT_ITEMS = "setMainLayoutItems";
+export const SET_SCREEN_INFORMATION = "setScreenInformation";
 export const REMOVE_FORM = "removeForm";

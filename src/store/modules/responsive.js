@@ -1,3 +1,5 @@
+import { SET_SCREEN_INFORMATION } from "../../types/action-types";
+
 const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
 
 function getCurrentBreakpointFromWidth(width) {
@@ -18,13 +20,24 @@ function sortBreakpoints(breakpoints) {
 }
 
 const state = {
-  currentScreenSize: null,
-  currentScreenClass: null
+  screenWidth: null,
+  screenClass: null
 };
 
-const mutations = {};
+const mutations = {
+  setScreenInformation(state, screenWidth) {
+    state.screenWidth = screenWidth;
+    state.screenClass = getCurrentBreakpointFromWidth(state.screenWidth);
+  }
+};
 
-const actions = {};
+const actions = {
+  setScreenInformation({ commit }, screenWidth) {
+    commit(SET_SCREEN_INFORMATION, screenWidth);
+    console.log(state.screenWidth);
+    console.log(state.screenClass);
+  }
+};
 
 export default {
   state,
