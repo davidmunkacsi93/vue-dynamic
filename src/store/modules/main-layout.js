@@ -70,17 +70,6 @@ function getLayoutItemsForSm() {
     static: true,
     layoutItemType: MENU
   };
-  const content = {
-    x: 0,
-    y: 4,
-    w: 12,
-    h: 10,
-    i: uuid(),
-    isDraggable: true,
-    isResizable: true,
-    static: true,
-    layoutItemType: CONTENT
-  };
   const navigationBar = {
     x: 0,
     y: 2,
@@ -91,6 +80,17 @@ function getLayoutItemsForSm() {
     isResizable: true,
     static: true,
     layoutItemType: NAVIGATION_BAR
+  };
+  const content = {
+    x: 0,
+    y: 12,
+    w: 12,
+    h: 10,
+    i: uuid(),
+    isDraggable: true,
+    isResizable: true,
+    static: true,
+    layoutItemType: CONTENT
   };
   layoutItems.push(menu);
   layoutItems.push(navigationBar);
@@ -141,7 +141,6 @@ const mutations = {
     };
 
     state.mainLayout = state.mainLayouts[screenClass];
-    console.log(state.mainLayout);
 
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
@@ -155,9 +154,7 @@ const mutations = {
     }
     const parsedLayouts = JSON.parse(layoutString);
     state.mainLayouts = parsedLayouts;
-    console.log(screenClass);
     state.mainLayout = state.mainLayouts[screenClass];
-    console.log(state.mainLayout);
 
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
