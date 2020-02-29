@@ -117,14 +117,18 @@ const state = {
 
 const mutations = {
   disableEditModeMainLayout(state) {
-    for (var layoutItem of state.mainLayout) {
-      layoutItem.static = true;
+    for (var layout of state.mainLayouts) {
+      for (var layoutItem of layout) {
+        layoutItem.static = true;
+      }
     }
     state.isEditModeActive = false;
   },
   enableEditModeMainLayout(state) {
-    for (var layoutItem of state.mainLayout) {
-      layoutItem.static = false;
+    for (var layout of state.mainLayouts) {
+      for (var layoutItem of layout) {
+        layoutItem.static = false;
+      }
     }
     state.isEditModeActive = true;
   },
