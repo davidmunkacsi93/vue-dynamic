@@ -128,7 +128,7 @@ const mutations = {
     }
     state.isEditModeActive = true;
   },
-  initializeMainLayout(state) {
+  initializeMainLayout(state, screenClass) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (layoutString) return;
 
@@ -139,6 +139,10 @@ const mutations = {
       xs: getLayoutItemsForXs(),
       xxs: getLayoutItemsForXxs()
     };
+
+    state.mainLayout = state.mainLayouts[screenClass];
+    console.log(state.mainLayout);
+
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
       JSON.stringify(state.mainLayouts)
@@ -175,7 +179,7 @@ const actions = {
   },
   loadMainLayout({ commit }, screenClass) {
     commit(INITIALIZE_MAIN_LAYOUT, screenClass);
-    commit(LOAD_MAIN_LAYOUT);
+    commit(LOAD_MAIN_LAYOUT, screenClass);
   },
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
