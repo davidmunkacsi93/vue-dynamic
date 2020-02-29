@@ -3,7 +3,7 @@ import { SET_SCREEN_INFORMATION } from "../../types/action-types";
 const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
 
 function getCurrentBreakpointFromWidth(width) {
-  const sorted = sortBreakpoints(this.breakPoints);
+  const sorted = sortBreakpoints(breakpoints);
   let matching = sorted[0];
   for (let i = 1, len = sorted.length; i < len; i++) {
     const breakpointName = sorted[i];

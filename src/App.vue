@@ -69,7 +69,8 @@ import routes from "./routes";
 import {
   LOAD_MAIN_LAYOUT,
   SET_MAIN_LAYOUT_ITEMS,
-  LOAD_APIS
+  LOAD_APIS,
+  SET_SCREEN_INFORMATION
 } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
@@ -123,7 +124,10 @@ export default {
   },
   methods: {
     onWindowResize() {
-      console.log("resizing");
+      this.$store.dispatch(
+        SET_SCREEN_INFORMATION,
+        document.documentElement.clientWidth
+      );
     }
   }
 };
