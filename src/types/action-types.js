@@ -6,7 +6,9 @@ export const DISABLE_EDIT_MODE_MAIN_LAYOUT = "disableEditModeMainLayout";
 export const INITIALIZE_MAIN_LAYOUT = "initializeMainLayout";
 export const LOAD_APIS = "loadApis";
 export const LOAD_API_LAYOUT = "loadApiLayout";
-export const LOAD_MAIN_LAYOUT = "loadMainLayout";
+export const LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE =
+  "loadMainLayoutFromLocalStorage";
+export const LOAD_MAIN_LAYOUT_FROM_STATE = "loadMainLayoutFromState";
 export const SAVE_API_LAYOUT = "saveApiLayout";
 export const SAVE_MAIN_LAYOUT = "saveMainLayout";
 export const SET_CURRENT_API_ID = "setCurrentApiId";

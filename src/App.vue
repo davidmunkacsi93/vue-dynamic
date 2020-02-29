@@ -67,7 +67,8 @@ import NavigationBar from "./components/NavigationBar.vue";
 import routes from "./routes";
 
 import {
-  LOAD_MAIN_LAYOUT,
+  LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE,
+  LOAD_MAIN_LAYOUT_FROM_STATE,
   SET_MAIN_LAYOUT_ITEMS,
   LOAD_APIS,
   SET_SCREEN_INFORMATION
@@ -111,7 +112,7 @@ export default {
       document.documentElement.clientWidth
     );
     this.$store.dispatch(
-      LOAD_MAIN_LAYOUT,
+      LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE,
       this.$store.state.responsive.screenClass
     );
     this.$store.dispatch(LOAD_APIS);
@@ -140,7 +141,7 @@ export default {
         this.screenClass !== this.$store.state.responsive.screenClass;
       if (screenClassChanged) {
         this.$store.dispatch(
-          LOAD_MAIN_LAYOUT,
+          LOAD_MAIN_LAYOUT_FROM_STATE,
           this.$store.state.responsive.screenClass
         );
       }

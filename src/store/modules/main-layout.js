@@ -3,9 +3,10 @@ import {
   DISABLE_EDIT_MODE_MAIN_LAYOUT,
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
   INITIALIZE_MAIN_LAYOUT,
-  LOAD_MAIN_LAYOUT,
   SAVE_MAIN_LAYOUT,
-  SET_MAIN_LAYOUT_ITEMS
+  SET_MAIN_LAYOUT_ITEMS,
+  LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE,
+  LOAD_MAIN_LAYOUT_FROM_STATE
 } from "../../types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
@@ -54,7 +55,45 @@ function getLayoutItemsForLg() {
 }
 
 function getLayoutItemsForMd() {
-  return getLayoutItemsForLg();
+  var layoutItems = [];
+  const menu = {
+    x: 2,
+    y: 0,
+    w: 8,
+    h: 2,
+    i: uuid(),
+    isDraggable: true,
+    isResizable: true,
+    static: true,
+    layoutItemType: MENU
+  };
+  const content = {
+    x: 2,
+    y: 2,
+    w: 8,
+    h: 10,
+    i: uuid(),
+    isDraggable: true,
+    isResizable: true,
+    static: true,
+    layoutItemType: CONTENT
+  };
+  const navigationBar = {
+    x: 0,
+    y: 0,
+    w: 2,
+    h: 15,
+    i: uuid(),
+    isDraggable: true,
+    isResizable: true,
+    static: true,
+    layoutItemType: NAVIGATION_BAR
+  };
+  layoutItems.push(menu);
+  layoutItems.push(navigationBar);
+  layoutItems.push(content);
+
+  return layoutItems;
 }
 
 function getLayoutItemsForSm() {
@@ -62,7 +101,7 @@ function getLayoutItemsForSm() {
   const menu = {
     x: 0,
     y: 0,
-    w: 12,
+    w: 6,
     h: 2,
     i: uuid(),
     isDraggable: true,
@@ -73,7 +112,7 @@ function getLayoutItemsForSm() {
   const navigationBar = {
     x: 0,
     y: 2,
-    w: 12,
+    w: 6,
     h: 10,
     i: uuid(),
     isDraggable: true,
@@ -84,7 +123,7 @@ function getLayoutItemsForSm() {
   const content = {
     x: 0,
     y: 12,
-    w: 12,
+    w: 6,
     h: 10,
     i: uuid(),
     isDraggable: true,
@@ -156,31 +195,41 @@ const mutations = {
     state.currentScreenClass = screenClass;
     state.mainLayout = state.mainLayouts[screenClass];
 
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(COMPACT);
+
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
       JSON.stringify(state.mainLayouts)
     );
   },
-  loadMainLayout(state, screenClass) {
+  loadMainLayoutFromLocalStorage(state, screenClass) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (!layoutString) {
       return;
     }
     const parsedLayouts = JSON.parse(layoutString);
     state.mainLayouts = parsedLayouts;
-
-    // When the screen class changes, the previous layout has to be saved.
-    if (screenClass !== state.currentScreenClass) {
-      console.log("Change class");
-      state.mainLayouts[state.currentScreenClass] = state.mainLayout;
-      state.currentScreenClass = screenClass;
-    }
     state.mainLayout = state.mainLayouts[screenClass];
 
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
   },
+  loadMainLayoutFromState(state, screenClass) {
+    if (screenClass !== state.currentScreenClass) {
+      console.log(`Change class ${state.currentScreenClass} to ${screenClass}`);
+      state.mainLayouts[state.currentScreenClass] = state.mainLayout;
+      state.currentScreenClass = screenClass;
+    }
+    state.mainLayout = state.mainLayouts[screenClass];
+    console.log(state.mainLayout);
+
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(COMPACT);
+  },
   saveMainLayout(state) {
+    state.mainLayouts[state.currentScreenClass] = state.mainLayout;
+
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
       JSON.stringify(state.mainLayouts)
@@ -199,9 +248,12 @@ const actions = {
   enableEditModeMainLayout({ commit }) {
     commit(ENABLE_EDIT_MODE_MAIN_LAYOUT);
   },
-  loadMainLayout({ commit }, screenClass) {
+  loadMainLayoutFromLocalStorage({ commit }, screenClass) {
     commit(INITIALIZE_MAIN_LAYOUT, screenClass);
-    commit(LOAD_MAIN_LAYOUT, screenClass);
+    commit(LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE, screenClass);
+  },
+  loadMainLayoutFromState({ commit }, screenClass) {
+    commit(LOAD_MAIN_LAYOUT_FROM_STATE, screenClass);
   },
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
