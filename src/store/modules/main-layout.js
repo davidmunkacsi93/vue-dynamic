@@ -110,6 +110,7 @@ function getLayoutItemsForXxs() {
 const LOCAL_STORAGE_MAIN_LAYOUTS_KEY = "main-layouts";
 
 const state = {
+  currentScreenClass: null,
   isEditModeActive: false,
   mainLayouts: {},
   mainLayout: []
@@ -117,18 +118,26 @@ const state = {
 
 const mutations = {
   disableEditModeMainLayout(state) {
-    for (var layout of state.mainLayouts) {
-      for (var layoutItem of layout) {
+    var screenClasses = Object.keys(state.mainLayouts);
+    for (var screenClass of screenClasses) {
+      for (var layoutItem of state.mainLayouts[screenClass]) {
         layoutItem.static = true;
       }
+    }
+    for (let layoutItem of state.mainLayout) {
+      layoutItem.static = true;
     }
     state.isEditModeActive = false;
   },
   enableEditModeMainLayout(state) {
-    for (var layout of state.mainLayouts) {
-      for (var layoutItem of layout) {
+    var screenClasses = Object.keys(state.mainLayouts);
+    for (var screenClass of screenClasses) {
+      for (let layoutItem of state.mainLayouts[screenClass]) {
         layoutItem.static = false;
       }
+    }
+    for (let layoutItem of state.mainLayout) {
+      layoutItem.static = false;
     }
     state.isEditModeActive = true;
   },
@@ -144,6 +153,7 @@ const mutations = {
       xxs: getLayoutItemsForXxs()
     };
 
+    state.currentScreenClass = screenClass;
     state.mainLayout = state.mainLayouts[screenClass];
 
     localStorage.setItem(
@@ -158,6 +168,13 @@ const mutations = {
     }
     const parsedLayouts = JSON.parse(layoutString);
     state.mainLayouts = parsedLayouts;
+
+    // When the screen class changes, the previous layout has to be saved.
+    if (screenClass !== state.currentScreenClass) {
+      console.log("Change class");
+      state.mainLayouts[state.currentScreenClass] = state.mainLayout;
+      state.currentScreenClass = screenClass;
+    }
     state.mainLayout = state.mainLayouts[screenClass];
 
     EventBus.$emit(LAYOUT_UPDATED);
@@ -170,7 +187,6 @@ const mutations = {
     );
   },
   setMainLayoutItems(state, mainLayout) {
-    console.log(mainLayout);
     state.mainLayout = mainLayout;
     EventBus.$emit(LAYOUT_UPDATED);
   }
