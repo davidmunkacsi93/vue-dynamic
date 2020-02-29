@@ -122,7 +122,7 @@ export default {
         x: this.$parent.$parent.x,
         y: this.$parent.$parent.y,
         w: 12,
-        h: 3,
+        h: 4,
         i: 0,
         uuid: uuid(),
         isDraggable: true,
@@ -134,23 +134,22 @@ export default {
     createDynamicComponents() {
       var dynamicComponents = [];
       // TODO: Extend to other dynamic components. Currently only supporting forms.
-      this.apiModel.dynamicComponents
-        .filter(c => c.type === FORM)
-        .forEach((c, index) => {
-          var component = {
-            x: 3 + index * 3,
-            y: 3,
-            w: 6,
-            h: 3,
-            i: index + 1,
-            uuid: uuid(),
-            isDraggable: true,
-            isResizable: true,
-            static: false,
-            layoutItemType: c.type
-          };
-          dynamicComponents.push(component);
-        });
+      var forms = this.apiModel.dynamicComponents.filter(c => c.type === FORM);
+      forms.forEach((c, index) => {
+        var component = {
+          x: 3 + index * 3,
+          y: 3,
+          w: 6,
+          h: 3,
+          i: index + 1,
+          uuid: uuid(),
+          isDraggable: true,
+          isResizable: true,
+          static: false,
+          layoutItemType: FORM
+        };
+        dynamicComponents.push(component);
+      });
       return dynamicComponents;
     }
   }
