@@ -122,7 +122,7 @@ export default {
     }
   },
   methods: {
-    onWindowResize(event) {
+    onWindowResize() {
       console.log("resizing");
     }
   }
