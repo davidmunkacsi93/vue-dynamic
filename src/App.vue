@@ -109,8 +109,10 @@ export default {
       SET_SCREEN_INFORMATION,
       document.documentElement.clientWidth
     );
-    var screenClass = this.$store.state.responsive.screenClass;
-    this.$store.dispatch(LOAD_MAIN_LAYOUT, screenClass);
+    this.$store.dispatch(
+      LOAD_MAIN_LAYOUT,
+      this.$store.state.responsive.screenClass
+    );
     this.$store.dispatch(LOAD_APIS);
   },
   beforeDestroy() {
@@ -131,6 +133,10 @@ export default {
       this.$store.dispatch(
         SET_SCREEN_INFORMATION,
         document.documentElement.clientWidth
+      );
+      this.$store.dispatch(
+        LOAD_MAIN_LAYOUT,
+        this.$store.state.responsive.screenClass
       );
     }
   }
