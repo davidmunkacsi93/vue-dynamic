@@ -1,16 +1,26 @@
 <script>
 import { GridItem } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
-import { COMPACT } from "../types/event-types";
+import { COMPACT, UPDATE_WIDTH } from "../types/event-types";
 
 export default {
   name: "GridItem",
   extends: GridItem,
   created: function() {
-    EventBus.$on(COMPACT, this.compactHandler);
+    EventBus.$on(COMPACT, this.onCompact);
+    EventBus.$on(UPDATE_WIDTH, this.onUpdateWidth);
   },
   beforeDestroy: function() {
-    EventBus.$off(COMPACT, this.compactHandler);
+    EventBus.$off(COMPACT, this.onCompact);
+    EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
+  },
+  methods: {
+    onCompact() {
+      this.compact();
+    },
+    onUpdateWidth() {
+      this.updateWidth(window.innerWidth);
+    }
   }
 };
 </script>

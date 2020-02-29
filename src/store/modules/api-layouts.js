@@ -10,7 +10,7 @@ import {
   DISABLE_EDIT_MODE_API_LAYOUT,
   ENABLE_EDIT_MODE_API_LAYOUT
 } from "../../types/action-types";
-import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
+import { COMPACT, LAYOUT_UPDATED, UPDATE_WIDTH } from "../../types/event-types";
 
 const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layout";
 
@@ -67,8 +67,9 @@ const mutations = {
     state.currentApiId = apiId;
     state.currentApiModel = state.apis.find(api => api.apiId == apiId);
     state.currentApiLayout = state.currentApiModel.apiLayout;
-    console.log(state.currentApiLayout);
+    EventBus.$emit(COMPACT);
     EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(UPDATE_WIDTH);
   },
 
   saveApiLayout(state) {
