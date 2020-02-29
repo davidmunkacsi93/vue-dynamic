@@ -67,6 +67,7 @@ const mutations = {
     state.currentApiId = apiId;
     state.currentApiModel = state.apis.find(api => api.apiId == apiId);
     state.currentApiLayout = state.currentApiModel.apiLayout;
+    console.log(state.currentApiLayout);
     EventBus.$emit(LAYOUT_UPDATED);
   },
 
