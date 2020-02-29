@@ -15,6 +15,9 @@ export default {
   methods: {
     handleLayoutUpdated() {
       this.layoutUpdate();
+    },
+    getLayouts() {
+      return this.layouts;
     }
   }
 };

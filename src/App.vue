@@ -102,6 +102,15 @@ export default {
     this.$store.dispatch(LOAD_MAIN_LAYOUT);
     this.$store.dispatch(LOAD_APIS);
   },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onWindowResize);
+  },
+  mounted() {
+    this.$nextTick(function() {
+      window.addEventListener("resize", this.onWindowResize);
+      this.onWindowResize();
+    });
+  },
   computed: {
     mainLayoutItems: {
       get() {
@@ -110,6 +119,11 @@ export default {
       set(layoutItems) {
         this.$store.dispatch(SET_MAIN_LAYOUT_ITEMS, layoutItems);
       }
+    }
+  },
+  methods: {
+    onWindowResize(event) {
+      console.log("resizing");
     }
   }
 };

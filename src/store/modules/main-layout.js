@@ -15,6 +15,7 @@ const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layout";
 
 const state = {
   isEditModeActive: false,
+  mainLayouts: {},
   mainLayoutItems: []
 };
 
