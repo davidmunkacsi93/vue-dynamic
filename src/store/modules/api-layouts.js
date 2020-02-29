@@ -1,6 +1,5 @@
 import EventBus from "../../utils/event-bus.js";
 import {
-  ADD_NEW_FORM,
   LOAD_API_LAYOUT,
   SET_CURRENT_API_ID,
   REMOVE_FORM,
@@ -9,7 +8,6 @@ import {
   LOAD_APIS,
   ADD_NEW_API
 } from "../../types/action-types";
-import { FORM } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
 
 const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layout";
@@ -21,22 +19,6 @@ function getNextId() {
     previous.apiId > current.apiId ? previous : current
   );
   return apiWithHighestId.apiId + 1;
-}
-
-function getNextFreePosition() {
-  const x = Math.max.apply(
-    Math,
-    state.layoutItems.map(function(layoutItem) {
-      return layoutItem.y + layoutItem.h;
-    })
-  );
-  const y = Math.max.apply(
-    Math,
-    state.layoutItems.map(function(layoutItem) {
-      return layoutItem.y + layoutItem.h;
-    })
-  );
-  return { x, y };
 }
 
 const state = {
@@ -52,26 +34,6 @@ const mutations = {
     apiModel.apiId = getNextId();
     apiModel.apiPath = "/api/" + apiModel.apiId;
     state.apis.push(apiModel);
-  },
-
-  addNewForm(state) {
-    const newId = getNextId();
-    const position = getNextFreePosition();
-    const newItem = {
-      x: position.x,
-      y: position.y,
-      w: 2,
-      h: 13,
-      i: newId.toString(),
-      id: newId,
-      isDraggable: true,
-      isResizable: true,
-      static: !state.isEditModeActive,
-      layoutItemType: FORM
-    };
-    state.currentApiLayout.push(newItem);
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(COMPACT);
   },
 
   loadApis(state) {
@@ -119,9 +81,6 @@ const actions = {
   addNewApi({ commit }, apiModel) {
     commit(ADD_NEW_API, apiModel);
     commit(SAVE_API_LAYOUT);
-  },
-  addNewForm({ commit }) {
-    commit(ADD_NEW_FORM);
   },
   loadApis({ commit }) {
     commit(LOAD_APIS);

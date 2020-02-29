@@ -1,5 +1,4 @@
 export const ADD_NEW_API = "addNewApi";
-export const ADD_NEW_FORM = "addNewForm";
 export const ENABLE_EDIT_MODE = "enableEditMode";
 export const DISABLE_EDIT_MODE = "disableEditMode";
 export const INITIALIZE_MAIN_LAYOUT = "initializeMainLayout";

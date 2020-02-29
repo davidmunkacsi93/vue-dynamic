@@ -37,7 +37,6 @@
 import { mapState } from "vuex";
 
 import {
-  ADD_NEW_FORM,
   DISABLE_EDIT_MODE,
   ENABLE_EDIT_MODE,
   SAVE_MAIN_LAYOUT
@@ -55,9 +54,6 @@ export default {
     })
   },
   methods: {
-    addGridItem() {
-      this.$store.dispatch(ADD_NEW_FORM);
-    },
     editGridLayout() {
       this.$store.dispatch(ENABLE_EDIT_MODE);
       this.isEditModeEnabled = true;
