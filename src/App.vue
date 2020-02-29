@@ -7,7 +7,7 @@
     <md-app>
       <md-app-content>
         <grid-layout
-          :layout.sync="mainLayoutItems"
+          :layout.sync="mainLayout"
           :col-num="12"
           :row-height="30"
           :margin="[0, 0]"
@@ -18,7 +18,7 @@
           :vertical-compact="true"
           :use-css-transforms="true"
         >
-          <template v-for="item in mainLayoutItems">
+          <template v-for="item in mainLayout">
             <grid-item
               :x="item.x"
               :y="item.y"
@@ -104,16 +104,22 @@ export default {
       window.addEventListener("resize", this.onWindowResize);
       this.onWindowResize();
     });
-    this.$store.dispatch(LOAD_MAIN_LAYOUT);
+
+    this.$store.dispatch(
+      SET_SCREEN_INFORMATION,
+      document.documentElement.clientWidth
+    );
+    var screenClass = this.$store.state.responsive.screenClass;
+    this.$store.dispatch(LOAD_MAIN_LAYOUT, screenClass);
     this.$store.dispatch(LOAD_APIS);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
   },
   computed: {
-    mainLayoutItems: {
+    mainLayout: {
       get() {
-        return this.$store.state.mainLayout.mainLayoutItems;
+        return this.$store.state.mainLayout.mainLayout;
       },
       set(layoutItems) {
         this.$store.dispatch(SET_MAIN_LAYOUT_ITEMS, layoutItems);

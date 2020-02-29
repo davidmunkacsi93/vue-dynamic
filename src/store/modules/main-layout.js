@@ -112,18 +112,18 @@ const LOCAL_STORAGE_MAIN_LAYOUTS_KEY = "main-layouts";
 const state = {
   isEditModeActive: false,
   mainLayouts: {},
-  mainLayoutItems: []
+  mainLayout: []
 };
 
 const mutations = {
   disableEditModeMainLayout(state) {
-    for (var layoutItem of state.mainLayoutItems) {
+    for (var layoutItem of state.mainLayout) {
       layoutItem.static = true;
     }
     state.isEditModeActive = false;
   },
   enableEditModeMainLayout(state) {
-    for (var layoutItem of state.mainLayoutItems) {
+    for (var layoutItem of state.mainLayout) {
       layoutItem.static = false;
     }
     state.isEditModeActive = true;
@@ -139,7 +139,6 @@ const mutations = {
       xs: getLayoutItemsForXs(),
       xxs: getLayoutItemsForXxs()
     };
-
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
       JSON.stringify(state.mainLayouts)
@@ -161,8 +160,8 @@ const mutations = {
       JSON.stringify(state.mainLayouts)
     );
   },
-  setMainLayoutItems(state, mainLayoutItems) {
-    state.mainLayoutItems = mainLayoutItems;
+  setMainLayoutItems(state, mainLayout) {
+    state.mainLayout = mainLayout;
     EventBus.$emit(LAYOUT_UPDATED);
   }
 };
@@ -174,8 +173,8 @@ const actions = {
   enableEditModeMainLayout({ commit }) {
     commit(ENABLE_EDIT_MODE_MAIN_LAYOUT);
   },
-  loadMainLayout({ commit }) {
-    commit(INITIALIZE_MAIN_LAYOUT);
+  loadMainLayout({ commit }, screenClass) {
+    commit(INITIALIZE_MAIN_LAYOUT, screenClass);
     commit(LOAD_MAIN_LAYOUT);
   },
   saveMainLayout({ commit }) {
