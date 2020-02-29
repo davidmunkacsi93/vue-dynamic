@@ -2,7 +2,8 @@
   <md-card ref="dynamicForm" class="dynamic-form">
     <md-card-header>
       <md-card-header-text>
-        <div class="md-title">Form</div>
+        <div class="md-title">{{ path }}</div>
+        <div class="md-subhead">{{ description }}</div>
       </md-card-header-text>
       <md-menu md-size="big" md-direction="bottom-end">
         <md-button class="md-icon-button" md-menu-trigger>
@@ -42,6 +43,10 @@ export default {
       type: String,
       required: true
     },
+    model: {
+      type: Object,
+      required: true
+    },
     apiName: {
       type: String,
       required: false
@@ -52,9 +57,14 @@ export default {
       isEditModeActive: state => state.mainLayout.isEditModeActive
     })
   },
+  mounted() {
+    console.log(this.model);
+  },
   data() {
     return {
-      list: controlList.map((name, index) => {
+      path: this.model.path,
+      description: this.model.description,
+      list: .map((name, index) => {
         return { name, order: index + 1, fixed: false };
       }),
       editable: true,

@@ -31,6 +31,7 @@
           ></dynamic-header>
           <dynamic-form
             v-else-if="item.layoutItemType === FORM"
+            :model="item"
             :type="FORM"
           ></dynamic-form>
         </grid-item>
@@ -132,10 +133,13 @@ export default {
       };
     },
     createDynamicComponents() {
+      console.log(this.apiModel);
       var dynamicComponents = [];
       // TODO: Extend to other dynamic components. Currently only supporting forms.
-      var forms = this.apiModel.dynamicComponents.filter(c => c.type === FORM);
-      forms.forEach((c, index) => {
+      var forms = this.apiModel.dynamicComponents.filter(
+        dynamicComponent => dynamicComponent.type === FORM
+      );
+      forms.forEach((dynamicComponent, index) => {
         var component = {
           x: 3 + index * 3,
           y: 3,
@@ -146,7 +150,10 @@ export default {
           isDraggable: true,
           isResizable: true,
           static: true,
-          layoutItemType: FORM
+          layoutItemType: FORM,
+          description: dynamicComponent.description,
+          path: dynamicComponent.path,
+          controls: dynamicComponent.controls
         };
         dynamicComponents.push(component);
       });
