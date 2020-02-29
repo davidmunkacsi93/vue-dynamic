@@ -60,9 +60,9 @@ function getLayoutItemsForMd() {
 function getLayoutItemsForSm() {
   var layoutItems = [];
   const menu = {
-    x: 2,
+    x: 0,
     y: 0,
-    w: 10,
+    w: 12,
     h: 2,
     i: uuid(),
     isDraggable: true,
@@ -71,9 +71,9 @@ function getLayoutItemsForSm() {
     layoutItemType: MENU
   };
   const content = {
-    x: 2,
-    y: 2,
-    w: 10,
+    x: 0,
+    y: 4,
+    w: 12,
     h: 10,
     i: uuid(),
     isDraggable: true,
@@ -83,9 +83,9 @@ function getLayoutItemsForSm() {
   };
   const navigationBar = {
     x: 0,
-    y: 0,
-    w: 2,
-    h: 15,
+    y: 2,
+    w: 12,
+    h: 10,
     i: uuid(),
     isDraggable: true,
     isResizable: true,
@@ -107,7 +107,7 @@ function getLayoutItemsForXxs() {
   return getLayoutItemsForXs();
 }
 
-const LOCAL_STORAGE_MAIN_LAYOUT_KEY = "main-layouts";
+const LOCAL_STORAGE_MAIN_LAYOUTS_KEY = "main-layouts";
 
 const state = {
   isEditModeActive: false,
@@ -129,16 +129,16 @@ const mutations = {
     state.isEditModeActive = true;
   },
   initializeMainLayout(state) {
-    const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
+    const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (layoutString) return;
 
     localStorage.setItem(
-      LOCAL_STORAGE_MAIN_LAYOUT_KEY,
+      LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
       JSON.stringify(state.mainLayouts)
     );
   },
   loadMainLayout(state) {
-    const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUT_KEY);
+    const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (!layoutString) {
       return;
     }
@@ -149,8 +149,8 @@ const mutations = {
   },
   saveMainLayout(state) {
     localStorage.setItem(
-      LOCAL_STORAGE_MAIN_LAYOUT_KEY,
-      JSON.stringify(state.mainLayoutItems)
+      LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
+      JSON.stringify(state.mainLayouts)
     );
   },
   setMainLayoutItems(state, mainLayoutItems) {
