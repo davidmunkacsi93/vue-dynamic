@@ -145,7 +145,7 @@ export default {
           uuid: uuid(),
           isDraggable: true,
           isResizable: true,
-          static: false,
+          static: true,
           layoutItemType: FORM
         };
         dynamicComponents.push(component);
