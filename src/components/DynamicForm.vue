@@ -64,7 +64,7 @@ export default {
     return {
       path: this.model.path,
       description: this.model.description,
-      list: .map((name, index) => {
+      list: controlList.map((name, index) => {
         return { name, order: index + 1, fixed: false };
       }),
       editable: true,
