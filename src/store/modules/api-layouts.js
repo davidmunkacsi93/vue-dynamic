@@ -36,6 +36,11 @@ const mutations = {
     apiModel.apiId = getNextId();
     apiModel.apiPath = "/api/" + apiModel.apiId;
     state.apis.push(apiModel);
+
+    localStorage.setItem(
+      LOCAL_STORAGE_API_LAYOUT_KEY,
+      JSON.stringify(state.apis)
+    );
   },
 
   disableEditModeApiLayout(state) {
@@ -100,7 +105,6 @@ const mutations = {
 const actions = {
   addNewApi({ commit }, apiModel) {
     commit(ADD_NEW_API, apiModel);
-    commit(SAVE_API_LAYOUT);
   },
   disableEditModeApiLayout({ commit }) {
     commit(DISABLE_EDIT_MODE_API_LAYOUT);
