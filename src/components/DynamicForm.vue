@@ -21,10 +21,10 @@
 
     <md-card-content>
       <md-list class="control-list">
-        <md-list-item v-for="element in list" :key="element.order">
+        <md-list-item v-for="control in controls" :key="control.order">
           <md-field>
-            <label>Control {{ element.order }}</label>
-            <md-input></md-input>
+            <label>{{ control.label }}</label>
+            <md-input v-if="control.element === INPUT" type="text"></md-input>
           </md-field>
         </md-list-item>
       </md-list>
@@ -34,8 +34,7 @@
 <script>
 import { mapState } from "vuex";
 import { REMOVE_FORM } from "../types/action-types";
-
-const controlList = ["text-box", "text-box", "text-box"];
+import { INPUT } from "../types/layout-item-types";
 
 export default {
   props: {
@@ -64,9 +63,16 @@ export default {
     return {
       path: this.model.path,
       description: this.model.description,
-      list: controlList.map((name, index) => {
-        return { name, order: index + 1, fixed: false };
+      controls: this.model.controls.map((control, index) => {
+        console.log(control);
+        var mappedTo = {
+          ...control,
+          index
+        };
+        console.log(mappedTo);
+        return mappedTo;
       }),
+      INPUT: INPUT,
       editable: true,
       isDragging: false,
       delayedDragging: false

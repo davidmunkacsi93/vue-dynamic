@@ -148,12 +148,14 @@ class ApiIntegrationService {
           dynamicComponent.type = FORM;
 
           if (apiMethod.parameters) {
-            dynamicComponent.controls.push(
-              this.createControlsForParameters(apiMethod, apiModels)
+            dynamicComponent.controls = this.createControlsForParameters(
+              apiMethod,
+              apiModels
             );
           } else if (apiMethod.requestBody) {
-            dynamicComponent.controls.push(
-              this.createControlsForSchema(apiMethod, apiModels)
+            dynamicComponent.controls = this.createControlsForSchema(
+              apiMethod,
+              apiModels
             );
           } else {
             console.error(
