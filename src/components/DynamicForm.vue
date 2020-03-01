@@ -59,9 +59,6 @@ export default {
       isEditModeActive: state => state.mainLayout.isEditModeActive
     })
   },
-  mounted() {
-    console.log(this.model);
-  },
   data() {
     return {
       path: this.model.path,

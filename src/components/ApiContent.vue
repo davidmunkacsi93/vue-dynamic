@@ -20,6 +20,7 @@
           :h="item.h"
           :i="item.i"
           :margin="[15, 15]"
+          :rowHeight="rowHeight"
           :isDraggable="item.isDraggable"
           :isResizable="item.isResizable"
           :static="item.static"
