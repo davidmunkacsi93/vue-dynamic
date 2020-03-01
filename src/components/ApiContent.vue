@@ -3,8 +3,8 @@
     <grid-layout
       :layout.sync="apiLayout"
       :col-num="12"
-      :row-height="rowHeight"
-      :margin="[30, 30]"
+      :rowHeight="rowHeight"
+      :margin="[3, 3]"
       :is-draggable="true"
       :is-resizable="true"
       :is-mirrored="false"
@@ -19,6 +19,7 @@
           :w="item.w"
           :h="item.h"
           :i="item.i"
+          :margin="[15, 15]"
           :isDraggable="item.isDraggable"
           :isResizable="item.isResizable"
           :static="item.static"
@@ -117,9 +118,11 @@ export default {
       this.createDynamicComponents().forEach(component =>
         layout.push(component)
       );
+      console.log(layout);
       return layout;
     },
     createHeader() {
+      console.log(this.$parent.$parent.rowHeight);
       return {
         x: this.$parent.$parent.x,
         y: this.$parent.$parent.y,
@@ -129,7 +132,7 @@ export default {
         uuid: uuid(),
         isDraggable: true,
         isResizable: true,
-        static: false,
+        static: true,
         layoutItemType: HEADER
       };
     },
@@ -143,8 +146,8 @@ export default {
 
       forms.forEach((dynamicComponent, index) => {
         var component = {
-          x: 3 + index * 3,
-          y: 3,
+          x: 0,
+          y: 0,
           w: 6,
           h: this.calculateFormHeight(dynamicComponent.controls),
           i: index + 1,
