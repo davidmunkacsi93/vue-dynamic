@@ -3,7 +3,7 @@
     <grid-layout
       :layout.sync="apiLayout"
       :col-num="12"
-      :row-height="30"
+      :row-height="rowHeight"
       :margin="[3, 3]"
       :is-draggable="true"
       :is-resizable="true"
@@ -60,6 +60,7 @@ export default {
   data() {
     return {
       currentApiId: 0,
+      rowHeight: 30,
       FORM: FORM,
       HEADER: HEADER
     };
@@ -139,12 +140,13 @@ export default {
       var forms = this.apiModel.dynamicComponents.filter(
         dynamicComponent => dynamicComponent.type === FORM
       );
+
       forms.forEach((dynamicComponent, index) => {
         var component = {
           x: 3 + index * 3,
           y: 3,
           w: 6,
-          h: 3,
+          h: this.calculateFormHeight(dynamicComponent.controls),
           i: index + 1,
           uuid: uuid(),
           isDraggable: true,
@@ -158,6 +160,17 @@ export default {
         dynamicComponents.push(component);
       });
       return dynamicComponents;
+    },
+    calculateFormHeight(controls) {
+      console.log(controls);
+      const header = 91.08;
+      const actions = 51.96;
+      const controlHeight = 83.96;
+      var result = Math.floor(
+        (header + actions + controls.length * controlHeight) / this.rowHeight
+      );
+      console.log(result);
+      return result;
     }
   }
 };
