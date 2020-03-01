@@ -4,7 +4,7 @@
       :layout.sync="apiLayout"
       :col-num="12"
       :row-height="rowHeight"
-      :margin="[3, 3]"
+      :margin="[30, 30]"
       :is-draggable="true"
       :is-resizable="true"
       :is-mirrored="false"
