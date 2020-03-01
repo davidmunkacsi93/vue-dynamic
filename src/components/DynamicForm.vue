@@ -22,10 +22,15 @@
     <md-card-content>
       <md-list class="control-list">
         <md-list-item v-for="control in controls" :key="control.order">
-          <md-field>
+          <md-field v-if="control.element === INPUT">
             <label>{{ control.label }}</label>
-            <md-input v-if="control.element === INPUT" type="text"></md-input>
+            <md-input v-model="control.value" type="text"></md-input>
           </md-field>
+          <md-switch
+            v-model="control.value"
+            v-else-if="control.element === SWITCH"
+            >{{ control.label }}</md-switch
+          >
         </md-list-item>
       </md-list>
     </md-card-content>
@@ -37,7 +42,7 @@
 <script>
 import { mapState } from "vuex";
 import { REMOVE_FORM } from "../types/action-types";
-import { INPUT } from "../types/layout-item-types";
+import { INPUT, SWITCH } from "../types/layout-item-types";
 
 export default {
   props: {
@@ -70,6 +75,7 @@ export default {
         };
       }),
       INPUT: INPUT,
+      SWITCH: SWITCH,
       editable: true,
       isDragging: false,
       delayedDragging: false

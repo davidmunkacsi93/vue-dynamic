@@ -209,7 +209,8 @@ class ApiIntegrationService {
         in: parameter.in,
         type: parameter.schema.type,
         format: parameter.schema.format,
-        placeholder: parameter.schema.example
+        placeholder: parameter.schema.example,
+        value: null
       };
 
       if (parameter.schema.enum) {
