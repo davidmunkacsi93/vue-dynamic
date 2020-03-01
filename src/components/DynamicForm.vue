@@ -1,5 +1,5 @@
 <template>
-  <md-card ref="dynamicForm" class="dynamic-form">
+  <md-card ref="dynamicForm" class="dynamic-form" md-with-hover>
     <md-card-header>
       <md-card-header-text>
         <div class="md-title">{{ path }}</div>
@@ -29,6 +29,9 @@
         </md-list-item>
       </md-list>
     </md-card-content>
+    <md-card-actions>
+      <md-button>Call</md-button>
+    </md-card-actions>
   </md-card>
 </template>
 <script>
