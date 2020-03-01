@@ -166,14 +166,12 @@ export default {
       return dynamicComponents;
     },
     calculateFormHeight(controls) {
-      console.log(controls);
       const header = 91.08;
       const actions = 51.96;
       const controlHeight = 83.96;
       var result = Math.floor(
         (header + actions + controls.length * controlHeight) / this.rowHeight
       );
-      console.log(result);
       return result;
     }
   }
