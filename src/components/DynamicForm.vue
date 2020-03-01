@@ -67,13 +67,10 @@ export default {
       path: this.model.path,
       description: this.model.description,
       controls: this.model.controls.map((control, index) => {
-        console.log(control);
-        var mappedTo = {
+        return {
           ...control,
           index
         };
-        console.log(mappedTo);
-        return mappedTo;
       }),
       INPUT: INPUT,
       editable: true,
