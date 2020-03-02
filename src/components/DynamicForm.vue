@@ -31,6 +31,18 @@
             v-else-if="control.element === SWITCH"
             >{{ control.label }}</md-switch
           >
+          <md-field v-else-if="control.element === DROP_DOWN">
+            <label>{{ control.label }}</label>
+            <md-select v-model="control.value">
+              <md-option
+                v-for="(value, name, index) in control.values"
+                v-model="control.values[index]"
+                :key="index"
+              >
+                {{ value }}
+              </md-option>
+            </md-select>
+          </md-field>
         </md-list-item>
       </md-list>
     </md-card-content>
@@ -42,7 +54,7 @@
 <script>
 import { mapState } from "vuex";
 import { REMOVE_FORM } from "../types/action-types";
-import { INPUT, SWITCH } from "../types/layout-item-types";
+import { DROP_DOWN, INPUT, SWITCH } from "../types/layout-item-types";
 
 export default {
   props: {
@@ -74,6 +86,7 @@ export default {
           index
         };
       }),
+      DROP_DOWN: DROP_DOWN,
       INPUT: INPUT,
       SWITCH: SWITCH,
       editable: true,
