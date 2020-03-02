@@ -132,6 +132,7 @@ export default {
   },
   methods: {
     onWindowResize() {
+      debugger;
       this.screenClass = this.$store.state.responsive.screenClass;
       this.$store.dispatch(
         SET_SCREEN_INFORMATION,

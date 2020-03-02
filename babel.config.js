@@ -1,3 +1,5 @@
 module.exports = {
-  presets: ["@vue/app"]
+  presets: ["@vue/app"],
+  sourceMaps: "inline",
+  retainLines: true
 };
