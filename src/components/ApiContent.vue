@@ -186,14 +186,15 @@ export default {
       const countDropDown = controls.filter(
         control => control.element === DROP_DOWN
       ).length;
-      var result = Math.floor(
-        (header +
-          actions +
-          countInput * inputHeight +
-          countSwitches * switchHeight +
-          countDropDown * dropDownHeight) /
-          this.rowHeight
-      );
+
+      var result =
+        Math.floor(
+          header +
+            actions +
+            countInput * inputHeight +
+            countSwitches * switchHeight +
+            countDropDown * dropDownHeight
+        ) / this.rowHeight;
       return result;
     }
   }
