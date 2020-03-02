@@ -52,7 +52,7 @@ import {
 
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
-import { FORM, HEADER } from "../types/layout-item-types";
+import { FORM, HEADER, INPUT, SWITCH } from "../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../types/event-types";
 import EventBus from "../utils/event-bus.js";
 
@@ -166,11 +166,23 @@ export default {
       return dynamicComponents;
     },
     calculateFormHeight(controls) {
+      debugger;
       const header = 91.08;
       const actions = 51.96;
-      const controlHeight = 83.96;
+      const switchHeight = 48;
+      const inputHeight = 83.96;
+
+      const countSwitches = controls.filter(
+        control => control.element === SWITCH
+      ).length;
+      const countInput = controls.filter(control => control.element === INPUT)
+        .length;
       var result = Math.floor(
-        (header + actions + controls.length * controlHeight) / this.rowHeight
+        (header +
+          actions +
+          countInput * inputHeight +
+          countSwitches * switchHeight) /
+          this.rowHeight
       );
       return result;
     }
