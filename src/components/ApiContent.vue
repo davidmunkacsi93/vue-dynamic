@@ -129,7 +129,6 @@ export default {
       return layout;
     },
     createHeader() {
-      console.log(this.$parent.$parent.rowHeight);
       return {
         x: this.$parent.$parent.x,
         y: this.$parent.$parent.y,
@@ -144,7 +143,6 @@ export default {
       };
     },
     createDynamicComponents() {
-      console.log(this.apiModel);
       var dynamicComponents = [];
       // TODO: Extend to other dynamic components. Currently only supporting forms.
       var forms = this.apiModel.dynamicComponents.filter(
