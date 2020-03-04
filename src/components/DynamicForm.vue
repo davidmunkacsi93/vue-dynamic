@@ -36,7 +36,7 @@
             <md-select v-model="control.value">
               <md-option
                 v-for="(value, name, index) in control.values"
-                v-model="control.values[index]"
+                :value="value"
                 :key="index"
               >
                 {{ value }}
