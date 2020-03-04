@@ -32,12 +32,16 @@ class ApiIntegrationService {
     };
     var metadata = this.extractMetadata(specification.info);
     var serverMetadata = this.extractServerMetadataV2(specification);
-    var apiModel = {
+    var apiModels = this.createApiModelsFromSchemaObjects(
+      specification.components.schemas
+    );
+
+    var apiUIModel = {
       ...version,
       ...metadata,
       ...serverMetadata
     };
-    return apiModel;
+    return apiUIModel;
   }
 
   processOpenApi3(specification) {
@@ -54,16 +58,16 @@ class ApiIntegrationService {
       apiModels.apiModels
     );
 
-    var apiModel = {
+    var apiUIModel = {
       ...version,
       ...serverMetadata,
       ...metadata,
       ...apiModels,
       ...dynamicComponents
     };
-    apiModel.apiLayout = [];
+    apiUIModel.apiLayout = [];
 
-    return apiModel;
+    return apiUIModel;
   }
 
   extractMetadata(info) {
