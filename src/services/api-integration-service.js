@@ -26,20 +26,21 @@ class ApiIntegrationService {
   }
 
   processOpenApi2(specification) {
-    debugger;
     var version = {
       specificationVersion: specification.swagger
     };
     var metadata = this.extractMetadata(specification.info);
     var serverMetadata = this.extractServerMetadataV2(specification);
     var apiModels = this.createApiModelsFromSchemaObjects(
-      specification.components.schemas
+      specification.definitions
     );
 
     var apiUIModel = {
       ...version,
       ...metadata,
-      ...serverMetadata
+      ...serverMetadata,
+      ...apiModels,
+      apiLayout: []
     };
     return apiUIModel;
   }
@@ -63,9 +64,9 @@ class ApiIntegrationService {
       ...serverMetadata,
       ...metadata,
       ...apiModels,
-      ...dynamicComponents
+      ...dynamicComponents,
+      apiLayout: []
     };
-    apiUIModel.apiLayout = [];
 
     return apiUIModel;
   }
@@ -127,10 +128,15 @@ class ApiIntegrationService {
         }
 
         if (propertyObject.type === "array") {
-          property.arrayType = propertyObject.items.$ref.replace(
-            "#/components/schemas/",
-            ""
-          );
+          debugger;
+          if (propertyObject.items.$ref) {
+            property.arrayType = propertyObject.items.$ref.replace(
+              "#/components/schemas/",
+              ""
+            );
+          } else {
+            property.arrayType = propertyObject.items.type;
+          }
         }
         apiModel.properties.push(property);
       }
