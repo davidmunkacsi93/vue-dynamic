@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       specificationURL:
-        "https://api.swaggerhub.com/apis/davidmunkacsi93/home-iot-api/1.0.0/swagger.json"
+        "https://api.swaggerhub.com/apis/davidmunkacsi93/petstore/1.0.0/swagger.json"
     };
   },
   methods: {
