@@ -26,14 +26,16 @@ class ApiIntegrationService {
   }
 
   processOpenApi2(specification) {
-    console.log(specification);
+    debugger;
     var version = {
-      specificationVersion: specification.openapi
+      specificationVersion: specification.swagger
     };
     var metadata = this.extractMetadata(specification.info);
+    var serverMetadata = this.extractServerMetadataV2(specification);
     var apiModel = {
       ...version,
-      ...metadata
+      ...metadata,
+      ...serverMetadata
     };
     return apiModel;
   }
@@ -69,6 +71,13 @@ class ApiIntegrationService {
       apiVersion: info.version,
       title: info.title,
       description: info.description
+    };
+  }
+
+  extractServerMetadataV2(specification) {
+    const scheme = specification.schemes[0];
+    return {
+      serverURL: scheme + "://" + specification.host + specification.basePath
     };
   }
 
