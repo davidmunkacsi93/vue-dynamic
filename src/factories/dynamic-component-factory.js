@@ -1,16 +1,16 @@
 import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
 
 class DynamicComponentFactory {
-  createDynamicComponentsForApi(apiEndpoints, apiModels) {
+  createDynamicComponentsForApi(apiPaths, apiModels) {
     var dynamicComponents = [];
 
-    for (var endpoint in apiEndpoints) {
-      var apiEndpoint = apiEndpoints[endpoint];
+    for (var path in apiPaths) {
+      var apiEndpoint = apiPaths[path];
 
       for (var httpMethod in apiEndpoint) {
         var apiMethod = apiEndpoint[httpMethod];
         var dynamicComponent = {};
-        dynamicComponent.path = endpoint;
+        dynamicComponent.path = path;
         dynamicComponent.description = apiMethod.description;
         dynamicComponent.httpMethod = httpMethod.toUpperCase();
 
