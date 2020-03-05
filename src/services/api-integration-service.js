@@ -34,14 +34,21 @@ class ApiIntegrationService {
     var apiModels = this.createApiModelsFromSchemaObjects(
       specification.definitions
     );
+    var dynamicComponents = this.createDynamicComponentsForApi(
+      version.specificationVersion,
+      specification.paths,
+      apiModels.apiModels
+    );
 
     var apiUIModel = {
       ...version,
       ...metadata,
       ...serverMetadata,
       ...apiModels,
+      ...dynamicComponents,
       apiLayout: []
     };
+
     return apiUIModel;
   }
 
@@ -55,6 +62,7 @@ class ApiIntegrationService {
       specification.components.schemas
     );
     var dynamicComponents = this.createDynamicComponentsForApi(
+      version.specificationVersion,
       specification.paths,
       apiModels.apiModels
     );
@@ -128,7 +136,6 @@ class ApiIntegrationService {
         }
 
         if (propertyObject.type === "array") {
-          debugger;
           if (propertyObject.items.$ref) {
             property.arrayType = propertyObject.items.$ref.replace(
               "#/components/schemas/",
@@ -145,7 +152,7 @@ class ApiIntegrationService {
     return result;
   }
 
-  createDynamicComponentsForApi(apiEndpoints, apiModels) {
+  createDynamicComponentsForApi(apiVersion, apiEndpoints, apiModels) {
     var result = {
       dynamicComponents: []
     };
@@ -156,7 +163,12 @@ class ApiIntegrationService {
 
         var dynamicComponent = this.getNewDynamicComponent();
         dynamicComponent.path = endpoint;
-        dynamicComponent.description = apiMethod.description;
+
+        if (apiVersion === "2.0") {
+          dynamicComponent.description = apiMethod.summary;
+        } else if (apiVersion === "3.0.0") {
+          dynamicComponent.description = apiMethod.description;
+        }
 
         if (httpMethod === "get") {
           // Based on the parameters specified generate a search form,
@@ -167,6 +179,7 @@ class ApiIntegrationService {
           dynamicComponent.type = FORM;
 
           if (apiMethod.parameters) {
+            debugger;
             dynamicComponent.controls = this.createControlsForParameters(
               apiMethod,
               apiModels
@@ -208,7 +221,7 @@ class ApiIntegrationService {
       var control = {
         label: property.name,
         element: INPUT,
-        in: "query",
+        in: property.in,
         type: property.type,
         format: property.format,
         placeholder: property.example,
@@ -221,6 +234,7 @@ class ApiIntegrationService {
 
   createControlsForParameters(apiMethod) {
     var result = [];
+    debugger;
     for (var parameter of apiMethod.parameters) {
       var control = {
         label: parameter.name,
