@@ -2,12 +2,10 @@ import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
 
 class OpenApi3Parser {
   processSpecification(specification) {
-    var version = {
-      specificationVersion: specification.openapi
-    };
+    var version = specification.openapi;
 
-    var metadata = this.getApiInformation(specification.info);
-    var serverMetadata = this.getServerInformation(specification.servers);
+    var apiInformation = this.getApiInformation(specification.info);
+    var serverInformation = this.getServerInformation(specification.servers);
 
     var apiModels = this.createApiModels(specification.components.schemas);
     var dynamicComponents = this.createDynamicComponentsForApi(
@@ -16,9 +14,9 @@ class OpenApi3Parser {
     );
 
     var apiUIModel = {
-      ...version,
-      ...serverMetadata,
-      ...metadata,
+      version,
+      ...apiInformation,
+      ...serverInformation,
       apiModels,
       dynamicComponents,
       apiLayout: []
