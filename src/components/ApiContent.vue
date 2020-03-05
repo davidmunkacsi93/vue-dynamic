@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-layout
-      :layout.sync="apiLayout"
+      :layout="apiLayout"
       :col-num="12"
       :rowHeight="rowHeight"
       :margin="[3, 3]"
@@ -43,7 +43,6 @@
 </template>
 <script>
 import { v1 as uuid } from "uuid";
-import { mapState } from "vuex";
 import {
   SET_API_LAYOUT_ITEMS,
   LOAD_API_LAYOUT,
@@ -59,8 +58,6 @@ import {
   INPUT,
   SWITCH
 } from "../types/layout-item-types";
-import { COMPACT, LAYOUT_UPDATED } from "../types/event-types";
-import EventBus from "../utils/event-bus.js";
 
 export default {
   components: { DynamicForm, DynamicHeader },
@@ -70,56 +67,73 @@ export default {
       currentApiId: 0,
       rowHeight: 30,
       FORM: FORM,
-      HEADER: HEADER
+      HEADER: HEADER,
+      apiLayout: [],
+      apiModel: {}
     };
   },
 
   beforeUpdate() {
-    if (!this.apiModel) {
-      console.error("API model could not be read.");
-    }
+    this.apiModel = this.$store.state.apiLayouts.apis[
+      this.$store.state.apiLayouts.currentApiId
+    ];
     if (!this.apiLayout || this.apiLayout.length === 0) {
       this.apiLayout = this.getDefaultLayout();
-      EventBus.$emit(LAYOUT_UPDATED);
-      EventBus.$emit(COMPACT);
+      this.$store.dispatch(SET_API_LAYOUT_ITEMS, this.apiLayout);
     }
   },
 
   beforeRouteEnter(to, from, next) {
     const nextApiId = to.params.apiId;
     next(vm => {
+      console.log(nextApiId);
       vm.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
+      vm.apiLayout =
+        vm.$store.state.apiLayouts.apis[
+          vm.$store.state.apiLayouts.currentApiId
+        ].apiLayout;
+      console.log(vm.apiLayout);
     });
   },
 
   beforeRouteUpdate(to, from, next) {
     this.currentApiId = to.params.apiId;
-    this.$store.dispatch(SAVE_API_LAYOUT).then(() => {
-      next();
-    });
+    this.$store.dispatch(SAVE_API_LAYOUT);
+    this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
+    this.apiModel = this.$store.state.apiLayouts.apis[
+      this.$store.state.apiLayouts.currentApiId
+    ];
+    this.apiLayout = this.apiModel.apiLayout;
+    next();
   },
 
   beforeRouteLeave(to, from, next) {
-    this.$store.dispatch(SAVE_API_LAYOUT).then(() => {
-      next();
-    });
+    this.$store.dispatch(SAVE_API_LAYOUT);
+    next();
   },
 
-  computed: {
-    ...mapState({
-      apiModel: state => state.apiLayouts.apis[state.apiLayouts.currentApiId]
-    }),
-    apiLayout: {
-      get() {
-        return this.$store.state.apiLayouts.apis[
-          this.$store.state.apiLayouts.currentApiId
-        ].apiLayout;
-      },
-      set(layoutItems) {
-        this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
-      }
-    }
-  },
+  // computed: {
+  //   ...mapState({
+  //     apiModel: state => state.apiLayouts.apis[state.apiLayouts.currentApiId]
+  //   }),
+  //   apiLayout: {
+  //     get() {
+  //       console.log("Calling get...");
+  //       console.log(
+  //         this.$store.state.apiLayouts.apis[
+  //           this.$store.state.apiLayouts.currentApiId
+  //         ].apiLayout
+  //       );
+  //       return this.$store.state.apiLayouts.apis[
+  //         this.$store.state.apiLayouts.currentApiId
+  //       ].apiLayout;
+  //     },
+  //     set(layoutItems) {
+  //       console.log("Calling set");
+  //       this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
+  //     }
+  //   }
+  // },
 
   methods: {
     getDefaultLayout() {
@@ -128,7 +142,6 @@ export default {
       this.createDynamicComponents().forEach(component =>
         layout.push(component)
       );
-      console.log(layout);
       return layout;
     },
     createHeader() {

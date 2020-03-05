@@ -23,7 +23,7 @@ function getNextId() {
 }
 
 const state = {
-  currentApiId: 0,
+  currentApiId: -1,
   isEditModeActive: false,
   apis: []
 };
@@ -80,12 +80,16 @@ const mutations = {
   },
 
   setApiLayoutItems(state, layoutItems) {
+    console.log(state.currentApiId);
     state.apis[state.currentApiId].apiLayout = layoutItems;
-  },
-
-  removeForm(state, formId) {
-    // TODO
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(UPDATE_WIDTH);
   }
+
+  // removeForm(state, formId) {
+  //   // TODO
+  // }
 };
 
 const actions = {
