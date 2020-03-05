@@ -1,10 +1,4 @@
 import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
-import {
-  HTTP_POST,
-  HTTP_DELETE,
-  HTTP_PUT,
-  HTTP_GET
-} from "../types/http-methods";
 
 class OpenApi3Parser {
   processSpecification(specification) {
@@ -15,20 +9,18 @@ class OpenApi3Parser {
     var metadata = this.getApiInformation(specification.info);
     var serverMetadata = this.getServerInformation(specification.servers);
 
-    var apiModels = this.createApiModelsFromSchemaObjects(
-      specification.components.schemas
-    );
+    var apiModels = this.createApiModels(specification.components.schemas);
     var dynamicComponents = this.createDynamicComponentsForApi(
       specification.paths,
-      apiModels.apiModels
+      apiModels
     );
 
     var apiUIModel = {
       ...version,
       ...serverMetadata,
       ...metadata,
-      ...apiModels,
-      ...dynamicComponents,
+      apiModels,
+      dynamicComponents,
       apiLayout: []
     };
 
@@ -50,14 +42,12 @@ class OpenApi3Parser {
     };
   }
 
-  createApiModelsFromSchemaObjects(schemaObjects) {
-    var result = {
-      apiModels: []
-    };
-    if (!schemaObjects) return;
+  createApiModels(schemas) {
+    var apiModels = [];
+    if (!schemas) return;
 
-    for (var objectKey in schemaObjects) {
-      const schemaObject = schemaObjects[objectKey];
+    for (var objectKey in schemas) {
+      const schemaObject = schemas[objectKey];
 
       if (!schemaObject) continue;
 
@@ -96,15 +86,13 @@ class OpenApi3Parser {
         }
         apiModel.properties.push(property);
       }
-      result.apiModels.push(apiModel);
+      apiModels.push(apiModel);
     }
-    return result;
+    return apiModels;
   }
 
   createDynamicComponentsForApi(apiEndpoints, apiModels) {
-    var result = {
-      dynamicComponents: []
-    };
+    var dynamicComponents = [];
 
     for (var endpoint in apiEndpoints) {
       var apiEndpoint = apiEndpoints[endpoint];
@@ -119,7 +107,6 @@ class OpenApi3Parser {
         if (httpMethod === "get") {
           // Based on the parameters specified generate a search form,
           // that transform into a grid / list / input based on the response type.
-          dynamicComponent.httpMethod = HTTP_GET;
         } else if (
           httpMethod === "post" ||
           httpMethod === "delete" ||
@@ -135,10 +122,10 @@ class OpenApi3Parser {
           console.error("Not supported HTTP method.");
         }
 
-        result.dynamicComponents.push(dynamicComponent);
+        dynamicComponents.push(dynamicComponent);
       }
     }
-    return result;
+    return dynamicComponents;
   }
 
   createControlsForDynamicForm(apiMethod, apiModels) {
@@ -156,7 +143,7 @@ class OpenApi3Parser {
   }
 
   createControlsForSchema(apiMethod, apiModels) {
-    var result = [];
+    var controls = [];
     var schema = apiMethod.requestBody.content["application/json"].schema;
     var apiModelKey = schema.$ref.replace("#/components/schemas/", "");
     var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
@@ -170,14 +157,13 @@ class OpenApi3Parser {
         placeholder: property.example,
         isEnum: false
       };
-      result.push(control);
+      controls.push(control);
     }
-    return result;
+    return controls;
   }
 
   createControlsForParameters(apiMethod) {
-    var result = [];
-    debugger;
+    var controls = [];
     for (var parameter of apiMethod.parameters) {
       var control = {
         label: parameter.name,
@@ -201,9 +187,9 @@ class OpenApi3Parser {
           control.values = parameter.schema.enum;
         }
       }
-      result.push(control);
+      controls.push(control);
     }
-    return result;
+    return controls;
   }
 }
 
