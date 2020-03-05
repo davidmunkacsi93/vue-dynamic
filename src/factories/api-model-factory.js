@@ -1,5 +1,7 @@
+import { getLastURLSegment } from "../utils/helpers";
+
 class ApiModelFactory {
-  createApiModels(components, referencePrefix) {
+  createApiModels(components) {
     var apiModels = [];
     if (!components) return;
 
@@ -32,10 +34,7 @@ class ApiModelFactory {
 
         if (propertyObject.type === "array") {
           if (propertyObject.items.$ref) {
-            property.arrayType = propertyObject.items.$ref.replace(
-              referencePrefix,
-              ""
-            );
+            property.arrayType = getLastURLSegment(propertyObject.items.$ref);
           } else {
             property.arrayType = propertyObject.items.type;
           }

@@ -4,7 +4,7 @@ import OpenApiInformationProvider from "../providers/open-api-information-provid
 
 class OpenApi3Parser {
   processSpecification(specification) {
-    var version = specification.openapi;
+    var specificationVersion = specification.openapi;
 
     var apiInformation = OpenApiInformationProvider.getApiInformation(
       specification.info
@@ -14,8 +14,8 @@ class OpenApi3Parser {
     );
 
     var apiModels = ApiModelFactory.createApiModels(
-      specification.components.schemas,
-      "#/components/schemas/"
+      specificationVersion,
+      specification.components.schemas
     );
     var dynamicComponents = DynamicComponentFactory.createDynamicComponents(
       specification.paths,
@@ -23,7 +23,7 @@ class OpenApi3Parser {
     );
 
     var apiUIModel = {
-      version,
+      specificationVersion,
       ...apiInformation,
       ...serverInformation,
       apiModels,

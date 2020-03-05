@@ -1,4 +1,5 @@
 import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
+import { getLastURLSegment } from "../utils/helpers";
 
 class DynamicFormFactory {
   createDynamicForm(path, httpMethod, apiMethod, apiModels) {
@@ -13,8 +14,9 @@ class DynamicFormFactory {
         apiModels
       );
     } else if (apiMethod.requestBody) {
+      var schema = apiMethod.requestBody.content["application/json"].schema;
       dynamicComponent.controls = this.createControlsForSchema(
-        apiMethod,
+        schema,
         apiModels
       );
     } else {
@@ -25,10 +27,11 @@ class DynamicFormFactory {
     return dynamicComponent;
   }
 
-  createControlsForSchema(apiMethod, apiModels) {
+  createControlsForSchema(schema, apiModels) {
+    debugger;
     var controls = [];
-    var schema = apiMethod.requestBody.content["application/json"].schema;
-    var apiModelKey = schema.$ref.replace("#/components/schemas/", "");
+    var apiModelKey = getLastURLSegment(schema.$ref);
+
     var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
     for (var property of apiModelForSchema.properties) {
       var control = {
@@ -58,16 +61,19 @@ class DynamicFormFactory {
         value: null
       };
 
-      if (parameter.schema.enum) {
-        if (
-          parameter.schema.enum.every(
-            value => value === true || value === false
-          )
-        ) {
-          control.element = SWITCH;
-        } else {
-          control.element = DROP_DOWN;
-          control.values = parameter.schema.enum;
+      if (parameter.schema) {
+        debugger;
+        if (parameter.schema.enum) {
+          if (
+            parameter.schema.enum.every(
+              value => value === true || value === false
+            )
+          ) {
+            control.element = SWITCH;
+          } else {
+            control.element = DROP_DOWN;
+            control.values = parameter.schema.enum;
+          }
         }
       }
       controls.push(control);
