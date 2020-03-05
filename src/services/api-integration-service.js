@@ -1,6 +1,6 @@
 import SwaggerParser from "swagger-parser";
-import OpenApi2Parser from "./open-api-2-parser.js";
-import OpenApi3Parser from "./open-api-3-parser.js";
+import OpenApi2Parser from "../parsers/open-api-2-parser.js";
+import OpenApi3Parser from "../parsers/open-api-3-parser.js";
 
 class ApiIntegrationService {
   async integrateNewAPI(url) {
