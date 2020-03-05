@@ -2,7 +2,7 @@
   <md-card ref="dynamicForm" class="dynamic-form" md-with-hover>
     <md-card-header>
       <md-card-header-text>
-        <div class="md-title">{{ path }}</div>
+        <div class="md-title">{{ path }} ({{ httpMethod }})</div>
         <div class="md-subhead">{{ description }}</div>
       </md-card-header-text>
       <md-menu md-size="big" md-direction="bottom-end">
@@ -80,6 +80,7 @@ export default {
     return {
       path: this.model.path,
       description: this.model.description,
+      httpMethod: this.model.httpMethod,
       controls: this.model.controls.map((control, index) => {
         return {
           ...control,

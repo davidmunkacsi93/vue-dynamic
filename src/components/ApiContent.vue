@@ -163,6 +163,7 @@ export default {
           layoutItemType: FORM,
           description: dynamicComponent.description,
           path: dynamicComponent.path,
+          httpMethod: dynamicComponent.httpMethod,
           controls: dynamicComponent.controls
         };
         dynamicComponents.push(component);
