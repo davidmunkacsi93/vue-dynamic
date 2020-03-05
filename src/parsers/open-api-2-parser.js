@@ -1,4 +1,5 @@
 import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
+import ApiModelFactory from "../factories/api-model-factory";
 
 class OpenApi2Parser {
   processSpecification(specification) {
@@ -6,7 +7,11 @@ class OpenApi2Parser {
 
     var apiInformation = this.getApiInformation(specification.info);
     var serverInformation = this.getServerInformation(specification);
-    var apiModels = this.createApiModels(specification.definitions);
+
+    var apiModels = ApiModelFactory.createApiModels(
+      specification.definitions,
+      "#/definitions/"
+    );
     var dynamicComponents = this.createDynamicComponentsForApi(
       specification.paths,
       apiModels.apiModels
@@ -85,7 +90,6 @@ class OpenApi2Parser {
       }
       apiModels.push(apiModel);
     }
-    console.log(apiModels);
     return apiModels;
   }
 

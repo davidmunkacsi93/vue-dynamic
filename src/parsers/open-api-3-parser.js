@@ -1,4 +1,5 @@
 import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
+import ApiModelFactory from "../factories/api-model-factory";
 
 class OpenApi3Parser {
   processSpecification(specification) {
@@ -7,7 +8,10 @@ class OpenApi3Parser {
     var apiInformation = this.getApiInformation(specification.info);
     var serverInformation = this.getServerInformation(specification.servers);
 
-    var apiModels = this.createApiModels(specification.components.schemas);
+    var apiModels = ApiModelFactory.createApiModels(
+      specification.components.schemas,
+      "#/components/schemas/"
+    );
     var dynamicComponents = this.createDynamicComponentsForApi(
       specification.paths,
       apiModels
@@ -38,55 +42,6 @@ class OpenApi3Parser {
       serverDescription: servers[0].description,
       serverURL: servers[0].url
     };
-  }
-
-  createApiModels(schemas) {
-    var apiModels = [];
-    if (!schemas) return;
-
-    for (var objectKey in schemas) {
-      const schemaObject = schemas[objectKey];
-
-      if (!schemaObject) continue;
-
-      var apiModel = {
-        type: objectKey,
-        description: schemaObject.description,
-        properties: []
-      };
-
-      for (var propertyName in schemaObject.properties) {
-        var propertyObject = schemaObject.properties[propertyName];
-        if (!propertyObject) continue;
-
-        var property = {
-          name: propertyName,
-          type: propertyObject.type,
-          format: propertyObject.format,
-          placeholder: propertyObject.example,
-          isEnum: false
-        };
-
-        if (propertyObject.enum) {
-          property.isEnum = true;
-          property.enumValues = propertyObject.enum;
-        }
-
-        if (propertyObject.type === "array") {
-          if (propertyObject.items.$ref) {
-            property.arrayType = propertyObject.items.$ref.replace(
-              "#/components/schemas/",
-              ""
-            );
-          } else {
-            property.arrayType = propertyObject.items.type;
-          }
-        }
-        apiModel.properties.push(property);
-      }
-      apiModels.push(apiModel);
-    }
-    return apiModels;
   }
 
   createDynamicComponentsForApi(apiEndpoints, apiModels) {
