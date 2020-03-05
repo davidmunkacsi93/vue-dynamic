@@ -24,7 +24,6 @@ class DynamicFormFactory {
         `Can't generate dynamic component for endpoint ${apiMethod.description}`
       );
     }
-    debugger;
     return dynamicComponent;
   }
 
@@ -72,7 +71,6 @@ class DynamicFormFactory {
     var apiModelKey = getLastURLSegment(schema.$ref);
 
     var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
-    debugger;
     for (var property of apiModelForSchema.properties) {
       var control = {
         label: property.name,
