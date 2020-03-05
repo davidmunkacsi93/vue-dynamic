@@ -44,55 +44,6 @@ class OpenApi2Parser {
     };
   }
 
-  createApiModels(definitions) {
-    var apiModels = [];
-    if (!definitions) return;
-
-    for (var definition in definitions) {
-      const definitionObject = definitions[definition];
-
-      if (!definitionObject) continue;
-
-      var apiModel = {
-        type: definition,
-        properties: []
-      };
-
-      for (var propertyName in definitionObject.properties) {
-        var propertyObject = definitionObject.properties[propertyName];
-        if (!propertyObject) continue;
-
-        var property = {
-          name: propertyName,
-          type: propertyObject.type,
-          format: propertyObject.format,
-          placeholder: propertyObject.example,
-          isEnum: false
-        };
-
-        if (propertyObject.enum) {
-          property.isEnum = true;
-          property.enumValues = propertyObject.enum;
-        }
-
-        if (propertyObject.type === "array") {
-          if (propertyObject.items.$ref) {
-            debugger;
-            property.arrayType = propertyObject.items.$ref.replace(
-              "#/definitions/",
-              ""
-            );
-          } else {
-            property.arrayType = propertyObject.items.type;
-          }
-        }
-        apiModel.properties.push(property);
-      }
-      apiModels.push(apiModel);
-    }
-    return apiModels;
-  }
-
   createDynamicComponentsForApi(apiEndpoints, apiModels) {
     var dynamicComponents = [];
 
