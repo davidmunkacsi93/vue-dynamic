@@ -17,7 +17,7 @@ class OpenApi2Parser {
       specification.definitions,
       "#/definitions/"
     );
-    var dynamicComponents = DynamicComponentFactory.createDynamicComponentsForApi(
+    var dynamicComponents = DynamicComponentFactory.createDynamicComponents(
       specification.paths,
       apiModels.apiModels
     );

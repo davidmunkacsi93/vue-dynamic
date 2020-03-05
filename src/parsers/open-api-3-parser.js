@@ -17,7 +17,7 @@ class OpenApi3Parser {
       specification.components.schemas,
       "#/components/schemas/"
     );
-    var dynamicComponents = DynamicComponentFactory.createDynamicComponentsForApi(
+    var dynamicComponents = DynamicComponentFactory.createDynamicComponents(
       specification.paths,
       apiModels
     );
