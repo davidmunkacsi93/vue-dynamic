@@ -24,25 +24,29 @@ class DynamicFormFactory {
         `Can't generate dynamic component for endpoint ${apiMethod.description}`
       );
     }
+    debugger;
     return dynamicComponent;
   }
 
   createControlsForParameters(apiMethod, apiModels) {
     var controls = [];
+
     for (var parameter of apiMethod.parameters) {
-      var control = {
-        label: parameter.name,
-        element: INPUT,
-        in: parameter.in,
-        type: parameter.schema.type,
-        format: parameter.schema.format,
-        placeholder: parameter.schema.example,
-        value: null
-      };
       if (parameter.schema) {
         if (parameter.schema.$ref) {
           controls = this.createControlsForSchema(parameter.schema, apiModels);
+          return controls;
         }
+
+        var control = {
+          label: parameter.name,
+          element: INPUT,
+          in: parameter.in,
+          type: parameter.schema.type,
+          format: parameter.schema.format,
+          placeholder: parameter.schema.example,
+          value: null
+        };
         if (parameter.schema.enum) {
           if (
             parameter.schema.enum.every(
@@ -55,9 +59,11 @@ class DynamicFormFactory {
             control.values = parameter.schema.enum;
           }
         }
+
+        controls.push(control);
       }
-      controls.push(control);
     }
+
     return controls;
   }
 
