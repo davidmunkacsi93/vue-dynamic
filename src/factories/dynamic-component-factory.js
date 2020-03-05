@@ -1,7 +1,7 @@
-import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
+import DynamicFormFactory from "../factories/dynamic-form-factory";
 
 class DynamicComponentFactory {
-  createDynamicComponentsForApi(apiPaths, apiModels) {
+  createDynamicComponents(apiPaths, apiModels) {
     var dynamicComponents = [];
 
     for (var path in apiPaths) {
@@ -10,9 +10,6 @@ class DynamicComponentFactory {
       for (var httpMethod in apiEndpoint) {
         var apiMethod = apiEndpoint[httpMethod];
         var dynamicComponent = {};
-        dynamicComponent.path = path;
-        dynamicComponent.description = apiMethod.description;
-        dynamicComponent.httpMethod = httpMethod.toUpperCase();
 
         if (httpMethod === "get") {
           // Based on the parameters specified generate a search form,
@@ -22,8 +19,9 @@ class DynamicComponentFactory {
           httpMethod === "delete" ||
           httpMethod === "put"
         ) {
-          dynamicComponent.type = FORM;
-          dynamicComponent.controls = this.createControlsForDynamicForm(
+          dynamicComponent = DynamicFormFactory.createDynamicForm(
+            path,
+            httpMethod,
             apiMethod,
             apiModels
           );
@@ -36,70 +34,6 @@ class DynamicComponentFactory {
       }
     }
     return dynamicComponents;
-  }
-
-  createControlsForDynamicForm(apiMethod, apiModels) {
-    var controls = [];
-    if (apiMethod.parameters) {
-      controls = this.createControlsForParameters(apiMethod, apiModels);
-    } else if (apiMethod.requestBody) {
-      controls = this.createControlsForSchema(apiMethod, apiModels);
-    } else {
-      console.error(
-        `Can't generate dynamic component for endpoint ${apiMethod.description}`
-      );
-    }
-    return controls;
-  }
-
-  createControlsForSchema(apiMethod, apiModels) {
-    var controls = [];
-    var schema = apiMethod.requestBody.content["application/json"].schema;
-    var apiModelKey = schema.$ref.replace("#/components/schemas/", "");
-    var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
-    for (var property of apiModelForSchema.properties) {
-      var control = {
-        label: property.name,
-        element: INPUT,
-        in: property.in,
-        type: property.type,
-        format: property.format,
-        placeholder: property.example,
-        isEnum: false
-      };
-      controls.push(control);
-    }
-    return controls;
-  }
-
-  createControlsForParameters(apiMethod) {
-    var controls = [];
-    for (var parameter of apiMethod.parameters) {
-      var control = {
-        label: parameter.name,
-        element: INPUT,
-        in: parameter.in,
-        type: parameter.schema.type,
-        format: parameter.schema.format,
-        placeholder: parameter.schema.example,
-        value: null
-      };
-
-      if (parameter.schema.enum) {
-        if (
-          parameter.schema.enum.every(
-            value => value === true || value === false
-          )
-        ) {
-          control.element = SWITCH;
-        } else {
-          control.element = DROP_DOWN;
-          control.values = parameter.schema.enum;
-        }
-      }
-      controls.push(control);
-    }
-    return controls;
   }
 }
 
