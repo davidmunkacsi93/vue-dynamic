@@ -1,32 +1,28 @@
 class OpenApi2Parser {
   processSpecification(specification) {
-    var version = {
-      specificationVersion: specification.swagger
-    };
-    var metadata = this.extractApiInformation(specification.info);
-    var serverMetadata = this.extractServerInformation(specification);
-    var apiModels = this.createApiModelsFromSchemaObjects(
-      specification.definitions
-    );
+    var specificationVersion = specification.swagger;
+
+    var apiInformation = this.getApiInformation(specification.info);
+    var serverInformation = this.getServerInformation(specification);
+    var apiModels = this.createApiModels(specification.definitions);
     var dynamicComponents = this.createDynamicComponentsForApi(
-      version.specificationVersion,
       specification.paths,
       apiModels.apiModels
     );
 
     var apiUIModel = {
-      ...version,
-      ...metadata,
-      ...serverMetadata,
-      ...apiModels,
-      ...dynamicComponents,
+      specificationVersion,
+      ...apiInformation,
+      ...serverInformation,
+      apiModels,
+      dynamicComponents,
       apiLayout: []
     };
 
     return apiUIModel;
   }
 
-  extractApiInformation(info) {
+  getApiInformation(info) {
     return {
       apiVersion: info.version,
       title: info.title,
@@ -34,7 +30,7 @@ class OpenApi2Parser {
     };
   }
 
-  extractServerInformation(specification) {
+  getServerInformation(specification) {
     const scheme = specification.schemes[0];
     return {
       serverURL: scheme + "://" + specification.host + specification.basePath
