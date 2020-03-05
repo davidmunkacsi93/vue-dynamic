@@ -84,10 +84,7 @@ const mutations = {
   },
 
   removeForm(state, formId) {
-    state.apis[state.currentApiId] = state.currentApiLayout.filter(
-      item => item.id != formId
-    );
-    EventBus.$emit(LAYOUT_UPDATED);
+    // TODO
   }
 };
 
