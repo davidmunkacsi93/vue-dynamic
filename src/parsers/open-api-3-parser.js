@@ -14,7 +14,6 @@ class OpenApi3Parser {
     );
 
     var apiModels = ApiModelFactory.createApiModels(
-      specificationVersion,
       specification.components.schemas
     );
     var dynamicComponents = DynamicComponentFactory.createDynamicComponents(

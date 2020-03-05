@@ -27,28 +27,7 @@ class DynamicFormFactory {
     return dynamicComponent;
   }
 
-  createControlsForSchema(schema, apiModels) {
-    debugger;
-    var controls = [];
-    var apiModelKey = getLastURLSegment(schema.$ref);
-
-    var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
-    for (var property of apiModelForSchema.properties) {
-      var control = {
-        label: property.name,
-        element: INPUT,
-        in: property.in,
-        type: property.type,
-        format: property.format,
-        placeholder: property.example,
-        isEnum: false
-      };
-      controls.push(control);
-    }
-    return controls;
-  }
-
-  createControlsForParameters(apiMethod) {
+  createControlsForParameters(apiMethod, apiModels) {
     var controls = [];
     for (var parameter of apiMethod.parameters) {
       var control = {
@@ -60,9 +39,10 @@ class DynamicFormFactory {
         placeholder: parameter.schema.example,
         value: null
       };
-
       if (parameter.schema) {
-        debugger;
+        if (parameter.schema.$ref) {
+          controls = this.createControlsForSchema(parameter.schema, apiModels);
+        }
         if (parameter.schema.enum) {
           if (
             parameter.schema.enum.every(
@@ -76,6 +56,27 @@ class DynamicFormFactory {
           }
         }
       }
+      controls.push(control);
+    }
+    return controls;
+  }
+
+  createControlsForSchema(schema, apiModels) {
+    var controls = [];
+    var apiModelKey = getLastURLSegment(schema.$ref);
+
+    var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
+    debugger;
+    for (var property of apiModelForSchema.properties) {
+      var control = {
+        label: property.name,
+        element: INPUT,
+        in: property.in,
+        type: property.type,
+        format: property.format,
+        placeholder: property.example,
+        isEnum: false
+      };
       controls.push(control);
     }
     return controls;

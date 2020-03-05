@@ -15,7 +15,8 @@ class OpenApi2Parser {
 
     var apiModels = ApiModelFactory.createApiModels(specification.definitions);
     var dynamicComponents = DynamicComponentFactory.createDynamicComponents(
-      apiModels.apiModels
+      specification.paths,
+      apiModels
     );
 
     var apiUIModel = {
