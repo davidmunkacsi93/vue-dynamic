@@ -1,12 +1,17 @@
 import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
 import ApiModelFactory from "../factories/api-model-factory";
+import OpenApiInformationProvider from "../providers/open-api-information-provider";
 
 class OpenApi3Parser {
   processSpecification(specification) {
     var version = specification.openapi;
 
-    var apiInformation = this.getApiInformation(specification.info);
-    var serverInformation = this.getServerInformation(specification.servers);
+    var apiInformation = OpenApiInformationProvider.getApiInformation(
+      specification.info
+    );
+    var serverInformation = OpenApiInformationProvider.getServerInformation(
+      specification
+    );
 
     var apiModels = ApiModelFactory.createApiModels(
       specification.components.schemas,
@@ -27,21 +32,6 @@ class OpenApi3Parser {
     };
 
     return apiUIModel;
-  }
-
-  getApiInformation(info) {
-    return {
-      apiVersion: info.version,
-      title: info.title,
-      description: info.description
-    };
-  }
-
-  getServerInformation(servers) {
-    return {
-      serverDescription: servers[0].description,
-      serverURL: servers[0].url
-    };
   }
 
   createDynamicComponentsForApi(apiEndpoints, apiModels) {
