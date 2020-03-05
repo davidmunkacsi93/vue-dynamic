@@ -1,7 +1,6 @@
 import EventBus from "../../utils/event-bus.js";
 import {
   LOAD_API_LAYOUT,
-  SET_CURRENT_API_ID,
   REMOVE_FORM,
   SET_API_LAYOUT_ITEMS,
   SAVE_API_LAYOUT,
@@ -24,9 +23,7 @@ function getNextId() {
 }
 
 const state = {
-  currentApiId: -1,
-  currentApiLayout: [],
-  currentApiModel: {},
+  currentApiId: 0,
   isEditModeActive: false,
   apis: []
 };
@@ -44,14 +41,14 @@ const mutations = {
   },
 
   disableEditModeApiLayout(state) {
-    for (var layoutItem of state.currentApiLayout) {
+    for (var layoutItem of state.apis[state.currentApiId].apiLayout) {
       layoutItem.static = true;
     }
     state.isEditModeActive = false;
   },
 
   enableEditModeApiLayout(state) {
-    for (var layoutItem of state.currentApiLayout) {
+    for (var layoutItem of state.apis[state.currentApiId].apiLayout) {
       layoutItem.static = false;
     }
     state.isEditModeActive = true;
@@ -70,15 +67,12 @@ const mutations = {
 
   loadApiLayout(state, apiId) {
     state.currentApiId = apiId;
-    state.currentApiModel = state.apis.find(api => api.apiId == apiId);
-    state.currentApiLayout = state.currentApiModel.apiLayout;
     EventBus.$emit(COMPACT);
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(UPDATE_WIDTH);
   },
 
   saveApiLayout(state) {
-    state.apis[state.currentApiId].apiLayout = state.currentApiLayout;
     localStorage.setItem(
       LOCAL_STORAGE_API_LAYOUT_KEY,
       JSON.stringify(state.apis)
@@ -86,16 +80,11 @@ const mutations = {
   },
 
   setApiLayoutItems(state, layoutItems) {
-    state.currentApiModel.apiLayout = layoutItems;
-    state.currentApiLayout = layoutItems;
-  },
-
-  setCurrentApiId(state, apiId) {
-    state.currentApiId = apiId;
+    state.apis[state.currentApiId].apiLayout = layoutItems;
   },
 
   removeForm(state, formId) {
-    state.currentApiLayout = state.currentApiLayout.filter(
+    state.apis[state.currentApiId] = state.currentApiLayout.filter(
       item => item.id != formId
     );
     EventBus.$emit(LAYOUT_UPDATED);
@@ -123,9 +112,6 @@ const actions = {
   },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);
-  },
-  setCurrentApiId({ commit }, apiId) {
-    commit(SET_CURRENT_API_ID, apiId);
   },
   removeForm({ commit }, formId) {
     commit(REMOVE_FORM, formId);

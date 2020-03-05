@@ -93,24 +93,27 @@ export default {
   },
 
   beforeRouteUpdate(to, from, next) {
-    const nextApiId = to.params.apiId;
-    this.$store.dispatch(SAVE_API_LAYOUT);
-    this.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
-    next();
+    this.currentApiId = to.params.apiId;
+    this.$store.dispatch(SAVE_API_LAYOUT).then(() => {
+      next();
+    });
   },
 
   beforeRouteLeave(to, from, next) {
-    this.$store.dispatch(SAVE_API_LAYOUT);
-    next();
+    this.$store.dispatch(SAVE_API_LAYOUT).then(() => {
+      next();
+    });
   },
 
   computed: {
     ...mapState({
-      apiModel: state => state.apiLayouts.currentApiModel
+      apiModel: state => state.apiLayouts.apis[state.apiLayouts.currentApiId]
     }),
     apiLayout: {
       get() {
-        return this.$store.state.apiLayouts.currentApiLayout;
+        return this.$store.state.apiLayouts.apis[
+          this.$store.state.apiLayouts.currentApiId
+        ].apiLayout;
       },
       set(layoutItems) {
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
