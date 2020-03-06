@@ -49,10 +49,7 @@ import {
 
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
-import {
-  FORM,
-  HEADER,
-} from "../types/layout-item-types";
+import { FORM, HEADER } from "../types/layout-item-types";
 
 export default {
   components: { DynamicForm, DynamicHeader },
