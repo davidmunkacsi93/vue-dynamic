@@ -120,16 +120,6 @@ export default {
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
   },
-  computed: {
-    mainLayout: {
-      get() {
-        return this.$store.state.mainLayout.mainLayout;
-      },
-      set(layoutItems) {
-        this.$store.dispatch(SET_MAIN_LAYOUT_ITEMS, layoutItems);
-      }
-    }
-  },
   methods: {
     onWindowResize() {
       this.screenClass = this.$store.state.responsive.screenClass;
