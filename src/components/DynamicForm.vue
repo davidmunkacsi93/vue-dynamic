@@ -2,7 +2,7 @@
   <md-card ref="dynamicForm" class="dynamic-form" md-with-hover>
     <md-card-header>
       <md-card-header-text>
-        <div class="md-title">{{ path }} ({{ httpMethod }})</div>
+        <div class="md-title">{{ path }}</div>
         <div class="md-subhead">{{ description }}</div>
       </md-card-header-text>
       <md-menu md-size="big" md-direction="bottom-end">
@@ -47,7 +47,7 @@
       </md-list>
     </md-card-content>
     <md-card-actions>
-      <md-button>Call</md-button>
+      <md-button>{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
 </template>
