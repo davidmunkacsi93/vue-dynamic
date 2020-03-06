@@ -52,7 +52,11 @@ class DynamicFormFactory {
     for (var parameter of apiMethod.parameters) {
       if (parameter.schema) {
         if (parameter.schema.$ref) {
-          controls = this.createControlsForSchema(parameter.schema, apiModels);
+          controls = this.createControlsForSchema(
+            parameter.in,
+            parameter.schema,
+            apiModels
+          );
           return controls;
         }
         var controlForSchema = this.createControl(parameter.schema);
@@ -63,6 +67,7 @@ class DynamicFormFactory {
           ...controlForSchema
         };
         controls.push(control);
+        console.log(control);
       }
     }
 
@@ -78,11 +83,14 @@ class DynamicFormFactory {
     for (var property of apiModelForSchema.properties) {
       var controlForSchema = this.createControl(property);
       var control = {
-        label: property,
+        label: property.name,
         in: parameterIn,
-        required: requiredProperties.some(prop => prop === property),
+        required:
+          requiredProperties &&
+          requiredProperties.some(prop => prop === property),
         ...controlForSchema
       };
+      console.log(control);
       controls.push(control);
     }
     return controls;
@@ -98,6 +106,7 @@ class DynamicFormFactory {
       value: null
     };
 
+    console.log(parameter);
     console.log(parameter.type);
     switch (parameter.type) {
       case "integer":
