@@ -1,45 +1,43 @@
 <template>
-  <div>
-    <grid-layout
-      :layout="apiLayout"
-      :col-num="12"
-      :rowHeight="rowHeight"
-      :margin="[3, 3]"
-      :is-draggable="true"
-      :is-resizable="true"
-      :is-mirrored="false"
-      :responsive="true"
-      :vertical-compact="true"
-      :use-css-transforms="true"
-    >
-      <template v-for="item in apiLayout">
-        <grid-item
-          :x="item.x"
-          :y="item.y"
-          :w="item.w"
-          :h="item.h"
-          :i="item.i"
-          :margin="[15, 15]"
-          :rowHeight="rowHeight"
-          :isDraggable="item.isDraggable"
-          :isResizable="item.isResizable"
-          :static="item.static"
-          :key="item.i"
-        >
-          <dynamic-header
-            v-if="item.layoutItemType === HEADER"
-            :type="HEADER"
-            :apiModel="apiModel"
-          ></dynamic-header>
-          <dynamic-form
-            v-else-if="item.layoutItemType === FORM"
-            :model="item"
-            :type="FORM"
-          ></dynamic-form>
-        </grid-item>
-      </template>
-    </grid-layout>
-  </div>
+  <grid-layout
+    :layout="apiLayout"
+    :col-num="12"
+    :rowHeight="rowHeight"
+    :margin="[3, 3]"
+    :is-draggable="true"
+    :is-resizable="true"
+    :is-mirrored="false"
+    :responsive="true"
+    :vertical-compact="true"
+    :use-css-transforms="true"
+  >
+    <template v-for="item in apiLayout">
+      <grid-item
+        :x="item.x"
+        :y="item.y"
+        :w="item.w"
+        :h="item.h"
+        :i="item.i"
+        :margin="[15, 15]"
+        :rowHeight="rowHeight"
+        :isDraggable="item.isDraggable"
+        :isResizable="item.isResizable"
+        :static="item.static"
+        :key="item.i"
+      >
+        <dynamic-header
+          v-if="item.layoutItemType === HEADER"
+          :type="HEADER"
+          :apiModel="apiModel"
+        ></dynamic-header>
+        <dynamic-form
+          v-else-if="item.layoutItemType === FORM"
+          :model="item"
+          :type="FORM"
+        ></dynamic-form>
+      </grid-item>
+    </template>
+  </grid-layout>
 </template>
 <script>
 import { v1 as uuid } from "uuid";
@@ -52,11 +50,8 @@ import {
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import {
-  DROP_DOWN,
   FORM,
   HEADER,
-  SWITCH,
-  TEXT_INPUT
 } from "../types/layout-item-types";
 
 export default {
@@ -73,8 +68,13 @@ export default {
     };
   },
 
+  created() {
+    this.setDynamicContentHeight();
+  },
+
   beforeUpdate() {
     this.loadCurrentApiLayout(this);
+    this.setDynamicContentHeight();
     if (!this.apiLayout || this.apiLayout.length === 0) {
       this.apiLayout = this.getDefaultLayout();
       this.$store.dispatch(SET_API_LAYOUT_ITEMS, this.apiLayout);
@@ -125,6 +125,12 @@ export default {
       );
       return layout;
     },
+    setDynamicContentHeight() {
+      var dynamicContent = this.$parent.$parent.$parent;
+      console.log(this.$parent);
+      dynamicContent.innerH = 100;
+      console.log(dynamicContent.innerH);
+    },
     createHeader() {
       return {
         x: this.$parent.$parent.x,
@@ -151,7 +157,7 @@ export default {
           x: 0,
           y: 0,
           w: 6,
-          h: this.calculateFormHeight(dynamicComponent.controls),
+          h: 4,
           i: index + 1,
           uuid: uuid(),
           isDraggable: true,
@@ -166,33 +172,6 @@ export default {
         dynamicComponents.push(component);
       });
       return dynamicComponents;
-    },
-    calculateFormHeight(controls) {
-      const header = 91.08;
-      const actions = 51.96;
-      const switchHeight = 48;
-      const textInputHeight = 83.96;
-      const dropDownHeight = 84;
-
-      const countSwitches = controls.filter(
-        control => control.element === SWITCH
-      ).length;
-      const countTextInput = controls.filter(
-        control => control.element === TEXT_INPUT
-      ).length;
-      const countDropDown = controls.filter(
-        control => control.element === DROP_DOWN
-      ).length;
-
-      var result =
-        Math.floor(
-          header +
-            actions +
-            countTextInput * textInputHeight +
-            countSwitches * switchHeight +
-            countDropDown * dropDownHeight
-        ) / this.rowHeight;
-      return result;
     }
   }
 };

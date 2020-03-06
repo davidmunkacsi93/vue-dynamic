@@ -102,6 +102,9 @@ export default {
       isEditModeActive: state => state.mainLayout.isEditModeActive
     })
   },
+  mounted() {
+    this.setGridItemHeight();
+  },
   data() {
     return {
       path: this.model.path,
@@ -130,6 +133,14 @@ export default {
   methods: {
     removeGridItem() {
       this.$store.dispatch(REMOVE_FORM, this.id);
+    },
+    setGridItemHeight() {
+      var gridItem = this.$parent;
+      var rowHeight = this.$parent.rowHeight;
+      var cardHeight = this.$refs.dynamicForm.$el.clientHeight;
+      gridItem.innerH = Math.ceil(Math.floor(cardHeight / rowHeight));
+      gridItem.handleResize();
+      console.log(gridItem.innerH);
     }
   }
 };
