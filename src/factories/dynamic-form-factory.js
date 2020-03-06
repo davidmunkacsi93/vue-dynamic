@@ -1,11 +1,11 @@
 import {
   FORM,
-  INPUT,
   DROP_DOWN,
   SWITCH,
   NUMBER_INPUT,
   FLOAT_INPUT,
   TEXT_INPUT,
+  LIST,
   DATE_PICKER,
   PASSWORD_INPUT
 } from "../types/layout-item-types";
@@ -32,6 +32,7 @@ class DynamicFormFactory {
     } else if (apiMethod.requestBody) {
       var schema = apiMethod.requestBody.content["application/json"].schema;
       dynamicComponent.controls = this.createControlsForSchema(
+        "body",
         schema,
         apiModels
       );
@@ -54,59 +55,13 @@ class DynamicFormFactory {
           controls = this.createControlsForSchema(parameter.schema, apiModels);
           return controls;
         }
-
+        var controlForSchema = this.createControl(parameter.schema);
         var control = {
           label: parameter.name,
           in: parameter.in,
           required: parameter.required,
-          type: parameter.schema.type,
-          format: parameter.schema.format,
-          minimum: parameter.schema.minimum,
-          maximum: parameter.schema.maximum,
-          default: null,
-          value: null
+          ...controlForSchema
         };
-
-        switch (parameter.schema.type) {
-          case "integer":
-            control.element = NUMBER_INPUT;
-            break;
-          case "number":
-            control.element = FLOAT_INPUT;
-            break;
-          case "string":
-            switch (parameter.schema.format) {
-              case "date":
-              case "date-time":
-                control.element = DATE_PICKER;
-                break;
-              case "password":
-                control.element = PASSWORD_INPUT;
-                break;
-              default:
-                control.element = TEXT_INPUT;
-                break;
-            }
-            break;
-          case "boolean":
-            break;
-        }
-
-        if (parameter.schema.enum) {
-          if (
-            parameter.schema.enum.every(
-              value => value === true || value === false
-            )
-          ) {
-            control.element = SWITCH;
-            control.default = parameter.schema.default;
-          } else {
-            control.element = DROP_DOWN;
-            control.values = parameter.schema.enum;
-            control.default = parameter.schema.default;
-          }
-        }
-
         controls.push(control);
       }
     }
@@ -114,24 +69,78 @@ class DynamicFormFactory {
     return controls;
   }
 
-  createControlsForSchema(schema, apiModels) {
+  createControlsForSchema(parameterIn, schema, apiModels) {
     var controls = [];
     var apiModelKey = getLastURLSegment(schema.$ref);
 
     var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
+    var requiredProperties = apiModelForSchema.required;
     for (var property of apiModelForSchema.properties) {
+      var controlForSchema = this.createControl(property);
       var control = {
-        label: property.name,
-        element: INPUT,
-        in: property.in,
-        type: property.type,
-        format: property.format,
-        placeholder: property.example,
-        isEnum: false
+        label: property,
+        in: parameterIn,
+        required: requiredProperties.some(prop => prop === property),
+        ...controlForSchema
       };
       controls.push(control);
     }
     return controls;
+  }
+
+  createControl(parameter) {
+    var control = {
+      type: parameter.type,
+      format: parameter.format,
+      minimum: parameter.minimum,
+      maximum: parameter.maximum,
+      default: null,
+      value: null
+    };
+
+    console.log(parameter.type);
+    switch (parameter.type) {
+      case "integer":
+        control.element = NUMBER_INPUT;
+        break;
+      case "number":
+        control.element = FLOAT_INPUT;
+        break;
+      case "string":
+        switch (parameter.format) {
+          case "date":
+          case "date-time":
+            control.element = DATE_PICKER;
+            break;
+          case "password":
+            control.element = PASSWORD_INPUT;
+            break;
+          default:
+            control.element = TEXT_INPUT;
+            break;
+        }
+        break;
+      case "boolean":
+        control.element = SWITCH;
+        break;
+      case "array":
+        control.element = LIST;
+        // TODO: How to display this?
+        break;
+      default:
+    }
+
+    if (parameter.enum) {
+      if (parameter.enum.every(value => value === true || value === false)) {
+        control.element = SWITCH;
+      } else {
+        control.element = DROP_DOWN;
+        control.values = parameter.enum;
+      }
+      control.description = parameter.description;
+      control.default = parameter.default;
+    }
+    return control;
   }
 }
 
