@@ -30,6 +30,8 @@ class DynamicFormFactory {
         `Can't generate dynamic component for endpoint ${apiMethod.description}`
       );
     }
+    dynamicComponent.responses = apiMethod.responses;
+
     return dynamicComponent;
   }
 
