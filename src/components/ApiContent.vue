@@ -103,29 +103,6 @@ export default {
     next();
   },
 
-  // computed: {
-  //   ...mapState({
-  //     apiModel: state => state.apiLayouts.apis[state.apiLayouts.currentApiId]
-  //   }),
-  //   apiLayout: {
-  //     get() {
-  //       console.log("Calling get...");
-  //       console.log(
-  //         this.$store.state.apiLayouts.apis[
-  //           this.$store.state.apiLayouts.currentApiId
-  //         ].apiLayout
-  //       );
-  //       return this.$store.state.apiLayouts.apis[
-  //         this.$store.state.apiLayouts.currentApiId
-  //       ].apiLayout;
-  //     },
-  //     set(layoutItems) {
-  //       console.log("Calling set");
-  //       this.$store.dispatch(SET_API_LAYOUT_ITEMS, layoutItems);
-  //     }
-  //   }
-  // },
-
   methods: {
     loadCurrentApiLayout(viewModel) {
       viewModel.apiModel =
