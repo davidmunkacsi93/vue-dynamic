@@ -1,10 +1,13 @@
 export const CONTENT = "CONTENT";
+export const DATE_PICKER = "DATE_PICKER";
 export const DROP_DOWN = "DROP_DOWN";
 export const FORM = "FORM";
 export const HEADER = "HEADER";
 export const GRID = "GRID";
-export const INPUT = "INPUT";
 export const LIST = "LIST";
 export const MENU = "MENU";
+export const NUMBER_INPUT = "NUMBER_INPUT";
 export const NAVIGATION_BAR = "NAVIGATION_BAR";
+export const PASSWORD_INPUT = "PASSWORD_INPUT";
 export const SWITCH = "SWITCH";
+export const TEXT_INPUT = "TEXT_INPUT";
