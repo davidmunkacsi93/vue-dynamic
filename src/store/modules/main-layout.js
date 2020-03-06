@@ -160,9 +160,7 @@ const mutations = {
         layoutItem.static = true;
       }
     }
-    for (let layoutItem of state.mainLayout) {
-      layoutItem.static = true;
-    }
+
     state.isEditModeActive = false;
   },
   enableEditModeMainLayout(state) {
@@ -172,9 +170,7 @@ const mutations = {
         layoutItem.static = false;
       }
     }
-    for (let layoutItem of state.mainLayout) {
-      layoutItem.static = false;
-    }
+
     state.isEditModeActive = true;
   },
   initializeMainLayout(state, screenClass) {
