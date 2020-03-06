@@ -7,7 +7,7 @@
     <md-app>
       <md-app-content>
         <grid-layout
-          :layout.sync="mainLayout"
+          :layout="mainLayout"
           :col-num="12"
           :row-height="30"
           :margin="[0, 0]"
@@ -67,9 +67,7 @@ import NavigationBar from "./components/NavigationBar.vue";
 import routes from "./routes";
 
 import {
-  LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE,
-  LOAD_MAIN_LAYOUT_FROM_STATE,
-  SET_MAIN_LAYOUT_ITEMS,
+  LOAD_MAIN_LAYOUT,
   LOAD_APIS,
   SET_SCREEN_INFORMATION
 } from "./types/action-types";
@@ -96,6 +94,7 @@ export default {
   data() {
     return {
       screenClass: null,
+      mainLayout: [],
       CONTENT,
       MENU,
       NAVIGATION_BAR
@@ -112,10 +111,13 @@ export default {
       document.documentElement.clientWidth
     );
     this.$store.dispatch(
-      LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE,
+      LOAD_MAIN_LAYOUT,
       this.$store.state.responsive.screenClass
     );
     this.$store.dispatch(LOAD_APIS);
+  },
+  created() {
+    this.loadMainLayout();
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
@@ -127,14 +129,19 @@ export default {
         SET_SCREEN_INFORMATION,
         document.documentElement.clientWidth
       );
+      console.log(this.screenClass);
       var screenClassChanged =
         this.screenClass !== this.$store.state.responsive.screenClass;
       if (screenClassChanged) {
-        this.$store.dispatch(
-          LOAD_MAIN_LAYOUT_FROM_STATE,
-          this.$store.state.responsive.screenClass
-        );
+        this.screenClass = this.$store.state.responsive.screenClass;
+        this.loadMainLayout();
       }
+    },
+    loadMainLayout() {
+      this.mainLayout = this.$store.state.mainLayout.mainLayouts[
+        this.$store.state.responsive.screenClass
+      ];
+      console.log(this.mainLayout);
     }
   }
 };
