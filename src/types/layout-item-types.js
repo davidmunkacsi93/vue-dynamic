@@ -6,6 +6,7 @@ export const HEADER = "HEADER";
 export const GRID = "GRID";
 export const LIST = "LIST";
 export const MENU = "MENU";
+export const FLOAT_INPUT = "FLOAT_INPUT";
 export const NUMBER_INPUT = "NUMBER_INPUT";
 export const NAVIGATION_BAR = "NAVIGATION_BAR";
 export const PASSWORD_INPUT = "PASSWORD_INPUT";
