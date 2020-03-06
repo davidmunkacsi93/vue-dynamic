@@ -47,10 +47,13 @@ class DynamicFormFactory {
 
         var control = {
           label: parameter.name,
-          element: INPUT,
           in: parameter.in,
+          required: parameter.required,
           type: parameter.schema.type,
           format: parameter.schema.format,
+          minimum: parameter.schema.minimum,
+          maximum: parameter.schema.maximum,
+          default: null,
           value: null
         };
 
