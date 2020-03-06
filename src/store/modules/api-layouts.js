@@ -80,7 +80,6 @@ const mutations = {
   },
 
   setApiLayoutItems(state, layoutItems) {
-    console.log(state.currentApiId);
     state.apis[state.currentApiId].apiLayout = layoutItems;
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(LAYOUT_UPDATED);

@@ -5,7 +5,13 @@ class DynamicFormFactory {
   createDynamicForm(path, httpMethod, apiMethod, apiModels) {
     var dynamicComponent = {};
     dynamicComponent.path = path;
-    dynamicComponent.description = apiMethod.description;
+
+    if (apiMethod.description) {
+      dynamicComponent.description = apiMethod.description;
+    }
+    if (apiMethod.summary) {
+      dynamicComponent.description = apiMethod.summary;
+    }
     dynamicComponent.httpMethod = httpMethod.toUpperCase();
     dynamicComponent.type = FORM;
     if (apiMethod.parameters) {
