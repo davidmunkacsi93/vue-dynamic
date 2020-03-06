@@ -74,9 +74,7 @@ export default {
   },
 
   beforeUpdate() {
-    this.apiModel = this.$store.state.apiLayouts.apis[
-      this.$store.state.apiLayouts.currentApiId
-    ];
+    this.loadCurrentApiLayout(this);
     if (!this.apiLayout || this.apiLayout.length === 0) {
       this.apiLayout = this.getDefaultLayout();
       this.$store.dispatch(SET_API_LAYOUT_ITEMS, this.apiLayout);
@@ -88,11 +86,7 @@ export default {
     next(vm => {
       console.log(nextApiId);
       vm.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
-      vm.apiLayout =
-        vm.$store.state.apiLayouts.apis[
-          vm.$store.state.apiLayouts.currentApiId
-        ].apiLayout;
-      console.log(vm.apiLayout);
+      this.loadCurrentApiLayout(vm);
     });
   },
 
@@ -100,10 +94,7 @@ export default {
     this.currentApiId = to.params.apiId;
     this.$store.dispatch(SAVE_API_LAYOUT);
     this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
-    this.apiModel = this.$store.state.apiLayouts.apis[
-      this.$store.state.apiLayouts.currentApiId
-    ];
-    this.apiLayout = this.apiModel.apiLayout;
+    this.loadCurrentApiLayout(this);
     next();
   },
 
@@ -136,6 +127,14 @@ export default {
   // },
 
   methods: {
+    loadCurrentApiLayout(viewModel) {
+      viewModel.apiModel =
+        viewModel.$store.state.apiLayouts.apis[
+          viewModel.$store.state.apiLayouts.currentApiId
+        ];
+      viewModel.apiLayout = viewModel.apiModel.apiLayout;
+    },
+
     getDefaultLayout() {
       var layout = [];
       layout.push(this.createHeader());
