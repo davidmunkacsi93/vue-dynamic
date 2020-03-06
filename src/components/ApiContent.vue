@@ -84,9 +84,8 @@ export default {
   beforeRouteEnter(to, from, next) {
     const nextApiId = to.params.apiId;
     next(vm => {
-      console.log(nextApiId);
       vm.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
-      this.loadCurrentApiLayout(vm);
+      vm.loadCurrentApiLayout(vm);
     });
   },
 
