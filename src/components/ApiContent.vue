@@ -55,8 +55,8 @@ import {
   DROP_DOWN,
   FORM,
   HEADER,
-  INPUT,
-  SWITCH
+  SWITCH,
+  TEXT_INPUT
 } from "../types/layout-item-types";
 
 export default {
@@ -171,14 +171,15 @@ export default {
       const header = 91.08;
       const actions = 51.96;
       const switchHeight = 48;
-      const inputHeight = 83.96;
+      const textInputHeight = 83.96;
       const dropDownHeight = 84;
 
       const countSwitches = controls.filter(
         control => control.element === SWITCH
       ).length;
-      const countInput = controls.filter(control => control.element === INPUT)
-        .length;
+      const countTextInput = controls.filter(
+        control => control.element === TEXT_INPUT
+      ).length;
       const countDropDown = controls.filter(
         control => control.element === DROP_DOWN
       ).length;
@@ -187,7 +188,7 @@ export default {
         Math.floor(
           header +
             actions +
-            countInput * inputHeight +
+            countTextInput * textInputHeight +
             countSwitches * switchHeight +
             countDropDown * dropDownHeight
         ) / this.rowHeight;
