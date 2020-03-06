@@ -51,9 +51,20 @@ class DynamicFormFactory {
           in: parameter.in,
           type: parameter.schema.type,
           format: parameter.schema.format,
-          placeholder: parameter.schema.example,
           value: null
         };
+
+        switch (parameter.schema.type) {
+          case "integer":
+            break;
+          case "number":
+            break;
+          case "string":
+            break;
+          case "boolean":
+            break;
+        }
+
         if (parameter.schema.enum) {
           if (
             parameter.schema.enum.every(
