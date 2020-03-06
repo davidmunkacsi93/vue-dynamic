@@ -1,4 +1,14 @@
-import { FORM, INPUT, DROP_DOWN, SWITCH } from "../types/layout-item-types";
+import {
+  FORM,
+  INPUT,
+  DROP_DOWN,
+  SWITCH,
+  NUMBER_INPUT,
+  FLOAT_INPUT,
+  TEXT_INPUT,
+  DATE_PICKER,
+  PASSWORD_INPUT
+} from "../types/layout-item-types";
 import { getLastURLSegment } from "../utils/helpers";
 
 class DynamicFormFactory {
@@ -59,10 +69,24 @@ class DynamicFormFactory {
 
         switch (parameter.schema.type) {
           case "integer":
+            control.element = NUMBER_INPUT;
             break;
           case "number":
+            control.element = FLOAT_INPUT;
             break;
           case "string":
+            switch (parameter.schema.format) {
+              case "date":
+              case "date-time":
+                control.element = DATE_PICKER;
+                break;
+              case "password":
+                control.element = PASSWORD_INPUT;
+                break;
+              default:
+                control.element = TEXT_INPUT;
+                break;
+            }
             break;
           case "boolean":
             break;
@@ -75,9 +99,11 @@ class DynamicFormFactory {
             )
           ) {
             control.element = SWITCH;
+            control.default = parameter.schema.default;
           } else {
             control.element = DROP_DOWN;
             control.values = parameter.schema.enum;
+            control.default = parameter.schema.default;
           }
         }
 
