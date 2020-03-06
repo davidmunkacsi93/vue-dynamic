@@ -82,14 +82,20 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    const nextApiId = to.params.apiId;
     next(vm => {
-      vm.$store.dispatch(LOAD_API_LAYOUT, nextApiId);
+      if (!vm.$store.state.apiLayouts.apis) next("/");
+
+      vm.currentApiId = to.params.apiId;
+      vm.$store.dispatch(LOAD_API_LAYOUT, vm.currentApiId);
       vm.loadCurrentApiLayout(vm);
     });
   },
 
   beforeRouteUpdate(to, from, next) {
+    if (!this.$store.state.apiLayouts.apis) {
+      next("/");
+    }
+
     this.currentApiId = to.params.apiId;
     this.$store.dispatch(SAVE_API_LAYOUT);
     this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
