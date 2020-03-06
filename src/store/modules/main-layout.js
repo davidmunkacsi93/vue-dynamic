@@ -3,10 +3,8 @@ import {
   DISABLE_EDIT_MODE_MAIN_LAYOUT,
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
   INITIALIZE_MAIN_LAYOUT,
-  SAVE_MAIN_LAYOUT,
-  SET_MAIN_LAYOUT_ITEMS,
-  LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE,
-  LOAD_MAIN_LAYOUT_FROM_STATE
+  LOAD_MAIN_LAYOUT,
+  SAVE_MAIN_LAYOUT
 } from "../../types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
@@ -151,8 +149,7 @@ const LOCAL_STORAGE_MAIN_LAYOUTS_KEY = "main-layouts";
 const state = {
   currentScreenClass: null,
   isEditModeActive: false,
-  mainLayouts: {},
-  mainLayout: []
+  mainLayouts: {}
 };
 
 const mutations = {
@@ -193,7 +190,6 @@ const mutations = {
     };
 
     state.currentScreenClass = screenClass;
-    state.mainLayout = state.mainLayouts[screenClass];
 
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
@@ -203,41 +199,23 @@ const mutations = {
       JSON.stringify(state.mainLayouts)
     );
   },
-  loadMainLayoutFromLocalStorage(state, screenClass) {
+  loadMainLayout(state, screenClass) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (!layoutString) {
       return;
     }
     const parsedLayouts = JSON.parse(layoutString);
     state.mainLayouts = parsedLayouts;
-    state.mainLayout = state.mainLayouts[screenClass];
-
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(COMPACT);
-  },
-  loadMainLayoutFromState(state, screenClass) {
-    if (screenClass !== state.currentScreenClass) {
-      console.log(`Change class ${state.currentScreenClass} to ${screenClass}`);
-      state.mainLayouts[state.currentScreenClass] = state.mainLayout;
-      state.currentScreenClass = screenClass;
-    }
-    state.mainLayout = state.mainLayouts[screenClass];
-    console.log(state.mainLayout);
+    state.currentScreenClass = screenClass;
 
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
   },
   saveMainLayout(state) {
-    state.mainLayouts[state.currentScreenClass] = state.mainLayout;
-
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
       JSON.stringify(state.mainLayouts)
     );
-  },
-  setMainLayoutItems(state, mainLayout) {
-    state.mainLayout = mainLayout;
-    EventBus.$emit(LAYOUT_UPDATED);
   }
 };
 
@@ -248,18 +226,12 @@ const actions = {
   enableEditModeMainLayout({ commit }) {
     commit(ENABLE_EDIT_MODE_MAIN_LAYOUT);
   },
-  loadMainLayoutFromLocalStorage({ commit }, screenClass) {
+  loadMainLayout({ commit }, screenClass) {
     commit(INITIALIZE_MAIN_LAYOUT, screenClass);
-    commit(LOAD_MAIN_LAYOUT_FROM_LOCAL_STORAGE, screenClass);
-  },
-  loadMainLayoutFromState({ commit }, screenClass) {
-    commit(LOAD_MAIN_LAYOUT_FROM_STATE, screenClass);
+    commit(LOAD_MAIN_LAYOUT, screenClass);
   },
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
-  },
-  setMainLayoutItems({ commit }, mainLayoutItems) {
-    commit(SET_MAIN_LAYOUT_ITEMS, mainLayoutItems);
   }
 };
 
