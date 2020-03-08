@@ -6,7 +6,8 @@ import {
   LOAD_MAIN_LAYOUT,
   SAVE_MAIN_LAYOUT,
   SET_CONTENT_HEIGHT,
-  SET_NAVIGATION_BAR_HEIGHT
+  SET_NAVIGATION_BAR_HEIGHT,
+  SET_SCREEN_CLASS
 } from "../../types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
@@ -197,14 +198,13 @@ const mutations = {
       JSON.stringify(state.mainLayouts)
     );
   },
-  loadMainLayout(state, screenClass) {
+  loadMainLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (!layoutString) {
       return;
     }
     const parsedLayouts = JSON.parse(layoutString);
     state.mainLayouts = parsedLayouts;
-    state.currentScreenClass = screenClass;
 
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(COMPACT);
@@ -222,11 +222,15 @@ const mutations = {
     content.h = height;
   },
   setNavigationBarHeight(state, height) {
+    console.log(state.currentScreenClass);
     var navigationBar = state.mainLayouts[state.currentScreenClass].find(
       item => item.layoutItemType === NAVIGATION_BAR
     );
-    console.log(navigationBar.static);
+    console.log(height);
     navigationBar.h = height;
+  },
+  setScreenClass(state, screenClass) {
+    state.currentScreenClass = screenClass;
   }
 };
 
@@ -249,6 +253,9 @@ const actions = {
   },
   setNavigationBarHeight({ commit }, height) {
     commit(SET_NAVIGATION_BAR_HEIGHT, height);
+  },
+  setScreenClass({ commit }, screenClass) {
+    commit(SET_SCREEN_CLASS, screenClass);
   }
 };
 

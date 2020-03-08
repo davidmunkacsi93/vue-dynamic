@@ -70,7 +70,8 @@ import routes from "./routes";
 import {
   LOAD_MAIN_LAYOUT,
   LOAD_APIS,
-  SET_SCREEN_INFORMATION
+  SET_SCREEN_INFORMATION,
+  SET_SCREEN_CLASS
 } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
@@ -135,6 +136,7 @@ export default {
         this.screenClass !== this.$store.state.responsive.screenClass;
       if (screenClassChanged) {
         this.screenClass = this.$store.state.responsive.screenClass;
+        this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
         this.loadMainLayout();
       }
     },

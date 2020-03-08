@@ -74,7 +74,6 @@ export default {
         var navigationTitleHeight = this.$refs.navigationTitle.clientHeight;
         var navigationListHeight = this.$refs.navigationList.$el.clientHeight;
         var navigationBarHeight = navigationTitleHeight + navigationListHeight;
-
         navigationBarGridItem.innerH =
           Math.ceil(navigationBarHeight / navigationBarGridItem.rowHeight) + 1;
         this.$store.dispatch(ENABLE_EDIT_MODE_MAIN_LAYOUT);
