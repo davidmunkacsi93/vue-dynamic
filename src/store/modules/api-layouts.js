@@ -7,7 +7,8 @@ import {
   LOAD_APIS,
   ADD_NEW_API,
   DISABLE_EDIT_MODE_API_LAYOUT,
-  ENABLE_EDIT_MODE_API_LAYOUT
+  ENABLE_EDIT_MODE_API_LAYOUT,
+  SET_API_ITEM_HEIGHT
 } from "../../types/action-types";
 import { COMPACT, LAYOUT_UPDATED, UPDATE_WIDTH } from "../../types/event-types";
 
@@ -79,9 +80,14 @@ const mutations = {
     );
   },
 
+  setApiItemHeight(state, payload) {
+    var apiLayout = state.apis[state.currentApiId].apiLayout;
+    var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
+    apiItem.h = payload.height;
+  },
+
   setApiLayoutItems(state, layoutItems) {
     state.apis[state.currentApiId].apiLayout = layoutItems;
-    EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(UPDATE_WIDTH);
   }
@@ -112,6 +118,9 @@ const actions = {
   },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);
+  },
+  setApiItemHeight({ commit }, payload) {
+    commit(SET_API_ITEM_HEIGHT, payload);
   },
   removeForm({ commit }, formId) {
     commit(REMOVE_FORM, formId);

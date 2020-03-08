@@ -71,7 +71,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { REMOVE_FORM } from "../types/action-types";
+import { REMOVE_FORM, SET_API_ITEM_HEIGHT } from "../types/action-types";
 import {
   DROP_DOWN,
   FLOAT_INPUT,
@@ -139,7 +139,10 @@ export default {
       var rowHeight = this.$parent.rowHeight;
       var cardHeight = this.$refs.dynamicForm.$el.clientHeight;
       gridItem.innerH = Math.ceil(Math.floor(cardHeight / rowHeight));
-      console.log(gridItem.$attrs.uuid);
+      this.$store.dispatch(SET_API_ITEM_HEIGHT, {
+        uuid: gridItem.$attrs.uuid,
+        height: gridItem.innerH
+      });
     }
   }
 };
