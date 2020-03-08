@@ -139,7 +139,6 @@ export default {
       var rowHeight = this.$parent.rowHeight;
       var cardHeight = this.$refs.dynamicForm.$el.clientHeight;
       gridItem.innerH = Math.ceil(Math.floor(cardHeight / rowHeight));
-      gridItem.handleResize();
       console.log(gridItem.innerH);
     }
   }

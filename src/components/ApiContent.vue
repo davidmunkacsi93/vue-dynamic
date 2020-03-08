@@ -124,9 +124,7 @@ export default {
     },
     setDynamicContentHeight() {
       var dynamicContent = this.$parent.$parent.$parent;
-      console.log(this.$parent);
       dynamicContent.innerH = 100;
-      console.log(dynamicContent.innerH);
     },
     createHeader() {
       return {
