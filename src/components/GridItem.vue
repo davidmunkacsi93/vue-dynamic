@@ -14,6 +14,12 @@ export default {
     EventBus.$off(COMPACT, this.onCompact);
     EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
   },
+  props: {
+    uuid: {
+      required: true,
+      type: String
+    }
+  },
   methods: {
     onCompact() {
       this.compact();

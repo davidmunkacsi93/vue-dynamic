@@ -139,7 +139,7 @@ export default {
       var rowHeight = this.$parent.rowHeight;
       var cardHeight = this.$refs.dynamicForm.$el.clientHeight;
       gridItem.innerH = Math.ceil(Math.floor(cardHeight / rowHeight));
-      console.log(gridItem.innerH);
+      console.log(gridItem.$attrs.uuid);
     }
   }
 };

@@ -29,14 +29,15 @@
               :isResizable="item.isResizable"
               :static="item.static"
               :key="item.id"
+              :uuid="item.i"
             >
-              <menu-bar :type="MENU" v-if="item.layoutItemType === MENU" />
+              <menu-bar v-if="item.layoutItemType === MENU" :type="MENU" />
               <dynamic-content
+                v-else-if="item.layoutItemType === CONTENT"
                 :x="item.x"
                 :y="item.y"
                 :type="CONTENT"
                 :id="item.id"
-                v-else-if="item.layoutItemType === CONTENT"
               />
               <navigation-bar
                 v-else-if="item.layoutItemType === NAVIGATION_BAR"

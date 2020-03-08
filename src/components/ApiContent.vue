@@ -24,6 +24,7 @@
         :isResizable="item.isResizable"
         :static="item.static"
         :key="item.i"
+        :uuid="item.uuid"
       >
         <dynamic-header
           v-if="item.layoutItemType === HEADER"
