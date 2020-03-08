@@ -50,6 +50,7 @@ class DynamicFormFactory {
     var controls = [];
 
     for (var parameter of apiMethod.parameters) {
+      var control;
       if (parameter.schema) {
         if (parameter.schema.$ref) {
           controls = this.createControlsForSchema(
@@ -60,15 +61,22 @@ class DynamicFormFactory {
           return controls;
         }
         var controlForSchema = this.createControl(parameter.schema);
-        var control = {
+        control = {
           label: parameter.name,
           in: parameter.in,
           required: parameter.required,
           ...controlForSchema
         };
-        controls.push(control);
-        console.log(control);
+      } else {
+        var controlForParameter = this.createControl(parameter);
+        control = {
+          label: parameter.name,
+          in: parameter.in,
+          required: parameter.required,
+          ...controlForParameter
+        };
       }
+      controls.push(control);
     }
 
     return controls;
@@ -90,7 +98,6 @@ class DynamicFormFactory {
           requiredProperties.some(prop => prop === property),
         ...controlForSchema
       };
-      console.log(control);
       controls.push(control);
     }
     return controls;
@@ -106,8 +113,6 @@ class DynamicFormFactory {
       value: null
     };
 
-    console.log(parameter);
-    console.log(parameter.type);
     switch (parameter.type) {
       case "integer":
         control.element = NUMBER_INPUT;
@@ -136,7 +141,11 @@ class DynamicFormFactory {
         control.element = LIST;
         // TODO: How to display this?
         break;
+      case "object":
+        console.log(parameter);
+        break;
       default:
+        break;
     }
 
     if (parameter.enum) {
