@@ -218,9 +218,7 @@ const mutations = {
     var content = state.mainLayouts[state.currentScreenClass].find(
       item => item.layoutItemType === CONTENT
     );
-    console.log(content.h);
     content.h = height;
-    console.log(content.h);
   }
 };
 
