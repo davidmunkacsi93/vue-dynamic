@@ -65,19 +65,22 @@ export default {
       this.setNavigationBarHeight();
     },
     setNavigationBarHeight() {
-      var navigationBarGridItem = this.$parent;
-      var navigationTitleHeight = this.$refs.navigationTitle.clientHeight;
-      var navigationListHeight = this.$refs.navigationList.$el.clientHeight;
-      var navigationBarHeight = navigationTitleHeight + navigationListHeight;
+      setTimeout(() => {
+        var navigationBarGridItem = this.$parent;
+        var navigationTitleHeight = this.$refs.navigationTitle.clientHeight;
+        var navigationListHeight = this.$refs.navigationList.$el.clientHeight;
+        var navigationBarHeight = navigationTitleHeight + navigationListHeight;
 
-      navigationBarGridItem.innerH = Math.ceil(navigationBarHeight / 30);
-      console.log(navigationBarGridItem.innerH);
-      this.$store.dispatch(
-        SET_NAVIGATION_BAR_HEIGHT,
-        navigationBarGridItem.innerH
-      );
-      EventBus.$emit(COMPACT);
-      EventBus.$emit(LAYOUT_UPDATED);
+        navigationBarGridItem.innerH =
+          Math.ceil(navigationBarHeight / navigationBarGridItem.rowHeight) + 1;
+        console.log(navigationBarGridItem.innerH);
+        this.$store.dispatch(
+          SET_NAVIGATION_BAR_HEIGHT,
+          navigationBarGridItem.innerH
+        );
+        EventBus.$emit(COMPACT);
+        EventBus.$emit(LAYOUT_UPDATED);
+      }, 50);
     }
   }
 };
