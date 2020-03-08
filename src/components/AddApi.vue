@@ -12,6 +12,8 @@
 <script>
 import ApiIntegrationService from "../services/api-integration-service";
 import { ADD_NEW_API } from "../types/action-types";
+import EventBus from "../utils/event-bus";
+import { API_ADDED } from "../types/event-types";
 
 export default {
   data() {
@@ -25,6 +27,7 @@ export default {
       ApiIntegrationService.integrateNewAPI(this.specificationURL)
         .then(apiModel => {
           this.$store.dispatch(ADD_NEW_API, apiModel);
+          EventBus.$emit(API_ADDED);
         })
         .catch(reason => console.error(reason));
     }

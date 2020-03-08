@@ -13,5 +13,6 @@ export const SET_API_ITEM_HEIGHT = "setApiItemHeight";
 export const SET_API_LAYOUT_ITEMS = "setApiLayoutItems";
 export const SET_CONTENT_HEIGHT = "setContentHeight";
 export const SET_MAIN_LAYOUT_ITEMS = "setMainLayoutItems";
+export const SET_NAVIGATION_BAR_HEIGHT = "setNavigationBarHeight";
 export const SET_SCREEN_INFORMATION = "setScreenInformation";
 export const REMOVE_FORM = "removeForm";

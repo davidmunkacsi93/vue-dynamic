@@ -1,12 +1,12 @@
 <template>
-  <div class="full-control navigation-bar">
-    <h3 class="md-title">Navigation</h3>
-    <md-list>
+  <div ref="navigationBar" class="full-control navigation-bar">
+    <h3 ref="navigationTitle" class="md-title">Navigation</h3>
+    <md-list ref="navigationList">
       <md-list-item :to="homePath">
         <md-icon>home</md-icon>
         <span class="md-list-item-text">Home</span>
       </md-list-item>
-      <md-list-item md-expand v-if="availableApis.length > 0">
+      <md-list-item md-expand @click="onExpand" v-if="availableApis.length > 0">
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
@@ -33,6 +33,9 @@
 
 <script>
 import { mapState } from "vuex";
+import { SET_NAVIGATION_BAR_HEIGHT } from "../types/action-types";
+import EventBus from "../utils/event-bus";
+import { API_ADDED, LAYOUT_UPDATED, COMPACT } from "../types/event-types";
 export default {
   data() {
     return {
@@ -40,12 +43,43 @@ export default {
       homePath: "/"
     };
   },
+  created() {
+    EventBus.$on(API_ADDED, this.onApiAdded);
+  },
+  beforeDestroy() {
+    EventBus.$off(API_ADDED, this.onApiAdded);
+  },
+  mounted() {
+    this.setNavigationBarHeight();
+  },
   computed: {
     ...mapState({
       availableApis: state => state.apiLayouts.apis
     })
   },
-  methods: {}
+  methods: {
+    onApiAdded() {
+      this.setNavigationBarHeight();
+    },
+    onExpand() {
+      this.setNavigationBarHeight();
+    },
+    setNavigationBarHeight() {
+      var navigationBarGridItem = this.$parent;
+      var navigationTitleHeight = this.$refs.navigationTitle.clientHeight;
+      var navigationListHeight = this.$refs.navigationList.$el.clientHeight;
+      var navigationBarHeight = navigationTitleHeight + navigationListHeight;
+
+      navigationBarGridItem.innerH = Math.ceil(navigationBarHeight / 30);
+      console.log(navigationBarGridItem.innerH);
+      this.$store.dispatch(
+        SET_NAVIGATION_BAR_HEIGHT,
+        navigationBarGridItem.innerH
+      );
+      EventBus.$emit(COMPACT);
+      EventBus.$emit(LAYOUT_UPDATED);
+    }
+  }
 };
 </script>
 
