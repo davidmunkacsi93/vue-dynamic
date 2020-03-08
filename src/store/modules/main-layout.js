@@ -4,7 +4,8 @@ import {
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
   INITIALIZE_MAIN_LAYOUT,
   LOAD_MAIN_LAYOUT,
-  SAVE_MAIN_LAYOUT
+  SAVE_MAIN_LAYOUT,
+  SET_CONTENT_HEIGHT
 } from "../../types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "../../types/layout-item-types";
 import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
@@ -228,6 +229,9 @@ const actions = {
   },
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
+  },
+  setContentHeight({commit}, height) {
+    commit(SET_CONTENT_HEIGHT, height);
   }
 };
 
