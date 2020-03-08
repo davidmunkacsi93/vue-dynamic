@@ -213,6 +213,14 @@ const mutations = {
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
       JSON.stringify(state.mainLayouts)
     );
+  },
+  setContentHeight(state, height) {
+    var content = state.mainLayouts[state.currentScreenClass].find(
+      item => item.layoutItemType === CONTENT
+    );
+    console.log(content.h);
+    content.h = height;
+    console.log(content.h);
   }
 };
 
@@ -230,7 +238,7 @@ const actions = {
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
   },
-  setContentHeight({commit}, height) {
+  setContentHeight({ commit }, height) {
     commit(SET_CONTENT_HEIGHT, height);
   }
 };

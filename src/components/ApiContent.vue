@@ -1,5 +1,6 @@
 <template>
   <grid-layout
+    ref="apiLayout"
     :layout="apiLayout"
     :col-num="12"
     :rowHeight="rowHeight"
@@ -45,7 +46,8 @@ import { v1 as uuid } from "uuid";
 import {
   SET_API_LAYOUT_ITEMS,
   LOAD_API_LAYOUT,
-  SAVE_API_LAYOUT
+  SAVE_API_LAYOUT,
+  SET_CONTENT_HEIGHT
 } from "../types/action-types";
 
 import DynamicForm from "../components/DynamicForm";
@@ -66,7 +68,7 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     this.setDynamicContentHeight();
   },
 
@@ -125,7 +127,9 @@ export default {
     },
     setDynamicContentHeight() {
       var dynamicContent = this.$parent.$parent.$parent;
-      dynamicContent.innerH = 100;
+      var apiLayoutHeight = this.$refs.apiLayout.$el.clientHeight;
+      dynamicContent.innerH = Math.ceil(apiLayoutHeight / this.rowHeight);
+      this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
     },
     createHeader() {
       return {

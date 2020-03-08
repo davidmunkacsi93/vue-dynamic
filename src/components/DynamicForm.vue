@@ -138,7 +138,7 @@ export default {
       var gridItem = this.$parent;
       var rowHeight = this.$parent.rowHeight;
       var cardHeight = this.$refs.dynamicForm.$el.clientHeight;
-      gridItem.innerH = Math.ceil(Math.floor(cardHeight / rowHeight));
+      gridItem.innerH = Math.ceil(cardHeight / rowHeight);
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: gridItem.$attrs.uuid,
         height: gridItem.innerH
