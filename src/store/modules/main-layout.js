@@ -162,7 +162,7 @@ const mutations = {
         layoutItem.static = true;
       }
     }
-
+    console.log("disabled");
     state.isEditModeActive = false;
   },
   enableEditModeMainLayout(state) {
@@ -172,7 +172,7 @@ const mutations = {
         layoutItem.static = false;
       }
     }
-
+    console.log("enabled");
     state.isEditModeActive = true;
   },
   initializeMainLayout(state, screenClass) {
@@ -225,6 +225,7 @@ const mutations = {
     var navigationBar = state.mainLayouts[state.currentScreenClass].find(
       item => item.layoutItemType === NAVIGATION_BAR
     );
+    console.log(navigationBar.static);
     navigationBar.h = height;
   }
 };

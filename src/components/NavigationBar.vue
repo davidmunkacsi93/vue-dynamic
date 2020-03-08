@@ -33,7 +33,11 @@
 
 <script>
 import { mapState } from "vuex";
-import { SET_NAVIGATION_BAR_HEIGHT } from "../types/action-types";
+import {
+  SET_NAVIGATION_BAR_HEIGHT,
+  ENABLE_EDIT_MODE_MAIN_LAYOUT,
+  DISABLE_EDIT_MODE_MAIN_LAYOUT
+} from "../types/action-types";
 import EventBus from "../utils/event-bus";
 import { API_ADDED, LAYOUT_UPDATED, COMPACT } from "../types/event-types";
 export default {
@@ -73,14 +77,17 @@ export default {
 
         navigationBarGridItem.innerH =
           Math.ceil(navigationBarHeight / navigationBarGridItem.rowHeight) + 1;
-        console.log(navigationBarGridItem.innerH);
+        this.$store.dispatch(ENABLE_EDIT_MODE_MAIN_LAYOUT);
         this.$store.dispatch(
           SET_NAVIGATION_BAR_HEIGHT,
           navigationBarGridItem.innerH
         );
+        setTimeout(() => {
+          this.$store.dispatch(DISABLE_EDIT_MODE_MAIN_LAYOUT);
+        }, 50);
         EventBus.$emit(COMPACT);
         EventBus.$emit(LAYOUT_UPDATED);
-      }, 50);
+      }, 25);
     }
   }
 };
