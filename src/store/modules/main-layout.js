@@ -216,12 +216,16 @@ const mutations = {
     );
   },
   setContentHeight(state, height) {
+    if (!state.currentScreenClass) return;
+
     var content = state.mainLayouts[state.currentScreenClass].find(
       item => item.layoutItemType === CONTENT
     );
     content.h = height;
   },
   setNavigationBarHeight(state, height) {
+    if (!state.currentScreenClass) return;
+
     var navigationBar = state.mainLayouts[state.currentScreenClass].find(
       item => item.layoutItemType === NAVIGATION_BAR
     );

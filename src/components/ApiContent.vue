@@ -53,6 +53,8 @@ import {
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import { FORM, HEADER } from "../types/layout-item-types";
+import EventBus from "../utils/event-bus";
+import { LAYOUT_UPDATED } from "../types/event-types";
 
 export default {
   components: { DynamicForm, DynamicHeader },
@@ -66,6 +68,14 @@ export default {
       apiLayout: [],
       apiModel: {}
     };
+  },
+
+  created() {
+    EventBus.$on(LAYOUT_UPDATED, this.setDynamicContentHeight);
+  },
+
+  beforeDestroy() {
+    EventBus.$off(LAYOUT_UPDATED, this.setDynamicContentHeight);
   },
 
   mounted() {
