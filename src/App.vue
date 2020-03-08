@@ -131,12 +131,12 @@ export default {
         SET_SCREEN_INFORMATION,
         document.documentElement.clientWidth
       );
+      this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
 
       var screenClassChanged =
         this.screenClass !== this.$store.state.responsive.screenClass;
       if (screenClassChanged) {
         this.screenClass = this.$store.state.responsive.screenClass;
-        this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
         this.loadMainLayout();
       }
     },
