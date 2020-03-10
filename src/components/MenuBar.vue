@@ -14,11 +14,17 @@
             <md-icon>more_vert</md-icon>
           </md-button>
           <md-menu-content>
-            <md-menu-item @click="editApiLayout" v-show="!isApiLayoutEditable">
+            <md-menu-item
+              @click="editApiLayout"
+              v-show="$route.name === API_ROUTE_NAME && !isApiLayoutEditable"
+            >
               <span>Edit API Layout</span>
               <md-icon>edit</md-icon>
             </md-menu-item>
-            <md-menu-item @click="saveApiLayout" v-show="isApiLayoutEditable">
+            <md-menu-item
+              @click="saveApiLayout"
+              v-show="$route.name === API_ROUTE_NAME && isApiLayoutEditable"
+            >
               <span>Save API Layout</span>
               <md-icon>save</md-icon>
             </md-menu-item>
@@ -52,12 +58,19 @@ import {
   SAVE_MAIN_LAYOUT
 } from "../types/action-types";
 
+import { API_ROUTE_NAME } from "../routes.js";
+
 export default {
   computed: {
     ...mapState({
       isApiLayoutEditable: state => state.apiLayouts.isEditModeActive,
       isMainLayoutEditable: state => state.mainLayout.isEditModeActive
     })
+  },
+  data() {
+    return {
+      API_ROUTE_NAME: API_ROUTE_NAME
+    };
   },
   methods: {
     editApiLayout() {
@@ -80,7 +93,8 @@ export default {
       type: String,
       required: true
     }
-  }
+  },
+  watch: {}
 };
 </script>
 
