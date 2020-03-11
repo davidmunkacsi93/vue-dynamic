@@ -54,7 +54,10 @@ import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import { FORM, HEADER } from "../types/layout-item-types";
 import EventBus from "../utils/event-bus";
-import { LAYOUT_UPDATED } from "../types/event-types";
+import {
+  DYNAMIC_CONTENT_HEIGHT_UPDATED,
+  LAYOUT_UPDATED
+} from "../types/event-types";
 
 export default {
   components: { DynamicForm, DynamicHeader },
@@ -141,6 +144,7 @@ export default {
       console.log(apiLayoutHeight);
       dynamicContent.innerH = Math.ceil(apiLayoutHeight / this.rowHeight);
       this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
+      EventBus.$emit(DYNAMIC_CONTENT_HEIGHT_UPDATED, dynamicContent.innerH);
     },
     createHeader() {
       return {
