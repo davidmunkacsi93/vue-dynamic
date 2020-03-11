@@ -83,12 +83,7 @@ export default {
   },
 
   beforeUpdate() {
-    this.loadCurrentApiLayout(this);
     this.setDynamicContentHeight();
-    if (!this.apiLayout || this.apiLayout.length === 0) {
-      this.apiLayout = this.getDefaultLayout();
-      this.$store.dispatch(SET_API_LAYOUT_ITEMS, this.apiLayout);
-    }
   },
 
   beforeRouteEnter(to, from, next) {
@@ -125,6 +120,11 @@ export default {
           viewModel.$store.state.apiLayouts.currentApiId
         ];
       viewModel.apiLayout = viewModel.apiModel.apiLayout;
+      if (!viewModel.apiLayout || viewModel.apiLayout.length === 0) {
+        viewModel.apiLayout = viewModel.getDefaultLayout();
+        viewModel.$store.dispatch(SET_API_LAYOUT_ITEMS, viewModel.apiLayout);
+      }
+      this.setDynamicContentHeight();
     },
 
     getDefaultLayout() {
@@ -138,6 +138,7 @@ export default {
     setDynamicContentHeight() {
       var dynamicContent = this.$parent.$parent.$parent;
       var apiLayoutHeight = this.$refs.apiLayout.$el.clientHeight;
+      console.log(apiLayoutHeight);
       dynamicContent.innerH = Math.ceil(apiLayoutHeight / this.rowHeight);
       this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
     },
