@@ -33,8 +33,6 @@ import { ADD_NEW_API } from "../types/action-types";
 import { API_ADDED } from "../types/event-types";
 
 import EventBus from "../utils/event-bus";
-
-import SwaggerParser from "swagger-parser";
 import ApiIntegrationService from "../services/api-integration-service.js";
 
 export default {
