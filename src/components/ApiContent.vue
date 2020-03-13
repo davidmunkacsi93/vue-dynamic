@@ -148,10 +148,19 @@ export default {
 
     getDefaultLayout() {
       var layout = [];
-      layout.push(this.createHeader());
+      var header = this.createHeader();
+      layout.push(header);
       this.createDynamicComponents().forEach(component =>
         layout.push(component)
       );
+      var apiLayout = this.$refs.apiLayout;
+      var bins = layout.map(layoutItem => {
+        return {
+          height: layoutItem.h * apiLayout.rowHeight,
+          width: layoutItem.w * (apiLayout.$el.offsetWidth / apiLayout.colNum)
+        };
+      });
+      console.log(bins);
       return layout;
     },
 
