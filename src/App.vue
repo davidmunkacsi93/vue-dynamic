@@ -7,6 +7,7 @@
     <md-app>
       <md-app-content>
         <grid-layout
+          ref="mainLayout"
           :layout="mainLayout"
           :col-num="12"
           :row-height="30"
@@ -65,6 +66,8 @@ import GridLayout from "./components/GridLayout.vue";
 import MenuBar from "./components/MenuBar.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 
+import EventBus from "./utils/event-bus";
+
 import routes from "./routes";
 
 import {
@@ -74,6 +77,7 @@ import {
   SET_SCREEN_CLASS
 } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
+import { DYNAMIC_CONTENT_HEIGHT_UPDATED } from "./types/event-types";
 
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
@@ -121,8 +125,12 @@ export default {
   created() {
     this.loadMainLayout();
   },
+  mounted() {
+    EventBus.$on(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);
+  },
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
+    EventBus.$off(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);
   },
   methods: {
     onWindowResize() {
@@ -139,6 +147,9 @@ export default {
         this.screenClass = this.$store.state.responsive.screenClass;
         this.loadMainLayout();
       }
+    },
+    onDynamicHeightUpdated() {
+      this.$refs.mainLayout.updateHeight();
     },
     loadMainLayout() {
       this.mainLayout = this.$store.state.mainLayout.mainLayouts[
