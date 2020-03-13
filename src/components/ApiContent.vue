@@ -166,8 +166,6 @@ export default {
 
     createHeader() {
       return {
-        x: this.$parent.$parent.x,
-        y: this.$parent.$parent.y,
         w: 12,
         h: 4,
         i: 0,
@@ -190,8 +188,6 @@ export default {
 
       forms.forEach((dynamicComponent, index) => {
         var component = {
-          x: 0,
-          y: 0,
           w: 6,
           h: 4,
           i: index + 1,
