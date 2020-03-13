@@ -182,8 +182,8 @@ export default {
 
       forms.forEach((dynamicComponent, index) => {
         var component = {
-          x: 0,
-          y: 0,
+          x: 10,
+          y: 10,
           w: 6,
           h: 5,
           i: index + 1,
