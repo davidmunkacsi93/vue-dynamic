@@ -84,23 +84,15 @@ import {
 
 export default {
   props: {
-    type: {
-      type: String,
-      required: true
-    },
-    model: {
-      type: Object,
-      required: true
-    },
     apiName: {
       type: String,
       required: false
     },
-    description: {
-      type: String,
+    controls: {
+      type: Array,
       required: true
     },
-    path: {
+    description: {
       type: String,
       required: true
     },
@@ -108,8 +100,12 @@ export default {
       type: String,
       required: true
     },
-    controls: {
-      type: Array,
+    path: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
       required: true
     }
   },
