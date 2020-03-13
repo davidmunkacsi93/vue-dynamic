@@ -5,7 +5,9 @@
       class="md-layout-item md-size-100"
       md-mode="query"
     ></md-progress-bar>
-    <div class="md-layout-item md-size-60">
+    <div
+      class="md-layout-item md-large-size-60 md-medium-size-70 md-small-size-100"
+    >
       <md-field>
         <label>API specification URL</label>
         <md-input v-model="specificationURL" type="text"></md-input>
@@ -15,7 +17,7 @@
     <md-dialog-alert
       :md-active.sync="apiCreated"
       md-title="API integrated"
-      :md-content="'New API for ' + this.specificationURL + 'created.'"
+      :md-content="'New API for ' + this.apiTitle + ' created.'"
       md-confirm-text="Ok"
     />
     <md-dialog-alert
@@ -43,6 +45,7 @@ export default {
       error: false,
       errorContent: null,
       apiCreated: false,
+      apiTitle: null,
       specificationURL:
         "https://api.swaggerhub.com/apis/davidmunkacsi93/petstore/1.0.0/swagger.json"
     };
@@ -68,6 +71,8 @@ export default {
       return SwaggerParser.validate(url)
         .then(async () => {
           let parsedSpecification = await SwaggerParser.parse(url);
+          this.apiTitle = parsedSpecification.info.title;
+
           if (parsedSpecification.swagger === "2.0") {
             return OpenApi2Parser.processSpecification(parsedSpecification);
           } else if (parsedSpecification.openapi === "3.0.0") {
