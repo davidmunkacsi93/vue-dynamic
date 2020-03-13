@@ -35,8 +35,7 @@ import { API_ADDED } from "../types/event-types";
 import EventBus from "../utils/event-bus";
 
 import SwaggerParser from "swagger-parser";
-import OpenApi2Parser from "../parsers/open-api-2-parser.js";
-import OpenApi3Parser from "../parsers/open-api-3-parser.js";
+import ApiIntegrationService from "../services/api-integration-service.js";
 
 export default {
   data() {
@@ -54,7 +53,7 @@ export default {
     addApi() {
       this.loading = true;
 
-      this.integrateNewAPI(this.specificationURL)
+      ApiIntegrationService.integrateNewAPI(this.specificationURL)
         .then(apiModel => {
           this.$store.dispatch(ADD_NEW_API, apiModel);
           this.loading = false;
@@ -65,24 +64,6 @@ export default {
           this.loading = false;
           this.error = true;
           this.errorContent = reason.toString();
-        });
-    },
-    async integrateNewAPI(url) {
-      return SwaggerParser.validate(url)
-        .then(async () => {
-          let parsedSpecification = await SwaggerParser.parse(url);
-          this.apiTitle = parsedSpecification.info.title;
-
-          if (parsedSpecification.swagger === "2.0") {
-            return OpenApi2Parser.processSpecification(parsedSpecification);
-          } else if (parsedSpecification.openapi === "3.0.0") {
-            return OpenApi3Parser.processSpecification(parsedSpecification);
-          } else {
-            throw new Error("Unknown specification or version detected.");
-          }
-        })
-        .catch(reason => {
-          throw new Error(reason);
         });
     }
   }
