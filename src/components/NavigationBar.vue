@@ -52,9 +52,11 @@ export default {
   },
   beforeDestroy() {
     EventBus.$off(API_ADDED, this.onApiAdded);
+    window.removeEventListener("resize", this.setNavigationBarHeight);
   },
   mounted() {
     this.setNavigationBarHeight();
+    window.addEventListener("resize", this.setNavigationBarHeight);
   },
   computed: {
     ...mapState({
