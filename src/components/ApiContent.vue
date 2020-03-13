@@ -150,29 +150,23 @@ export default {
       var layout = [];
       var header = this.createHeader();
       layout.push(header);
-      this.createDynamicComponents().forEach(component =>
+      this.createDynamicComponents(header).forEach(component =>
         layout.push(component)
       );
-      var apiLayout = this.$refs.apiLayout;
-      var bins = layout.map(layoutItem => {
-        return {
-          height: layoutItem.h * apiLayout.rowHeight,
-          width: layoutItem.w * (apiLayout.$el.offsetWidth / apiLayout.colNum)
-        };
-      });
-      console.log(bins);
       return layout;
     },
 
     createHeader() {
       return {
+        x: 0,
+        y: 0,
         w: 12,
-        h: 4,
+        h: 5,
         i: 0,
         uuid: uuid(),
         isDraggable: true,
         isResizable: true,
-        static: true,
+        static: false,
         apiVersion: this.apiModel.apiVersion,
         description: this.apiModel.description,
         title: this.apiModel.title,
@@ -188,13 +182,15 @@ export default {
 
       forms.forEach((dynamicComponent, index) => {
         var component = {
+          x: 0,
+          y: 0,
           w: 6,
-          h: 4,
+          h: 5,
           i: index + 1,
           uuid: uuid(),
           isDraggable: true,
           isResizable: true,
-          static: true,
+          static: false,
           layoutItemType: FORM,
           description: dynamicComponent.description,
           path: dynamicComponent.path,
