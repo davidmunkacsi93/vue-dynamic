@@ -11,8 +11,16 @@
 <script>
 export default {
   props: {
-    apiModel: {
-      type: Object,
+    apiVersion: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
       required: true
     }
   }

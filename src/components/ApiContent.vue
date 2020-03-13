@@ -30,15 +30,17 @@
         <dynamic-header
           v-if="item.layoutItemType === HEADER"
           :type="HEADER"
-          :apiModel="apiModel"
+          :apiVersion="item.apiVersion"
+          :description="item.description"
+          :title="item.title"
         ></dynamic-header>
         <dynamic-form
           v-else-if="item.layoutItemType === FORM"
+          :type="FORM"
+          :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
-          :controls="item.controls"
           :path="item.path"
-          :type="FORM"
         ></dynamic-form>
       </grid-item>
     </template>
