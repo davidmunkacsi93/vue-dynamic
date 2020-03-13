@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="md-title">
-      <h1>{{ apiModel.title }} - {{ apiModel.apiVersion }}</h1>
+      <h1>{{ title }} - {{ apiVersion }}</h1>
     </div>
-    <div class="md-subtitle" v-if="apiModel.description">
-      <h3>{{ apiModel.description }}</h3>
+    <div class="md-subtitle" v-if="description">
+      <h3>{{ description }}</h3>
     </div>
   </div>
 </template>

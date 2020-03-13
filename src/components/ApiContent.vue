@@ -137,14 +137,6 @@ export default {
       this.setDynamicContentHeight();
     },
 
-    getDefaultLayout() {
-      var layout = [];
-      layout.push(this.createHeader());
-      this.createDynamicComponents().forEach(component =>
-        layout.push(component)
-      );
-      return layout;
-    },
     setDynamicContentHeight() {
       var dynamicContent = this.$parent.$parent.$parent;
       var apiLayoutHeight = this.$refs.apiLayout.$el.clientHeight;
@@ -153,6 +145,16 @@ export default {
       this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
       EventBus.$emit(DYNAMIC_CONTENT_HEIGHT_UPDATED, dynamicContent.innerH);
     },
+
+    getDefaultLayout() {
+      var layout = [];
+      layout.push(this.createHeader());
+      this.createDynamicComponents().forEach(component =>
+        layout.push(component)
+      );
+      return layout;
+    },
+
     createHeader() {
       return {
         x: this.$parent.$parent.x,
@@ -164,6 +166,9 @@ export default {
         isDraggable: true,
         isResizable: true,
         static: true,
+        apiVersion: this.apiModel.apiVersion,
+        description: this.apiModel.description,
+        title: this.apiModel.title,
         layoutItemType: HEADER
       };
     },
