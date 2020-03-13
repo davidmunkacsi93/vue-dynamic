@@ -95,6 +95,22 @@ export default {
     apiName: {
       type: String,
       required: false
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    path: {
+      type: String,
+      required: true
+    },
+    httpMethod: {
+      type: String,
+      required: true
+    },
+    controls: {
+      type: Array,
+      required: true
     }
   },
   computed: {
@@ -107,16 +123,6 @@ export default {
   },
   data() {
     return {
-      path: this.model.path,
-      description: this.model.description,
-      httpMethod: this.model.httpMethod,
-      controls: this.model.controls.map((control, index) => {
-        return {
-          ...control,
-          index
-        };
-      }),
-
       DATE_PICKER: DATE_PICKER,
       DROP_DOWN: DROP_DOWN,
       FLOAT_INPUT: FLOAT_INPUT,

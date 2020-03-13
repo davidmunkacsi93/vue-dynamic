@@ -34,7 +34,10 @@
         ></dynamic-header>
         <dynamic-form
           v-else-if="item.layoutItemType === FORM"
-          :model="item"
+          :description="item.description"
+          :httpMethod="item.httpMethod"
+          :controls="item.controls"
+          :path="item.path"
           :type="FORM"
         ></dynamic-form>
       </grid-item>
@@ -122,7 +125,9 @@ export default {
         viewModel.$store.state.apiLayouts.apis[
           viewModel.$store.state.apiLayouts.currentApiId
         ];
+
       viewModel.apiLayout = viewModel.apiModel.apiLayout;
+
       if (!viewModel.apiLayout || viewModel.apiLayout.length === 0) {
         viewModel.apiLayout = viewModel.getDefaultLayout();
         viewModel.$store.dispatch(SET_API_LAYOUT_ITEMS, viewModel.apiLayout);
