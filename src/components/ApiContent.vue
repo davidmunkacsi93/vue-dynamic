@@ -131,8 +131,15 @@ export default {
       viewModel.apiLayout = viewModel.apiModel.apiLayout;
 
       if (!viewModel.apiLayout || viewModel.apiLayout.length === 0) {
-        viewModel.apiLayout = viewModel.getDefaultLayout();
+        var defaultLayout = viewModel.getDefaultLayout();
+        viewModel.apiModel.apiLayout = defaultLayout;
+        viewModel.apiLayout = defaultLayout;
         viewModel.$store.dispatch(SET_API_LAYOUT_ITEMS, viewModel.apiLayout);
+        setTimeout(() => {
+          this.apiLayout.forEach(layoutItem => {
+            layoutItem.static = true;
+          });
+        }, 200);
       }
       this.setDynamicContentHeight();
     },
@@ -182,9 +189,9 @@ export default {
 
       forms.forEach((dynamicComponent, index) => {
         var component = {
-          x: 10,
-          y: 10,
-          w: 6,
+          x: 0,
+          y: 5,
+          w: 3,
           h: 5,
           i: index + 1,
           uuid: uuid(),
