@@ -54,6 +54,7 @@ export default {
       ApiIntegrationService.integrateNewAPI(this.specificationURL)
         .then(apiModel => {
           this.$store.dispatch(ADD_NEW_API, apiModel);
+          this.apiTitle = apiModel.title;
           this.loading = false;
           this.apiCreated = true;
           EventBus.$emit(API_ADDED);
