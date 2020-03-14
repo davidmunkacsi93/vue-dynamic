@@ -9,7 +9,8 @@ import {
   DISABLE_EDIT_MODE_API_LAYOUT,
   ENABLE_EDIT_MODE_API_LAYOUT,
   SET_API_ITEM_HEIGHT,
-  SET_API_ITEM_WIDTH
+  SET_API_ITEM_WIDTH,
+  SET_API_ITEM_INTIAILIZED
 } from "../../types/action-types";
 import { COMPACT, LAYOUT_UPDATED, UPDATE_WIDTH } from "../../types/event-types";
 
@@ -81,16 +82,26 @@ const mutations = {
     );
   },
 
+  setApiItemInitialized(state, uuid) {
+    var apiLayout = state.apis[state.currentApiId].apiLayout;
+    var apiItem = apiLayout.find(item => item.uuid === uuid);
+    apiItem.initialized = true;
+  },
+
   setApiItemHeight(state, payload) {
     var apiLayout = state.apis[state.currentApiId].apiLayout;
     var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
     apiItem.h = payload.height;
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(UPDATE_WIDTH);
   },
 
   setApiItemWidth(state, payload) {
     var apiLayout = state.apis[state.currentApiId].apiLayout;
     var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
     apiItem.w = payload.width;
+    EventBus.$emit(LAYOUT_UPDATED);
+    EventBus.$emit(UPDATE_WIDTH);
   },
 
   setApiLayoutItems(state, layoutItems) {
@@ -125,6 +136,9 @@ const actions = {
   },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);
+  },
+  setApiItemInitialized({ commit }, uuid) {
+    commit(SET_API_ITEM_INTIAILIZED, uuid);
   },
   setApiItemHeight({ commit }, payload) {
     commit(SET_API_ITEM_HEIGHT, payload);

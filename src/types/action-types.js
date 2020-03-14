@@ -9,6 +9,7 @@ export const LOAD_API_LAYOUT = "loadApiLayout";
 export const LOAD_MAIN_LAYOUT = "loadMainLayout";
 export const SAVE_API_LAYOUT = "saveApiLayout";
 export const SAVE_MAIN_LAYOUT = "saveMainLayout";
+export const SET_API_ITEM_INTIAILIZED = "setApiItemInitialized";
 export const SET_API_ITEM_HEIGHT = "setApiItemHeight";
 export const SET_API_ITEM_WIDTH = "setApiItemWidth";
 export const SET_API_LAYOUT_ITEMS = "setApiLayoutItems";

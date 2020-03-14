@@ -75,7 +75,8 @@ import { mapState } from "vuex";
 import {
   REMOVE_FORM,
   SET_API_ITEM_HEIGHT,
-  SET_API_ITEM_WIDTH
+  SET_API_ITEM_WIDTH,
+  SET_API_ITEM_INTIAILIZED
 } from "../types/action-types";
 import {
   DROP_DOWN,
@@ -105,6 +106,10 @@ export default {
       type: String,
       required: true
     },
+    initialized: {
+      type: Boolean,
+      required: true
+    },
     path: {
       type: String,
       required: true
@@ -120,8 +125,11 @@ export default {
     })
   },
   mounted() {
-    this.setGridItemHeight();
-    this.setGridItemWidth();
+    if (!this.initialized) {
+      this.setGridItemHeight();
+      this.setGridItemWidth();
+      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
+    }
   },
   data() {
     return {

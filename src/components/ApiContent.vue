@@ -40,6 +40,7 @@
           :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
+          :initialized="item.initialized"
           :path="item.path"
         ></dynamic-form>
       </grid-item>
@@ -129,7 +130,6 @@ export default {
         ];
 
       viewModel.apiLayout = viewModel.apiModel.apiLayout;
-
       if (!viewModel.apiLayout || viewModel.apiLayout.length === 0) {
         var defaultLayout = viewModel.getDefaultLayout();
         viewModel.apiModel.apiLayout = defaultLayout;
@@ -202,7 +202,8 @@ export default {
           description: dynamicComponent.description,
           path: dynamicComponent.path,
           httpMethod: dynamicComponent.httpMethod,
-          controls: dynamicComponent.controls
+          controls: dynamicComponent.controls,
+          initialized: false
         };
         dynamicComponents.push(component);
       });
