@@ -119,6 +119,14 @@ export default {
       required: true
     }
   },
+  mounted() {
+    console.log(this.initialized);
+    if (this.initialized) {
+      this.setGridItemHeight();
+      this.setGridItemWidth();
+      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
+    }
+  },
   data() {
     return {
       DATE_PICKER: DATE_PICKER,
