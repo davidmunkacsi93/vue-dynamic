@@ -2,7 +2,7 @@
   <md-card ref="dynamicForm" class="dynamic-form" md-with-hover>
     <md-card-header>
       <md-card-header-text>
-        <div class="md-title">{{ path }}</div>
+        <div class="md-title" ref="cardTitle">{{ path }}</div>
         <div class="md-subhead">{{ description }}</div>
       </md-card-header-text>
       <md-menu md-size="big" md-direction="bottom-end">
@@ -67,11 +67,16 @@
     <md-card-actions>
       <md-button>{{ httpMethod }}</md-button>
     </md-card-actions>
+    <canvas ref="canvas" width="0" height="0"></canvas>
   </md-card>
 </template>
 <script>
 import { mapState } from "vuex";
-import { REMOVE_FORM, SET_API_ITEM_HEIGHT } from "../types/action-types";
+import {
+  REMOVE_FORM,
+  SET_API_ITEM_HEIGHT,
+  SET_API_ITEM_WIDTH
+} from "../types/action-types";
 import {
   DROP_DOWN,
   FLOAT_INPUT,
@@ -116,6 +121,7 @@ export default {
   },
   mounted() {
     this.setGridItemHeight();
+    this.setGridItemWidth();
   },
   data() {
     return {
@@ -145,6 +151,23 @@ export default {
         uuid: gridItem.$attrs.uuid,
         height: gridItem.innerH
       });
+    },
+    setGridItemWidth() {
+      var gridItem = this.$parent;
+      var canvas = this.$refs.canvas;
+      var context = canvas.getContext("2d");
+      context.font = "bold 24px Roboto";
+
+      var textMetrics = context.measureText(this.$refs.cardTitle.innerText);
+      var colWidth = gridItem.containerWidth / gridItem.cols;
+      var calculatedWidth = Math.ceil(textMetrics.width / colWidth);
+      if (calculatedWidth > gridItem.innerW) {
+        gridItem.innerW = calculatedWidth;
+        this.$store.dispatch(SET_API_ITEM_WIDTH, {
+          uuid: gridItem.$attrs.uuid,
+          width: gridItem.innerW
+        });
+      }
     }
   }
 };
@@ -156,5 +179,10 @@ export default {
 }
 .control-list {
   padding: 0;
+}
+.md-title {
+  height: auto;
+  width: auto;
+  word-wrap: break-word;
 }
 </style>
