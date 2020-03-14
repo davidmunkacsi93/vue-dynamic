@@ -1,5 +1,15 @@
+import { LIST } from "../types/layout-item-types";
+
 class DynamicListFactory {
-  createDynamicList() {}
+  createDynamicList(path, httpMethod, apiMethod, apiModels) {
+    var dynamicList = {
+      httpMethod: httpMethod.toUpperCase(),
+      path: path,
+      type: LIST
+    };
+
+    return dynamicList;
+  }
 }
 
 const instance = new DynamicListFactory();
