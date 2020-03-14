@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <canvas ref="canvas" width="0" height="0"></canvas>
+  </div>
 </template>
 
 <script>
@@ -42,8 +44,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.initialized);
-    if (this.initialized) {
+    if (!this.initialized) {
       this.setGridItemHeight();
       this.setGridItemWidth();
       this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);

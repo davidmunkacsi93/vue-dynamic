@@ -196,8 +196,7 @@ export default {
     },
     createDynamicComponents() {
       var dynamicComponents = [];
-
-      dynamicComponents.forEach((dynamicComponent, index) => {
+      this.apiModel.dynamicComponents.forEach((dynamicComponent, index) => {
         var component = {
           x: (index % 3) * 3,
           y: 5,
@@ -213,8 +212,6 @@ export default {
         };
         dynamicComponents.push(component);
       });
-
-      console.log(dynamicComponents);
 
       return dynamicComponents;
     }

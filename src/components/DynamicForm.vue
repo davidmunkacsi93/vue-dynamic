@@ -71,7 +71,6 @@
   </md-card>
 </template>
 <script>
-import { mapState } from "vuex";
 import {
   REMOVE_FORM,
   SET_API_ITEM_HEIGHT,
@@ -120,8 +119,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.initialized);
-    if (this.initialized) {
+    if (!this.initialized) {
       this.setGridItemHeight();
       this.setGridItemWidth();
       this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
