@@ -189,7 +189,7 @@ export default {
 
       forms.forEach((dynamicComponent, index) => {
         var component = {
-          x: 0,
+          x: (index % 3) * 3,
           y: 5,
           w: 3,
           h: 5,
