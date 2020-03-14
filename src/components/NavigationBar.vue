@@ -15,7 +15,7 @@
             v-for="api in availableApis"
             :key="api.apiId"
           >
-            <span>{{ api.title }}</span>
+            <span>{{ api.title }} - {{ api.apiVersion }}</span>
           </md-list-item>
         </md-list>
       </md-list-item>
