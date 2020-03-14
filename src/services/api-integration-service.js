@@ -12,11 +12,11 @@ class ApiIntegrationService {
         } else if (parsedSpecification.openapi === "3.0.0") {
           return OpenApi3Parser.processSpecification(parsedSpecification);
         } else {
-          console.error("Unknown specification or version detected.");
+          throw new Error("Unknown specification or version detected.");
         }
       })
       .catch(reason => {
-        console.error(reason);
+        throw new Error(reason);
       });
   }
 }

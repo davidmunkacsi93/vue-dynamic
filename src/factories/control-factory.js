@@ -1,5 +1,4 @@
 import {
-  FORM,
   DROP_DOWN,
   SWITCH,
   NUMBER_INPUT,
