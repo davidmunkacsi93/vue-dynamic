@@ -46,8 +46,6 @@ class DynamicComponentFactory {
       // Based on the parameters specified generate a search form,
       // that transform into a grid / list / input based on the response type.
       var responseOk = apiMethod.responses["200"];
-      // console.log(httpMethod);
-      // console.log(apiMethod);
       if (responseOk) {
         if (responseOk.content) {
           return this.getDynamicComponentTypeForSchema(
@@ -58,6 +56,8 @@ class DynamicComponentFactory {
         } else {
           return FORM;
         }
+      } else {
+        return FORM;
       }
     } else if (
       httpMethod === "post" ||
