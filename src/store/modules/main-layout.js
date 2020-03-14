@@ -24,7 +24,7 @@ function getLayoutItemsForLg() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: MENU
+    type: MENU
   };
   const content = {
     x: 2,
@@ -35,7 +35,7 @@ function getLayoutItemsForLg() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: CONTENT
+    type: CONTENT
   };
   const navigationBar = {
     x: 0,
@@ -46,7 +46,7 @@ function getLayoutItemsForLg() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: NAVIGATION_BAR
+    type: NAVIGATION_BAR
   };
   layoutItems.push(menu);
   layoutItems.push(navigationBar);
@@ -66,7 +66,7 @@ function getLayoutItemsForMd() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: MENU
+    type: MENU
   };
   const content = {
     x: 2,
@@ -77,7 +77,7 @@ function getLayoutItemsForMd() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: CONTENT
+    type: CONTENT
   };
   const navigationBar = {
     x: 0,
@@ -88,7 +88,7 @@ function getLayoutItemsForMd() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: NAVIGATION_BAR
+    type: NAVIGATION_BAR
   };
   layoutItems.push(menu);
   layoutItems.push(navigationBar);
@@ -108,7 +108,7 @@ function getLayoutItemsForSm() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: MENU
+    type: MENU
   };
   const navigationBar = {
     x: 0,
@@ -119,7 +119,7 @@ function getLayoutItemsForSm() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: NAVIGATION_BAR
+    type: NAVIGATION_BAR
   };
   const content = {
     x: 0,
@@ -130,7 +130,7 @@ function getLayoutItemsForSm() {
     isDraggable: true,
     isResizable: true,
     static: true,
-    layoutItemType: CONTENT
+    type: CONTENT
   };
   layoutItems.push(menu);
   layoutItems.push(navigationBar);
@@ -219,7 +219,7 @@ const mutations = {
     if (!state.currentScreenClass) return;
 
     var content = state.mainLayouts[state.currentScreenClass].find(
-      item => item.layoutItemType === CONTENT
+      item => item.type === CONTENT
     );
     content.h = height;
   },
@@ -227,7 +227,7 @@ const mutations = {
     if (!state.currentScreenClass) return;
 
     var navigationBar = state.mainLayouts[state.currentScreenClass].find(
-      item => item.layoutItemType === NAVIGATION_BAR
+      item => item.type === NAVIGATION_BAR
     );
     navigationBar.h = height;
   },

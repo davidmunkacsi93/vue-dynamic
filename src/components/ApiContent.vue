@@ -28,14 +28,14 @@
         :uuid="item.uuid"
       >
         <dynamic-header
-          v-if="item.layoutItemType === HEADER"
+          v-if="item.type === HEADER"
           :type="HEADER"
           :apiVersion="item.apiVersion"
           :description="item.description"
           :title="item.title"
         ></dynamic-header>
         <dynamic-form
-          v-else-if="item.layoutItemType === FORM"
+          v-else-if="item.type === FORM"
           :type="FORM"
           :controls="item.controls"
           :description="item.description"
@@ -43,6 +43,15 @@
           :initialized="item.initialized"
           :path="item.path"
         ></dynamic-form>
+        <dynamic-list
+          v-else-if="item.type === FORM"
+          :type="FORM"
+          :controls="item.controls"
+          :description="item.description"
+          :httpMethod="item.httpMethod"
+          :initialized="item.initialized"
+          :path="item.path"
+        ></dynamic-list>
       </grid-item>
     </template>
   </grid-layout>
@@ -58,7 +67,8 @@ import {
 
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
-import { FORM, HEADER } from "../types/layout-item-types";
+import DynamicList from "../components/DynamicList";
+import { FORM, HEADER, LIST } from "../types/layout-item-types";
 import EventBus from "../utils/event-bus";
 import {
   DYNAMIC_CONTENT_HEIGHT_UPDATED,
@@ -66,7 +76,7 @@ import {
 } from "../types/event-types";
 
 export default {
-  components: { DynamicForm, DynamicHeader },
+  components: { DynamicForm, DynamicHeader, DynamicList },
 
   data() {
     return {
@@ -177,17 +187,13 @@ export default {
         apiVersion: this.apiModel.apiVersion,
         description: this.apiModel.description,
         title: this.apiModel.title,
-        layoutItemType: HEADER
+        type: HEADER
       };
     },
     createDynamicComponents() {
       var dynamicComponents = [];
-      // TODO: Extend to other dynamic components. Currently only supporting forms.
-      var forms = this.apiModel.dynamicComponents.filter(
-        dynamicComponent => dynamicComponent.type === FORM
-      );
 
-      forms.forEach((dynamicComponent, index) => {
+      dynamicComponents.forEach((dynamicComponent, index) => {
         var component = {
           x: (index % 3) * 3,
           y: 5,
@@ -198,15 +204,22 @@ export default {
           isDraggable: true,
           isResizable: true,
           static: false,
-          layoutItemType: FORM,
+          type: dynamicComponent.type,
           description: dynamicComponent.description,
           path: dynamicComponent.path,
           httpMethod: dynamicComponent.httpMethod,
           controls: dynamicComponent.controls,
           initialized: false
         };
+
+        if (dynamicComponent.type === LIST) {
+          component.searchParameterControls =
+            dynamicComponent.searchParameterControls;
+          component.listType = dynamicComponent.listType;
+        }
         dynamicComponents.push(component);
       });
+
       return dynamicComponents;
     }
   }

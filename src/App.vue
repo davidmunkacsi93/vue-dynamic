@@ -32,16 +32,16 @@
               :key="item.id"
               :uuid="item.i"
             >
-              <menu-bar v-if="item.layoutItemType === MENU" :type="MENU" />
+              <menu-bar v-if="item.type === MENU" :type="MENU" />
               <dynamic-content
-                v-else-if="item.layoutItemType === CONTENT"
+                v-else-if="item.type === CONTENT"
                 :x="item.x"
                 :y="item.y"
                 :type="CONTENT"
                 :id="item.id"
               />
               <navigation-bar
-                v-else-if="item.layoutItemType === NAVIGATION_BAR"
+                v-else-if="item.type === NAVIGATION_BAR"
               ></navigation-bar>
             </grid-item>
           </template>
