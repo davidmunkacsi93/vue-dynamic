@@ -16,6 +16,7 @@ class ApiIntegrationService {
         }
       })
       .catch(reason => {
+        console.error(reason);
         throw new Error(reason);
       });
   }

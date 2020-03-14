@@ -20,11 +20,11 @@ class DynamicComponentFactory {
         console.log(dynamicComponentType);
         switch (dynamicComponentType) {
           case LIST:
+            console.log(apiMethod);
             dynamicComponent = DynamicListFactory.createDynamicList(
               path,
               httpMethod,
-              apiMethod,
-              apiModels
+              apiMethod
             );
             break;
           case FORM:

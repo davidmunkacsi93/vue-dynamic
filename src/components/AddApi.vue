@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-// import { ADD_NEW_API } from "../types/action-types";
+import { ADD_NEW_API } from "../types/action-types";
 import { API_ADDED } from "../types/event-types";
 
 import EventBus from "../utils/event-bus";
@@ -53,7 +53,7 @@ export default {
 
       ApiIntegrationService.integrateNewAPI(this.specificationURL)
         .then(apiModel => {
-          // this.$store.dispatch(ADD_NEW_API, apiModel);
+          this.$store.dispatch(ADD_NEW_API, apiModel);
           this.apiTitle = apiModel.title;
           this.loading = false;
           this.apiCreated = true;

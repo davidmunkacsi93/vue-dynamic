@@ -86,17 +86,21 @@ class ControlFactory {
         control.element = FLOAT_INPUT;
         break;
       case "string":
-        switch (parameter.format) {
-          case "date":
-          case "date-time":
-            control.element = DATE_PICKER;
-            break;
-          case "password":
-            control.element = PASSWORD_INPUT;
-            break;
-          default:
-            control.element = TEXT_INPUT;
-            break;
+        if (parameter.format) {
+          switch (parameter.format) {
+            case "date":
+            case "date-time":
+              control.element = DATE_PICKER;
+              break;
+            case "password":
+              control.element = PASSWORD_INPUT;
+              break;
+            default:
+              control.element = TEXT_INPUT;
+              break;
+          }
+        } else {
+          control.element = TEXT_INPUT;
         }
         break;
       case "boolean":
