@@ -82,8 +82,11 @@ export default {
     return {
       currentApiId: 0,
       rowHeight: 30,
+
       FORM: FORM,
       HEADER: HEADER,
+      LIST: LIST,
+
       apiLayout: [],
       apiModel: {}
     };
@@ -99,6 +102,7 @@ export default {
 
   mounted() {
     this.setDynamicContentHeight();
+    this.rowHeight = 30;
   },
 
   beforeUpdate() {
@@ -204,21 +208,13 @@ export default {
           isDraggable: true,
           isResizable: true,
           static: false,
-          type: dynamicComponent.type,
-          description: dynamicComponent.description,
-          path: dynamicComponent.path,
-          httpMethod: dynamicComponent.httpMethod,
-          controls: dynamicComponent.controls,
-          initialized: false
+          initialized: false,
+          ...dynamicComponent
         };
-
-        if (dynamicComponent.type === LIST) {
-          component.searchParameterControls =
-            dynamicComponent.searchParameterControls;
-          component.listType = dynamicComponent.listType;
-        }
         dynamicComponents.push(component);
       });
+
+      console.log(dynamicComponents);
 
       return dynamicComponents;
     }

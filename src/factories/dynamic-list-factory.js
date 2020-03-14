@@ -8,14 +8,12 @@ class DynamicListFactory {
       httpMethod: httpMethod.toUpperCase(),
       path: path,
       type: LIST,
-      searchParameterControls: []
+      controls: []
     };
 
     if (apiMethod.parameters) {
-      var searchParameterControls = ControlFactory.createControlsForParameters(
-        apiMethod
-      );
-      dynamicList.searchParameterControls = searchParameterControls;
+      var controls = ControlFactory.createControlsForParameters(apiMethod);
+      dynamicList.controls = controls;
     }
 
     dynamicList.listType = this.getListType(apiMethod);
