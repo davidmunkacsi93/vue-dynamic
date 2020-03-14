@@ -46,24 +46,15 @@ class DynamicComponentFactory {
       // Based on the parameters specified generate a search form,
       // that transform into a grid / list / input based on the response type.
       var responseOk = apiMethod.responses["200"];
-      console.log(apiMethod);
+      // console.log(httpMethod);
+      // console.log(apiMethod);
       if (responseOk) {
-        var content = responseOk.content;
-        if (content) {
-          var schema = content["application/json"].schema;
-          if (schema.$ref) {
-            return GRID;
-          } else if (schema.type) {
-            switch (schema.type) {
-              case "array":
-                if (schema.items.type === "string") {
-                  return LIST;
-                }
-                break;
-              case "string":
-                return LIST;
-            }
-          }
+        if (responseOk.content) {
+          return this.getDynamicComponentTypeForSchema(
+            responseOk.content["application/json"].schema
+          );
+        } else if (responseOk.schema) {
+          return this.getDynamicComponentTypeForSchema(responseOk.schema);
         } else {
           return FORM;
         }
@@ -77,6 +68,24 @@ class DynamicComponentFactory {
     } else {
       throw new Error("Not supported HTTP method.");
     }
+  }
+
+  getDynamicComponentTypeForSchema(schema) {
+    if (schema.$ref) {
+      return GRID;
+    } else if (schema.type) {
+      switch (schema.type) {
+        case "array":
+          if (schema.items.type === "string") {
+            return LIST;
+          }
+          break;
+        case "string":
+          return LIST;
+      }
+    }
+
+    return FORM;
   }
 }
 
