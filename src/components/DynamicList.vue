@@ -20,6 +20,10 @@
     </md-card-header>
 
     <md-card-content>
+      <md-tabs>
+        <md-tab id="tab-search" md-label="Search"></md-tab>
+        <md-tab id="tab-results" md-label="Results"></md-tab>
+      </md-tabs>
       <md-list class="control-list">
         <md-list-item v-for="control in controls" :key="control.order">
           <md-datepicker
@@ -71,8 +75,28 @@
 </template>
 <script>
 import DynamicComponent from "./DynamicComponent.vue";
+import {
+  DROP_DOWN,
+  FLOAT_INPUT,
+  NUMBER_INPUT,
+  TEXT_INPUT,
+  PASSWORD_INPUT,
+  SWITCH,
+  DATE_PICKER
+} from "../types/layout-item-types";
 export default {
-  extends: DynamicComponent
+  extends: DynamicComponent,
+  data() {
+    return {
+      DATE_PICKER: DATE_PICKER,
+      DROP_DOWN: DROP_DOWN,
+      FLOAT_INPUT: FLOAT_INPUT,
+      NUMBER_INPUT: NUMBER_INPUT,
+      PASSWORD_INPUT: PASSWORD_INPUT,
+      TEXT_INPUT: TEXT_INPUT,
+      SWITCH: SWITCH
+    };
+  }
 };
 </script>
 <style lang="scss"></style>

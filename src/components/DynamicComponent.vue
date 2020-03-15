@@ -38,7 +38,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.initialized);
     if (!this.initialized) {
       this.setGridItemHeight();
       this.setGridItemWidth();

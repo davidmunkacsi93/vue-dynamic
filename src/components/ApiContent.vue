@@ -47,7 +47,7 @@
           :uuid="item.uuid"
         ></dynamic-form>
         <dynamic-list
-          v-else-if="item.type === FORM"
+          v-else-if="item.type === LIST"
           :type="FORM"
           :controls="item.controls"
           :description="item.description"
