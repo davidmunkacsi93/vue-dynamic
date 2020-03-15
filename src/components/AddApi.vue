@@ -33,7 +33,6 @@ import { ADD_NEW_API } from "../types/action-types";
 import { API_ADDED } from "../types/event-types";
 
 import EventBus from "../utils/event-bus";
-import ApiIntegrationService from "../services/api-integration-service.js";
 
 export default {
   data() {
@@ -51,7 +50,8 @@ export default {
     addApi() {
       this.loading = true;
 
-      ApiIntegrationService.integrateNewAPI(this.specificationURL)
+      this.$apiIntegrationService
+        .integrateNewAPI(this.specificationURL)
         .then(apiModel => {
           this.$store.dispatch(ADD_NEW_API, apiModel);
           this.apiTitle = apiModel.title;
