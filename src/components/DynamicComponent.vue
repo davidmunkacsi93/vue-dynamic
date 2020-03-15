@@ -61,6 +61,8 @@ export default {
         componentHeight = this.$refs.dynamicComponent.clientHeight;
       }
 
+      if (!componentHeight) return;
+
       gridItem.innerH = Math.ceil(componentHeight / rowHeight);
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: this.uuid,
