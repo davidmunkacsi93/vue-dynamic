@@ -14,10 +14,6 @@ import {
 
 export default {
   props: {
-    apiName: {
-      type: String,
-      required: false
-    },
     controls: {
       type: Array,
       required: true
