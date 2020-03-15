@@ -2,7 +2,7 @@
 import {
   REMOVE_FORM,
   SET_API_ITEM_HEIGHT,
-  // SET_API_ITEM_WIDTH,
+  SET_API_ITEM_WIDTH,
   SET_API_ITEM_INTIAILIZED
 } from "../types/action-types";
 
@@ -40,7 +40,7 @@ export default {
   mounted() {
     if (!this.initialized) {
       this.setGridItemHeight();
-      // this.setGridItemWidth();
+      this.setGridItemWidth();
       this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
     }
   },
@@ -54,12 +54,11 @@ export default {
       var gridItem = this.$parent;
       var rowHeight = this.$parent.rowHeight;
 
-      var componentHeight = null;
-      if (this.$refs.dynamicComponent.$el) {
-        componentHeight = this.$refs.dynamicComponent.$el.clientHeight;
-      } else {
-        componentHeight = this.$refs.dynamicComponent.clientHeight;
-      }
+      if (!this.$refs.dynamicComponent) return;
+
+      var dynamicComponent =
+        this.$refs.dynamicComponent.$el || this.$refs.dynamicComponent;
+      var componentHeight = dynamicComponent.clientHeight;
 
       if (!componentHeight) return;
 
@@ -68,25 +67,28 @@ export default {
         uuid: this.uuid,
         height: gridItem.innerH
       });
-    }
-    // setGridItemWidth() {
-    // if (!this.$parent) return;
-    //   var gridItem = this.$parent;
-    //   var canvas = this.$refs.canvas;
-    //   var context = canvas.getContext("2d");
-    //   context.font = "bold 24px Roboto";
+    },
 
-    //   var textMetrics = context.measureText(this.$refs.cardTitle.innerText);
-    //   var colWidth = gridcontainerWidth / gridcols;
-    //   var calculatedWidth = Math.ceil(textMetrics.width / colWidth);
-    //   if (calculatedWidth > gridinnerW) {
-    //     gridinnerW = calculatedWidth;
-    //     this.$store.dispatch(SET_API_ITEM_WIDTH, {
-    //       uuid: grid$attrs.uuid,
-    //       width: gridinnerW
-    //     });
-    //   }
-    // }
+    setGridItemWidth() {
+      if (!this.$parent) return;
+
+      var gridItem = this.$parent;
+      var colWidth = gridItem.containerWidth / gridItem.cols;
+
+      var title = this.$refs.title || this.$refs.title.$el;
+      var stringPixelWidth = require("string-pixel-width");
+      var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
+      console.log(fontSize);
+      var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
+      var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
+      if (calculatedWidth > gridItem.innerW) {
+        gridItem.innerW = calculatedWidth;
+        this.$store.dispatch(SET_API_ITEM_WIDTH, {
+          uuid: this.uuid,
+          width: gridItem.innerW
+        });
+      }
+    }
   }
 };
 </script>

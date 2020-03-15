@@ -17,6 +17,7 @@
     "bin-pack": "^1.0.2",
     "core-js": "^2.6.5",
     "popper.js": "^1.16.0",
+    "string-pixel-width": "^1.10.0",
     "swagger-parser": "^8.0.4",
     "uuid": "^7.0.1",
     "vue": "^2.6.10",

@@ -2,7 +2,7 @@
   <md-card ref="dynamicComponent" class="dynamic-form" md-with-hover>
     <md-card-header>
       <md-card-header-text>
-        <div class="md-title" ref="cardTitle">{{ path }}</div>
+        <div class="md-title" ref="title">{{ path }}</div>
         <div class="md-subhead">{{ description }}</div>
       </md-card-header-text>
       <md-menu md-size="big" md-direction="bottom-end">
