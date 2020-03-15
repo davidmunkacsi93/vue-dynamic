@@ -27,16 +27,31 @@
         :key="item.i"
         :uuid="item.uuid"
       >
-        <dynamic-component
+        <dynamic-header
+          v-if="item.type === HEADER"
+          :type="HEADER"
           :apiVersion="item.apiVersion"
+          :description="item.description"
+          :title="item.title"
+        ></dynamic-header>
+        <dynamic-form
+          v-else-if="item.type === FORM"
+          :type="FORM"
           :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
           :path="item.path"
-          :title="item.title"
-          :type="item.type"
-        ></dynamic-component>
+        ></dynamic-form>
+        <dynamic-list
+          v-else-if="item.type === FORM"
+          :type="FORM"
+          :controls="item.controls"
+          :description="item.description"
+          :httpMethod="item.httpMethod"
+          :initialized="item.initialized"
+          :path="item.path"
+        ></dynamic-list>
       </grid-item>
     </template>
   </grid-layout>
@@ -50,7 +65,9 @@ import {
   SET_CONTENT_HEIGHT
 } from "../types/action-types";
 
-import DynamicComponent from "../components/DynamicComponent";
+import DynamicForm from "../components/DynamicForm";
+import DynamicHeader from "../components/DynamicHeader";
+import DynamicList from "../components/DynamicList";
 import { FORM, HEADER, LIST } from "../types/layout-item-types";
 import EventBus from "../utils/event-bus";
 import {
@@ -59,7 +76,7 @@ import {
 } from "../types/event-types";
 
 export default {
-  components: { DynamicComponent },
+  components: { DynamicForm, DynamicHeader, DynamicList },
 
   data() {
     return {

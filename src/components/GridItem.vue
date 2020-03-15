@@ -7,6 +7,7 @@ export default {
   name: "GridItem",
   extends: GridItem,
   created: function() {
+    console.log(this);
     EventBus.$on(COMPACT, this.onCompact);
     EventBus.$on(UPDATE_WIDTH, this.onUpdateWidth);
   },

@@ -1,30 +1,6 @@
 <template>
   <div>
-    <dynamic-header
-      v-if="type === HEADER"
-      :type="HEADER"
-      :apiVersion="apiVersion"
-      :description="description"
-      :title="title"
-    ></dynamic-header>
-    <dynamic-form
-      v-else-if="type === FORM"
-      :type="FORM"
-      :controls="controls"
-      :description="description"
-      :httpMethod="httpMethod"
-      :initialized="initialized"
-      :path="path"
-    ></dynamic-form>
-    <dynamic-list
-      v-else-if="type === FORM"
-      :type="FORM"
-      :controls="controls"
-      :description="description"
-      :httpMethod="httpMethod"
-      :initialized="initialized"
-      :path="path"
-    ></dynamic-list>
+    <slot></slot>
   </div>
 </template>
 
@@ -37,13 +13,7 @@ import {
 } from "../types/action-types";
 import { FORM, HEADER, LIST } from "../types/layout-item-types";
 
-import DynamicForm from "../components/DynamicForm";
-import DynamicHeader from "../components/DynamicHeader";
-import DynamicList from "../components/DynamicList";
-
 export default {
-  components: { DynamicForm, DynamicHeader, DynamicList },
-
   props: {
     apiVersion: {
       type: String
@@ -70,15 +40,12 @@ export default {
       type: String
     }
   },
-  created() {
-    console.log(this);
-  },
   mounted() {
-    if (!this.initialized) {
-      this.setGridItemHeight();
-      // this.setGridItemWidth();
-      // this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
-    }
+    // if (!this.initialized) {
+    //   this.setGridItemHeight();
+    //   // this.setGridItemWidth();
+    //   // this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
+    // }
   },
   data() {
     return {
