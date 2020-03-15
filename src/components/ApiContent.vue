@@ -32,6 +32,7 @@
           :type="HEADER"
           :apiVersion="item.apiVersion"
           :description="item.description"
+          :initialized="item.initialized"
           :title="item.title"
           :uuid="item.uuid"
         ></dynamic-header>
@@ -156,6 +157,7 @@ export default {
           this.apiLayout.forEach(layoutItem => {
             layoutItem.static = true;
           });
+          this.$store.dispatch(SAVE_API_LAYOUT, viewModel.apiLayout);
         }, 200);
       }
       this.setDynamicContentHeight();
@@ -191,6 +193,7 @@ export default {
         isDraggable: true,
         isResizable: true,
         static: false,
+        initialized: false,
         apiVersion: this.apiModel.apiVersion,
         description: this.apiModel.description,
         title: this.apiModel.title,

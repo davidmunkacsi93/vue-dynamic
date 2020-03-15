@@ -86,6 +86,7 @@ const mutations = {
     var apiLayout = state.apis[state.currentApiId].apiLayout;
     var apiItem = apiLayout.find(item => item.uuid === uuid);
     apiItem.initialized = true;
+    console.log(apiItem);
   },
 
   setApiItemHeight(state, payload) {

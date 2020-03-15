@@ -38,6 +38,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.initialized);
     if (!this.initialized) {
       this.setGridItemHeight();
       this.setGridItemWidth();
@@ -78,8 +79,8 @@ export default {
       var title = this.$refs.title || this.$refs.title.$el;
       var stringPixelWidth = require("string-pixel-width");
       var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
-      console.log(fontSize);
       var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
+      
       var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
       if (calculatedWidth > gridItem.innerW) {
         gridItem.innerW = calculatedWidth;
