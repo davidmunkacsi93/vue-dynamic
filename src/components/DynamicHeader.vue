@@ -1,6 +1,6 @@
 <template>
   <div ref="dynamicComponent">
-    <div class="md-title">
+    <div ref="title" class="md-title">
       <h1>{{ title }} - {{ apiVersion }}</h1>
     </div>
     <div class="md-subtitle" v-if="description">

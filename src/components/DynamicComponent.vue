@@ -5,7 +5,6 @@ import {
   // SET_API_ITEM_WIDTH,
   SET_API_ITEM_INTIAILIZED
 } from "../types/action-types";
-import { FORM, HEADER, LIST } from "../types/layout-item-types";
 
 export default {
   props: {
@@ -41,32 +40,31 @@ export default {
       this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
     }
   },
-  data() {
-    return {
-      FORM: FORM,
-      HEADER: HEADER,
-      LIST: LIST,
-
-      editable: true,
-      isDragging: false,
-      delayedDragging: false
-    };
-  },
   methods: {
     removeGridItem() {
       this.$store.dispatch(REMOVE_FORM, this.id);
     },
     setGridItemHeight() {
+      if (!this.$parent) return;
+
       var gridItem = this.$parent;
       var rowHeight = this.$parent.rowHeight;
-      var cardHeight = this.$refs.dynamicComponent.$el.clientHeight;
-      var gridinnerH = Math.ceil(cardHeight / rowHeight);
+
+      var componentHeight = null;
+      if (this.$refs.dynamicComponent.$el) {
+        componentHeight = this.$refs.dynamicComponent.$el.clientHeight;
+      } else {
+        componentHeight = this.$refs.dynamicComponent.clientHeight;
+      }
+      
+      gridItem.innerH = Math.ceil(componentHeight / rowHeight);
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: gridItem.$attrs.uuid,
-        height: gridinnerH
+        height: gridItem.innerH
       });
     }
     // setGridItemWidth() {
+    // if (!this.$parent) return;
     //   var gridItem = this.$parent;
     //   var canvas = this.$refs.canvas;
     //   var context = canvas.getContext("2d");

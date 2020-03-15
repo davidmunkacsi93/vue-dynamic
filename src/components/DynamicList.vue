@@ -72,10 +72,7 @@
 <script>
 import DynamicComponent from "./DynamicComponent.vue";
 export default {
-  extends: DynamicComponent,
-  created() {
-    console.log(this);
-  }
+  extends: DynamicComponent
 };
 </script>
 <style lang="scss"></style>
