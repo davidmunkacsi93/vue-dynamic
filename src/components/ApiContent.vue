@@ -196,22 +196,26 @@ export default {
     },
     createDynamicComponents() {
       var dynamicComponents = [];
-      this.apiModel.dynamicComponents.forEach((dynamicComponent, index) => {
-        var component = {
-          x: (index % 3) * 3,
-          y: 5,
-          w: 3,
-          h: 5,
-          i: index + 1,
-          uuid: uuid(),
-          isDraggable: true,
-          isResizable: true,
-          static: false,
-          initialized: false,
-          ...dynamicComponent
-        };
-        dynamicComponents.push(component);
-      });
+
+      // TODO: Temporarily filter empty objects (grids).
+      this.apiModel.dynamicComponents
+        .filter(dynamicComponent => Object.keys(dynamicComponent).length > 0)
+        .forEach((dynamicComponent, index) => {
+          var component = {
+            x: (index % 3) * 3,
+            y: 5,
+            w: 3,
+            h: 5,
+            i: index + 1,
+            uuid: uuid(),
+            isDraggable: true,
+            isResizable: true,
+            static: false,
+            initialized: false,
+            ...dynamicComponent
+          };
+          dynamicComponents.push(component);
+        });
 
       return dynamicComponents;
     }
