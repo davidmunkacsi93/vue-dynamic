@@ -27,31 +27,16 @@
         :key="item.i"
         :uuid="item.uuid"
       >
-        <dynamic-header
-          v-if="item.type === HEADER"
-          :type="HEADER"
+        <dynamic-component
           :apiVersion="item.apiVersion"
+          :controls="item.controls"
           :description="item.description"
+          :httpMethod="item.httpMethod"
+          :initialized="item.initialized"
+          :path="item.path"
           :title="item.title"
-        ></dynamic-header>
-        <dynamic-form
-          v-else-if="item.type === FORM"
-          :type="FORM"
-          :controls="item.controls"
-          :description="item.description"
-          :httpMethod="item.httpMethod"
-          :initialized="item.initialized"
-          :path="item.path"
-        ></dynamic-form>
-        <dynamic-list
-          v-else-if="item.type === FORM"
-          :type="FORM"
-          :controls="item.controls"
-          :description="item.description"
-          :httpMethod="item.httpMethod"
-          :initialized="item.initialized"
-          :path="item.path"
-        ></dynamic-list>
+          :type="item.type"
+        ></dynamic-component>
       </grid-item>
     </template>
   </grid-layout>
@@ -65,9 +50,7 @@ import {
   SET_CONTENT_HEIGHT
 } from "../types/action-types";
 
-import DynamicForm from "../components/DynamicForm";
-import DynamicHeader from "../components/DynamicHeader";
-import DynamicList from "../components/DynamicList";
+import DynamicComponent from "../components/DynamicComponent";
 import { FORM, HEADER, LIST } from "../types/layout-item-types";
 import EventBus from "../utils/event-bus";
 import {
@@ -76,7 +59,7 @@ import {
 } from "../types/event-types";
 
 export default {
-  components: { DynamicForm, DynamicHeader, DynamicList },
+  components: { DynamicComponent },
 
   data() {
     return {

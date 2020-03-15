@@ -1,53 +1,91 @@
 <template>
   <div>
-    <canvas ref="canvas" width="0" height="0"></canvas>
+    <dynamic-header
+      v-if="type === HEADER"
+      :type="HEADER"
+      :apiVersion="apiVersion"
+      :description="description"
+      :title="title"
+    ></dynamic-header>
+    <dynamic-form
+      v-else-if="type === FORM"
+      :type="FORM"
+      :controls="controls"
+      :description="description"
+      :httpMethod="httpMethod"
+      :initialized="initialized"
+      :path="path"
+    ></dynamic-form>
+    <dynamic-list
+      v-else-if="type === FORM"
+      :type="FORM"
+      :controls="controls"
+      :description="description"
+      :httpMethod="httpMethod"
+      :initialized="initialized"
+      :path="path"
+    ></dynamic-list>
   </div>
 </template>
 
 <script>
 import {
   REMOVE_FORM,
-  SET_API_ITEM_HEIGHT,
-  SET_API_ITEM_WIDTH,
-  SET_API_ITEM_INTIAILIZED
+  SET_API_ITEM_HEIGHT
+  // SET_API_ITEM_WIDTH,
+  // SET_API_ITEM_INTIAILIZED
 } from "../types/action-types";
+import { FORM, HEADER, LIST } from "../types/layout-item-types";
+
+import DynamicForm from "../components/DynamicForm";
+import DynamicHeader from "../components/DynamicHeader";
+import DynamicList from "../components/DynamicList";
 
 export default {
+  components: { DynamicForm, DynamicHeader, DynamicList },
+
   props: {
+    apiVersion: {
+      type: String
+    },
     controls: {
-      type: Array,
-      required: true
+      type: Array
     },
     description: {
-      type: String,
-      required: false
+      type: String
     },
     httpMethod: {
-      type: String,
-      required: true
+      type: String
     },
     initialized: {
-      type: Boolean,
-      required: true
+      type: Boolean
     },
     path: {
-      type: String,
-      required: true
+      type: String
+    },
+    title: {
+      type: String
     },
     type: {
-      type: String,
-      required: true
+      type: String
     }
+  },
+  created() {
+    console.log(this);
   },
   mounted() {
     if (!this.initialized) {
       this.setGridItemHeight();
-      this.setGridItemWidth();
-      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
+      // this.setGridItemWidth();
+      // this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
     }
   },
   data() {
     return {
+      FORM: FORM,
+      HEADER: HEADER,
+      LIST: LIST,
+
       editable: true,
       isDragging: false,
       delayedDragging: false
@@ -61,29 +99,29 @@ export default {
       var gridItem = this.$parent;
       var rowHeight = this.$parent.rowHeight;
       var cardHeight = this.$refs.dynamicForm.$el.clientHeight;
-      gridItem.innerH = Math.ceil(cardHeight / rowHeight);
+      var gridinnerH = Math.ceil(cardHeight / rowHeight);
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: gridItem.$attrs.uuid,
-        height: gridItem.innerH
+        height: gridinnerH
       });
-    },
-    setGridItemWidth() {
-      var gridItem = this.$parent;
-      var canvas = this.$refs.canvas;
-      var context = canvas.getContext("2d");
-      context.font = "bold 24px Roboto";
-
-      var textMetrics = context.measureText(this.$refs.cardTitle.innerText);
-      var colWidth = gridItem.containerWidth / gridItem.cols;
-      var calculatedWidth = Math.ceil(textMetrics.width / colWidth);
-      if (calculatedWidth > gridItem.innerW) {
-        gridItem.innerW = calculatedWidth;
-        this.$store.dispatch(SET_API_ITEM_WIDTH, {
-          uuid: gridItem.$attrs.uuid,
-          width: gridItem.innerW
-        });
-      }
     }
+    // setGridItemWidth() {
+    //   var gridItem = this.$parent;
+    //   var canvas = this.$refs.canvas;
+    //   var context = canvas.getContext("2d");
+    //   context.font = "bold 24px Roboto";
+
+    //   var textMetrics = context.measureText(this.$refs.cardTitle.innerText);
+    //   var colWidth = gridcontainerWidth / gridcols;
+    //   var calculatedWidth = Math.ceil(textMetrics.width / colWidth);
+    //   if (calculatedWidth > gridinnerW) {
+    //     gridinnerW = calculatedWidth;
+    //     this.$store.dispatch(SET_API_ITEM_WIDTH, {
+    //       uuid: grid$attrs.uuid,
+    //       width: gridinnerW
+    //     });
+    //   }
+    // }
   }
 };
 </script>
