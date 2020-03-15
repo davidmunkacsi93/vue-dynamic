@@ -1,15 +1,9 @@
-<template>
-  <div>
-    <slot></slot>
-  </div>
-</template>
-
 <script>
 import {
   REMOVE_FORM,
-  SET_API_ITEM_HEIGHT
+  SET_API_ITEM_HEIGHT,
   // SET_API_ITEM_WIDTH,
-  // SET_API_ITEM_INTIAILIZED
+  SET_API_ITEM_INTIAILIZED
 } from "../types/action-types";
 import { FORM, HEADER, LIST } from "../types/layout-item-types";
 
@@ -41,11 +35,11 @@ export default {
     }
   },
   mounted() {
-    // if (!this.initialized) {
-    //   this.setGridItemHeight();
-    //   // this.setGridItemWidth();
-    //   // this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
-    // }
+    if (!this.initialized) {
+      this.setGridItemHeight();
+      // this.setGridItemWidth();
+      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
+    }
   },
   data() {
     return {
@@ -65,7 +59,7 @@ export default {
     setGridItemHeight() {
       var gridItem = this.$parent;
       var rowHeight = this.$parent.rowHeight;
-      var cardHeight = this.$refs.dynamicForm.$el.clientHeight;
+      var cardHeight = this.$refs.dynamicComponent.$el.clientHeight;
       var gridinnerH = Math.ceil(cardHeight / rowHeight);
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: gridItem.$attrs.uuid,

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="dynamicComponent">
     <div class="md-title">
       <h1>{{ title }} - {{ apiVersion }}</h1>
     </div>

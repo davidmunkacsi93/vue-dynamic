@@ -1,5 +1,5 @@
 <template>
-  <md-card ref="dynamicForm" class="dynamic-form" md-with-hover>
+  <md-card ref="dynamicComponent" class="dynamic-form" md-with-hover>
     <md-card-header>
       <md-card-header-text>
         <div class="md-title" ref="cardTitle">{{ path }}</div>
