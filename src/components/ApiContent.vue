@@ -33,6 +33,7 @@
           :apiVersion="item.apiVersion"
           :description="item.description"
           :title="item.title"
+          :uuid="item.uuid"
         ></dynamic-header>
         <dynamic-form
           v-else-if="item.type === FORM"
@@ -42,6 +43,7 @@
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
           :path="item.path"
+          :uuid="item.uuid"
         ></dynamic-form>
         <dynamic-list
           v-else-if="item.type === FORM"
@@ -51,6 +53,7 @@
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
           :path="item.path"
+          :uuid="item.uuid"
         ></dynamic-list>
       </grid-item>
     </template>

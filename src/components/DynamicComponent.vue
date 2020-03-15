@@ -31,13 +31,17 @@ export default {
     },
     type: {
       type: String
+    },
+    uuid: {
+      required: true,
+      type: String
     }
   },
   mounted() {
     if (!this.initialized) {
       this.setGridItemHeight();
       // this.setGridItemWidth();
-      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.$parent.$attrs.uuid);
+      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
     }
   },
   methods: {
@@ -56,10 +60,10 @@ export default {
       } else {
         componentHeight = this.$refs.dynamicComponent.clientHeight;
       }
-      
+
       gridItem.innerH = Math.ceil(componentHeight / rowHeight);
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
-        uuid: gridItem.$attrs.uuid,
+        uuid: this.uuid,
         height: gridItem.innerH
       });
     }
