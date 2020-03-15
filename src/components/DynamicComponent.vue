@@ -80,7 +80,7 @@ export default {
       var stringPixelWidth = require("string-pixel-width");
       var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
       var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
-      
+
       var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
       if (calculatedWidth > gridItem.innerW) {
         gridItem.innerW = calculatedWidth;
