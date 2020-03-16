@@ -156,7 +156,6 @@ export default {
       this.mainLayout = this.$store.state.mainLayout.mainLayouts[
         this.$store.state.responsive.screenClass
       ];
-      console.log(this.mainLayout);
     }
   }
 };

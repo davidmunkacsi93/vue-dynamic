@@ -36,8 +36,6 @@ export default {
     this.setGridItemHeight();
     this.setGridItemWidth();
     this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
-    this.compact();
-    this.$parent.layoutUpdate();
   },
   methods: {
     onCompact() {
@@ -47,17 +45,14 @@ export default {
       this.updateWidth(window.innerWidth);
     },
     setGridItemHeight() {
-      console.log(this.$children[0].$el.offsetHeight);
-      console.log(this.$children[0].$el.clientHeight);
-
-      this.innerH = Math.floor(
-        this.$children[0].$el.offsetHeight / this.rowHeight
-      );
+      this.innerH = Math.floor(this.$el.clientHeight / this.rowHeight);
 
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: this.uuid,
         height: this.innerH
       });
+
+      this.compact();
     },
     setGridItemWidth() {
       if (

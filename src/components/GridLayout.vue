@@ -12,6 +12,9 @@ export default {
   beforeDestroy: function() {
     EventBus.$off(LAYOUT_UPDATED, this.handleLayoutUpdated);
   },
+  mounted() {
+    this.layoutUpdate();
+  },
   methods: {
     handleLayoutUpdated() {
       this.layoutUpdate();

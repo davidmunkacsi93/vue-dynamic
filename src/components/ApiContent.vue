@@ -19,7 +19,7 @@
         :w="item.w"
         :h="item.h"
         :i="item.i"
-        :margin="[15, 15]"
+        :margin="[3, 3]"
         :rowHeight="30"
         :isDraggable="item.isDraggable"
         :isResizable="item.isResizable"
