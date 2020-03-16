@@ -114,7 +114,7 @@ export default {
 
   mounted() {
     this.setDynamicContentHeight();
-    this.rowHeight = 30;
+    this.rowHeight = 1;
   },
 
   beforeUpdate() {
@@ -173,8 +173,10 @@ export default {
 
     setDynamicContentHeight() {
       var dynamicContent = this.$parent.$parent.$parent;
+      var rowHeight = this.$parent.$parent.$parent.$parent.rowHeight;
+      console.log(rowHeight);
       var apiLayoutHeight = this.$refs.apiLayout.$el.clientHeight;
-      dynamicContent.innerH = Math.ceil(apiLayoutHeight / this.rowHeight);
+      dynamicContent.innerH = Math.ceil(apiLayoutHeight / rowHeight);
 
       this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
       EventBus.$emit(DYNAMIC_CONTENT_HEIGHT_UPDATED, dynamicContent.innerH);

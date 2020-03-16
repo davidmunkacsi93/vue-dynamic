@@ -29,7 +29,8 @@ export default {
     }
   },
   mounted() {
-    console.log("Grid item mounted");
+    console.log(this.innerH * this.rowHeight);
+    console.log(this.$el.clientHeight);
   }
 };
 </script>
