@@ -24,49 +24,7 @@
         <md-tab id="tab-search" md-label="Search"></md-tab>
         <md-tab id="tab-results" md-label="Results"></md-tab>
       </md-tabs>
-      <md-list class="control-list">
-        <md-list-item v-for="control in controls" :key="control.order">
-          <md-datepicker
-            v-model="control.value"
-            v-if="control.element === DATE_PICKER"
-          >
-            <label>{{ control.label }}</label>
-          </md-datepicker>
-          <md-field v-if="control.element === DROP_DOWN">
-            <label>{{ control.label }}</label>
-            <md-select v-model="control.value">
-              <md-option
-                v-for="(value, name, index) in control.values"
-                :value="value"
-                :key="index"
-              >
-                {{ value }}
-              </md-option>
-            </md-select>
-          </md-field>
-          <md-switch
-            v-model="control.value"
-            v-if="control.element === SWITCH"
-            >{{ control.label }}</md-switch
-          >
-          <md-field v-if="control.element === FLOAT_INPUT">
-            <label>{{ control.label }}</label>
-            <md-input
-              v-model="control.value"
-              type="number"
-              step="0.01"
-            ></md-input>
-          </md-field>
-          <md-field v-if="control.element === NUMBER_INPUT">
-            <label>{{ control.label }}</label>
-            <md-input v-model="control.value" type="number"></md-input>
-          </md-field>
-          <md-field v-if="control.element === TEXT_INPUT">
-            <label>{{ control.label }}</label>
-            <md-input v-model="control.value" type="text"></md-input>
-          </md-field>
-        </md-list-item>
-      </md-list>
+      <dynamic-form-controls :controls="controls"></dynamic-form-controls>
     </md-card-content>
     <md-card-actions>
       <md-button>{{ httpMethod }}</md-button>
@@ -75,6 +33,8 @@
 </template>
 <script>
 import DynamicComponent from "./DynamicComponent.vue";
+import DynamicFormControls from "./DynamicFormControls";
+
 import {
   DROP_DOWN,
   FLOAT_INPUT,
@@ -84,8 +44,16 @@ import {
   SWITCH,
   DATE_PICKER
 } from "../types/layout-item-types";
+
 export default {
   extends: DynamicComponent,
+  components: { DynamicFormControls },
+  props: {
+    controls: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
       DATE_PICKER: DATE_PICKER,
