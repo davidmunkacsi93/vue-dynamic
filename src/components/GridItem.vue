@@ -2,6 +2,7 @@
 import { GridItem } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
 import { COMPACT, UPDATE_WIDTH } from "../types/event-types";
+import { SET_API_ITEM_HEIGHT } from "../types/action-types";
 
 export default {
   name: "GridItem",
@@ -29,8 +30,11 @@ export default {
     }
   },
   mounted() {
-    console.log(this.innerH * this.rowHeight);
-    console.log(this.$el.clientHeight);
+    this.innerH = Math.ceil(this.$el.clientHeight / this.rowHeight);
+    this.$store.dispatch(SET_API_ITEM_HEIGHT, {
+      uuid: this.uuid,
+      height: this.innerH
+    });
   }
 };
 </script>

@@ -5,6 +5,8 @@ import {
   SET_API_ITEM_WIDTH,
   SET_API_ITEM_INTIAILIZED
 } from "../types/action-types";
+import EventBus from "../utils/event-bus";
+import { DYNAMIC_COMPONENT_MOUNTED } from "../types/event-types";
 
 export default {
   props: {
@@ -38,7 +40,8 @@ export default {
     }
   },
   mounted() {
-    console.log("Dynamic component mounted");
+    EventBus.$emit(DYNAMIC_COMPONENT_MOUNTED);
+
     if (!this.initialized) {
       // this.setGridItemHeight();
       this.setGridItemWidth();

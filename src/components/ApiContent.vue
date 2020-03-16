@@ -3,7 +3,7 @@
     ref="apiLayout"
     :layout="apiLayout"
     :col-num="12"
-    :rowHeight="rowHeight"
+    :rowHeight="30"
     :margin="[3, 3]"
     :is-draggable="true"
     :is-resizable="true"
@@ -20,7 +20,7 @@
         :h="item.h"
         :i="item.i"
         :margin="[15, 15]"
-        :rowHeight="rowHeight"
+        :rowHeight="30"
         :isDraggable="item.isDraggable"
         :isResizable="item.isResizable"
         :static="item.static"
@@ -114,7 +114,6 @@ export default {
 
   mounted() {
     this.setDynamicContentHeight();
-    this.rowHeight = 1;
   },
 
   beforeUpdate() {
@@ -174,7 +173,6 @@ export default {
     setDynamicContentHeight() {
       var dynamicContent = this.$parent.$parent.$parent;
       var rowHeight = this.$parent.$parent.$parent.$parent.rowHeight;
-      console.log(rowHeight);
       var apiLayoutHeight = this.$refs.apiLayout.$el.clientHeight;
       dynamicContent.innerH = Math.ceil(apiLayoutHeight / rowHeight);
 

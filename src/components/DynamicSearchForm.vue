@@ -65,9 +65,6 @@ export default {
       TEXT_INPUT: TEXT_INPUT,
       SWITCH: SWITCH
     };
-  },
-  mounted() {
-    console.log(this.controls);
   }
 };
 </script>
