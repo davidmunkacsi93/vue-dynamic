@@ -28,6 +28,7 @@
               :i="item.i"
               :isDraggable="item.isDraggable"
               :isResizable="item.isResizable"
+              :initialized="item.initialized"
               :static="item.static"
               :key="item.id"
               :uuid="item.i"
@@ -155,6 +156,7 @@ export default {
       this.mainLayout = this.$store.state.mainLayout.mainLayouts[
         this.$store.state.responsive.screenClass
       ];
+      console.log(this.mainLayout);
     }
   }
 };

@@ -19,9 +19,6 @@ export default {
     getLayouts() {
       return this.layouts;
     }
-  },
-  mounted() {
-    console.log(this.rowHeight);
   }
 };
 </script>

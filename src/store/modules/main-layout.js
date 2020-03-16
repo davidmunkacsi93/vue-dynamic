@@ -24,6 +24,7 @@ function getLayoutItemsForLg() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: MENU
   };
   const content = {
@@ -35,6 +36,7 @@ function getLayoutItemsForLg() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: CONTENT
   };
   const navigationBar = {
@@ -46,6 +48,7 @@ function getLayoutItemsForLg() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: NAVIGATION_BAR
   };
   layoutItems.push(menu);
@@ -66,6 +69,7 @@ function getLayoutItemsForMd() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: MENU
   };
   const content = {
@@ -77,6 +81,7 @@ function getLayoutItemsForMd() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: CONTENT
   };
   const navigationBar = {
@@ -88,6 +93,7 @@ function getLayoutItemsForMd() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: NAVIGATION_BAR
   };
   layoutItems.push(menu);
@@ -108,6 +114,7 @@ function getLayoutItemsForSm() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: MENU
   };
   const navigationBar = {
@@ -119,6 +126,7 @@ function getLayoutItemsForSm() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: NAVIGATION_BAR
   };
   const content = {
@@ -130,6 +138,7 @@ function getLayoutItemsForSm() {
     isDraggable: true,
     isResizable: true,
     static: true,
+    initialized: true,
     type: CONTENT
   };
   layoutItems.push(menu);

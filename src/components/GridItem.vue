@@ -16,6 +16,10 @@ export default {
     EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
   },
   props: {
+    initialized: {
+      required: true,
+      type: Boolean
+    },
     uuid: {
       required: true,
       type: String
@@ -30,7 +34,11 @@ export default {
     }
   },
   mounted() {
+    if (this.initialized) return;
+
+    console.log(this.initialized);
     this.innerH = Math.ceil(this.$el.clientHeight / this.rowHeight);
+
     this.$store.dispatch(SET_API_ITEM_HEIGHT, {
       uuid: this.uuid,
       height: this.innerH
@@ -43,7 +51,6 @@ export default {
 .vue-grid-item {
   resize: both;
   background: transparent;
-  height: auto !important;
 }
 
 .vue-grid-item > .vue-resizable-handle {

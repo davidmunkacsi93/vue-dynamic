@@ -1,12 +1,10 @@
 <script>
 import {
   REMOVE_FORM,
-  SET_API_ITEM_HEIGHT,
   SET_API_ITEM_WIDTH,
   SET_API_ITEM_INTIAILIZED
 } from "../types/action-types";
 import EventBus from "../utils/event-bus";
-import { DYNAMIC_COMPONENT_MOUNTED } from "../types/event-types";
 
 export default {
   props: {
@@ -40,10 +38,7 @@ export default {
     }
   },
   mounted() {
-    EventBus.$emit(DYNAMIC_COMPONENT_MOUNTED);
-
     if (!this.initialized) {
-      // this.setGridItemHeight();
       this.setGridItemWidth();
       this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
     }
@@ -51,26 +46,6 @@ export default {
   methods: {
     removeGridItem() {
       this.$store.dispatch(REMOVE_FORM, this.id);
-    },
-    setGridItemHeight() {
-      if (!this.$parent) return;
-
-      var gridItem = this.$parent;
-      var rowHeight = this.$parent.rowHeight;
-
-      if (!this.$refs.dynamicComponent) return;
-      debugger;
-      var dynamicComponent =
-        this.$refs.dynamicComponent.$el || this.$refs.dynamicComponent;
-      var componentHeight = dynamicComponent.clientHeight;
-
-      if (!componentHeight) return;
-
-      gridItem.innerH = Math.ceil(componentHeight / rowHeight);
-      this.$store.dispatch(SET_API_ITEM_HEIGHT, {
-        uuid: this.uuid,
-        height: gridItem.innerH
-      });
     },
 
     setGridItemWidth() {
