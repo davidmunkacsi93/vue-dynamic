@@ -1,5 +1,5 @@
 <template>
-  <md-card ref="dynamicComponent" md-with-hover>
+  <md-card ref="dynamicComponent" class="dynamic-component" md-with-hover>
     <md-card-header>
       <md-card-header-text>
         <div class="md-title" ref="title">{{ path }}</div>
@@ -57,7 +57,7 @@ export default {
 };
 </script>
 <style>
-.dynamic-form {
+.dynamic-component {
   height: 100%;
   margin: 0px !important;
 }
