@@ -27,6 +27,9 @@ export default {
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
     }
+  },
+  mounted() {
+    console.log("Grid item mounted");
   }
 };
 </script>
@@ -35,6 +38,7 @@ export default {
 .vue-grid-item {
   resize: both;
   background: transparent;
+  height: auto !important;
 }
 
 .vue-grid-item > .vue-resizable-handle {

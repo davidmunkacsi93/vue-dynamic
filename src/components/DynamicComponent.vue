@@ -38,8 +38,9 @@ export default {
     }
   },
   mounted() {
+    console.log("Dynamic component mounted");
     if (!this.initialized) {
-      this.setGridItemHeight();
+      // this.setGridItemHeight();
       this.setGridItemWidth();
       this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
     }
@@ -55,7 +56,7 @@ export default {
       var rowHeight = this.$parent.rowHeight;
 
       if (!this.$refs.dynamicComponent) return;
-
+      debugger;
       var dynamicComponent =
         this.$refs.dynamicComponent.$el || this.$refs.dynamicComponent;
       var componentHeight = dynamicComponent.clientHeight;

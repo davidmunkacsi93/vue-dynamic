@@ -69,6 +69,8 @@ import {
   SET_CONTENT_HEIGHT
 } from "../types/action-types";
 
+import GridItem from "../components/GridItem";
+import GridLayout from "../components/GridLayout";
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
@@ -80,7 +82,13 @@ import {
 } from "../types/event-types";
 
 export default {
-  components: { DynamicForm, DynamicHeader, DynamicSearchForm },
+  components: {
+    GridItem,
+    GridLayout,
+    DynamicForm,
+    DynamicHeader,
+    DynamicSearchForm
+  },
 
   data() {
     return {

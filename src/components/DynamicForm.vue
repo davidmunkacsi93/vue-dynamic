@@ -58,7 +58,8 @@ export default {
 </script>
 <style>
 .dynamic-component {
-  height: 100%;
+  height: auto;
+  width: auto;
   margin: 0px !important;
 }
 .control-list {
