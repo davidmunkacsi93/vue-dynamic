@@ -2,7 +2,12 @@
 import { GridItem } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
 import { COMPACT, UPDATE_WIDTH } from "../types/event-types";
-import { SET_API_ITEM_HEIGHT } from "../types/action-types";
+import {
+  SET_API_ITEM_HEIGHT,
+  SET_API_ITEM_WIDTH,
+  SET_API_ITEM_INTIAILIZED
+} from "../types/action-types";
+import stringPixelWidth from "string-pixel-width";
 
 export default {
   name: "GridItem",
@@ -25,24 +30,44 @@ export default {
       type: String
     }
   },
+  mounted() {
+    // if (this.initialized) return;
+
+    this.setGridItemHeight();
+    this.setGridItemWidth();
+    this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
+  },
   methods: {
     onCompact() {
       this.compact();
     },
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
+    },
+    setGridItemHeight() {
+      this.innerH = Math.floor(
+        this.$children[0].$el.offsetHeight / this.rowHeight
+      );
+
+      console.log(this.innerH);
+      this.$store.dispatch(SET_API_ITEM_HEIGHT, {
+        uuid: this.uuid,
+        height: this.innerH
+      });
+    },
+    setGridItemWidth() {
+      // var colWidth = this.containerWidth / this.cols;
+      // var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
+      // var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
+      // var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
+      // if (calculatedWidth > this.innerW) {
+      //   this.innerW = calculatedWidth;
+      //   this.$store.dispatch(SET_API_ITEM_WIDTH, {
+      //     uuid: this.uuid,
+      //     width: this.innerW
+      //   });
+      // }
     }
-  },
-  mounted() {
-    if (this.initialized) return;
-
-    console.log(this.initialized);
-    this.innerH = Math.ceil(this.$el.clientHeight / this.rowHeight);
-
-    this.$store.dispatch(SET_API_ITEM_HEIGHT, {
-      uuid: this.uuid,
-      height: this.innerH
-    });
   }
 };
 </script>

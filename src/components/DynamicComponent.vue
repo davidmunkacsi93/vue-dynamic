@@ -1,10 +1,5 @@
 <script>
-import {
-  REMOVE_FORM,
-  SET_API_ITEM_WIDTH,
-  SET_API_ITEM_INTIAILIZED
-} from "../types/action-types";
-import EventBus from "../utils/event-bus";
+import { REMOVE_FORM } from "../types/action-types";
 
 export default {
   props: {
@@ -37,36 +32,9 @@ export default {
       type: String
     }
   },
-  mounted() {
-    if (!this.initialized) {
-      this.setGridItemWidth();
-      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
-    }
-  },
   methods: {
     removeGridItem() {
       this.$store.dispatch(REMOVE_FORM, this.id);
-    },
-
-    setGridItemWidth() {
-      if (!this.$parent) return;
-
-      var gridItem = this.$parent;
-      var colWidth = gridItem.containerWidth / gridItem.cols;
-
-      var title = this.$refs.title || this.$refs.title.$el;
-      var stringPixelWidth = require("string-pixel-width");
-      var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
-      var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
-
-      var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
-      if (calculatedWidth > gridItem.innerW) {
-        gridItem.innerW = calculatedWidth;
-        this.$store.dispatch(SET_API_ITEM_WIDTH, {
-          uuid: this.uuid,
-          width: gridItem.innerW
-        });
-      }
     }
   }
 };

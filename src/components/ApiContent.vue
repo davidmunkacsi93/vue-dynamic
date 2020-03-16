@@ -23,6 +23,7 @@
         :rowHeight="30"
         :isDraggable="item.isDraggable"
         :isResizable="item.isResizable"
+        :initialized="item.initialized"
         :static="item.static"
         :key="item.i"
         :uuid="item.uuid"
