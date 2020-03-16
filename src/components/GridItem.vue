@@ -56,17 +56,21 @@ export default {
       });
     },
     setGridItemWidth() {
-      // var colWidth = this.containerWidth / this.cols;
-      // var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
-      // var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
-      // var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
-      // if (calculatedWidth > this.innerW) {
-      //   this.innerW = calculatedWidth;
-      //   this.$store.dispatch(SET_API_ITEM_WIDTH, {
-      //     uuid: this.uuid,
-      //     width: this.innerW
-      //   });
-      // }
+      if (!this.$children[0]) return;
+
+      var title = this.$children[0].$refs.title;
+      var colWidth = this.containerWidth / this.cols;
+      var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
+      var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
+
+      var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
+      if (calculatedWidth > this.innerW) {
+        this.innerW = calculatedWidth;
+        this.$store.dispatch(SET_API_ITEM_WIDTH, {
+          uuid: this.uuid,
+          width: this.innerW
+        });
+      }
     }
   }
 };
