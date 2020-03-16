@@ -68,8 +68,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.md-tabs {
-  display: block !important;
-}
-</style>

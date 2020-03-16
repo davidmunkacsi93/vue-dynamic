@@ -33,9 +33,11 @@ export default {
   mounted() {
     if (this.initialized) return;
 
-    this.setGridItemHeight();
-    this.setGridItemWidth();
-    this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
+    setTimeout(() => {
+      this.setGridItemWidth();
+      this.setGridItemHeight();
+      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
+    }, 200);
   },
   methods: {
     onCompact() {
@@ -45,16 +47,17 @@ export default {
       this.updateWidth(window.innerWidth);
     },
     setGridItemHeight() {
-      this.innerH = Math.floor(this.$el.clientHeight / this.rowHeight);
+      this.innerH = Math.floor(
+        this.$children[0].$el.offsetHeight / this.rowHeight
+      );
 
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: this.uuid,
         height: this.innerH
       });
-
-      this.compact();
     },
     setGridItemWidth() {
+      console.log(this.$children[0].$refs);
       if (
         !this.$children[0] ||
         !this.$children[0].$refs ||
@@ -68,6 +71,7 @@ export default {
       var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
 
       var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
+      console.log(calculatedWidth);
       if (calculatedWidth > this.innerW) {
         this.innerW = calculatedWidth;
         this.$store.dispatch(SET_API_ITEM_WIDTH, {
