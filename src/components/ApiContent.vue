@@ -46,16 +46,16 @@
           :path="item.path"
           :uuid="item.uuid"
         ></dynamic-form>
-        <dynamic-list
+        <dynamic-search-form
           v-else-if="item.type === LIST"
-          :type="FORM"
+          :type="LIST"
           :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
           :path="item.path"
           :uuid="item.uuid"
-        ></dynamic-list>
+        ></dynamic-search-form>
       </grid-item>
     </template>
   </grid-layout>
@@ -71,7 +71,7 @@ import {
 
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
-import DynamicList from "../components/DynamicList";
+import DynamicSearchForm from "../components/DynamicSearchForm";
 import { FORM, HEADER, LIST } from "../types/layout-item-types";
 import EventBus from "../utils/event-bus";
 import {
@@ -80,7 +80,7 @@ import {
 } from "../types/event-types";
 
 export default {
-  components: { DynamicForm, DynamicHeader, DynamicList },
+  components: { DynamicForm, DynamicHeader, DynamicSearchForm },
 
   data() {
     return {

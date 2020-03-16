@@ -21,10 +21,11 @@
 
     <md-card-content>
       <md-tabs>
-        <md-tab id="tab-search" md-label="Search"></md-tab>
+        <md-tab id="tab-search" md-label="Search">
+          <dynamic-form-controls :controls="controls"></dynamic-form-controls>
+        </md-tab>
         <md-tab id="tab-results" md-label="Results"></md-tab>
       </md-tabs>
-      <dynamic-form-controls :controls="controls"></dynamic-form-controls>
     </md-card-content>
     <md-card-actions>
       <md-button>{{ httpMethod }}</md-button>
@@ -64,6 +65,9 @@ export default {
       TEXT_INPUT: TEXT_INPUT,
       SWITCH: SWITCH
     };
+  },
+  mounted() {
+    console.log(this.controls);
   }
 };
 </script>
