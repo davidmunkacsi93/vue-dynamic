@@ -31,11 +31,13 @@ export default {
     }
   },
   mounted() {
-    // if (this.initialized) return;
+    if (this.initialized) return;
 
     this.setGridItemHeight();
     this.setGridItemWidth();
     this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
+    this.compact();
+    this.$parent.layoutUpdate();
   },
   methods: {
     onCompact() {
@@ -45,18 +47,25 @@ export default {
       this.updateWidth(window.innerWidth);
     },
     setGridItemHeight() {
+      console.log(this.$children[0].$el.offsetHeight);
+      console.log(this.$children[0].$el.clientHeight);
+
       this.innerH = Math.floor(
         this.$children[0].$el.offsetHeight / this.rowHeight
       );
 
-      console.log(this.innerH);
       this.$store.dispatch(SET_API_ITEM_HEIGHT, {
         uuid: this.uuid,
         height: this.innerH
       });
     },
     setGridItemWidth() {
-      if (!this.$children[0]) return;
+      if (
+        !this.$children[0] ||
+        !this.$children[0].$refs ||
+        !this.$children[0].$refs.title
+      )
+        return;
 
       var title = this.$children[0].$refs.title;
       var colWidth = this.containerWidth / this.cols;
