@@ -20,7 +20,7 @@
     "string-pixel-width": "^1.10.0",
     "swagger-parser": "^8.0.4",
     "uuid": "^7.0.1",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-grid-layout": "^2.3.7",
     "vue-material": "^1.0.0-beta-11",
     "vue-router": "^3.1.5",
@@ -39,6 +39,6 @@
     "node-sass": "^4.9.0",
     "prettier": "^1.18.2",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
   }
 }
