@@ -28,7 +28,7 @@
       <dynamic-form-controls :controls="controls"></dynamic-form-controls>
     </md-card-content>
     <md-card-actions>
-      <md-button>{{ httpMethod }}</md-button>
+      <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
 </template>

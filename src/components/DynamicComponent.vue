@@ -33,6 +33,9 @@ export default {
     }
   },
   methods: {
+    callApiMethod() {
+      console.log(this.httpMethod);
+    },
     removeGridItem() {
       this.$store.dispatch(REMOVE_FORM, this.id);
     }

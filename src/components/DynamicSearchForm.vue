@@ -28,7 +28,7 @@
       </md-tabs>
     </md-card-content>
     <md-card-actions>
-      <md-button>{{ httpMethod }}</md-button>
+      <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
 </template>
