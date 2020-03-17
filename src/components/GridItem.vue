@@ -61,7 +61,6 @@ export default {
       }
     },
     setGridItemWidth() {
-      console.log(this.$children[0].$refs);
       if (
         !this.$children[0] ||
         !this.$children[0].$refs ||
@@ -71,11 +70,11 @@ export default {
 
       var title = this.$children[0].$refs.title;
       var colWidth = this.containerWidth / this.cols;
+      
       var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
       var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
+      var calculatedWidth = Math.ceil(textWidth / colWidth) + 2;
 
-      var calculatedWidth = Math.ceil(textWidth / colWidth) + 1;
-      console.log(calculatedWidth);
       if (calculatedWidth > this.innerW) {
         this.innerW = calculatedWidth;
         this.$store.dispatch(SET_API_ITEM_WIDTH, {
