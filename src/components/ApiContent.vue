@@ -220,7 +220,7 @@ export default {
         .forEach((dynamicComponent, index) => {
           var component = {
             x: (index % 3) * 3,
-            y: 5,
+            y: (index + 2) * 5,
             w: 3,
             h: 5,
             i: index + 1,

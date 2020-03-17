@@ -1,7 +1,7 @@
 <script>
 import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
-import { LAYOUT_UPDATED } from "../types/event-types";
+import { LAYOUT_UPDATED, UPDATE_WIDTH } from "../types/event-types";
 import { SET_API_LAYOUT_ITEMS } from "../types/action-types";
 
 export default {
@@ -23,7 +23,6 @@ export default {
     if (this.compactRequired) {
       setTimeout(() => {
         var compactedLayout = this.compact(this.layout);
-        console.log(compactedLayout);
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, compactedLayout);
       }, 1000);
     }
