@@ -1,7 +1,7 @@
 <script>
 import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
-import { LAYOUT_UPDATED, UPDATE_WIDTH } from "../types/event-types";
+import { LAYOUT_UPDATED } from "../types/event-types";
 import { SET_API_LAYOUT_ITEMS } from "../types/action-types";
 
 export default {
@@ -49,10 +49,6 @@ export default {
     },
 
     compactItem(compactedItems, l) {
-      while (l.y > 0 && !this.getFirstCollision(compactedItems, l)) {
-        l.y--;
-      }
-
       let collides;
       while ((collides = this.getFirstCollision(compactedItems, l))) {
         l.y = collides.y + collides.h;
