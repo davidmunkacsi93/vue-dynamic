@@ -3,6 +3,7 @@ import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
 import { LAYOUT_UPDATED } from "../types/event-types";
 import BinPack from "bin-pack";
+import { SET_API_LAYOUT_ITEMS } from '../types/action-types';
 
 export default {
   name: "GridLayout",
@@ -21,7 +22,9 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.binPackLayoutItems();
+      if (this.packingRequired) {
+        this.binPackLayoutItems();
+      }
     }, 300);
   },
   methods: {
@@ -30,7 +33,6 @@ export default {
     },
     binPackLayoutItems() {
       if (!this.layout) return;
-      console.log(this.layout);
       var bins = this.layout.map(layoutItem => {
         return {
           height: layoutItem.h,
@@ -41,13 +43,13 @@ export default {
       var binPackedLayout = BinPack(bins);
 
       if (!binPackedLayout) return;
-
       binPackedLayout.items.forEach(bin => {
         var uuid = bin.item.uuid;
         var layoutItem = this.layout.find(item => item.uuid == uuid);
-        // layoutItem.x = bin.x;
-        // layoutItem.y = bin.y;
+        layoutItem.x = bin.x % this.colNum;
+        layoutItem.y = bin.y;
       });
+      this.$store.dispatch(SET_API_LAYOUT_ITEMS, this.layout);
     }
   }
 };

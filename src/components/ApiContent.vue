@@ -8,6 +8,7 @@
     :is-draggable="true"
     :is-resizable="true"
     :is-mirrored="false"
+    :packing-required="true"
     :responsive="true"
     :vertical-compact="true"
     :use-css-transforms="true"
