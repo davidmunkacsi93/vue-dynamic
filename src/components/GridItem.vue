@@ -47,7 +47,7 @@ export default {
       this.updateWidth(window.innerWidth);
     },
     setGridItemHeight() {
-      var calculatedHeight = Math.floor(
+      var calculatedHeight = Math.ceil(
         this.$children[0].$el.offsetHeight / this.rowHeight
       );
 
