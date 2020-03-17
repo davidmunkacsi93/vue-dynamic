@@ -13,14 +13,11 @@ export default {
     EventBus.$off(LAYOUT_UPDATED, this.handleLayoutUpdated);
   },
   mounted() {
-    this.layoutUpdate();
+    setTimeout(() => {}, 300);
   },
   methods: {
     handleLayoutUpdated() {
       this.layoutUpdate();
-    },
-    getLayouts() {
-      return this.layouts;
     }
   }
 };

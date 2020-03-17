@@ -70,7 +70,6 @@ export default {
 
       var title = this.$children[0].$refs.title;
       var colWidth = this.containerWidth / this.cols;
-      
       var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
       var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
       var calculatedWidth = Math.ceil(textWidth / colWidth) + 2;
