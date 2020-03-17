@@ -33,14 +33,14 @@ export default {
       this.layoutUpdate();
     },
     compact(layout) {
-      const compareWith = layout;
+      const compactedItems = [];
       const sorted = this.sortLayoutItemsByRowCol(layout);
       const out = Array(layout.length);
 
       for (let i = 0, len = sorted.length; i < len; i++) {
         let l = sorted[i];
-        l = this.compactItem(compareWith, l);
-        compareWith.push(l);
+        let compacted = this.compactItem(compactedItems, l);
+        compactedItems.push(compacted);
         out[layout.indexOf(l)] = l;
 
         l.moved = false;
@@ -49,9 +49,9 @@ export default {
       return out;
     },
 
-    compactItem(compareWith, l) {
+    compactItem(compactedItems, l) {
       let collides;
-      while ((collides = this.getFirstCollision(compareWith, l))) {
+      while ((collides = this.getFirstCollision(compactedItems, l))) {
         l.y = collides.y + collides.h;
       }
       return l;
