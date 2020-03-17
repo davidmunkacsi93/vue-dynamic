@@ -2,6 +2,7 @@
   <grid-layout
     ref="apiLayout"
     :layout="apiLayout"
+    :compactRequired="true"
     :col-num="12"
     :rowHeight="30"
     :margin="[3, 3]"
