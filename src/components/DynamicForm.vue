@@ -1,5 +1,10 @@
 <template>
-  <md-card ref="dynamicComponent" class="dynamic-component" md-with-hover>
+  <md-card
+    ref="dynamicComponent"
+    class="dynamic-component"
+    :class="{ 'component-height': initialized }"
+    md-with-hover
+  >
     <md-card-header>
       <md-card-header-text>
         <div class="md-title" ref="title">{{ path }}</div>
@@ -61,6 +66,9 @@ export default {
   height: auto;
   width: auto;
   margin: 0px !important;
+}
+.component-height {
+  height: 100%;
 }
 .control-list {
   padding: 0;
