@@ -47,14 +47,18 @@ export default {
       this.updateWidth(window.innerWidth);
     },
     setGridItemHeight() {
-      this.innerH = Math.floor(
+      var calculatedHeight = Math.floor(
         this.$children[0].$el.offsetHeight / this.rowHeight
       );
 
-      this.$store.dispatch(SET_API_ITEM_HEIGHT, {
-        uuid: this.uuid,
-        height: this.innerH
-      });
+      if (calculatedHeight > this.innerH) {
+        this.innerH = calculatedHeight;
+
+        this.$store.dispatch(SET_API_ITEM_HEIGHT, {
+          uuid: this.uuid,
+          height: this.innerH
+        });
+      }
     },
     setGridItemWidth() {
       console.log(this.$children[0].$refs);
