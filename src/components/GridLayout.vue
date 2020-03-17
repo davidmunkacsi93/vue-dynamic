@@ -50,6 +50,10 @@ export default {
     },
 
     compactItem(compactedItems, l) {
+      while (l.y > 0 && !this.getFirstCollision(compactedItems, l)) {
+        l.y--;
+      }
+
       let collides;
       while ((collides = this.getFirstCollision(compactedItems, l))) {
         l.y = collides.y + collides.h;
@@ -61,10 +65,6 @@ export default {
       for (let i = 0, len = layout.length; i < len; i++) {
         if (this.collides(layout[i], layoutItem)) return layout[i];
       }
-    },
-
-    getAllCollisions(layout, layoutItem) {
-      return layout.filter(l => this.collides(l, layoutItem));
     },
 
     collides(l1, l2) {
