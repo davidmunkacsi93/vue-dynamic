@@ -25,7 +25,7 @@ export default {
         var compactedLayout = this.compact(this.layout);
         console.log(compactedLayout);
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, compactedLayout);
-      }, 300);
+      }, 1000);
     }
   },
   methods: {
@@ -33,18 +33,14 @@ export default {
       this.layoutUpdate();
     },
     compact(layout) {
-      const compareWith = this.getStatics(layout);
+      const compareWith = layout;
       const sorted = this.sortLayoutItemsByRowCol(layout);
       const out = Array(layout.length);
 
       for (let i = 0, len = sorted.length; i < len; i++) {
         let l = sorted[i];
-
-        if (!l.static) {
-          l = this.compactItem(compareWith, l);
-          compareWith.push(l);
-        }
-
+        l = this.compactItem(compareWith, l);
+        compareWith.push(l);
         out[layout.indexOf(l)] = l;
 
         l.moved = false;
@@ -52,6 +48,7 @@ export default {
 
       return out;
     },
+
     compactItem(compareWith, l) {
       let collides;
       while ((collides = this.getFirstCollision(compareWith, l))) {
@@ -68,10 +65,6 @@ export default {
 
     getAllCollisions(layout, layoutItem) {
       return layout.filter(l => this.collides(l, layoutItem));
-    },
-
-    getStatics(layout) {
-      return layout.filter(l => l.static);
     },
 
     collides(l1, l2) {
