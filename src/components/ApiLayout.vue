@@ -34,6 +34,7 @@ export default {
 
       var compactedLayout = this.compact(this.layout);
       var correctedLayout = this.correctBounds(compactedLayout);
+      console.log(correctedLayout);
       this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
       this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
       this.$store.dispatch(SET_API_LAYOUT_COMPACTED);
@@ -89,7 +90,6 @@ export default {
       const corrected = [];
       for (let i = 0, len = layout.length; i < len; i++) {
         const l = layout[i];
-        //  right
         if (l.x + l.w > this.cols) l.x = this.cols - l.w;
         if (l.x < 0) {
           l.x = 0;

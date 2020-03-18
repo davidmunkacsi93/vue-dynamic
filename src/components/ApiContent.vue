@@ -172,6 +172,7 @@ export default {
       var currentApiId = this.$store.state.apiLayouts.currentApiId;
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
+      console.log(this.apiLayout);
       this.setDynamicContentHeight();
     },
 
