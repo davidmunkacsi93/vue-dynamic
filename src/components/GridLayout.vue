@@ -1,7 +1,7 @@
 <script>
 import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
-import { LAYOUT_UPDATED } from "../types/event-types";
+import { LAYOUT_UPDATED, SCREEN_CLASS_CHANGED } from "../types/event-types";
 import {
   SET_API_LAYOUT_ITEMS,
   SET_API_LAYOUTS,
@@ -19,24 +19,32 @@ export default {
   },
   created: function() {
     EventBus.$on(LAYOUT_UPDATED, this.onLayoutUpdated);
+    EventBus.$on(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
   },
   beforeDestroy: function() {
     EventBus.$off(LAYOUT_UPDATED, this.onLayoutUpdated);
+    EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
   },
   mounted() {
     if (!this.compacted) {
       setTimeout(() => {
-        var compactedLayout = this.compact(this.layout);
-        var correctedLayout = this.correctBounds(compactedLayout);
-        this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
-        this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
-        this.$store.dispatch(SET_API_LAYOUT_COMPACTED);
+        this.compactLayout();
       }, 1000);
     }
   },
   methods: {
     onLayoutUpdated() {
       this.layoutUpdate();
+    },
+    onScreenClassChanged() {
+      this.compactLayout();
+    },
+    compactLayout() {
+      var compactedLayout = this.compact(this.layout);
+      var correctedLayout = this.correctBounds(compactedLayout);
+      this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
+      this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
+      this.$store.dispatch(SET_API_LAYOUT_COMPACTED);
     },
     compact(layout) {
       const compactedItems = [];

@@ -81,7 +81,8 @@ import { getCurrentScreenClass } from "../utils/responsive-utils";
 import { FORM, HEADER, LIST } from "../types/layout-item-types";
 import {
   DYNAMIC_CONTENT_HEIGHT_UPDATED,
-  LAYOUT_UPDATED
+  LAYOUT_UPDATED,
+  SCREEN_CLASS_CHANGED
 } from "../types/event-types";
 
 export default {
@@ -163,6 +164,7 @@ export default {
       if (screenClassChanged) {
         this.screenClass = currentScreenClass;
         this.loadCurrentApiLayout();
+        EventBus.$emit(SCREEN_CLASS_CHANGED);
       }
     },
 
