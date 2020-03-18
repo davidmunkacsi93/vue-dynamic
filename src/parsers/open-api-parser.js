@@ -38,11 +38,11 @@ class OpenApiParser {
       dynamicComponents,
       apiLayout: defaultLayout,
       apiLayouts: {
-        xxs: [],
-        xs: [],
-        sm: [],
-        md: [],
-        lg: []
+        xxs: defaultLayout,
+        xs: defaultLayout,
+        sm: defaultLayout,
+        md: defaultLayout,
+        lg: defaultLayout
       },
       compacted: false
     };

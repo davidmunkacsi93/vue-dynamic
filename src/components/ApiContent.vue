@@ -118,6 +118,8 @@ export default {
   },
 
   mounted() {
+    this.currentApiId = this.$router.currentRoute.params.apiId;
+    this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
     this.setDynamicContentHeight();
     this.onWindowResize();
   },
@@ -144,7 +146,7 @@ export default {
     this.currentApiId = to.params.apiId;
     this.$store.dispatch(SAVE_API_LAYOUT);
     this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
-    this.loadCurrentApiLayout(this);
+    this.loadCurrentApiLayout();
     next();
   },
 
@@ -165,12 +167,10 @@ export default {
     },
 
     loadCurrentApiLayout() {
-      this.apiModel = this.$store.state.apiLayouts.apis[
-        this.$store.state.apiLayouts.currentApiId
-      ];
-      console.log(this.screenClass);
+      var currentApiId = this.$store.state.apiLayouts.currentApiId;
+      this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
-      console.log(this.apiLayout);
+
       this.setDynamicContentHeight();
     },
 
