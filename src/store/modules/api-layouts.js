@@ -10,7 +10,8 @@ import {
   ENABLE_EDIT_MODE_API_LAYOUT,
   SET_API_ITEM_HEIGHT,
   SET_API_ITEM_WIDTH,
-  SET_API_ITEM_INTIAILIZED
+  SET_API_ITEM_INTIAILIZED,
+  SET_API_LAYOUTS
 } from "../../types/action-types";
 import { COMPACT, LAYOUT_UPDATED, UPDATE_WIDTH } from "../../types/event-types";
 
@@ -110,6 +111,10 @@ const mutations = {
     state.apis[state.currentApiId].apiLayout = layoutItems;
     EventBus.$emit(LAYOUT_UPDATED);
     EventBus.$emit(UPDATE_WIDTH);
+  },
+
+  setApiLayouts(state, layouts) {
+    state.apis[state.currentApiId].apiLayouts = layouts;
   }
 
   // removeForm(state, formId) {
@@ -135,6 +140,9 @@ const actions = {
   },
   saveApiLayout({ commit }) {
     commit(SAVE_API_LAYOUT);
+  },
+  setApiLayouts({ commit }, layouts) {
+    commit(SET_API_LAYOUTS, layouts);
   },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);
