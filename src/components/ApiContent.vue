@@ -2,7 +2,7 @@
   <grid-layout
     ref="apiLayout"
     :layout="apiLayout"
-    :compactRequired="true"
+    :compacted="apiLayout.compacted"
     :col-num="12"
     :rowHeight="30"
     :margin="[3, 3]"
@@ -185,6 +185,7 @@ export default {
 
     getDefaultLayout() {
       var layout = [];
+      layout.compacted = false;
       var header = this.createHeader();
       layout.push(header);
       this.createDynamicComponents(header).forEach(component =>

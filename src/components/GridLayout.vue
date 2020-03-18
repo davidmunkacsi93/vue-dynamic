@@ -2,13 +2,17 @@
 import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
 import { LAYOUT_UPDATED, UPDATE_WIDTH } from "../types/event-types";
-import { SET_API_LAYOUT_ITEMS, SET_API_LAYOUTS } from "../types/action-types";
+import {
+  SET_API_LAYOUT_ITEMS,
+  SET_API_LAYOUTS,
+  SET_API_LAYOUT_COMPACTED
+} from "../types/action-types";
 
 export default {
   name: "GridLayout",
   extends: GridLayout,
   props: {
-    compactRequired: {
+    compacted: {
       type: Boolean,
       required: true
     }
@@ -20,12 +24,13 @@ export default {
     EventBus.$off(LAYOUT_UPDATED, this.handleLayoutUpdated);
   },
   mounted() {
-    if (this.compactRequired) {
+    if (!this.compacted) {
       setTimeout(() => {
         var compactedLayout = this.compact(this.layout);
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, compactedLayout);
         this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
         EventBus.$emit(UPDATE_WIDTH);
+        this.$store.dispatch(SET_API_LAYOUT_COMPACTED);
       }, 1000);
     }
   },

@@ -11,7 +11,8 @@ import {
   SET_API_ITEM_HEIGHT,
   SET_API_ITEM_WIDTH,
   SET_API_ITEM_INTIAILIZED,
-  SET_API_LAYOUTS
+  SET_API_LAYOUTS,
+  SET_API_LAYOUT_COMPACTED
 } from "../../types/action-types";
 import { COMPACT, LAYOUT_UPDATED, UPDATE_WIDTH } from "../../types/event-types";
 
@@ -113,6 +114,10 @@ const mutations = {
     EventBus.$emit(UPDATE_WIDTH);
   },
 
+  setApiLayoutCompacted(state) {
+    state.apis[state.currentApiId].apiLayout.compacted = true;
+  },
+
   setApiLayouts(state, layouts) {
     var currentApiLayouts = state.apis[state.currentApiId].apiLayouts;
     if (!currentApiLayouts) {
@@ -164,6 +169,9 @@ const actions = {
   },
   setApiItemWidth({ commit }, payload) {
     commit(SET_API_ITEM_WIDTH, payload);
+  },
+  setApiLayoutCompacted({ commit }) {
+    commit(SET_API_LAYOUT_COMPACTED);
   },
   removeForm({ commit }, formId) {
     commit(REMOVE_FORM, formId);

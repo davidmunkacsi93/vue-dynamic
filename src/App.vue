@@ -9,7 +9,7 @@
         <grid-layout
           ref="mainLayout"
           :layout="mainLayout"
-          :compact-required="false"
+          :compacted="true"
           :col-num="12"
           :row-height="30"
           :margin="[0, 0]"
