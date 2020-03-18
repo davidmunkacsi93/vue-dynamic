@@ -18,10 +18,10 @@ export default {
     }
   },
   created: function() {
-    EventBus.$on(LAYOUT_UPDATED, this.handleLayoutUpdated);
+    EventBus.$on(LAYOUT_UPDATED, this.onLayoutUpdated);
   },
   beforeDestroy: function() {
-    EventBus.$off(LAYOUT_UPDATED, this.handleLayoutUpdated);
+    EventBus.$off(LAYOUT_UPDATED, this.onLayoutUpdated);
   },
   mounted() {
     if (!this.compacted) {
@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    handleLayoutUpdated() {
+    onLayoutUpdated() {
       this.layoutUpdate();
     },
     compact(layout) {
