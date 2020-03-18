@@ -1,4 +1,3 @@
-import EventBus from "../../utils/event-bus.js";
 import {
   LOAD_API_LAYOUT,
   REMOVE_FORM,
@@ -14,7 +13,6 @@ import {
   SET_API_LAYOUTS,
   SET_API_LAYOUT_COMPACTED
 } from "../../types/action-types";
-import { COMPACT, LAYOUT_UPDATED, UPDATE_WIDTH } from "../../types/event-types";
 
 const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layout";
 
@@ -66,15 +64,10 @@ const mutations = {
     }
     const parsedApis = JSON.parse(apiString);
     state.apis = parsedApis;
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(COMPACT);
   },
 
   loadApiLayout(state, apiId) {
     state.currentApiId = apiId;
-    EventBus.$emit(COMPACT);
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(UPDATE_WIDTH);
   },
 
   saveApiLayout(state) {
@@ -96,26 +89,21 @@ const mutations = {
 
     var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
     apiItem.h = payload.height;
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(UPDATE_WIDTH);
   },
 
   setApiItemWidth(state, payload) {
     var apiLayout = state.apis[state.currentApiId].apiLayout;
     var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
     apiItem.w = payload.width;
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(UPDATE_WIDTH);
   },
 
   setApiLayoutItems(state, layoutItems) {
     state.apis[state.currentApiId].apiLayout = layoutItems;
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(UPDATE_WIDTH);
   },
 
   setApiLayoutCompacted(state) {
     state.apis[state.currentApiId].apiLayout.compacted = true;
+    console.log(state.apis[state.currentApiId].apiLayout.compacted);
   },
 
   setApiLayouts(state, layouts) {
@@ -172,6 +160,7 @@ const actions = {
   },
   setApiLayoutCompacted({ commit }) {
     commit(SET_API_LAYOUT_COMPACTED);
+    commit(SAVE_API_LAYOUT);
   },
   removeForm({ commit }, formId) {
     commit(REMOVE_FORM, formId);
