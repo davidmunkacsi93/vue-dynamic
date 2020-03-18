@@ -23,17 +23,12 @@ class OpenApiParser {
       apiModels
     );
 
-    var defaultApiLayout = DefaultApiLayoutFactory.getDefaultApiLayout(
+    var defaultLayout = DefaultApiLayoutFactory.getDefaultApiLayout(
       apiInformation.apiVersion,
       apiInformation.description,
       apiInformation.title,
       dynamicComponents
     );
-
-    var defaultLayout = {
-      ...defaultApiLayout,
-      compacted: false
-    };
 
     var apiUIModel = {
       specificationVersion,
