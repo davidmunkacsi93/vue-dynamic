@@ -31,6 +31,7 @@
         <dynamic-header
           v-if="item.type === HEADER"
           :type="HEADER"
+          :baseURL="baseURL"
           :apiVersion="item.apiVersion"
           :description="item.description"
           :initialized="item.initialized"
@@ -40,6 +41,7 @@
         <dynamic-form
           v-else-if="item.type === FORM"
           :type="FORM"
+          :baseURL="baseURL"
           :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
@@ -50,6 +52,7 @@
         <dynamic-search-form
           v-else-if="item.type === LIST"
           :type="LIST"
+          :baseURL="baseURL"
           :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
@@ -103,6 +106,7 @@ export default {
 
       apiLayout: [],
       apiModel: {},
+      baseURL: null,
       compacted: false
     };
   },
@@ -171,7 +175,8 @@ export default {
       var currentApiId = this.$store.state.apiLayouts.currentApiId;
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
-      console.log(this.apiLayout);
+      this.baseURL = this.apiModel.serverURL;
+      console.log(this.baseURL);
       this.setDynamicContentHeight();
     },
 

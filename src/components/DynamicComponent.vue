@@ -6,6 +6,9 @@ export default {
     apiVersion: {
       type: String
     },
+    baseURL: {
+      type: String
+    },
     controls: {
       type: Array
     },
@@ -35,6 +38,7 @@ export default {
   methods: {
     callApiMethod() {
       console.log(this.httpMethod);
+      console.log(this.baseURL + this.path);
     },
     removeGridItem() {
       this.$store.dispatch(REMOVE_FORM, this.id);
