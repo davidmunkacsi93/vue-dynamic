@@ -164,7 +164,7 @@ export default {
         this.screenClass = currentScreenClass;
         this.$store.dispatch(SAVE_API_LAYOUT);
         this.loadCurrentApiLayout();
-        EventBus.$emit(SCREEN_CLASS_CHANGED);
+        // EventBus.$emit(SCREEN_CLASS_CHANGED);
       }
     },
 

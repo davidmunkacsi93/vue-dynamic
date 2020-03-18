@@ -1,7 +1,11 @@
 <script>
 import { GridItem } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
-import { COMPACT, UPDATE_WIDTH } from "../types/event-types";
+import {
+  COMPACT,
+  UPDATE_WIDTH,
+  SCREEN_CLASS_CHANGED
+} from "../types/event-types";
 import {
   SET_API_ITEM_HEIGHT,
   SET_API_ITEM_WIDTH,
@@ -14,10 +18,12 @@ export default {
   extends: GridItem,
   created: function() {
     EventBus.$on(COMPACT, this.onCompact);
+    EventBus.$on(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$on(UPDATE_WIDTH, this.onUpdateWidth);
   },
   beforeDestroy: function() {
     EventBus.$off(COMPACT, this.onCompact);
+    EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
   },
   props: {
@@ -34,17 +40,23 @@ export default {
     if (this.initialized) return;
 
     setTimeout(() => {
-      this.setGridItemWidth();
-      this.setGridItemHeight();
-      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
+      this.setDefaultSize();
     }, 300);
   },
   methods: {
     onCompact() {
       this.compact();
     },
+    onScreenClassChanged() {
+      this.setDefaultSize();
+    },
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
+    },
+    setDefaultSize() {
+      this.setGridItemWidth();
+      this.setGridItemHeight();
+      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
     },
     setGridItemHeight() {
       var calculatedHeight = Math.ceil(

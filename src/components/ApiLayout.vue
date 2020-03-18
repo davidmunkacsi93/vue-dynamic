@@ -30,8 +30,9 @@ export default {
       this.compactLayout();
     },
     compactLayout() {
+      if (this.layout.compacted) return;
       if (this.layout.length <= 0) return;
-
+      console.log("Compacting...");
       var compactedLayout = this.compact(this.layout);
       var correctedLayout = this.correctBounds(compactedLayout);
       console.log(correctedLayout);
