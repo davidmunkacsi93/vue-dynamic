@@ -1,7 +1,7 @@
 import { v1 as uuid } from "uuid";
 import { HEADER } from "../types/layout-item-types";
 
-class DefaultLayoutFactory {
+class DefaultApiLayoutFactory {
   getDefaultApiLayout(apiVersion, description, title, dynamicComponents) {
     var layout = [];
     var header = this.createHeader(apiVersion, description, title);
@@ -58,6 +58,6 @@ class DefaultLayoutFactory {
   }
 }
 
-const instance = new DefaultLayoutFactory();
+const instance = new DefaultApiLayoutFactory();
 Object.freeze(instance);
 export default instance;

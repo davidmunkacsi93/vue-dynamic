@@ -64,7 +64,6 @@
 </template>
 <script>
 import {
-  SET_API_LAYOUT_ITEMS,
   LOAD_API_LAYOUT,
   SAVE_API_LAYOUT,
   SET_CONTENT_HEIGHT
