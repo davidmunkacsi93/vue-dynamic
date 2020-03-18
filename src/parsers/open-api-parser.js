@@ -28,7 +28,13 @@ class OpenApiParser {
       ...serverInformation,
       apiModels,
       dynamicComponents,
-      apiLayout: [],
+      apiLayouts: {
+        xxs: [],
+        xs: [],
+        sm: [],
+        md: [],
+        lg: []
+      },
       compacted: false
     };
     return apiUIModel;
