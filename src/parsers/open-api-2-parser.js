@@ -25,7 +25,8 @@ class OpenApi2Parser {
       ...serverInformation,
       apiModels,
       dynamicComponents,
-      apiLayout: []
+      apiLayout: [],
+      compacted: false
     };
 
     return apiUIModel;

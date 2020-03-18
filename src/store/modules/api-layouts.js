@@ -102,8 +102,8 @@ const mutations = {
   },
 
   setApiLayoutCompacted(state) {
-    state.apis[state.currentApiId].apiLayout.compacted = true;
-    console.log(state.apis[state.currentApiId].apiLayout.compacted);
+    state.apis[state.currentApiId].compacted = true;
+    console.log(state.apis[state.currentApiId].compacted);
   },
 
   setApiLayouts(state, layouts) {
