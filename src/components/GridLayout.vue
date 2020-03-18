@@ -1,7 +1,7 @@
 <script>
 import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
-import { LAYOUT_UPDATED, UPDATE_WIDTH } from "../types/event-types";
+import { LAYOUT_UPDATED } from "../types/event-types";
 import {
   SET_API_LAYOUT_ITEMS,
   SET_API_LAYOUTS,
@@ -27,9 +27,9 @@ export default {
     if (!this.compacted) {
       setTimeout(() => {
         var compactedLayout = this.compact(this.layout);
-        this.$store.dispatch(SET_API_LAYOUT_ITEMS, compactedLayout);
+        var correctedLayout = this.correctBounds(compactedLayout);
+        this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
         this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
-        EventBus.$emit(UPDATE_WIDTH);
         this.$store.dispatch(SET_API_LAYOUT_COMPACTED);
       }, 1000);
     }
@@ -84,6 +84,25 @@ export default {
         }
         return -1;
       });
+    },
+    correctBounds(layout) {
+      const corrected = [];
+      for (let i = 0, len = layout.length; i < len; i++) {
+        const l = layout[i];
+        //  right
+        if (l.x + l.w > this.cols) l.x = this.cols - l.w;
+        if (l.x < 0) {
+          l.x = 0;
+          l.w = this.cols;
+        }
+        if (!l.static) corrected.push(l);
+        else {
+          while (this.getFirstCollision(corrected, l)) {
+            l.y++;
+          }
+        }
+      }
+      return layout;
     }
   }
 };
