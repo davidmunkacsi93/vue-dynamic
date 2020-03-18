@@ -21,9 +21,9 @@
       md-confirm-text="Ok"
     />
     <md-dialog-alert
-      :md-active.sync="error"
+      :md-active.sync="isNotValid"
       md-title="API could not be integrated"
-      :md-content="errorContent"
+      :md-content="errorMessage"
       md-confirm-text="Ok"
     />
   </div>
@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       loading: false,
-      error: false,
-      errorContent: null,
+      isNotValid: false,
+      errorMessage: null,
       apiCreated: false,
       apiTitle: null,
       specificationURL:
@@ -61,8 +61,8 @@ export default {
         })
         .catch(reason => {
           this.loading = false;
-          this.error = true;
-          this.errorContent = reason.toString();
+          this.isNotValid = true;
+          this.errorMessage = reason.toString();
         });
     }
   }
