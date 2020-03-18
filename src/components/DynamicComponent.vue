@@ -37,6 +37,15 @@ export default {
   },
   methods: {
     callApiMethod() {
+      var configuration = {
+        baseURL: this.baseURL,
+        url: this.path,
+        method: this.httpMethod.toLowerCase()
+      };
+      this.$http
+        .request(configuration)
+        .then(response => console.log(response))
+        .catch(reason => console.error(reason));
       console.log(this.httpMethod);
       console.log(this.baseURL + this.path);
     },
