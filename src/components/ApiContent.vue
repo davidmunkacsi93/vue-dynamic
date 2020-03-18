@@ -2,14 +2,13 @@
   <grid-layout
     ref="apiLayout"
     :layout="apiLayout"
-    :compacted="apiLayout.compacted"
+    :compacted="compacted"
     :col-num="12"
     :rowHeight="30"
     :margin="[3, 3]"
     :is-draggable="true"
     :is-resizable="true"
     :is-mirrored="false"
-    :packing-required="true"
     :responsive="true"
     :vertical-compact="true"
     :use-css-transforms="true"
@@ -103,10 +102,10 @@ export default {
       LIST: LIST,
 
       apiLayout: [],
-      apiModel: {}
+      apiModel: {},
+      compacted: false
     };
   },
-
   created() {
     EventBus.$on(LAYOUT_UPDATED, this.setDynamicContentHeight);
   },
@@ -156,7 +155,6 @@ export default {
         viewModel.$store.state.apiLayouts.apis[
           viewModel.$store.state.apiLayouts.currentApiId
         ];
-
       viewModel.apiLayout = viewModel.apiModel.apiLayout;
       if (!viewModel.apiLayout || viewModel.apiLayout.length === 0) {
         var defaultLayout = viewModel.getDefaultLayout();
@@ -185,7 +183,6 @@ export default {
 
     getDefaultLayout() {
       var layout = [];
-      layout.compacted = false;
       var header = this.createHeader();
       layout.push(header);
       this.createDynamicComponents(header).forEach(component =>
