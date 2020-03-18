@@ -1,8 +1,7 @@
 <template>
-  <grid-layout-base
+  <api-layout
     ref="apiLayout"
     :layout="apiLayout"
-    :compacted="compacted"
     :col-num="12"
     :rowHeight="30"
     :margin="[3, 3]"
@@ -60,7 +59,7 @@
         ></dynamic-search-form>
       </grid-item>
     </template>
-  </grid-layout-base>
+  </api-layout>
 </template>
 <script>
 import {
@@ -69,8 +68,8 @@ import {
   SET_CONTENT_HEIGHT
 } from "../types/action-types";
 
+import ApiLayout from "../components/ApiLayout";
 import GridItem from "../components/GridItem";
-import GridLayoutBase from "../components/GridLayoutBase";
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
@@ -88,7 +87,7 @@ import {
 export default {
   components: {
     GridItem,
-    GridLayoutBase,
+    ApiLayout,
     DynamicForm,
     DynamicHeader,
     DynamicSearchForm

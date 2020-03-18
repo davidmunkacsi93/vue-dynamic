@@ -37,7 +37,7 @@ export default {
       this.setGridItemWidth();
       this.setGridItemHeight();
       this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
-    }, 200);
+    }, 300);
   },
   methods: {
     onCompact() {

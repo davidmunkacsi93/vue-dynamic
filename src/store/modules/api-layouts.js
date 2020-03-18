@@ -13,8 +13,9 @@ import {
   SET_API_LAYOUTS,
   SET_API_LAYOUT_COMPACTED
 } from "../../types/action-types";
+import { getCurrentScreenClass } from "../../utils/responsive-utils";
 
-const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layout";
+const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layouts";
 
 function getNextId() {
   if (!state.apis || state.apis.length === 0) return 0;
@@ -44,16 +45,24 @@ const mutations = {
   },
 
   disableEditModeApiLayout(state) {
-    for (var layoutItem of state.apis[state.currentApiId].apiLayout) {
-      layoutItem.static = true;
+    var screenClasses = Object.keys(state.apis[state.currentApiId].apiLayouts);
+    for (var screenClass of screenClasses) {
+      for (let layoutItem of state.mainLayouts[screenClass]) {
+        layoutItem.static = false;
+      }
     }
-    state.isEditModeActive = false;
+
+    state.isEditModeActive = true;
   },
 
   enableEditModeApiLayout(state) {
-    for (var layoutItem of state.apis[state.currentApiId].apiLayout) {
-      layoutItem.static = false;
+    var screenClasses = Object.keys(state.apis[state.currentApiId].apiLayouts);
+    for (var screenClass of screenClasses) {
+      for (let layoutItem of state.mainLayouts[screenClass]) {
+        layoutItem.static = false;
+      }
     }
+
     state.isEditModeActive = true;
   },
 
@@ -78,31 +87,45 @@ const mutations = {
   },
 
   setApiItemInitialized(state, uuid) {
-    var apiLayout = state.apis[state.currentApiId].apiLayout;
+    var currentScreenClass = getCurrentScreenClass();
+    var apiLayout =
+      state.apis[state.currentApiId].apiLayouts[currentScreenClass];
+      console.log(apiLayout);
+      console.log(uuid);
     var apiItem = apiLayout.find(item => item.uuid === uuid);
+
     apiItem.initialized = true;
   },
 
   setApiItemHeight(state, payload) {
-    if (!state.apis[state.currentApiId]) return;
-    var apiLayout = state.apis[state.currentApiId].apiLayout;
-
+    var currentScreenClass = getCurrentScreenClass();
+    var apiLayout =
+      state.apis[state.currentApiId].apiLayouts[currentScreenClass];
     var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
+
     apiItem.h = payload.height;
   },
 
   setApiItemWidth(state, payload) {
-    var apiLayout = state.apis[state.currentApiId].apiLayout;
+    var currentScreenClass = getCurrentScreenClass();
+    var apiLayout =
+      state.apis[state.currentApiId].apiLayouts[currentScreenClass];
     var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
+
     apiItem.w = payload.width;
   },
 
   setApiLayoutItems(state, layoutItems) {
-    state.apis[state.currentApiId].apiLayout = layoutItems;
+    var currentScreenClass = getCurrentScreenClass();
+    state.apis[state.currentApiId].apiLayouts[currentScreenClass] = layoutItems;
   },
 
   setApiLayoutCompacted(state) {
-    state.apis[state.currentApiId].compacted = true;
+    var currentScreenClass = getCurrentScreenClass();
+
+    state.apis[state.currentApiId].apiLayouts[
+      currentScreenClass
+    ].compacted = true;
   },
 
   setApiLayouts(state, layouts) {
