@@ -24,6 +24,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: MENU
     };
     const content = {
@@ -36,6 +37,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: CONTENT
     };
     const navigationBar = {
@@ -48,6 +50,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: NAVIGATION_BAR
     };
     layoutItems.push(menu);
@@ -69,6 +72,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: MENU
     };
     const content = {
@@ -81,6 +85,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: CONTENT
     };
     const navigationBar = {
@@ -93,6 +98,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: NAVIGATION_BAR
     };
     layoutItems.push(menu);
@@ -114,6 +120,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: MENU
     };
     const navigationBar = {
@@ -126,6 +133,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: NAVIGATION_BAR
     };
     const content = {
@@ -138,6 +146,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      uuid: uuid(),
       type: CONTENT
     };
     layoutItems.push(menu);

@@ -6,10 +6,9 @@
     />
     <md-app>
       <md-app-content>
-        <grid-layout
+        <grid-layout-base
           ref="mainLayout"
           :layout="mainLayout"
-          :compacted="true"
           :col-num="12"
           :row-height="30"
           :margin="[0, 0]"
@@ -47,7 +46,7 @@
               ></navigation-bar>
             </grid-item>
           </template>
-        </grid-layout>
+        </grid-layout-base>
       </md-app-content>
     </md-app>
   </div>
@@ -64,7 +63,7 @@ import VueRouter from "vue-router";
 
 import DynamicContent from "./components/DynamicContent.vue";
 import GridItem from "./components/GridItem.vue";
-import GridLayout from "./components/GridLayout.vue";
+import GridLayoutBase from "./components/GridLayoutBase.vue";
 import MenuBar from "./components/MenuBar.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 
@@ -96,7 +95,7 @@ export default {
   components: {
     DynamicContent,
     GridItem,
-    GridLayout,
+    GridLayoutBase,
     MenuBar,
     NavigationBar
   },

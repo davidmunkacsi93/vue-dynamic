@@ -9,7 +9,6 @@ import {
 } from "../types/action-types";
 
 export default {
-  name: "GridLayout",
   extends: GridLayout,
   props: {
     compacted: {
@@ -28,6 +27,7 @@ export default {
   mounted() {
     if (!this.compacted) {
       setTimeout(() => {
+        console.log("compacting...");
         this.compactLayout();
       }, 1000);
     }
@@ -40,8 +40,12 @@ export default {
       this.compactLayout();
     },
     compactLayout() {
+      if (!this.compacted) return;
+      
+      console.log(this.layout);
       var compactedLayout = this.compact(this.layout);
       var correctedLayout = this.correctBounds(compactedLayout);
+      console.log(compactedLayout);
       this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
       this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
       this.$store.dispatch(SET_API_LAYOUT_COMPACTED);

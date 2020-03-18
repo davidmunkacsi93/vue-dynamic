@@ -1,5 +1,5 @@
 <template>
-  <grid-layout
+  <grid-layout-base
     ref="apiLayout"
     :layout="apiLayout"
     :compacted="compacted"
@@ -60,7 +60,7 @@
         ></dynamic-search-form>
       </grid-item>
     </template>
-  </grid-layout>
+  </grid-layout-base>
 </template>
 <script>
 import {
@@ -70,7 +70,7 @@ import {
 } from "../types/action-types";
 
 import GridItem from "../components/GridItem";
-import GridLayout from "../components/GridLayout";
+import GridLayoutBase from "../components/GridLayoutBase";
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
@@ -88,7 +88,7 @@ import {
 export default {
   components: {
     GridItem,
-    GridLayout,
+    GridLayoutBase,
     DynamicForm,
     DynamicHeader,
     DynamicSearchForm
@@ -131,7 +131,7 @@ export default {
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!vm.$store.state.apiLayouts.apis) next("/");
+      if (!vm.$store.state.apiLayouts.apis) next("/addApi");
 
       vm.currentApiId = to.params.apiId;
       vm.$store.dispatch(LOAD_API_LAYOUT, vm.currentApiId);
@@ -141,7 +141,7 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     if (!this.$store.state.apiLayouts.apis) {
-      next("/");
+      next("/addApi");
     }
 
     this.currentApiId = to.params.apiId;
@@ -172,7 +172,7 @@ export default {
       var currentApiId = this.$store.state.apiLayouts.currentApiId;
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
-
+      console.log(this.apiLayout);
       this.setDynamicContentHeight();
     },
 
