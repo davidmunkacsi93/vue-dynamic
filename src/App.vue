@@ -72,10 +72,11 @@ import EventBus from "./utils/event-bus";
 
 import routes from "./routes";
 
+import { getCurrentScreenClass } from "./utils/responsive-utils";
+
 import {
   LOAD_MAIN_LAYOUT,
   LOAD_APIS,
-  SET_SCREEN_INFORMATION,
   SET_SCREEN_CLASS
 } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
@@ -109,44 +110,31 @@ export default {
     };
   },
   beforeCreate() {
-    this.$nextTick(function() {
+    this.$nextTick(() => {
       window.addEventListener("resize", this.onWindowResize);
       this.onWindowResize();
     });
 
-    this.$store.dispatch(
-      SET_SCREEN_INFORMATION,
-      document.documentElement.clientWidth
-    );
-    this.$store.dispatch(
-      LOAD_MAIN_LAYOUT,
-      this.$store.state.responsive.screenClass
-    );
+    this.screenClass = getCurrentScreenClass();
+    this.$store.dispatch(LOAD_MAIN_LAYOUT, this.screenClass);
     this.$store.dispatch(LOAD_APIS);
   },
   created() {
-    this.loadMainLayout();
-  },
-  mounted() {
     EventBus.$on(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);
   },
+  mounted() {},
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
     EventBus.$off(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);
   },
   methods: {
     onWindowResize() {
-      this.screenClass = this.$store.state.responsive.screenClass;
-      this.$store.dispatch(
-        SET_SCREEN_INFORMATION,
-        document.documentElement.clientWidth
-      );
-      this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
+      var currentScreenClass = getCurrentScreenClass();
 
-      var screenClassChanged =
-        this.screenClass !== this.$store.state.responsive.screenClass;
+      var screenClassChanged = this.screenClass !== currentScreenClass;
       if (screenClassChanged) {
-        this.screenClass = this.$store.state.responsive.screenClass;
+        this.screenClass = currentScreenClass;
+        this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
         this.loadMainLayout();
       }
     },
@@ -155,7 +143,7 @@ export default {
     },
     loadMainLayout() {
       this.mainLayout = this.$store.state.mainLayout.mainLayouts[
-        this.$store.state.responsive.screenClass
+        this.screenClass
       ];
     }
   }

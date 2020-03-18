@@ -42,16 +42,11 @@ const mutations = {
 
     state.isEditModeActive = true;
   },
-  initializeMainLayout(state, screenClass) {
+  initializeMainLayout(state) {
     const layoutString = localStorage.getItem(LOCAL_STORAGE_MAIN_LAYOUTS_KEY);
     if (layoutString) return;
 
     state.mainLayouts = DefaultMainLayoutFactory.getDefaultMainLayout();
-
-    state.currentScreenClass = screenClass;
-
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(COMPACT);
 
     localStorage.setItem(
       LOCAL_STORAGE_MAIN_LAYOUTS_KEY,
@@ -104,8 +99,9 @@ const actions = {
     commit(ENABLE_EDIT_MODE_MAIN_LAYOUT);
   },
   loadMainLayout({ commit }, screenClass) {
-    commit(INITIALIZE_MAIN_LAYOUT, screenClass);
-    commit(LOAD_MAIN_LAYOUT, screenClass);
+    commit(SET_SCREEN_CLASS, screenClass);
+    commit(INITIALIZE_MAIN_LAYOUT);
+    commit(LOAD_MAIN_LAYOUT);
   },
   saveMainLayout({ commit }) {
     commit(SAVE_MAIN_LAYOUT);
