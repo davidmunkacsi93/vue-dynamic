@@ -44,6 +44,7 @@ export default {
       this.compact();
     },
     onUpdateWidth() {
+      console.log(window.innerWidth);
       this.updateWidth(window.innerWidth);
     },
     setGridItemHeight() {
