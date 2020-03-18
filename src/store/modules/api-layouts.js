@@ -45,24 +45,26 @@ const mutations = {
   },
 
   disableEditModeApiLayout(state) {
-    var screenClasses = Object.keys(state.apis[state.currentApiId].apiLayouts);
+    var apiLayouts = state.apis[state.currentApiId].apiLayouts;
+    var screenClasses = Object.keys(apiLayouts);
     for (var screenClass of screenClasses) {
-      for (let layoutItem of state.mainLayouts[screenClass]) {
-        layoutItem.static = false;
+      for (let layoutItem of apiLayouts[screenClass]) {
+        layoutItem.static = true;
       }
     }
 
-    state.isEditModeActive = true;
+    state.isEditModeActive = false;
   },
 
   enableEditModeApiLayout(state) {
-    var screenClasses = Object.keys(state.apis[state.currentApiId].apiLayouts);
+    var apiLayouts = state.apis[state.currentApiId].apiLayouts;
+    var screenClasses = Object.keys(apiLayouts);
     for (var screenClass of screenClasses) {
-      for (let layoutItem of state.mainLayouts[screenClass]) {
+      for (let layoutItem of apiLayouts[screenClass]) {
         layoutItem.static = false;
       }
     }
-
+    console.log(apiLayouts);
     state.isEditModeActive = true;
   },
 
@@ -90,8 +92,6 @@ const mutations = {
     var currentScreenClass = getCurrentScreenClass();
     var apiLayout =
       state.apis[state.currentApiId].apiLayouts[currentScreenClass];
-      console.log(apiLayout);
-      console.log(uuid);
     var apiItem = apiLayout.find(item => item.uuid === uuid);
 
     apiItem.initialized = true;
