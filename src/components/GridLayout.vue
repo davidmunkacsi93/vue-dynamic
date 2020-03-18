@@ -2,7 +2,7 @@
 import { GridLayout } from "vue-grid-layout";
 import EventBus from "../utils/event-bus.js";
 import { LAYOUT_UPDATED } from "../types/event-types";
-import { SET_API_LAYOUT_ITEMS } from "../types/action-types";
+import { SET_API_LAYOUT_ITEMS, SET_API_LAYOUTS } from "../types/action-types";
 
 export default {
   name: "GridLayout",
@@ -24,6 +24,7 @@ export default {
       setTimeout(() => {
         var compactedLayout = this.compact(this.layout);
         this.$store.dispatch(SET_API_LAYOUT_ITEMS, compactedLayout);
+        this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
       }, 1000);
     }
   },

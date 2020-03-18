@@ -114,7 +114,15 @@ const mutations = {
   },
 
   setApiLayouts(state, layouts) {
-    state.apis[state.currentApiId].apiLayouts = layouts;
+    var currentApiLayouts = state.apis[state.currentApiId].apiLayouts;
+    if (!currentApiLayouts) {
+      state.apis[state.currentApiId].apiLayouts = layouts;
+    } else {
+      var screenClasses = Object.keys(layouts);
+      screenClasses.forEach(screenClass => {
+        currentApiLayouts[screenClass] = layouts[screenClass];
+      });
+    }
   }
 
   // removeForm(state, formId) {
@@ -146,6 +154,7 @@ const actions = {
   },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);
+    commit(SAVE_API_LAYOUT);
   },
   setApiItemInitialized({ commit }, uuid) {
     commit(SET_API_ITEM_INTIAILIZED, uuid);
