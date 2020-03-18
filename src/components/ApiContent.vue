@@ -63,7 +63,6 @@
   </grid-layout>
 </template>
 <script>
-import { v1 as uuid } from "uuid";
 import {
   SET_API_LAYOUT_ITEMS,
   LOAD_API_LAYOUT,
@@ -156,18 +155,6 @@ export default {
           viewModel.$store.state.apiLayouts.currentApiId
         ];
       viewModel.apiLayout = viewModel.apiModel.apiLayout;
-      if (!viewModel.apiLayout || viewModel.apiLayout.length === 0) {
-        var defaultLayout = viewModel.getDefaultLayout();
-        viewModel.apiModel.apiLayout = defaultLayout;
-        viewModel.apiLayout = defaultLayout;
-        viewModel.$store.dispatch(SET_API_LAYOUT_ITEMS, viewModel.apiLayout);
-        setTimeout(() => {
-          this.apiLayout.forEach(layoutItem => {
-            layoutItem.static = true;
-          });
-          this.$store.dispatch(SAVE_API_LAYOUT, viewModel.apiLayout);
-        }, 200);
-      }
       this.setDynamicContentHeight();
     },
 
@@ -179,60 +166,6 @@ export default {
 
       this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
       EventBus.$emit(DYNAMIC_CONTENT_HEIGHT_UPDATED, dynamicContent.innerH);
-    },
-
-    getDefaultLayout() {
-      var layout = [];
-      var header = this.createHeader();
-      layout.push(header);
-      this.createDynamicComponents(header).forEach(component =>
-        layout.push(component)
-      );
-      return layout;
-    },
-
-    createHeader() {
-      return {
-        x: 0,
-        y: 0,
-        w: 12,
-        h: 5,
-        i: 0,
-        uuid: uuid(),
-        isDraggable: true,
-        isResizable: true,
-        static: false,
-        initialized: false,
-        apiVersion: this.apiModel.apiVersion,
-        description: this.apiModel.description,
-        title: this.apiModel.title,
-        type: HEADER
-      };
-    },
-    createDynamicComponents() {
-      var dynamicComponents = [];
-
-      // TODO: Temporarily filter empty objects (grids).
-      this.apiModel.dynamicComponents
-        .filter(dynamicComponent => Object.keys(dynamicComponent).length > 0)
-        .forEach((dynamicComponent, index) => {
-          var component = {
-            x: (index % 3) * 3,
-            y: (index + 2) * 5,
-            w: 3,
-            h: 5,
-            i: index + 1,
-            uuid: uuid(),
-            isDraggable: true,
-            isResizable: true,
-            static: false,
-            initialized: false,
-            ...dynamicComponent
-          };
-          dynamicComponents.push(component);
-        });
-
-      return dynamicComponents;
     }
   }
 };
