@@ -122,7 +122,6 @@ export default {
   created() {
     EventBus.$on(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);
   },
-  mounted() {},
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
     EventBus.$off(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);

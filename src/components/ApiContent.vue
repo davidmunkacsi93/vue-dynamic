@@ -74,8 +74,11 @@ import GridLayout from "../components/GridLayout";
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
-import { FORM, HEADER, LIST } from "../types/layout-item-types";
+
 import EventBus from "../utils/event-bus";
+import { getCurrentScreenClass } from "../utils/responsive-utils";
+
+import { FORM, HEADER, LIST } from "../types/layout-item-types";
 import {
   DYNAMIC_CONTENT_HEIGHT_UPDATED,
   LAYOUT_UPDATED
@@ -106,14 +109,17 @@ export default {
   },
   created() {
     EventBus.$on(LAYOUT_UPDATED, this.setDynamicContentHeight);
+    window.addEventListener("resize", this.onWindowResize);
   },
 
   beforeDestroy() {
     EventBus.$off(LAYOUT_UPDATED, this.setDynamicContentHeight);
+    window.removeEventListener("resize", this.onWindowResize);
   },
 
   mounted() {
     this.setDynamicContentHeight();
+    this.onWindowResize();
   },
 
   beforeUpdate() {
@@ -126,7 +132,7 @@ export default {
 
       vm.currentApiId = to.params.apiId;
       vm.$store.dispatch(LOAD_API_LAYOUT, vm.currentApiId);
-      vm.loadCurrentApiLayout(vm);
+      vm.loadCurrentApiLayout();
     });
   },
 
@@ -148,12 +154,23 @@ export default {
   },
 
   methods: {
-    loadCurrentApiLayout(viewModel) {
-      viewModel.apiModel =
-        viewModel.$store.state.apiLayouts.apis[
-          viewModel.$store.state.apiLayouts.currentApiId
-        ];
-      viewModel.apiLayout = viewModel.apiModel.apiLayout;
+    onWindowResize() {
+      var currentScreenClass = getCurrentScreenClass();
+
+      var screenClassChanged = this.screenClass !== currentScreenClass;
+      if (screenClassChanged) {
+        this.screenClass = currentScreenClass;
+        this.loadCurrentApiLayout();
+      }
+    },
+
+    loadCurrentApiLayout() {
+      this.apiModel = this.$store.state.apiLayouts.apis[
+        this.$store.state.apiLayouts.currentApiId
+      ];
+      console.log(this.screenClass);
+      this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
+      console.log(this.apiLayout);
       this.setDynamicContentHeight();
     },
 
