@@ -80,8 +80,7 @@ import { getCurrentScreenClass } from "../utils/responsive-utils";
 import { FORM, HEADER, LIST } from "../types/layout-item-types";
 import {
   DYNAMIC_CONTENT_HEIGHT_UPDATED,
-  LAYOUT_UPDATED,
-  SCREEN_CLASS_CHANGED
+  LAYOUT_UPDATED
 } from "../types/event-types";
 
 export default {

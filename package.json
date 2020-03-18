@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "bin-pack": "^1.0.2",
     "core-js": "^2.6.5",
     "popper.js": "^1.16.0",
     "string-pixel-width": "^1.10.0",
