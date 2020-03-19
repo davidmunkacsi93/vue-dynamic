@@ -105,6 +105,8 @@ export default {
 
     loadCurrentApiLayout() {
       var currentApiId = this.$store.state.apiLayouts.currentApiId;
+      console.log(currentApiId);
+
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
       this.tags = this.getTags(this.apiLayout);

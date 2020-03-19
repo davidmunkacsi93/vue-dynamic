@@ -3,11 +3,7 @@ import GridLayout from "vue-grid-layout";
 import GridLayoutBase from "../components/GridLayoutBase";
 import EventBus from "../utils/event-bus.js";
 import { SCREEN_CLASS_CHANGED } from "../types/event-types";
-import {
-  SET_API_LAYOUT_ITEMS,
-  SET_API_LAYOUTS,
-  SET_API_LAYOUT_COMPACTED
-} from "../types/action-types";
+import { SET_API_LAYOUT_ITEMS } from "../types/action-types";
 
 export default {
   mixins: [GridLayoutBase, GridLayout],
@@ -23,22 +19,15 @@ export default {
     }, 1000);
   },
   methods: {
-    onLayoutUpdated() {
-      this.layoutUpdate();
-    },
     onScreenClassChanged() {
       this.compactLayout();
     },
     compactLayout() {
-      if (this.layout.compacted) return;
-      if (this.layout.length <= 0) return;
-      console.log("Compacting...");
+      if (this.layout.length <= 0 || this.layout.compacted) return;
+
       var compactedLayout = this.compact(this.layout);
       var correctedLayout = this.correctBounds(compactedLayout);
-      console.log(correctedLayout);
       this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
-      this.$store.dispatch(SET_API_LAYOUTS, this.layouts);
-      this.$store.dispatch(SET_API_LAYOUT_COMPACTED);
     },
     compact(layout) {
       const compactedItems = [];
@@ -79,6 +68,7 @@ export default {
       if (l1.y >= l2.y + l2.h) return false;
       return true;
     },
+
     sortLayoutItemsByRowCol(layout) {
       return [].concat(layout).sort(function(a, b) {
         if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
@@ -87,6 +77,7 @@ export default {
         return -1;
       });
     },
+
     correctBounds(layout) {
       const corrected = [];
       for (let i = 0, len = layout.length; i < len; i++) {

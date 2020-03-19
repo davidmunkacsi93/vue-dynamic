@@ -1,6 +1,5 @@
 import {
   LOAD_API_LAYOUT,
-  REMOVE_FORM,
   SET_API_LAYOUT_ITEMS,
   SAVE_API_LAYOUT,
   LOAD_APIS,
@@ -9,9 +8,7 @@ import {
   ENABLE_EDIT_MODE_API_LAYOUT,
   SET_API_ITEM_HEIGHT,
   SET_API_ITEM_WIDTH,
-  SET_API_ITEM_INTIAILIZED,
-  SET_API_LAYOUTS,
-  SET_API_LAYOUT_COMPACTED
+  SET_API_ITEM_INTIAILIZED
 } from "../../types/action-types";
 import { getCurrentScreenClass } from "../../utils/responsive-utils";
 
@@ -117,32 +114,18 @@ const mutations = {
 
   setApiLayoutItems(state, layoutItems) {
     var currentScreenClass = getCurrentScreenClass();
-    state.apis[state.currentApiId].apiLayouts[currentScreenClass] = layoutItems;
-  },
+    var currentApiLayout =
+      state.apis[state.currentApiId].apiLayouts[currentScreenClass];
 
-  setApiLayoutCompacted(state) {
-    var currentScreenClass = getCurrentScreenClass();
-
-    state.apis[state.currentApiId].apiLayouts[
-      currentScreenClass
-    ].compacted = true;
-  },
-
-  setApiLayouts(state, layouts) {
-    var currentApiLayouts = state.apis[state.currentApiId].apiLayouts;
-    if (!currentApiLayouts) {
-      state.apis[state.currentApiId].apiLayouts = layouts;
-    } else {
-      var screenClasses = Object.keys(layouts);
-      screenClasses.forEach(screenClass => {
-        currentApiLayouts[screenClass] = layouts[screenClass];
-      });
-    }
+    layoutItems.forEach(layoutItem => {
+      var index = currentApiLayout.findIndex(
+        item => item.uuid == layoutItem.uuid
+      );
+      state.apis[state.currentApiId].apiLayouts[currentScreenClass][
+        index
+      ] = layoutItem;
+    });
   }
-
-  // removeForm(state, formId) {
-  //   // TODO
-  // }
 };
 
 const actions = {
@@ -164,9 +147,6 @@ const actions = {
   saveApiLayout({ commit }) {
     commit(SAVE_API_LAYOUT);
   },
-  setApiLayouts({ commit }, layouts) {
-    commit(SET_API_LAYOUTS, layouts);
-  },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);
     commit(SAVE_API_LAYOUT);
@@ -179,13 +159,6 @@ const actions = {
   },
   setApiItemWidth({ commit }, payload) {
     commit(SET_API_ITEM_WIDTH, payload);
-  },
-  setApiLayoutCompacted({ commit }) {
-    commit(SET_API_LAYOUT_COMPACTED);
-    commit(SAVE_API_LAYOUT);
-  },
-  removeForm({ commit }, formId) {
-    commit(REMOVE_FORM, formId);
   }
 };
 
