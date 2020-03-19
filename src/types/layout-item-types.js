@@ -1,4 +1,5 @@
 export const CONTENT = "CONTENT";
+export const CHIPS = "CHIPS";
 export const DATE_PICKER = "DATE_PICKER";
 export const DROP_DOWN = "DROP_DOWN";
 export const FORM = "FORM";

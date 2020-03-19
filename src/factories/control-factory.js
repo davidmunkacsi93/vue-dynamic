@@ -4,9 +4,9 @@ import {
   NUMBER_INPUT,
   FLOAT_INPUT,
   TEXT_INPUT,
-  LIST,
   DATE_PICKER,
-  PASSWORD_INPUT
+  PASSWORD_INPUT,
+  CHIPS
 } from "../types/layout-item-types";
 import { getLastURLSegment } from "../utils/helpers";
 
@@ -107,8 +107,16 @@ class ControlFactory {
         control.element = SWITCH;
         break;
       case "array":
-        control.element = LIST;
-        // TODO: How to display this?
+        if (parameter.item) {
+          if (parameter.items.enum) {
+            let dropDown = this.createDropDown(parameter.items);
+            control = { ...control, ...dropDown };
+          } else if (parameter.items.type === "string") {
+            control.element = CHIPS;
+          }
+        } else if (parameter.schema) {
+          // Not supported.
+        }
         break;
       case "object":
         console.log(parameter);
@@ -118,15 +126,26 @@ class ControlFactory {
     }
 
     if (parameter.enum) {
-      if (parameter.enum.every(value => value === true || value === false)) {
-        control.element = SWITCH;
-      } else {
-        control.element = DROP_DOWN;
-        control.values = parameter.enum;
-      }
-      control.description = parameter.description;
-      control.default = parameter.default;
+      let dropDown = this.createDropDown(parameter);
+      control = {
+        ...control,
+        ...dropDown
+      };
     }
+    return control;
+  }
+
+  createDropDown(parameter) {
+    var control = {};
+    if (parameter.enum.every(value => value === true || value === false)) {
+      control.element = SWITCH;
+    } else {
+      control.element = DROP_DOWN;
+      control.values = parameter.enum;
+    }
+    control.description = parameter.description;
+    control.default = parameter.default;
+
     return control;
   }
 }
