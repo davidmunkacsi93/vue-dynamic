@@ -7,6 +7,7 @@ class DynamicListFactory {
     var dynamicList = {
       httpMethod: httpMethod.toUpperCase(),
       path: path,
+      tags: apiMethod.tags,
       type: LIST,
       controls: []
     };

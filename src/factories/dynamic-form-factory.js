@@ -13,8 +13,12 @@ class DynamicFormFactory {
     if (apiMethod.summary) {
       dynamicComponent.description = apiMethod.summary;
     }
+
     dynamicComponent.httpMethod = httpMethod.toUpperCase();
     dynamicComponent.type = FORM;
+
+    dynamicComponent.tags = apiMethod.tags;
+
     if (apiMethod.parameters) {
       dynamicComponent.controls = ControlFactory.createControlsForParameters(
         apiMethod,
