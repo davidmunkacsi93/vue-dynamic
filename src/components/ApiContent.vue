@@ -19,16 +19,26 @@
         ></api-tab-content>
       </md-tab>
     </md-tabs>
+    <api-dialogs
+      :requestFailed="requestFailed"
+      :requestSuccessful="requestSuccessful"
+      :errorMessage="errorMessage"
+      :successMessage="successMessage"
+    ></api-dialogs>
   </div>
 </template>
 <script>
 import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
 
+import ApiDialogs from "./ApiDialogs.vue";
 import ApiTabContent from "../components/ApiTabContent";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
+import EventBus from "../utils/event-bus";
+import { REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../types/event-types";
 
 export default {
   components: {
+    ApiDialogs,
     ApiTabContent
   },
   data() {
@@ -41,6 +51,11 @@ export default {
       tags: [],
       apiModel: {},
 
+      requestFailed: false,
+      requestSuccessful: false,
+      errorMessage: "",
+      successMessage: "",
+
       apiVersion: null,
       baseURL: null,
       description: null,
@@ -49,6 +64,8 @@ export default {
   },
   created() {
     window.addEventListener("resize", this.onWindowResize);
+    EventBus.$on(REQUEST_FAILED, this.onRequestFailed);
+    EventBus.$on(REQUEST_SUCCESSFUL, this.onRequestSuccessful);
   },
 
   beforeDestroy() {
@@ -90,6 +107,14 @@ export default {
   },
 
   methods: {
+    onRequestFailed(payload) {
+      this.requestFailed = true;
+      this.errorMessage = payload.errorMessage;
+    },
+    onRequestSuccessful(payload) {
+      this.requestSuccessful = true;
+      this.successMessage = payload.successMessage;
+    },
     onWindowResize() {
       var currentScreenClass = getCurrentScreenClass();
 
@@ -104,14 +129,11 @@ export default {
 
     loadCurrentApiLayout() {
       var currentApiId = this.$store.state.apiLayouts.currentApiId;
-      console.log(currentApiId);
 
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
-      console.log(this.apiLayout);
 
       this.tags = this.getTags(this.apiLayout);
-      console.log(this.tags);
       this.tags.forEach(tag => {
         this.apiLayoutByTags[tag] = this.apiLayout.filter(layoutItem => {
           if (!layoutItem.tags) return false;

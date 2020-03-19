@@ -1,5 +1,7 @@
 <script>
 import { REMOVE_FORM } from "../types/action-types";
+import EventBus from "../utils/event-bus";
+import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
 
 export default {
   props: {
@@ -44,8 +46,12 @@ export default {
       };
       this.$http
         .request(configuration)
-        .then(response => console.log(response))
-        .catch(reason => console.error(reason));
+        .then(response => {
+          EventBus.$emit(REQUEST_SUCCESSFUL, { successMessage: response });
+        })
+        .catch(reason => {
+          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason });
+        });
       console.log(this.httpMethod);
       console.log(this.baseURL + this.path);
     },
