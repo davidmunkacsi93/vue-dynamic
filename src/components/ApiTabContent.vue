@@ -77,7 +77,13 @@ import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
 
-import { FORM, HEADER, LIST, GRID, SEARCH_FORM } from "../types/layout-item-types";
+import {
+  FORM,
+  HEADER,
+  LIST,
+  GRID,
+  SEARCH_FORM
+} from "../types/layout-item-types";
 
 export default {
   components: {
