@@ -26,6 +26,7 @@ class DefaultApiLayoutFactory {
       initialized: false,
       apiVersion: apiVersion,
       description: description,
+      tags: [],
       title: title,
       type: HEADER
     };

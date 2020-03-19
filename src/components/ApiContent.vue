@@ -13,27 +13,19 @@
         :id="'tab-' + tag"
         :md-label="tag"
       >
-        {{ tag }}
+        <api-tab-content
+          :apiLayout="apiLayoutByTags[tag]"
+          :baseURL="baseURL"
+        ></api-tab-content>
       </md-tab>
     </md-tabs>
   </div>
 </template>
 <script>
-import {
-  LOAD_API_LAYOUT,
-  SAVE_API_LAYOUT,
-  SET_CONTENT_HEIGHT
-} from "../types/action-types";
+import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
 
 import ApiTabContent from "../components/ApiTabContent";
-import EventBus from "../utils/event-bus";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
-
-import { FORM, HEADER, LIST } from "../types/layout-item-types";
-import {
-  DYNAMIC_CONTENT_HEIGHT_UPDATED,
-  LAYOUT_UPDATED
-} from "../types/event-types";
 
 export default {
   components: {
@@ -44,11 +36,8 @@ export default {
       currentApiId: 0,
       rowHeight: 30,
 
-      FORM: FORM,
-      HEADER: HEADER,
-      LIST: LIST,
-
       apiLayout: [],
+      apiLayoutByTags: {},
       tags: [],
       apiModel: {},
 
@@ -59,25 +48,20 @@ export default {
     };
   },
   created() {
-    EventBus.$on(LAYOUT_UPDATED, this.setDynamicContentHeight);
     window.addEventListener("resize", this.onWindowResize);
   },
 
   beforeDestroy() {
-    EventBus.$off(LAYOUT_UPDATED, this.setDynamicContentHeight);
     window.removeEventListener("resize", this.onWindowResize);
   },
 
   mounted() {
     this.currentApiId = this.$router.currentRoute.params.apiId;
     this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
-    this.setDynamicContentHeight();
     this.onWindowResize();
   },
 
-  beforeUpdate() {
-    this.setDynamicContentHeight();
-  },
+  beforeUpdate() {},
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -124,15 +108,18 @@ export default {
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
       this.tags = this.getTags(this.apiLayout);
+      this.tags.forEach(tag => {
+        this.apiLayoutByTags[tag] = this.apiLayout.filter(layoutItem => {
+          if (!layoutItem.tags) return false;
 
-      console.log(this.tags);
+          return layoutItem.tags.includes(tag);
+        });
+      });
 
       this.apiVersion = this.apiModel.apiVersion;
       this.baseURL = this.apiModel.serverURL;
       this.description = this.apiModel.description;
       this.title = this.apiModel.title;
-
-      this.setDynamicContentHeight();
     },
 
     getTags(apiLayout) {
@@ -143,19 +130,12 @@ export default {
         .filter(
           (value, index, collection) => collection.indexOf(value) === index
         );
-    },
-
-    setDynamicContentHeight() {
-      var dynamicContent = this.$parent.$parent.$parent;
-      console.log(dynamicContent);
-      var rowHeight = this.$parent.$parent.$parent.$parent.rowHeight;
-      var apiContentHeight = this.$refs.apiContent.clientHeight;
-      dynamicContent.innerH = Math.ceil(apiContentHeight / rowHeight);
-
-      this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
-      EventBus.$emit(DYNAMIC_CONTENT_HEIGHT_UPDATED, dynamicContent.innerH);
     }
   }
 };
 </script>
-<style></style>
+<style>
+.md-tabs-content {
+  height: auto !important;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <api-layout
     ref="apiLayout"
-    :layout="apiLayout"
+    :layout="innerApiLayout"
     :col-num="12"
     :rowHeight="30"
     :margin="[3, 3]"
@@ -12,7 +12,7 @@
     :vertical-compact="true"
     :use-css-transforms="true"
   >
-    <template v-for="item in apiLayout">
+    <template v-for="item in innerApiLayout">
       <grid-item
         :x="item.x"
         :y="item.y"
@@ -71,6 +71,9 @@ import GridItem from "../components/GridItem";
 import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
+
+import { FORM, HEADER, LIST } from "../types/layout-item-types";
+
 export default {
   components: {
     GridItem,
@@ -88,6 +91,18 @@ export default {
       required: true,
       type: String
     }
+  },
+  data() {
+    return {
+      FORM: FORM,
+      HEADER: HEADER,
+      LIST: LIST,
+
+      innerApiLayout: []
+    };
+  },
+  mounted() {
+    this.innerApiLayout = this.apiLayout;
   }
 };
 </script>
