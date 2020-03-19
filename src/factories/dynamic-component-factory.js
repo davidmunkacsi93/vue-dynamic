@@ -1,4 +1,5 @@
 import DynamicFormFactory from "../factories/dynamic-form-factory";
+import DynamicGridFactory from "../factories/dynamic-grid-factory";
 import DynamicListFactory from "../factories/dynamic-list-factory";
 import { FORM, GRID, LIST, SEARCH_FORM } from "../types/layout-item-types";
 
@@ -19,16 +20,27 @@ class DynamicComponentFactory {
         );
         console.log(dynamicComponentType);
         switch (dynamicComponentType) {
+          case FORM:
+            dynamicComponent = DynamicFormFactory.createDynamicForm(
+              path,
+              httpMethod,
+              apiMethod,
+              apiModels
+            );
+            break;
+          case GRID:
+            dynamicComponent = DynamicGridFactory.createDynamicGrid(
+              path,
+              httpMethod,
+              apiMethod,
+              apiModels
+            );
+            break;
+          case SEARCH_FORM:
+            break;
           case LIST:
             console.log(apiMethod);
             dynamicComponent = DynamicListFactory.createDynamicList(
-              path,
-              httpMethod,
-              apiMethod
-            );
-            break;
-          case FORM:
-            dynamicComponent = DynamicFormFactory.createDynamicForm(
               path,
               httpMethod,
               apiMethod,
