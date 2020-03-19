@@ -107,12 +107,13 @@ class ControlFactory {
         control.element = SWITCH;
         break;
       case "array":
-        if (parameter.item) {
+        if (parameter.items) {
           if (parameter.items.enum) {
             let dropDown = this.createDropDown(parameter.items);
             control = { ...control, ...dropDown };
           } else if (parameter.items.type === "string") {
             control.element = CHIPS;
+            control.value = [];
           }
         } else if (parameter.schema) {
           // Not supported.
