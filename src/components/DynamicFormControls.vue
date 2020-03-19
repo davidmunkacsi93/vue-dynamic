@@ -1,6 +1,10 @@
 <template>
   <md-list class="control-list">
     <md-list-item v-for="control in controls" :key="control.order">
+      <md-chips
+        v-if="control.element === CHIPS"
+        v-model="control.value"
+      ></md-chips>
       <md-datepicker
         v-model="control.value"
         v-if="control.element === DATE_PICKER"
