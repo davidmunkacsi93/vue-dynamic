@@ -6,7 +6,7 @@
     <div class="md-subtitle" v-if="description">
       <h3>{{ description }}</h3>
     </div>
-    <md-tabs :md-active-tab="tags[0] + '-' + currentApiId">
+    <md-tabs md-dynamic-height :md-active-tab="tags[0] + '-' + currentApiId">
       <md-tab
         v-for="tag in tags"
         :key="tag + '-' + currentApiId"
@@ -19,18 +19,23 @@
         ></api-tab-content>
       </md-tab>
     </md-tabs>
-    <api-dialogs
-      :requestFailed="requestFailed"
-      :requestSuccessful="requestSuccessful"
-      :errorMessage="errorMessage"
-      :successMessage="successMessage"
-    ></api-dialogs>
+    <md-dialog-alert
+      :md-active.sync="requestSuccessful"
+      md-title="Successful"
+      :md-content="successMessage"
+      md-confirm-text="Ok"
+    />
+    <md-dialog-alert
+      :md-active.sync="requestFailed"
+      md-title="Error"
+      :md-content="errorMessage"
+      md-confirm-text="Ok"
+    />
   </div>
 </template>
 <script>
 import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
 
-import ApiDialogs from "./ApiDialogs.vue";
 import ApiTabContent from "../components/ApiTabContent";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
 import EventBus from "../utils/event-bus";
@@ -38,7 +43,6 @@ import { REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../types/event-types";
 
 export default {
   components: {
-    ApiDialogs,
     ApiTabContent
   },
   data() {
@@ -70,6 +74,8 @@ export default {
 
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
+    EventBus.$off(REQUEST_FAILED, this.onRequestFailed);
+    EventBus.$off(REQUEST_SUCCESSFUL, this.onRequestSuccessful);
   },
 
   mounted() {

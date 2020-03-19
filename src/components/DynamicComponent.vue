@@ -47,10 +47,14 @@ export default {
       this.$http
         .request(configuration)
         .then(response => {
-          EventBus.$emit(REQUEST_SUCCESSFUL, { successMessage: response });
+          console.log(response);
+          EventBus.$emit(REQUEST_SUCCESSFUL, {
+            successMessage: response.toString()
+          });
         })
         .catch(reason => {
-          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason });
+          console.log(reason);
+          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
       console.log(this.httpMethod);
       console.log(this.baseURL + this.path);
