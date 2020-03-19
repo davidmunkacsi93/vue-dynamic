@@ -57,6 +57,7 @@
           :description="item.description"
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
+          :listType="item.listType"
           :path="item.path"
           :uuid="item.uuid"
         ></dynamic-search-form>

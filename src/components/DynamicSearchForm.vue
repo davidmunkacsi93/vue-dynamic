@@ -24,7 +24,14 @@
         <md-tab id="tab-search" md-label="Search">
           <dynamic-form-controls :controls="controls"></dynamic-form-controls>
         </md-tab>
-        <md-tab id="tab-results" md-label="Results"></md-tab>
+        <md-tab id="tab-results" md-label="Results">
+          <dynamic-list
+            v-if="type === LIST"
+            :listType="listType"
+            :values="results"
+          >
+          </dynamic-list>
+        </md-tab>
       </md-tabs>
     </md-card-content>
     <md-card-actions>
@@ -35,36 +42,54 @@
 <script>
 import DynamicComponent from "./DynamicComponent.vue";
 import DynamicFormControls from "./DynamicFormControls";
+import DynamicList from "./DynamicList";
 
-import {
-  DROP_DOWN,
-  FLOAT_INPUT,
-  NUMBER_INPUT,
-  TEXT_INPUT,
-  PASSWORD_INPUT,
-  SWITCH,
-  DATE_PICKER
-} from "../types/layout-item-types";
+import EventBus from "../utils/event-bus";
+import { REQUEST_FAILED } from "../types/event-types";
+import { LIST, GRID } from "../types/layout-item-types";
 
 export default {
   extends: DynamicComponent,
-  components: { DynamicFormControls },
+  components: { DynamicFormControls, DynamicList },
   props: {
     controls: {
       type: Array,
       required: true
+    },
+    listType: {
+      type: String,
+      required: false
     }
   },
   data() {
     return {
-      DATE_PICKER: DATE_PICKER,
-      DROP_DOWN: DROP_DOWN,
-      FLOAT_INPUT: FLOAT_INPUT,
-      NUMBER_INPUT: NUMBER_INPUT,
-      PASSWORD_INPUT: PASSWORD_INPUT,
-      TEXT_INPUT: TEXT_INPUT,
-      SWITCH: SWITCH
+      LIST: LIST,
+      results: []
     };
+  },
+  methods: {
+    callApiMethod() {
+      var configuration = {
+        baseURL: this.baseURL,
+        url: this.path,
+        method: this.httpMethod.toLowerCase()
+      };
+      this.$http
+        .request(configuration)
+        .then(response => {
+          switch (this.type) {
+            case LIST:
+              this.results = response.data;
+              break;
+            case GRID:
+              break;
+          }
+        })
+        .catch(reason => {
+          console.log(reason);
+          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
+        });
+    }
   }
 };
 </script>

@@ -56,8 +56,6 @@ export default {
           console.log(reason);
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
-      console.log(this.httpMethod);
-      console.log(this.baseURL + this.path);
     },
     removeGridItem() {
       this.$store.dispatch(REMOVE_FORM, this.id);
