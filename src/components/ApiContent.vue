@@ -7,8 +7,14 @@
       <h3>{{ description }}</h3>
     </div>
     <md-tabs>
-      <md-tab id="tab-search" md-label="Search"> </md-tab>
-      <md-tab id="tab-results" md-label="Results"></md-tab>
+      <md-tab
+        v-for="(tag, index) in tags"
+        :key="index"
+        :id="'tab-' + tag"
+        :md-label="tag"
+      >
+        {{ tag }}
+      </md-tab>
     </md-tabs>
   </div>
 </template>
@@ -119,6 +125,8 @@ export default {
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
       this.tags = this.getTags(this.apiLayout);
 
+      console.log(this.tags);
+
       this.apiVersion = this.apiModel.apiVersion;
       this.baseURL = this.apiModel.serverURL;
       this.description = this.apiModel.description;
@@ -128,14 +136,13 @@ export default {
     },
 
     getTags(apiLayout) {
-      var tags = apiLayout
+      return apiLayout
         .map(layoutItem => layoutItem.tags)
         .filter(tags => tags)
         .reduce((acc, val) => [...acc, ...val])
         .filter(
           (value, index, collection) => collection.indexOf(value) === index
         );
-      console.log(tags);
     },
 
     setDynamicContentHeight() {
