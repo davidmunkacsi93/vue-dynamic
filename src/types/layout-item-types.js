@@ -11,5 +11,6 @@ export const FLOAT_INPUT = "FLOAT_INPUT";
 export const NUMBER_INPUT = "NUMBER_INPUT";
 export const NAVIGATION_BAR = "NAVIGATION_BAR";
 export const PASSWORD_INPUT = "PASSWORD_INPUT";
+export const SEARCH_FORM = "SEARCH_FORM";
 export const SWITCH = "SWITCH";
 export const TEXT_INPUT = "TEXT_INPUT";

@@ -50,7 +50,11 @@
           :uuid="item.uuid"
         ></dynamic-form>
         <dynamic-search-form
-          v-else-if="item.type === LIST"
+          v-else-if="
+            item.type === LIST ||
+              item.type === GRID ||
+              item.type === SEARCH_FORM
+          "
           :type="LIST"
           :baseURL="baseURL"
           :controls="item.controls"
@@ -73,7 +77,7 @@ import DynamicForm from "../components/DynamicForm";
 import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
 
-import { FORM, HEADER, LIST } from "../types/layout-item-types";
+import { FORM, HEADER, LIST, GRID, SEARCH_FORM } from "../types/layout-item-types";
 
 export default {
   components: {
@@ -97,7 +101,9 @@ export default {
     return {
       FORM: FORM,
       HEADER: HEADER,
+      GRID: GRID,
       LIST: LIST,
+      SEARCH_FORM: SEARCH_FORM,
 
       innerApiLayout: []
     };

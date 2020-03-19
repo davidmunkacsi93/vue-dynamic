@@ -1,6 +1,6 @@
 import DynamicFormFactory from "../factories/dynamic-form-factory";
 import DynamicListFactory from "../factories/dynamic-list-factory";
-import { FORM, GRID, LIST } from "../types/layout-item-types";
+import { FORM, GRID, LIST, SEARCH_FORM } from "../types/layout-item-types";
 
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
@@ -78,6 +78,8 @@ class DynamicComponentFactory {
         case "array":
           if (schema.items.type === "string") {
             return LIST;
+          } else if (schema.items.$ref) {
+            return GRID;
           }
           break;
         case "string":
@@ -85,7 +87,7 @@ class DynamicComponentFactory {
       }
     }
 
-    return FORM;
+    return SEARCH_FORM;
   }
 }
 
