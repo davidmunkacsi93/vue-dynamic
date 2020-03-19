@@ -50,7 +50,8 @@ import {
   TEXT_INPUT,
   PASSWORD_INPUT,
   SWITCH,
-  DATE_PICKER
+  DATE_PICKER,
+  CHIPS
 } from "../types/layout-item-types";
 
 export default {
@@ -62,6 +63,7 @@ export default {
   },
   data() {
     return {
+      CHIPS: CHIPS,
       DATE_PICKER: DATE_PICKER,
       DROP_DOWN: DROP_DOWN,
       FLOAT_INPUT: FLOAT_INPUT,
