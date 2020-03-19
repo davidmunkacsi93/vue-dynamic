@@ -1,68 +1,16 @@
 <template>
-  <api-layout
-    ref="apiLayout"
-    :layout="apiLayout"
-    :col-num="12"
-    :rowHeight="30"
-    :margin="[3, 3]"
-    :is-draggable="true"
-    :is-resizable="true"
-    :is-mirrored="false"
-    :responsive="true"
-    :vertical-compact="true"
-    :use-css-transforms="true"
-  >
-    <template v-for="item in apiLayout">
-      <grid-item
-        :x="item.x"
-        :y="item.y"
-        :w="item.w"
-        :h="item.h"
-        :i="item.i"
-        :margin="[3, 3]"
-        :rowHeight="30"
-        :isDraggable="item.isDraggable"
-        :isResizable="item.isResizable"
-        :initialized="item.initialized"
-        :static="item.static"
-        :key="item.i"
-        :uuid="item.uuid"
-      >
-        <dynamic-header
-          v-if="item.type === HEADER"
-          :type="HEADER"
-          :baseURL="baseURL"
-          :apiVersion="item.apiVersion"
-          :description="item.description"
-          :initialized="item.initialized"
-          :title="item.title"
-          :uuid="item.uuid"
-        ></dynamic-header>
-        <dynamic-form
-          v-else-if="item.type === FORM"
-          :type="FORM"
-          :baseURL="baseURL"
-          :controls="item.controls"
-          :description="item.description"
-          :httpMethod="item.httpMethod"
-          :initialized="item.initialized"
-          :path="item.path"
-          :uuid="item.uuid"
-        ></dynamic-form>
-        <dynamic-search-form
-          v-else-if="item.type === LIST"
-          :type="LIST"
-          :baseURL="baseURL"
-          :controls="item.controls"
-          :description="item.description"
-          :httpMethod="item.httpMethod"
-          :initialized="item.initialized"
-          :path="item.path"
-          :uuid="item.uuid"
-        ></dynamic-search-form>
-      </grid-item>
-    </template>
-  </api-layout>
+  <div ref="apiContent">
+    <div ref="title" class="md-title">
+      <h1>{{ title }} - {{ apiVersion }}</h1>
+    </div>
+    <div class="md-subtitle" v-if="description">
+      <h3>{{ description }}</h3>
+    </div>
+    <md-tabs>
+      <md-tab id="tab-search" md-label="Search"> </md-tab>
+      <md-tab id="tab-results" md-label="Results"></md-tab>
+    </md-tabs>
+  </div>
 </template>
 <script>
 import {
@@ -71,12 +19,7 @@ import {
   SET_CONTENT_HEIGHT
 } from "../types/action-types";
 
-import ApiLayout from "../components/ApiLayout";
-import GridItem from "../components/GridItem";
-import DynamicForm from "../components/DynamicForm";
-import DynamicHeader from "../components/DynamicHeader";
-import DynamicSearchForm from "../components/DynamicSearchForm";
-
+import ApiTabContent from "../components/ApiTabContent";
 import EventBus from "../utils/event-bus";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
 
@@ -88,13 +31,8 @@ import {
 
 export default {
   components: {
-    GridItem,
-    ApiLayout,
-    DynamicForm,
-    DynamicHeader,
-    DynamicSearchForm
+    ApiTabContent
   },
-
   data() {
     return {
       currentApiId: 0,
@@ -105,9 +43,13 @@ export default {
       LIST: LIST,
 
       apiLayout: [],
+      tags: [],
       apiModel: {},
+
+      apiVersion: null,
       baseURL: null,
-      compacted: false
+      description: null,
+      title: null
     };
   },
   created() {
@@ -175,16 +117,33 @@ export default {
       var currentApiId = this.$store.state.apiLayouts.currentApiId;
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
+      this.tags = this.getTags(this.apiLayout);
+
+      this.apiVersion = this.apiModel.apiVersion;
       this.baseURL = this.apiModel.serverURL;
-      console.log(this.baseURL);
+      this.description = this.apiModel.description;
+      this.title = this.apiModel.title;
+
       this.setDynamicContentHeight();
+    },
+
+    getTags(apiLayout) {
+      var tags = apiLayout
+        .map(layoutItem => layoutItem.tags)
+        .filter(tags => tags)
+        .reduce((acc, val) => [...acc, ...val])
+        .filter(
+          (value, index, collection) => collection.indexOf(value) === index
+        );
+      console.log(tags);
     },
 
     setDynamicContentHeight() {
       var dynamicContent = this.$parent.$parent.$parent;
+      console.log(dynamicContent);
       var rowHeight = this.$parent.$parent.$parent.$parent.rowHeight;
-      var apiLayoutHeight = this.$refs.apiLayout.$el.clientHeight;
-      dynamicContent.innerH = Math.ceil(apiLayoutHeight / rowHeight);
+      var apiContentHeight = this.$refs.apiContent.clientHeight;
+      dynamicContent.innerH = Math.ceil(apiContentHeight / rowHeight);
 
       this.$store.dispatch(SET_CONTENT_HEIGHT, dynamicContent.innerH);
       EventBus.$emit(DYNAMIC_CONTENT_HEIGHT_UPDATED, dynamicContent.innerH);
