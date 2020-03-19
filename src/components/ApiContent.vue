@@ -6,11 +6,11 @@
     <div class="md-subtitle" v-if="description">
       <h3>{{ description }}</h3>
     </div>
-    <md-tabs>
+    <md-tabs :md-active-tab="tags[0] + '-' + currentApiId">
       <md-tab
-        v-for="(tag, index) in tags"
-        :key="index"
-        :id="'tab-' + tag"
+        v-for="tag in tags"
+        :key="tag + '-' + currentApiId"
+        :id="tag + '-' + currentApiId"
         :md-label="tag"
       >
         <api-tab-content
@@ -59,9 +59,8 @@ export default {
     this.currentApiId = this.$router.currentRoute.params.apiId;
     this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
     this.onWindowResize();
+    this.loadCurrentApiLayout();
   },
-
-  beforeUpdate() {},
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -109,7 +108,10 @@ export default {
 
       this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
+      console.log(this.apiLayout);
+
       this.tags = this.getTags(this.apiLayout);
+      console.log(this.tags);
       this.tags.forEach(tag => {
         this.apiLayoutByTags[tag] = this.apiLayout.filter(layoutItem => {
           if (!layoutItem.tags) return false;

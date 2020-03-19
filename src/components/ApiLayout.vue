@@ -29,6 +29,7 @@ export default {
       var correctedLayout = this.correctBounds(compactedLayout);
       this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
     },
+    
     compact(layout) {
       const compactedItems = [];
       const sorted = this.sortLayoutItemsByRowCol(layout);
