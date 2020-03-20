@@ -1,7 +1,13 @@
 import DynamicFormFactory from "../factories/dynamic-form-factory";
 import DynamicGridFactory from "../factories/dynamic-grid-factory";
 import DynamicListFactory from "../factories/dynamic-list-factory";
-import { FORM, GRID, LIST, SEARCH_FORM } from "../types/layout-item-types";
+import {
+  FORM,
+  GRID,
+  LIST,
+  SEARCH_FORM,
+  READ_ONLY_FORM
+} from "../types/layout-item-types";
 
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
@@ -84,7 +90,7 @@ class DynamicComponentFactory {
 
   getDynamicComponentTypeForSchema(schema) {
     if (schema.$ref) {
-      return GRID;
+      return READ_ONLY_FORM;
     } else if (schema.type) {
       switch (schema.type) {
         case "array":

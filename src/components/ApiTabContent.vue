@@ -55,12 +55,13 @@
               item.type === GRID ||
               item.type === SEARCH_FORM
           "
-          :type="LIST"
+          :type="item.type"
           :baseURL="baseURL"
           :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
+          :gridModel="item.gridModel"
           :listType="item.listType"
           :path="item.path"
           :uuid="item.uuid"

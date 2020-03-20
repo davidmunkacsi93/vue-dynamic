@@ -31,6 +31,12 @@
             :values="results"
           >
           </dynamic-list>
+          <dynamic-grid
+            v-else-if="type === GRID"
+            :gridModel="gridModel"
+            :values="results"
+          >
+          </dynamic-grid>
         </md-tab>
       </md-tabs>
     </md-card-content>
@@ -42,6 +48,7 @@
 <script>
 import DynamicComponent from "./DynamicComponent.vue";
 import DynamicFormControls from "./DynamicFormControls";
+import DynamicGrid from "./DynamicGrid";
 import DynamicList from "./DynamicList";
 
 import EventBus from "../utils/event-bus";
@@ -50,19 +57,22 @@ import { LIST, GRID } from "../types/layout-item-types";
 
 export default {
   extends: DynamicComponent,
-  components: { DynamicFormControls, DynamicList },
+  components: { DynamicFormControls, DynamicGrid, DynamicList },
   props: {
     controls: {
       type: Array,
       required: true
     },
+    gridModel: {
+      required: false
+    },
     listType: {
-      type: String,
       required: false
     }
   },
   data() {
     return {
+      GRID: GRID,
       LIST: LIST,
       results: []
     };
