@@ -52,7 +52,7 @@
         <dynamic-search-form
           v-else-if="
             item.type === LIST ||
-              item.type === GRID ||
+              item.type === TABLE ||
               item.type === SEARCH_FORM
           "
           :type="item.type"
@@ -61,7 +61,7 @@
           :description="item.description"
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
-          :gridModel="item.gridModel"
+          :tableModel="item.tableModel"
           :listType="item.listType"
           :path="item.path"
           :uuid="item.uuid"
@@ -82,7 +82,7 @@ import {
   FORM,
   HEADER,
   LIST,
-  GRID,
+  TABLE,
   SEARCH_FORM
 } from "../types/layout-item-types";
 
@@ -108,7 +108,7 @@ export default {
     return {
       FORM: FORM,
       HEADER: HEADER,
-      GRID: GRID,
+      TABLE: TABLE,
       LIST: LIST,
       SEARCH_FORM: SEARCH_FORM,
 

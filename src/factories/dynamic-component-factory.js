@@ -1,9 +1,10 @@
 import DynamicFormFactory from "../factories/dynamic-form-factory";
-import DynamicGridFactory from "../factories/dynamic-grid-factory";
 import DynamicListFactory from "../factories/dynamic-list-factory";
+import DynamicTableFactory from "../factories/dynamic-table-factory";
+
 import {
   FORM,
-  GRID,
+  TABLE,
   LIST,
   SEARCH_FORM,
   READ_ONLY_FORM
@@ -34,8 +35,8 @@ class DynamicComponentFactory {
               apiModels
             );
             break;
-          case GRID:
-            dynamicComponent = DynamicGridFactory.createDynamicGrid(
+          case TABLE:
+            dynamicComponent = DynamicTableFactory.createDynamicTable(
               path,
               httpMethod,
               apiMethod,
@@ -97,7 +98,7 @@ class DynamicComponentFactory {
           if (schema.items.type === "string") {
             return LIST;
           } else if (schema.items.$ref) {
-            return GRID;
+            return TABLE;
           }
           break;
         case "string":

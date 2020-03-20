@@ -31,12 +31,12 @@
             :values="results"
           >
           </dynamic-list>
-          <dynamic-grid
-            v-else-if="type === GRID"
-            :gridModel="gridModel"
+          <dynamic-table
+            v-else-if="type === TABLE"
+            :tableModel="tableModel"
             :values="results"
           >
-          </dynamic-grid>
+          </dynamic-table>
         </md-tab>
       </md-tabs>
     </md-card-content>
@@ -48,22 +48,22 @@
 <script>
 import DynamicComponent from "./DynamicComponent.vue";
 import DynamicFormControls from "./DynamicFormControls";
-import DynamicGrid from "./DynamicGrid";
 import DynamicList from "./DynamicList";
+import DynamicTable from "./DynamicTable";
 
 import EventBus from "../utils/event-bus";
 import { REQUEST_FAILED } from "../types/event-types";
-import { LIST, GRID } from "../types/layout-item-types";
+import { LIST, TABLE } from "../types/layout-item-types";
 
 export default {
   extends: DynamicComponent,
-  components: { DynamicFormControls, DynamicGrid, DynamicList },
+  components: { DynamicFormControls, DynamicTable, DynamicList },
   props: {
     controls: {
       type: Array,
       required: true
     },
-    gridModel: {
+    tableModel: {
       required: false
     },
     listType: {
@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      GRID: GRID,
+      TABLE: TABLE,
       LIST: LIST,
       results: []
     };
@@ -91,7 +91,7 @@ export default {
             case LIST:
               this.results = response.data;
               break;
-            case GRID:
+            case TABLE:
               break;
           }
         })

@@ -1,14 +1,14 @@
-import { GRID } from "../types/layout-item-types";
+import { TABLE } from "../types/layout-item-types";
 import { getLastURLSegment } from "../utils/helpers";
 import ControlFactory from "./control-factory";
 
-class DynamicGridFactory {
-  createDynamicGrid(path, httpMethod, apiMethod, apiModels) {
+class DynamicTableFactory {
+  createDynamicTable(path, httpMethod, apiMethod, apiModels) {
     var dynamicGrid = {
       httpMethod: httpMethod.toUpperCase(),
       path: path,
       tags: apiMethod.tags,
-      type: GRID,
+      type: TABLE,
       controls: []
     };
 
@@ -17,14 +17,14 @@ class DynamicGridFactory {
       dynamicGrid.controls = controls;
     }
 
-    dynamicGrid.gridModel = this.getGridModel(apiMethod, apiModels);
+    dynamicGrid.tableModel = this.getTableModel(apiMethod, apiModels);
 
     console.log(dynamicGrid);
 
     return dynamicGrid;
   }
 
-  getGridModel(apiMethod, apiModels) {
+  getTableModel(apiMethod, apiModels) {
     var responseOk = apiMethod.responses["200"];
     if (responseOk) {
       var modelRef;
@@ -34,16 +34,16 @@ class DynamicGridFactory {
       } else if (responseOk.schema) {
         modelRef = responseOk.schema.$ref || responseOk.schema.items.$ref;
       } else {
-        throw new Error("Could not grid model.");
+        throw new Error("Could not determine table model.");
       }
       var modelKey = getLastURLSegment(modelRef);
       return apiModels.find(model => model.type === modelKey);
     } else {
-      throw new Error("Could not grid model.");
+      throw new Error("Could not determine table model.");
     }
   }
 }
 
-const instance = new DynamicGridFactory();
+const instance = new DynamicTableFactory();
 Object.freeze(instance);
 export default instance;
