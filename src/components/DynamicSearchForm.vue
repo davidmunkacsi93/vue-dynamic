@@ -1,9 +1,13 @@
 <template>
-  <md-card ref="dynamicComponent" class="dynamic-component" md-with-hover>
-    <md-card-header>
+  <md-card
+    ref="dynamicComponent"
+    class="md-layout dynamic-component"
+    md-with-hover
+  >
+    <md-card-header class="md-layout-item md-size-100">
       <md-card-header-text>
         <div class="md-title" ref="title">{{ path }}</div>
-        <div class="md-subhead">{{ description }}</div>
+        <div class="md-subhead" v-if="description">{{ description }}</div>
       </md-card-header-text>
       <md-menu md-size="big" md-direction="bottom-end">
         <md-button class="md-icon-button" md-menu-trigger>
@@ -19,8 +23,14 @@
       </md-menu>
     </md-card-header>
 
-    <md-card-content>
-      <md-tabs>
+    <md-progress-bar
+      v-if="isLoading"
+      class="md-layout-item md-size-100"
+      md-mode="query"
+    ></md-progress-bar>
+
+    <md-card-content class="md-layout-item md-size-100">
+      <md-tabs :md-active-tab="activeTab">
         <md-tab id="tab-search" md-label="Search">
           <dynamic-form-controls :controls="controls"></dynamic-form-controls>
         </md-tab>
@@ -40,7 +50,7 @@
         </md-tab>
       </md-tabs>
     </md-card-content>
-    <md-card-actions>
+    <md-card-actions class="md-layout-item md-size-100">
       <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
@@ -74,26 +84,40 @@ export default {
     return {
       TABLE: TABLE,
       LIST: LIST,
-      results: []
+
+      results: [],
+      activeTab: "tab-search",
+
+      isLoading: false
     };
   },
   methods: {
     callApiMethod() {
+      this.isLoading = true;
+
       var configuration = {
         baseURL: this.baseURL,
         url: this.path,
         method: this.httpMethod.toLowerCase()
       };
+
       this.$http
         .request(configuration)
         .then(response => {
+          this.isLoading = false;
+          this.activeTab = "tab-results";
           this.results = response.data;
         })
         .catch(reason => {
-          console.log(reason);
+          this.isLoading = false;
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
     }
   }
 };
 </script>
+<style>
+.dynamic-component {
+  height: 100% !important;
+}
+</style>
