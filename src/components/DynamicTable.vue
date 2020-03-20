@@ -7,11 +7,7 @@
     </draggable>
 
     <md-table-row v-for="item in list" :key="item.name">
-      <md-table-cell
-        :md-label="{ header }"
-        v-for="header in headers"
-        :key="header"
-      >
+      <md-table-cell v-for="header in headers" :md-label="header" :key="header">
         {{ item[header] }}
       </md-table-cell>
     </md-table-row>
