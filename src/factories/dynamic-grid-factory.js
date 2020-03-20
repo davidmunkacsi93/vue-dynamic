@@ -28,10 +28,11 @@ class DynamicGridFactory {
     var responseOk = apiMethod.responses["200"];
     if (responseOk) {
       var modelRef;
+      console.log(responseOk);
       if (responseOk.content) {
         modelRef = responseOk.content["application/json"].$ref;
       } else if (responseOk.schema) {
-        modelRef = responseOk.schema.$ref;
+        modelRef = responseOk.schema.$ref || responseOk.schema.items.$ref;
       } else {
         throw new Error("Could not grid model.");
       }
