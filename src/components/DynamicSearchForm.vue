@@ -33,7 +33,7 @@
           </dynamic-list>
           <dynamic-table
             v-else-if="type === TABLE"
-            :tableModel="tableModel"
+            :model="tableModel"
             :values="results"
           >
           </dynamic-table>
@@ -87,13 +87,7 @@ export default {
       this.$http
         .request(configuration)
         .then(response => {
-          switch (this.type) {
-            case LIST:
-              this.results = response.data;
-              break;
-            case TABLE:
-              break;
-          }
+          this.results = response.data;
         })
         .catch(reason => {
           console.log(reason);
