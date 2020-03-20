@@ -4,7 +4,7 @@ import ControlFactory from "./control-factory";
 
 class DynamicTableFactory {
   createDynamicTable(path, httpMethod, apiMethod, apiModels) {
-    var dynamicGrid = {
+    var dynamicTable = {
       httpMethod: httpMethod.toUpperCase(),
       path: path,
       tags: apiMethod.tags,
@@ -14,14 +14,14 @@ class DynamicTableFactory {
 
     if (apiMethod.parameters) {
       var controls = ControlFactory.createControlsForParameters(apiMethod);
-      dynamicGrid.controls = controls;
+      dynamicTable.controls = controls;
     }
 
-    dynamicGrid.tableModel = this.getTableModel(apiMethod, apiModels);
+    dynamicTable.tableModel = this.getTableModel(apiMethod, apiModels);
 
-    console.log(dynamicGrid);
+    console.log(dynamicTable);
 
-    return dynamicGrid;
+    return dynamicTable;
   }
 
   getTableModel(apiMethod, apiModels) {
