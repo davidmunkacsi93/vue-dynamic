@@ -30,8 +30,8 @@
     ></md-progress-bar>
 
     <md-card-content class="md-layout-item md-size-100">
-      <md-tabs :md-active-tab="activeTab">
-        <md-tab id="tab-search" md-label="Search">
+      <md-tabs :md-active-tab.sync="activeTab">
+        <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
           <dynamic-form-controls :controls="controls"></dynamic-form-controls>
         </md-tab>
         <md-tab id="tab-results" md-label="Results">
@@ -92,6 +92,9 @@ export default {
     };
   },
   methods: {
+    onSearchTabClick() {
+      this.activeTab = "tab-search";
+    },
     callApiMethod() {
       this.isLoading = true;
 
@@ -106,6 +109,7 @@ export default {
         .then(response => {
           this.isLoading = false;
           this.activeTab = "tab-results";
+          console.log(this.activeTab);
           this.results = response.data;
         })
         .catch(reason => {
