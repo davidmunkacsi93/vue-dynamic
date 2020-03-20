@@ -99,6 +99,12 @@ export default {
       this.isLoading = true;
 
       var configuration = {
+        crossDomain: true,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Headers": "Content-Type"
+        },
         baseURL: this.baseURL,
         url: this.path,
         method: this.httpMethod.toLowerCase()
@@ -109,7 +115,6 @@ export default {
         .then(response => {
           this.isLoading = false;
           this.activeTab = "tab-results";
-          console.log(this.activeTab);
           this.results = response.data;
         })
         .catch(reason => {
@@ -122,6 +127,7 @@ export default {
 </script>
 <style>
 .dynamic-component {
+  width: 100% !important;
   height: 100% !important;
 }
 </style>
