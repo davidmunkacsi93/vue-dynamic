@@ -1,15 +1,17 @@
 <template>
-  <md-table md-card>
-    <md-table-row>
-      <draggable v-model="headers" tag="tr">
-        <md-table-head v-for="header in headers" :key="header" scope="col">
-          {{ header }}
-        </md-table-head>
-      </draggable>
-    </md-table-row>
+  <md-table v-model="list">
+    <draggable v-model="headers" tag="tr">
+      <md-table-head v-for="header in headers" :key="header" scope="col">
+        {{ header }}
+      </md-table-head>
+    </draggable>
 
     <md-table-row v-for="item in list" :key="item.name">
-      <md-table-cell v-for="header in headers" :key="header">
+      <md-table-cell
+        :md-label="{ header }"
+        v-for="header in headers"
+        :key="header"
+      >
         {{ item[header] }}
       </md-table-cell>
     </md-table-row>
