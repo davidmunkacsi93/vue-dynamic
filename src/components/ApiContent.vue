@@ -1,5 +1,5 @@
 <template>
-  <div ref="apiContent">
+  <div ref="apiContent" class="api-content">
     <div ref="title" class="md-title">
       <h1>{{ title }} - {{ apiVersion }}</h1>
     </div>
@@ -169,5 +169,9 @@ export default {
 <style>
 .md-tabs-content {
   height: auto !important;
+}
+
+.api-content {
+  padding: 10px;
 }
 </style>
