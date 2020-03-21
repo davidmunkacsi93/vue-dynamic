@@ -6,7 +6,7 @@ import {
   UPDATE_WIDTH,
   SCREEN_CLASS_CHANGED
 } from "../types/event-types";
-import { SET_API_ITEM_SIZE } from "../types/action-types";
+import { SET_API_ITEM_SIZE, SET_CONTENT_HEIGHT } from "../types/action-types";
 
 export default {
   name: "GridItem",
@@ -54,6 +54,13 @@ export default {
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
     },
+
+    setContentHeightAuto() {
+      let newSize = this.$slots.default[0].elm.getBoundingClientRect();
+      let pos = this.calcWH(newSize.height, newSize.width);
+      this.$store.dispatch(SET_CONTENT_HEIGHT, pos.h);
+    },
+
     autoSize() {
       this.previousW = this.innerW;
       this.previousH = this.innerH;
