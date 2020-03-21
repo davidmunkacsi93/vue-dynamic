@@ -24,9 +24,6 @@ class OpenApiParser {
     );
 
     var defaultLayout = DefaultApiLayoutFactory.getDefaultApiLayout(
-      apiInformation.apiVersion,
-      apiInformation.description,
-      apiInformation.title,
       dynamicComponents
     );
 

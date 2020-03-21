@@ -1,35 +1,12 @@
 import { v1 as uuid } from "uuid";
-import { HEADER } from "../types/layout-item-types";
 
 class DefaultApiLayoutFactory {
-  getDefaultApiLayout(apiVersion, description, title, dynamicComponents) {
+  getDefaultApiLayout(dynamicComponents) {
     var layout = [];
-    var header = this.createHeader(apiVersion, description, title);
-    layout.push(header);
     this.createDynamicComponents(dynamicComponents).forEach(component =>
       layout.push(component)
     );
     return layout;
-  }
-
-  createHeader(apiVersion, description, title) {
-    return {
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 5,
-      i: 0,
-      uuid: uuid(),
-      isDraggable: true,
-      isResizable: true,
-      static: false,
-      initialized: false,
-      apiVersion: apiVersion,
-      description: description,
-      tags: [],
-      title: title,
-      type: HEADER
-    };
   }
 
   createDynamicComponents(dynamicComponents) {

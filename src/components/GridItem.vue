@@ -118,7 +118,7 @@ export default {
           pos.w
         );
       }
-      
+
       this.$store.dispatch(SET_API_ITEM_SIZE, {
         uuid: this.uuid,
         x: this.innerX,
