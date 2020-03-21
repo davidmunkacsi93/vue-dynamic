@@ -17,20 +17,19 @@ export default {
   },
   mounted() {
     this.$forceNextTick(() => {
-      this.autoSizeParent();
+      this.setParentHeight();
     });
-    this.autoSizeParent();
   },
   updated() {
     this.$forceNextTick(() => {
-      this.autoSizeParent();
+      this.setParentHeight();
     });
   },
   methods: {
-    autoSizeParent() {
+    setParentHeight() {
       if (!this.$parent) return;
 
-      this.$parent.autoSize();
+      this.$parent.setContentHeightAuto();
     }
   }
 };

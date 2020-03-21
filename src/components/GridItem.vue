@@ -6,8 +6,7 @@ import {
   UPDATE_WIDTH,
   SCREEN_CLASS_CHANGED
 } from "../types/event-types";
-import { SET_API_ITEM_SIZE } from "../types/action-types";
-import { CONTENT } from "../types/layout-item-types";
+import { SET_API_ITEM_SIZE, SET_CONTENT_HEIGHT } from "../types/action-types";
 
 export default {
   name: "GridItem",
@@ -41,10 +40,8 @@ export default {
     }
   },
   mounted() {
-    if (this.autoSizeRequired) {
-      this.$forceNextTick(() => {
-        this.autoSize();
-      });
+    if (this.autoSizeRequired && !this.initialized) {
+      this.autoSize();
     }
   },
   methods: {
@@ -57,6 +54,13 @@ export default {
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
     },
+
+    setContentHeightAuto() {
+      let newSize = this.$slots.default[0].elm.getBoundingClientRect();
+      let pos = this.calcWH(newSize.height, newSize.width);
+      this.$store.dispatch(SET_CONTENT_HEIGHT, pos.h);
+    },
+
     autoSize() {
       this.previousW = this.innerW;
       this.previousH = this.innerH;
@@ -114,11 +118,11 @@ export default {
         );
       }
 
-      if (this.type === CONTENT) {
-        console.log(newSize);
-      } else {
-        this.$store.dispatch(SET_API_ITEM_SIZE, this);
-      }
+      this.$store.dispatch(SET_API_ITEM_SIZE, {
+        uuid: this.uuid,
+        w: pos.w,
+        h: pos.h
+      });
     }
   }
 };
