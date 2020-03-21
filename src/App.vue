@@ -30,6 +30,7 @@
               :isDraggable="item.isDraggable"
               :isResizable="item.isResizable"
               :initialized="item.initialized"
+              :autoSizeRequired="item.autoSizeRequired"
               :static="item.static"
               :key="item.id"
               :uuid="item.i"

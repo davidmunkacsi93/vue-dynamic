@@ -22,9 +22,9 @@ export default {
   },
   props: {
     autoSizeRequired: {
+      default: true,
       required: false,
-      type: Boolean,
-      default: true
+      type: Boolean
     },
     initialized: {
       required: true,
@@ -36,7 +36,7 @@ export default {
     }
   },
   mounted() {
-    if (this.autoSizeRequired && !this.initialized) {
+    if (this.autoSizeRequired) {
       this.autoSize();
     }
   },
