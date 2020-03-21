@@ -83,14 +83,16 @@ const mutations = {
     );
   },
 
-  setApiItemSize(state, item) {
+  setApiItemSize(state, payload) {
     var currentScreenClass = getCurrentScreenClass();
     var apiLayout =
       state.apis[state.currentApiId].apiLayouts[currentScreenClass];
-    var apiItem = apiLayout.find(item => item.uuid === item.uuid);
+    var apiItem = apiLayout.find(
+      layoutItem => layoutItem.uuid === payload.uuid
+    );
 
-    apiItem.w = item.w;
-    apiItem.h = item.h;
+    apiItem.h = payload.h;
+    apiItem.w = payload.w;
     apiItem.initialized = true;
   },
 
@@ -129,8 +131,8 @@ const actions = {
   saveApiLayout({ commit }) {
     commit(SAVE_API_LAYOUT);
   },
-  setApiItemSize({ commit }, item) {
-    commit(SET_API_ITEM_SIZE, item);
+  setApiItemSize({ commit }, payload) {
+    commit(SET_API_ITEM_SIZE, payload);
   },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);

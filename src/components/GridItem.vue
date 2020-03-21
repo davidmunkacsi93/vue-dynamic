@@ -7,7 +7,6 @@ import {
   SCREEN_CLASS_CHANGED
 } from "../types/event-types";
 import { SET_API_ITEM_SIZE } from "../types/action-types";
-import { CONTENT } from "../types/layout-item-types";
 
 export default {
   name: "GridItem",
@@ -41,10 +40,8 @@ export default {
     }
   },
   mounted() {
-    if (this.autoSizeRequired) {
-      this.$forceNextTick(() => {
-        this.autoSize();
-      });
+    if (this.autoSizeRequired && !this.initialized) {
+      this.autoSize();
     }
   },
   methods: {
@@ -114,11 +111,11 @@ export default {
         );
       }
 
-      if (this.type === CONTENT) {
-        console.log(newSize);
-      } else {
-        this.$store.dispatch(SET_API_ITEM_SIZE, this);
-      }
+      this.$store.dispatch(SET_API_ITEM_SIZE, {
+        uuid: this.uuid,
+        w: pos.w,
+        h: pos.h
+      });
     }
   }
 };
