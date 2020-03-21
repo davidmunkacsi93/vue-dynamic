@@ -1,5 +1,15 @@
 <template>
-  <h1>Welcome to VueGeneric!</h1>
+  <div>
+    <md-empty-state
+      md-icon="home"
+      md-label="Welcome to VueGeneric!"
+      md-description="Add and use your services in one single application."
+    >
+      <md-button class="md-primary md-raised" to="/addApi">
+        Add Your API
+      </md-button>
+    </md-empty-state>
+  </div>
 </template>
 <script></script>
 <style></style>
