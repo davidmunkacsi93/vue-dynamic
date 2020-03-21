@@ -1,6 +1,6 @@
 <template>
   <md-content class="dynamic-content">
-    <router-view> </router-view>
+    <router-view></router-view>
   </md-content>
 </template>
 <script>
@@ -25,7 +25,9 @@ export default {
     autoSizeParent() {
       if (!this.$parent) return;
 
-      this.$parent.autoSize();
+      setTimeout(() => {
+        this.$parent.autoSize();
+      }, 3000);
     }
   }
 };

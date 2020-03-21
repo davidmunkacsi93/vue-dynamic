@@ -31,6 +31,7 @@
               :isResizable="item.isResizable"
               :initialized="item.initialized"
               :autoSizeRequired="item.autoSizeRequired"
+              :type="item.type"
               :static="item.static"
               :key="item.id"
               :uuid="item.i"

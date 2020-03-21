@@ -6,9 +6,7 @@ import {
   ADD_NEW_API,
   DISABLE_EDIT_MODE_API_LAYOUT,
   ENABLE_EDIT_MODE_API_LAYOUT,
-  SET_API_ITEM_HEIGHT,
-  SET_API_ITEM_WIDTH,
-  SET_API_ITEM_INTIAILIZED
+  SET_API_ITEM_SIZE
 } from "../../types/action-types";
 import { getCurrentScreenClass } from "../../utils/responsive-utils";
 
@@ -85,31 +83,15 @@ const mutations = {
     );
   },
 
-  setApiItemInitialized(state, uuid) {
+  setApiItemSize(state, item) {
     var currentScreenClass = getCurrentScreenClass();
     var apiLayout =
       state.apis[state.currentApiId].apiLayouts[currentScreenClass];
-    var apiItem = apiLayout.find(item => item.uuid === uuid);
+    var apiItem = apiLayout.find(item => item.uuid === item.uuid);
 
+    apiItem.w = item.w;
+    apiItem.h = item.h;
     apiItem.initialized = true;
-  },
-
-  setApiItemHeight(state, payload) {
-    var currentScreenClass = getCurrentScreenClass();
-    var apiLayout =
-      state.apis[state.currentApiId].apiLayouts[currentScreenClass];
-    var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
-
-    apiItem.h = payload.height;
-  },
-
-  setApiItemWidth(state, payload) {
-    var currentScreenClass = getCurrentScreenClass();
-    var apiLayout =
-      state.apis[state.currentApiId].apiLayouts[currentScreenClass];
-    var apiItem = apiLayout.find(item => item.uuid === payload.uuid);
-
-    apiItem.w = payload.width;
   },
 
   setApiLayoutItems(state, layoutItems) {
@@ -147,18 +129,12 @@ const actions = {
   saveApiLayout({ commit }) {
     commit(SAVE_API_LAYOUT);
   },
+  setApiItemSize({ commit }, item) {
+    commit(SET_API_ITEM_SIZE, item);
+  },
   setApiLayoutItems({ commit }, layoutItems) {
     commit(SET_API_LAYOUT_ITEMS, layoutItems);
     commit(SAVE_API_LAYOUT);
-  },
-  setApiItemInitialized({ commit }, uuid) {
-    commit(SET_API_ITEM_INTIAILIZED, uuid);
-  },
-  setApiItemHeight({ commit }, payload) {
-    commit(SET_API_ITEM_HEIGHT, payload);
-  },
-  setApiItemWidth({ commit }, payload) {
-    commit(SET_API_ITEM_WIDTH, payload);
   }
 };
 

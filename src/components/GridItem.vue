@@ -6,6 +6,8 @@ import {
   UPDATE_WIDTH,
   SCREEN_CLASS_CHANGED
 } from "../types/event-types";
+import { SET_API_ITEM_SIZE } from "../types/action-types";
+import { CONTENT } from "../types/layout-item-types";
 
 export default {
   name: "GridItem",
@@ -30,6 +32,9 @@ export default {
       required: true,
       type: Boolean
     },
+    type: {
+      type: String
+    },
     uuid: {
       required: true,
       type: String
@@ -45,7 +50,7 @@ export default {
       this.compact();
     },
     onScreenClassChanged() {
-      this.setDefaultSize();
+      // TODO: Do we even need this?
     },
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
@@ -105,6 +110,12 @@ export default {
           pos.h,
           pos.w
         );
+      }
+
+      if (this.type === CONTENT) {
+        console.log(newSize);
+      } else {
+        this.$store.dispatch(SET_API_ITEM_SIZE, this);
       }
     }
   }
