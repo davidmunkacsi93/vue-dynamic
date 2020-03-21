@@ -22,7 +22,7 @@
     />
     <md-dialog-alert
       :md-active.sync="isNotValid"
-      md-title="API could not be integrated"
+      md-title="API could not be added"
       :md-content="errorMessage"
       md-confirm-text="Ok"
     />

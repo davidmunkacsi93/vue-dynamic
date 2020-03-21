@@ -85,7 +85,8 @@ class DynamicComponentFactory {
     ) {
       return FORM;
     } else {
-      throw new Error("Not supported HTTP method.");
+      console.log(httpMethod);
+      throw new Error(`${httpMethod} - not supported HTTP method.`);
     }
   }
 
