@@ -1,5 +1,9 @@
 <template>
-  <div ref="navigationBar" class="full-control navigation-bar">
+  <div
+    ref="navigationBar"
+    class="full-control navigation-bar"
+    :class="{ hidden: hidden, visible: !hidden }"
+  >
     <h3 ref="navigationTitle" class="md-title">Navigation</h3>
     <md-list ref="navigationList">
       <md-list-item :to="homePath">
@@ -41,6 +45,12 @@ import {
 import EventBus from "../utils/event-bus";
 import { API_ADDED, LAYOUT_UPDATED, COMPACT } from "../types/event-types";
 export default {
+  props: {
+    hidden: {
+      required: true,
+      type: Boolean
+    }
+  },
   data() {
     return {
       addApiPath: "/addApi",
@@ -98,5 +108,17 @@ export default {
 .navigation-bar {
   height: 100%;
   padding: 10px;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 }
 </style>

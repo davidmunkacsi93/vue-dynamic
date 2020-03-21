@@ -43,6 +43,7 @@
               />
               <navigation-bar
                 v-else-if="item.type === NAVIGATION_BAR"
+                :hidden="item.hidden"
               ></navigation-bar>
             </grid-item>
           </template>

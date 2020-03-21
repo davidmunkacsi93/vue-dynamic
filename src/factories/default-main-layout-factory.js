@@ -50,6 +50,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      hidden: false,
       uuid: uuid(),
       type: NAVIGATION_BAR
     };
@@ -98,6 +99,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      hidden: false,
       uuid: uuid(),
       type: NAVIGATION_BAR
     };
@@ -133,6 +135,7 @@ class DefaultMainLayoutFactory {
       isResizable: true,
       static: true,
       initialized: true,
+      hidden: false,
       uuid: uuid(),
       type: NAVIGATION_BAR
     };
