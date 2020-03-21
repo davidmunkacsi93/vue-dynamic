@@ -15,9 +15,9 @@ class DefaultMainLayoutFactory {
   getLayoutItemsForLg() {
     var layoutItems = [];
     const menu = {
-      x: 2,
+      x: 0,
       y: 0,
-      w: 10,
+      w: 12,
       h: 2,
       i: uuid(),
       isDraggable: true,
@@ -28,9 +28,9 @@ class DefaultMainLayoutFactory {
       type: MENU
     };
     const content = {
-      x: 2,
+      x: 3,
       y: 2,
-      w: 10,
+      w: 9,
       h: 10,
       i: uuid(),
       isDraggable: true,
@@ -42,8 +42,8 @@ class DefaultMainLayoutFactory {
     };
     const navigationBar = {
       x: 0,
-      y: 0,
-      w: 2,
+      y: 2,
+      w: 3,
       h: 15,
       i: uuid(),
       isDraggable: true,
@@ -63,9 +63,9 @@ class DefaultMainLayoutFactory {
   getLayoutItemsForMd() {
     var layoutItems = [];
     const menu = {
-      x: 2,
+      x: 3,
       y: 0,
-      w: 8,
+      w: 7,
       h: 2,
       i: uuid(),
       isDraggable: true,
@@ -76,9 +76,9 @@ class DefaultMainLayoutFactory {
       type: MENU
     };
     const content = {
-      x: 2,
+      x: 3,
       y: 2,
-      w: 8,
+      w: 7,
       h: 10,
       i: uuid(),
       isDraggable: true,
@@ -91,7 +91,7 @@ class DefaultMainLayoutFactory {
     const navigationBar = {
       x: 0,
       y: 0,
-      w: 2,
+      w: 3,
       h: 15,
       i: uuid(),
       isDraggable: true,
