@@ -69,8 +69,6 @@ import GridLayoutBase from "./components/GridLayoutBase.vue";
 import MenuBar from "./components/MenuBar.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 
-import EventBus from "./utils/event-bus";
-
 import routes from "./routes";
 
 import { getCurrentScreenClass } from "./utils/responsive-utils";
@@ -81,7 +79,6 @@ import {
   SET_SCREEN_CLASS
 } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
-import { DYNAMIC_CONTENT_HEIGHT_UPDATED } from "./types/event-types";
 
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
