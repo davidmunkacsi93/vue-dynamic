@@ -1,6 +1,6 @@
 <template>
   <md-content class="dynamic-content">
-    <router-view> </router-view>
+    <router-view></router-view>
   </md-content>
 </template>
 <script>
@@ -14,12 +14,30 @@ export default {
       required: true,
       type: Number
     }
+  },
+  mounted() {
+    this.$forceNextTick(() => {
+      this.autoSizeParent();
+    });
+    this.autoSizeParent();
+  },
+  updated() {
+    this.$forceNextTick(() => {
+      this.autoSizeParent();
+    });
+  },
+  methods: {
+    autoSizeParent() {
+      if (!this.$parent) return;
+
+      this.$parent.autoSize();
+    }
   }
 };
 </script>
 <style>
 .dynamic-content {
   margin-top: 10px;
-  height: 100%;
+  height: auto;
 }
 </style>

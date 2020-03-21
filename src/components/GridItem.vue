@@ -6,12 +6,8 @@ import {
   UPDATE_WIDTH,
   SCREEN_CLASS_CHANGED
 } from "../types/event-types";
-import {
-  SET_API_ITEM_HEIGHT,
-  SET_API_ITEM_WIDTH,
-  SET_API_ITEM_INTIAILIZED
-} from "../types/action-types";
-import stringPixelWidth from "string-pixel-width";
+import { SET_API_ITEM_SIZE } from "../types/action-types";
+import { CONTENT } from "../types/layout-item-types";
 
 export default {
   name: "GridItem",
@@ -27,9 +23,17 @@ export default {
     EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
   },
   props: {
+    autoSizeRequired: {
+      default: true,
+      required: false,
+      type: Boolean
+    },
     initialized: {
       required: true,
       type: Boolean
+    },
+    type: {
+      type: String
     },
     uuid: {
       required: true,
@@ -37,61 +41,83 @@ export default {
     }
   },
   mounted() {
-    if (this.initialized) return;
-
-    setTimeout(() => {
-      this.setDefaultSize();
-    }, 300);
+    if (this.autoSizeRequired) {
+      this.$forceNextTick(() => {
+        this.autoSize();
+      });
+    }
   },
   methods: {
     onCompact() {
       this.compact();
     },
     onScreenClassChanged() {
-      this.setDefaultSize();
+      // TODO: Do we even need this?
     },
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
     },
-    setDefaultSize() {
-      this.setGridItemWidth();
-      this.setGridItemHeight();
-      this.$store.dispatch(SET_API_ITEM_INTIAILIZED, this.uuid);
-    },
-    setGridItemHeight() {
-      var calculatedHeight = Math.ceil(
-        this.$children[0].$el.offsetHeight / this.rowHeight
-      );
+    autoSize() {
+      this.previousW = this.innerW;
+      this.previousH = this.innerH;
 
-      if (calculatedHeight > this.innerH) {
-        this.innerH = calculatedHeight;
+      let newSize = this.$slots.default[0].elm.getBoundingClientRect();
+      let pos = this.calcWH(newSize.height, newSize.width);
 
-        this.$store.dispatch(SET_API_ITEM_HEIGHT, {
-          uuid: this.uuid,
-          height: this.innerH
-        });
+      if (pos.w < this.minW) {
+        pos.w = this.minW;
       }
-    },
-    setGridItemWidth() {
-      if (
-        !this.$children[0] ||
-        !this.$children[0].$refs ||
-        !this.$children[0].$refs.title
-      )
-        return;
+      if (pos.w > this.maxW) {
+        pos.w = this.maxW;
+      }
+      if (pos.h < this.minH) {
+        pos.h = this.minH;
+      }
+      if (pos.h > this.maxH) {
+        pos.h = this.maxH;
+      }
 
-      var title = this.$children[0].$refs.title;
-      var colWidth = this.containerWidth / this.cols;
-      var fontSize = window.getComputedStyle(title).fontSize.replace(/\D/g, "");
-      var textWidth = stringPixelWidth(title.innerText, { size: fontSize });
-      var calculatedWidth = Math.ceil(textWidth / colWidth) + 2;
+      if (pos.h < 1) {
+        pos.h = 1;
+      }
+      if (pos.w < 1) {
+        pos.w = 1;
+      }
 
-      if (calculatedWidth > this.innerW) {
-        this.innerW = calculatedWidth;
-        this.$store.dispatch(SET_API_ITEM_WIDTH, {
-          uuid: this.uuid,
-          width: this.innerW
-        });
+      if (this.innerW !== pos.w || this.innerH !== pos.h) {
+        this.$emit(
+          "resize",
+          this.i,
+          pos.h,
+          pos.w,
+          newSize.height,
+          newSize.width
+        );
+      }
+      if (this.previousW !== pos.w || this.previousH !== pos.h) {
+        this.$emit(
+          "resized",
+          this.i,
+          pos.h,
+          pos.w,
+          newSize.height,
+          newSize.width
+        );
+        this.eventBus.$emit(
+          "resizeEvent",
+          "resizeend",
+          this.i,
+          this.innerX,
+          this.innerY,
+          pos.h,
+          pos.w
+        );
+      }
+
+      if (this.type === CONTENT) {
+        console.log(newSize);
+      } else {
+        this.$store.dispatch(SET_API_ITEM_SIZE, this);
       }
     }
   }

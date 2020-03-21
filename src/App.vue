@@ -30,6 +30,8 @@
               :isDraggable="item.isDraggable"
               :isResizable="item.isResizable"
               :initialized="item.initialized"
+              :autoSizeRequired="item.autoSizeRequired"
+              :type="item.type"
               :static="item.static"
               :key="item.id"
               :uuid="item.i"
@@ -63,6 +65,8 @@ import "vue-material/dist/theme/black-green-light.css";
 
 import VueRouter from "vue-router";
 
+import VueForceNextTick from "vue-force-next-tick";
+
 import DynamicContent from "./components/DynamicContent.vue";
 import GridItem from "./components/GridItem.vue";
 import GridLayoutBase from "./components/GridLayoutBase.vue";
@@ -80,6 +84,7 @@ import {
 } from "./types/action-types";
 import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
+Vue.use(VueForceNextTick);
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
 
