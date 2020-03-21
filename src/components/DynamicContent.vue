@@ -14,6 +14,19 @@ export default {
       required: true,
       type: Number
     }
+  },
+  mounted() {
+    this.autoSizeParent();
+  },
+  updated() {
+    this.autoSizeParent();
+  },
+  methods: {
+    autoSizeParent() {
+      if (!this.$parent) return;
+
+      this.$parent.autoSize();
+    }
   }
 };
 </script>
