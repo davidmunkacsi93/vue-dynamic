@@ -16,18 +16,21 @@ export default {
     }
   },
   mounted() {
+    this.$forceNextTick(() => {
+      this.autoSizeParent();
+    });
     this.autoSizeParent();
   },
   updated() {
-    this.autoSizeParent();
+    this.$forceNextTick(() => {
+      this.autoSizeParent();
+    });
   },
   methods: {
     autoSizeParent() {
       if (!this.$parent) return;
 
-      setTimeout(() => {
-        this.$parent.autoSize();
-      }, 3000);
+      this.$parent.autoSize();
     }
   }
 };
@@ -35,6 +38,6 @@ export default {
 <style>
 .dynamic-content {
   margin-top: 10px;
-  height: 100%;
+  height: auto;
 }
 </style>

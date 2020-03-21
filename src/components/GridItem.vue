@@ -42,7 +42,9 @@ export default {
   },
   mounted() {
     if (this.autoSizeRequired) {
-      this.autoSize();
+      this.$forceNextTick(() => {
+        this.autoSize();
+      });
     }
   },
   methods: {
