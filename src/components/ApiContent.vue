@@ -148,6 +148,15 @@ export default {
         });
       });
 
+      var notTagged = this.apiLayout.filter(
+        layoutItem => !layoutItem.tags || layoutItem.tags.length === 0
+      );
+      if (notTagged && notTagged.length > 0) {
+        let otherTagKey = "Other";
+        this.tags.push(otherTagKey);
+        this.apiLayoutByTags[otherTagKey] = notTagged;
+      }
+
       this.apiVersion = this.apiModel.apiVersion;
       this.baseURL = this.apiModel.serverURL;
       this.description = this.apiModel.description;
