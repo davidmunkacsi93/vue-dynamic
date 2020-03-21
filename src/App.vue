@@ -8,6 +8,7 @@
       <md-app-content>
         <grid-layout-base
           ref="mainLayout"
+          class="main-layout"
           :layout="mainLayout"
           :col-num="12"
           :row-height="30"
@@ -119,12 +120,8 @@ export default {
     this.$store.dispatch(LOAD_MAIN_LAYOUT, this.screenClass);
     this.$store.dispatch(LOAD_APIS);
   },
-  created() {
-    EventBus.$on(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);
-  },
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
-    EventBus.$off(DYNAMIC_CONTENT_HEIGHT_UPDATED, this.onDynamicHeightUpdated);
   },
   methods: {
     onWindowResize() {
@@ -136,9 +133,6 @@ export default {
         this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
         this.loadMainLayout();
       }
-    },
-    onDynamicHeightUpdated() {
-      this.$refs.mainLayout.updateHeight();
     },
     loadMainLayout() {
       this.mainLayout = this.$store.state.mainLayout.mainLayouts[
@@ -169,6 +163,10 @@ body {
 
 .page-container {
   height: 100%;
+}
+
+.main-layout {
+  height: 100% !important;
 }
 
 .md-content {
