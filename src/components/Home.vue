@@ -1,6 +1,7 @@
 <template>
   <div>
     <md-empty-state
+      class="md-primary"
       md-icon="home"
       md-label="Welcome to VueGeneric!"
       md-description="Add and use your services in one single application."

@@ -1,5 +1,5 @@
 <template>
-  <md-content>
+  <md-content class="dynamic-content">
     <router-view> </router-view>
   </md-content>
 </template>
@@ -18,7 +18,8 @@ export default {
 };
 </script>
 <style>
-.md-content {
+.dynamic-content {
+  margin-top: 10px;
   height: 100%;
 }
 </style>

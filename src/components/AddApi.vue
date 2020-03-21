@@ -1,5 +1,5 @@
 <template>
-  <div class="md-layout">
+  <div class="add-api-content md-layout">
     <md-progress-bar
       v-show="loading"
       class="md-layout-item md-size-100"
@@ -69,7 +69,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.md-layout {
+.add-api-content {
   margin-top: 10px;
+  padding: 10px;
 }
 </style>
