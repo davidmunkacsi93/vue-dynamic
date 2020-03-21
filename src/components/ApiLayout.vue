@@ -14,9 +14,7 @@ export default {
     EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
   },
   mounted() {
-    setTimeout(() => {
-      this.compactLayout();
-    }, 1000);
+    this.$forceNextTick(() => this.compactLayout());
   },
   methods: {
     onScreenClassChanged() {

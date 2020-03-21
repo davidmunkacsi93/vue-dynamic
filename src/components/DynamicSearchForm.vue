@@ -125,9 +125,4 @@ export default {
   }
 };
 </script>
-<style>
-.dynamic-component {
-  width: 100% !important;
-  height: 100% !important;
-}
-</style>
+<style></style>

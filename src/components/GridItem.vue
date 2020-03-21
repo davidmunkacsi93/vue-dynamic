@@ -40,8 +40,8 @@ export default {
     }
   },
   mounted() {
-    if (this.autoSizeRequired && !this.initialized) {
-      this.autoSize();
+    if (this.autoSizeRequired) {
+      this.$forceNextTick(() => this.autoSize());
     }
   },
   methods: {
@@ -66,6 +66,7 @@ export default {
       this.previousH = this.innerH;
 
       let newSize = this.$slots.default[0].elm.getBoundingClientRect();
+      console.log(newSize);
       let pos = this.calcWH(newSize.height, newSize.width);
 
       if (pos.w < this.minW) {
@@ -117,9 +118,11 @@ export default {
           pos.w
         );
       }
-
+      
       this.$store.dispatch(SET_API_ITEM_SIZE, {
         uuid: this.uuid,
+        x: this.innerX,
+        y: this.innerY,
         w: pos.w,
         h: pos.h
       });

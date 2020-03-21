@@ -91,6 +91,8 @@ const mutations = {
       layoutItem => layoutItem.uuid === payload.uuid
     );
 
+    apiItem.x = payload.x;
+    apiItem.y = payload.y;
     apiItem.h = payload.h;
     apiItem.w = payload.w;
     apiItem.initialized = true;
