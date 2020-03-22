@@ -13,11 +13,14 @@ import {
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
     var dynamicComponents = [];
+    var supportedHttpMethods = ["get", "post", "put", "delete"];
 
     for (var path in apiPaths) {
       var apiEndpoint = apiPaths[path];
 
       for (var httpMethod in apiEndpoint) {
+        if (!supportedHttpMethods.includes(httpMethod)) return;
+
         var apiMethod = apiEndpoint[httpMethod];
         var dynamicComponent = {};
 
