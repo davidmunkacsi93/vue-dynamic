@@ -1,3 +1,4 @@
+import ControlFactory from "../factories/control-factory";
 import DynamicFormFactory from "../factories/dynamic-form-factory";
 import DynamicListFactory from "../factories/dynamic-list-factory";
 import DynamicTableFactory from "../factories/dynamic-table-factory";
@@ -19,7 +20,7 @@ class DynamicComponentFactory {
       var apiEndpoint = apiPaths[path];
 
       for (var httpMethod in apiEndpoint) {
-        if (!supportedHttpMethods.includes(httpMethod)) return;
+        if (!supportedHttpMethods.includes(httpMethod)) continue;
 
         var apiMethod = apiEndpoint[httpMethod];
         var dynamicComponent = {};
@@ -59,6 +60,16 @@ class DynamicComponentFactory {
             break;
         }
         dynamicComponents.push(dynamicComponent);
+      }
+      if (apiEndpoint.parameters) {
+        var controlsForEndpointParameters = ControlFactory.createControlsForEndpointParameters(
+          apiEndpoint.parameters
+        );
+
+        dynamicComponents.forEach(component => {
+          if (!component.controls) component.controls = [];
+          component.controls.push(controlsForEndpointParameters);
+        });
       }
     }
     return dynamicComponents;

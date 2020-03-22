@@ -11,6 +11,16 @@ import {
 import { getLastURLSegment } from "../utils/helpers";
 
 class ControlFactory {
+  createControlsForEndpointParameters(parameters) {
+    var controls = [];
+    parameters.forEach(parameter => {
+      var controlForParameter = this.createControl(parameter);
+      controls.push(controlForParameter);
+    });
+
+    return controls;
+  }
+
   createControlsForParameters(apiMethod, apiModels) {
     var controls = [];
 
