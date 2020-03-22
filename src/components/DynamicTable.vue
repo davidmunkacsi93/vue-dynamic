@@ -22,7 +22,7 @@ export default {
   props: {
     model: {
       type: Object,
-      required: true
+      required: false
     },
     values: {
       type: Array,
@@ -30,11 +30,20 @@ export default {
     }
   },
   mounted() {
-    this.headers = this.model.properties.map(property => property.name);
+    if (
+      !this.model ||
+      !this.model.properties ||
+      Object.keys(this.model).length === 0
+    ) {
+      this.runtimeModel = true;
+    } else {
+      this.headers = this.model.properties.map(property => property.name);
+    }
   },
   data() {
     return {
-      headers: []
+      headers: [],
+      runtimeModel: false
     };
   }
 };

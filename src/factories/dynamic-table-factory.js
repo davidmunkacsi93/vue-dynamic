@@ -32,14 +32,17 @@ class DynamicTableFactory {
       if (responseOk.content) {
         modelRef = responseOk.content["application/json"].$ref;
       } else if (responseOk.schema) {
+        if (!responseOk.schema.$ref && !responseOk.schema.items) {
+          return {};
+        }
         modelRef = responseOk.schema.$ref || responseOk.schema.items.$ref;
       } else {
-        throw new Error("Could not determine table model.");
+        return {};
       }
       var modelKey = getLastURLSegment(modelRef);
       return apiModels.find(model => model.type === modelKey);
     } else {
-      throw new Error("Could not determine table model.");
+      return {};
     }
   }
 }
