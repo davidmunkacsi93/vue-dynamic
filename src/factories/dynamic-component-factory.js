@@ -3,13 +3,7 @@ import DynamicFormFactory from "../factories/dynamic-form-factory";
 import DynamicListFactory from "../factories/dynamic-list-factory";
 import DynamicTableFactory from "../factories/dynamic-table-factory";
 
-import {
-  FORM,
-  TABLE,
-  LIST,
-  SEARCH_FORM,
-  READ_ONLY_FORM
-} from "../types/layout-item-types";
+import { FORM, TABLE, LIST } from "../types/layout-item-types";
 
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
@@ -46,8 +40,6 @@ class DynamicComponentFactory {
               apiMethod,
               apiModels
             );
-            break;
-          case SEARCH_FORM:
             break;
           case LIST:
             console.log(apiMethod);
@@ -106,7 +98,7 @@ class DynamicComponentFactory {
 
   getDynamicComponentTypeForSchema(schema) {
     if (schema.$ref) {
-      return READ_ONLY_FORM;
+      return TABLE;
     } else if (schema.type) {
       switch (schema.type) {
         case "array":
@@ -121,7 +113,7 @@ class DynamicComponentFactory {
       }
     }
 
-    return SEARCH_FORM;
+    return TABLE;
   }
 }
 
