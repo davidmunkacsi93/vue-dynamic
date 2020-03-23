@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted() {
-    if (this.autoSizeRequired) {
+    if (this.autoSizeRequired && !this.initialized) {
       this.$forceNextTick(() => this.autoSize());
     }
   },

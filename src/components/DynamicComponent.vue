@@ -76,14 +76,14 @@ export default {
 }
 
 .content-height {
-  height: 70%;
+  height: 60%;
 }
 
 .title-height {
-  height: 20%;
+  height: auto;
 }
 
 .actions-height {
-  height: 10%;
+  height: auto;
 }
 </style>

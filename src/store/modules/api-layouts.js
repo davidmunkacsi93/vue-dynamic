@@ -90,7 +90,6 @@ const mutations = {
     var apiItem = apiLayout.find(
       layoutItem => layoutItem.uuid === payload.uuid
     );
-
     apiItem.x = payload.x;
     apiItem.y = payload.y;
     apiItem.h = payload.h;
