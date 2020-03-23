@@ -30,7 +30,8 @@ class DynamicTableFactory {
       var modelRef;
       console.log(responseOk);
       if (responseOk.content) {
-        modelRef = responseOk.content["application/json"].$ref;
+        let jsonResponse = responseOk.content["application/json"];
+        modelRef = jsonResponse.$ref || jsonResponse.schema.$ref;
       } else if (responseOk.schema) {
         if (!responseOk.schema.$ref && !responseOk.schema.items) {
           return {};
@@ -39,6 +40,7 @@ class DynamicTableFactory {
       } else {
         return {};
       }
+      console.log(modelRef);
       var modelKey = getLastURLSegment(modelRef);
       return apiModels.find(model => model.type === modelKey);
     } else {
