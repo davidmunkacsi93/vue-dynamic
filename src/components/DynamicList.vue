@@ -14,7 +14,6 @@ export default {
       required: true
     },
     values: {
-      type: Array,
       required: true
     }
   }

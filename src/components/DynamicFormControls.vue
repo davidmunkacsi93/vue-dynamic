@@ -1,5 +1,5 @@
 <template>
-  <md-list class="control-list">
+  <md-list>
     <draggable v-model="controls">
       <md-list-item v-for="control in controls" :key="control.order">
         <md-chips
@@ -24,9 +24,9 @@
             </md-option>
           </md-select>
         </md-field>
-        <md-switch v-model="control.value" v-if="control.element === SWITCH">{{
-          control.label
-        }}</md-switch>
+        <md-switch v-if="control.element === SWITCH" v-model="control.value">
+          {{ control.label }}
+        </md-switch>
         <md-field v-if="control.element === FLOAT_INPUT">
           <label>{{ control.label }}</label>
           <md-input
@@ -39,10 +39,17 @@
           <label>{{ control.label }}</label>
           <md-input v-model="control.value" type="number"></md-input>
         </md-field>
+        <md-field v-if="control.element === PASSWORD_INPUT">
+          <label>{{ control.label }}</label>
+          <md-input v-model="control.value" type="password"></md-input>
+        </md-field>
         <md-field v-if="control.element === TEXT_INPUT">
           <label>{{ control.label }}</label>
           <md-input v-model="control.value" type="text"></md-input>
         </md-field>
+        <md-tooltip v-if="control.description" md-direction="left">
+          {{ control.description }}
+        </md-tooltip>
       </md-list-item>
     </draggable>
   </md-list>

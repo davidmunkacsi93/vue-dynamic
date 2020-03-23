@@ -5,24 +5,12 @@
     :class="{ 'component-height': initialized }"
     md-with-hover
   >
-    <md-card-header class="md-layout-item md-size-100">
-      <md-card-header-text>
-        <div class="md-title" ref="title">{{ path }}</div>
-        <div class="md-subhead" v-if="description">{{ description }}</div>
-      </md-card-header-text>
-      <md-menu md-size="big" md-direction="bottom-end">
-        <md-button class="md-icon-button" md-menu-trigger>
-          <md-icon>more_vert</md-icon>
-        </md-button>
-
-        <md-menu-content>
-          <md-menu-item @click="removeGridItem">
-            <span>Remove</span>
-            <md-icon>clear</md-icon>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </md-card-header>
+    <card-header
+      :description="description"
+      :initialized="initialized"
+      :path="path"
+      :uuid="uuid"
+    ></card-header>
 
     <md-progress-bar
       v-if="isLoading"
@@ -30,8 +18,14 @@
       md-mode="query"
     ></md-progress-bar>
 
-    <md-card-content class="md-layout-item md-size-100">
-      <md-tabs :md-active-tab.sync="activeTab">
+    <md-card-content
+      class="md-layout-item md-size-100"
+      :class="{ 'content-height': initialized }"
+    >
+      <md-tabs
+        :md-active-tab.sync="activeTab"
+        :class="{ stretch: initialized }"
+      >
         <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
           <dynamic-form-controls :controls="controls"></dynamic-form-controls>
         </md-tab>
@@ -51,12 +45,16 @@
         </md-tab>
       </md-tabs>
     </md-card-content>
-    <md-card-actions class="md-layout-item md-size-100">
+    <md-card-actions
+      class="md-layout-item md-size-100"
+      :class="{ 'actions-height': initialized }"
+    >
       <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
 </template>
 <script>
+import CardHeader from "./CardHeader.vue";
 import DynamicComponent from "./DynamicComponent.vue";
 import DynamicFormControls from "./DynamicFormControls";
 import DynamicList from "./DynamicList";
@@ -68,7 +66,7 @@ import { LIST, TABLE } from "../types/layout-item-types";
 
 export default {
   extends: DynamicComponent,
-  components: { DynamicFormControls, DynamicTable, DynamicList },
+  components: { CardHeader, DynamicFormControls, DynamicTable, DynamicList },
   props: {
     controls: {
       type: Array,
