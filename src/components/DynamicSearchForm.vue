@@ -5,7 +5,10 @@
     :class="{ 'component-height': initialized }"
     md-with-hover
   >
-    <md-card-header class="md-layout-item md-size-100">
+    <md-card-header
+      class="md-layout-item md-size-100"
+      :class="{ 'title-height': initialized }"
+    >
       <md-card-header-text>
         <div class="md-title" ref="title">{{ path }}</div>
         <div class="md-subhead" v-if="description">{{ description }}</div>

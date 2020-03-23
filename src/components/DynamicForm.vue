@@ -1,11 +1,14 @@
 <template>
   <md-card
     ref="dynamicComponent"
-    class="dynamic-component"
+    class="md-layout dynamic-component"
     :class="{ 'component-height': initialized }"
     md-with-hover
   >
-    <md-card-header :class="{ 'title-height': initialized }">
+    <md-card-header
+      class="md-layout-item md-size-100"
+      :class="{ 'title-height': initialized }"
+    >
       <md-card-header-text>
         <div class="md-title" ref="title">{{ path }}</div>
         <div class="md-subhead">{{ description }}</div>
@@ -24,13 +27,19 @@
       </md-menu>
     </md-card-header>
 
-    <md-card-content :class="{ 'content-height': initialized }">
+    <md-card-content
+      class="md-layout-item md-size-100"
+      :class="{ 'content-height': initialized }"
+    >
       <dynamic-form-controls
         :class="{ stretch: initialized }"
         :controls="controls"
       ></dynamic-form-controls>
     </md-card-content>
-    <md-card-actions :class="{ 'action-height': initialized }">
+    <md-card-actions
+      class="md-layout-item md-size-100"
+      :class="{ 'action-height': initialized }"
+    >
       <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
