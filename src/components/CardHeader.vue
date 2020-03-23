@@ -53,4 +53,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.md-title {
+  overflow-wrap: break-word !important;
+}
+</style>
