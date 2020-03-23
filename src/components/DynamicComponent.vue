@@ -66,16 +66,14 @@ export default {
   width: auto;
   margin: 0px !important;
 }
-
-.stretch {
-  height: 100%;
-}
-
 .component-height {
   height: 100%;
 }
 
 .content-height {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  overflow-y: auto;
   height: 60%;
 }
 

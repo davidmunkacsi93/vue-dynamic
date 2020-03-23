@@ -1,5 +1,5 @@
 <template>
-  <md-list class="control-list">
+  <md-list>
     <draggable v-model="controls">
       <md-list-item v-for="control in controls" :key="control.order">
         <md-chips
