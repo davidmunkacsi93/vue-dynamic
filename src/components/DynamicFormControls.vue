@@ -47,6 +47,9 @@
           <label>{{ control.label }}</label>
           <md-input v-model="control.value" type="text"></md-input>
         </md-field>
+        <md-tooltip v-if="control.description" md-direction="left">
+          {{ control.description }}
+        </md-tooltip>
       </md-list-item>
     </draggable>
   </md-list>
