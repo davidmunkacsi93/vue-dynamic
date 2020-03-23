@@ -24,9 +24,9 @@
             </md-option>
           </md-select>
         </md-field>
-        <md-switch v-model="control.value" v-if="control.element === SWITCH">{{
-          control.label
-        }}</md-switch>
+        <md-switch v-if="control.element === SWITCH" v-model="control.value">
+          {{ control.label }}
+        </md-switch>
         <md-field v-if="control.element === FLOAT_INPUT">
           <label>{{ control.label }}</label>
           <md-input
@@ -38,6 +38,10 @@
         <md-field v-if="control.element === NUMBER_INPUT">
           <label>{{ control.label }}</label>
           <md-input v-model="control.value" type="number"></md-input>
+        </md-field>
+        <md-field v-if="control.element === PASSWORD_INPUT">
+          <label>{{ control.label }}</label>
+          <md-input v-model="control.value" type="password"></md-input>
         </md-field>
         <md-field v-if="control.element === TEXT_INPUT">
           <label>{{ control.label }}</label>
