@@ -39,7 +39,11 @@ import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
 import ApiTabContent from "../components/ApiTabContent";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
 import EventBus from "../utils/event-bus";
-import { REQUEST_FAILED, REQUEST_SUCCESSFUL, SCREEN_CLASS_CHANGED } from "../types/event-types";
+import {
+  REQUEST_FAILED,
+  REQUEST_SUCCESSFUL,
+  SCREEN_CLASS_CHANGED
+} from "../types/event-types";
 
 export default {
   components: {
@@ -164,8 +168,13 @@ export default {
     },
 
     getTags(apiLayout) {
-      return apiLayout
+      var taggedItems = apiLayout
         .map(layoutItem => layoutItem.tags)
+        .filter(tags => tags);
+      if (!taggedItems || taggedItems.length === 0) return [];
+
+      console.log(taggedItems);
+      return taggedItems
         .filter(tags => tags)
         .reduce((acc, val) => [...acc, ...val])
         .filter(
