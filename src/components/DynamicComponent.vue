@@ -64,4 +64,36 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.md-title {
+  height: auto;
+  width: auto;
+  word-wrap: break-word;
+}
+
+.dynamic-component {
+  height: auto;
+  width: auto;
+  margin: 0px !important;
+}
+
+.stretch {
+  height: 100%;
+}
+
+.component-height {
+  height: 100%;
+}
+
+.content-height {
+  height: 70%;
+}
+
+.title-height {
+  height: 20%;
+}
+
+.actions-height {
+  height: 10%;
+}
+</style>

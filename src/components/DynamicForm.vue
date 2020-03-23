@@ -5,7 +5,7 @@
     :class="{ 'component-height': initialized }"
     md-with-hover
   >
-    <md-card-header>
+    <md-card-header :class="{ 'title-height': initialized }">
       <md-card-header-text>
         <div class="md-title" ref="title">{{ path }}</div>
         <div class="md-subhead">{{ description }}</div>
@@ -24,10 +24,13 @@
       </md-menu>
     </md-card-header>
 
-    <md-card-content>
-      <dynamic-form-controls :controls="controls"></dynamic-form-controls>
+    <md-card-content :class="{ 'content-height': initialized }">
+      <dynamic-form-controls
+        :class="{ stretch: initialized }"
+        :controls="controls"
+      ></dynamic-form-controls>
     </md-card-content>
-    <md-card-actions>
+    <md-card-actions :class="{ 'action-height': initialized }">
       <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
@@ -61,21 +64,4 @@ export default {
   }
 };
 </script>
-<style>
-.dynamic-component {
-  height: auto;
-  width: auto;
-  margin: 0px !important;
-}
-.component-height {
-  height: 100%;
-}
-.control-list {
-  padding: 0;
-}
-.md-title {
-  height: auto;
-  width: auto;
-  word-wrap: break-word;
-}
-</style>
+<style></style>

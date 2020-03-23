@@ -30,8 +30,14 @@
       md-mode="query"
     ></md-progress-bar>
 
-    <md-card-content class="md-layout-item md-size-100">
-      <md-tabs :md-active-tab.sync="activeTab">
+    <md-card-content
+      class="md-layout-item md-size-100"
+      :class="{ 'content-height': initialized }"
+    >
+      <md-tabs
+        :md-active-tab.sync="activeTab"
+        :class="{ stretch: initialized }"
+      >
         <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
           <dynamic-form-controls :controls="controls"></dynamic-form-controls>
         </md-tab>
@@ -51,7 +57,10 @@
         </md-tab>
       </md-tabs>
     </md-card-content>
-    <md-card-actions class="md-layout-item md-size-100">
+    <md-card-actions
+      class="md-layout-item md-size-100"
+      :class="{ 'actions-height': initialized }"
+    >
       <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
     </md-card-actions>
   </md-card>
