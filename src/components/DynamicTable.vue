@@ -37,14 +37,21 @@ export default {
     ) {
       this.runtimeModel = true;
     } else {
+      this.staticModel = true;
       this.headers = this.model.properties.map(property => property.name);
     }
   },
   data() {
     return {
       headers: [],
-      runtimeModel: false
+      runtimeModel: false,
+      staticModel: false
     };
+  },
+  watch: {
+    values: function(value) {
+      console.log(value);
+    }
   }
 };
 </script>
