@@ -39,7 +39,7 @@ import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
 import ApiTabContent from "../components/ApiTabContent";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
 import EventBus from "../utils/event-bus";
-import { REQUEST_FAILED, REQUEST_SUCCESSFUL } from "../types/event-types";
+import { REQUEST_FAILED, REQUEST_SUCCESSFUL, SCREEN_CLASS_CHANGED } from "../types/event-types";
 
 export default {
   components: {
@@ -129,7 +129,7 @@ export default {
         this.screenClass = currentScreenClass;
         this.$store.dispatch(SAVE_API_LAYOUT);
         this.loadCurrentApiLayout();
-        // EventBus.$emit(SCREEN_CLASS_CHANGED);
+        EventBus.$emit(SCREEN_CLASS_CHANGED);
       }
     },
 

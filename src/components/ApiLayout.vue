@@ -18,7 +18,9 @@ export default {
   },
   methods: {
     onScreenClassChanged() {
-      this.compactLayout();
+      this.$forceNextTick(() => {
+        this.compactLayout();
+      });
     },
     compactLayout() {
       if (this.layout.length <= 0 || this.layout.compacted) return;
