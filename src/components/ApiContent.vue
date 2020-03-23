@@ -173,7 +173,6 @@ export default {
         .filter(tags => tags);
       if (!taggedItems || taggedItems.length === 0) return [];
 
-      console.log(taggedItems);
       return taggedItems
         .filter(tags => tags)
         .reduce((acc, val) => [...acc, ...val])
