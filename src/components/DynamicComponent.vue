@@ -65,12 +65,6 @@ export default {
 </script>
 
 <style>
-.md-title {
-  height: auto;
-  width: auto;
-  word-wrap: break-word;
-}
-
 .dynamic-component {
   height: auto;
   width: auto;
