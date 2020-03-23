@@ -1,5 +1,4 @@
 <script>
-import { REMOVE_FORM } from "../types/action-types";
 import EventBus from "../utils/event-bus";
 import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
 
@@ -56,9 +55,6 @@ export default {
           console.log(reason);
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
-    },
-    removeGridItem() {
-      this.$store.dispatch(REMOVE_FORM, this.id);
     }
   }
 };

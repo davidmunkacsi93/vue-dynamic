@@ -5,31 +5,12 @@
     :class="{ 'component-height': initialized }"
     md-with-hover
   >
-    <md-card-header
-      class="md-layout-item md-layout md-size-100"
-      :class="{ 'title-height': initialized }"
-    >
-      <md-card-header-text class="md-layout-item md-size-90">
-        <div class="md-title" ref="title">{{ path }}</div>
-        <div class="md-subhead">{{ description }}</div>
-      </md-card-header-text>
-      <md-menu
-        md-size="big"
-        md-direction="bottom-end"
-        class="md-layout-item md-size-10"
-      >
-        <md-button class="md-icon-button" md-menu-trigger>
-          <md-icon>more_vert</md-icon>
-        </md-button>
-
-        <md-menu-content>
-          <md-menu-item @click="removeGridItem">
-            <span>Remove</span>
-            <md-icon>clear</md-icon>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </md-card-header>
+    <card-header
+      :description="description"
+      :initialized="initialized"
+      :path="path"
+      :uuid="uuid"
+    ></card-header>
 
     <md-card-content
       class="md-layout-item md-size-100"
@@ -58,12 +39,13 @@ import {
   SWITCH,
   DATE_PICKER
 } from "../types/layout-item-types";
+import CardHeader from "./CardHeader";
 import DynamicComponent from "./DynamicComponent.vue";
 import DynamicFormControls from "./DynamicFormControls.vue";
 
 export default {
   extends: DynamicComponent,
-  components: { DynamicFormControls },
+  components: { CardHeader, DynamicFormControls },
   data() {
     return {
       DATE_PICKER: DATE_PICKER,

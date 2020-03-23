@@ -5,27 +5,12 @@
     :class="{ 'component-height': initialized }"
     md-with-hover
   >
-    <md-card-header
-      class="md-layout-item md-size-100"
-      :class="{ 'title-height': initialized }"
-    >
-      <md-card-header-text>
-        <div class="md-title" ref="title">{{ path }}</div>
-        <div class="md-subhead" v-if="description">{{ description }}</div>
-      </md-card-header-text>
-      <md-menu md-size="big" md-direction="bottom-end">
-        <md-button class="md-icon-button" md-menu-trigger>
-          <md-icon>more_vert</md-icon>
-        </md-button>
-
-        <md-menu-content>
-          <md-menu-item @click="removeGridItem">
-            <span>Remove</span>
-            <md-icon>clear</md-icon>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </md-card-header>
+    <card-header
+      :description="description"
+      :initialized="initialized"
+      :path="path"
+      :uuid="uuid"
+    ></card-header>
 
     <md-progress-bar
       v-if="isLoading"
@@ -69,6 +54,7 @@
   </md-card>
 </template>
 <script>
+import CardHeader from "./CardHeader.vue";
 import DynamicComponent from "./DynamicComponent.vue";
 import DynamicFormControls from "./DynamicFormControls";
 import DynamicList from "./DynamicList";
@@ -80,7 +66,7 @@ import { LIST, TABLE } from "../types/layout-item-types";
 
 export default {
   extends: DynamicComponent,
-  components: { DynamicFormControls, DynamicTable, DynamicList },
+  components: { CardHeader, DynamicFormControls, DynamicTable, DynamicList },
   props: {
     controls: {
       type: Array,
