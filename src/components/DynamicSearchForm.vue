@@ -2,6 +2,7 @@
   <md-card
     ref="dynamicComponent"
     class="md-layout dynamic-component"
+    :class="{ 'component-height': initialized }"
     md-with-hover
   >
     <md-card-header class="md-layout-item md-size-100">
