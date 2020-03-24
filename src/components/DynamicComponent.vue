@@ -1,8 +1,51 @@
+<template>
+  <md-card
+    ref="dynamicComponent"
+    class="md-layout dynamic-component"
+    :class="{ 'component-height': initialized }"
+    md-with-hover
+  >
+    <card-header
+      :description="description"
+      :initialized="initialized"
+      :path="path"
+      :uuid="uuid"
+    ></card-header>
+
+    <md-card-content
+      class="md-layout-item md-size-100"
+      :class="{ 'content-height': initialized }"
+    >
+      <slot :results="results"></slot>
+    </md-card-content>
+
+    <md-progress-bar
+      v-if="isLoading"
+      class="md-layout-item md-size-100"
+      md-mode="query"
+    ></md-progress-bar>
+
+    <md-card-actions
+      class="md-layout-item md-size-100"
+      :class="{ 'actions-height': initialized }"
+    >
+      <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
+    </md-card-actions>
+  </md-card>
+</template>
 <script>
 import EventBus from "../utils/event-bus";
+import CardHeader from "../components/CardHeader";
 import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
 
 export default {
+  components: { CardHeader },
+  data() {
+    return {
+      isLoading: false,
+      results: []
+    };
+  },
   props: {
     apiVersion: {
       type: String
@@ -29,7 +72,8 @@ export default {
       type: String
     },
     type: {
-      type: String
+      type: String,
+      required: true
     },
     uuid: {
       required: true,
@@ -38,21 +82,29 @@ export default {
   },
   methods: {
     callApiMethod() {
+      this.isLoading = true;
+
+      var params = {
+        t: "Star wars",
+        apiKey: "fa42c8b4"
+      };
       var configuration = {
+        crossDomain: true,
         baseURL: this.baseURL,
         url: this.path,
-        method: this.httpMethod.toLowerCase()
+        method: this.httpMethod.toLowerCase(),
+        params
       };
+
       this.$http
         .request(configuration)
         .then(response => {
-          console.log(response);
-          EventBus.$emit(REQUEST_SUCCESSFUL, {
-            successMessage: response.toString()
-          });
+          this.isLoading = false;
+          this.results = response.data;
+          EventBus.$emit(REQUEST_SUCCESSFUL);
         })
         .catch(reason => {
-          console.log(reason);
+          this.isLoading = false;
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
     }

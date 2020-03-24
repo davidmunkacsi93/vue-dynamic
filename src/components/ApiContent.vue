@@ -39,11 +39,7 @@ import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
 import ApiTabContent from "../components/ApiTabContent";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
 import EventBus from "../utils/event-bus";
-import {
-  REQUEST_FAILED,
-  REQUEST_SUCCESSFUL,
-  SCREEN_CLASS_CHANGED
-} from "../types/event-types";
+import { REQUEST_FAILED, SCREEN_CLASS_CHANGED } from "../types/event-types";
 
 export default {
   components: {
@@ -73,13 +69,11 @@ export default {
   created() {
     window.addEventListener("resize", this.onWindowResize);
     EventBus.$on(REQUEST_FAILED, this.onRequestFailed);
-    EventBus.$on(REQUEST_SUCCESSFUL, this.onRequestSuccessful);
   },
 
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
     EventBus.$off(REQUEST_FAILED, this.onRequestFailed);
-    EventBus.$off(REQUEST_SUCCESSFUL, this.onRequestSuccessful);
   },
 
   mounted() {
@@ -120,10 +114,6 @@ export default {
     onRequestFailed(payload) {
       this.requestFailed = true;
       this.errorMessage = payload.errorMessage;
-    },
-    onRequestSuccessful(payload) {
-      this.requestSuccessful = true;
-      this.successMessage = payload.successMessage;
     },
     onWindowResize() {
       var currentScreenClass = getCurrentScreenClass();
