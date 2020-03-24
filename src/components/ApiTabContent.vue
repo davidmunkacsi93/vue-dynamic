@@ -28,40 +28,41 @@
         :key="item.i"
         :uuid="item.uuid"
       >
-        <dynamic-header
-          v-if="item.type === HEADER"
-          :type="HEADER"
-          :baseURL="baseURL"
-          :apiVersion="item.apiVersion"
-          :description="item.description"
-          :initialized="item.initialized"
-          :title="item.title"
-          :uuid="item.uuid"
-        ></dynamic-header>
-        <dynamic-form
-          v-else-if="item.type === FORM"
-          :type="FORM"
-          :baseURL="baseURL"
-          :controls="item.controls"
-          :description="item.description"
-          :httpMethod="item.httpMethod"
-          :initialized="item.initialized"
-          :path="item.path"
-          :uuid="item.uuid"
-        ></dynamic-form>
-        <dynamic-search-form
-          v-else-if="item.type === LIST || item.type === TABLE"
+        <dynamic-component
           :type="item.type"
           :baseURL="baseURL"
           :controls="item.controls"
           :description="item.description"
           :httpMethod="item.httpMethod"
           :initialized="item.initialized"
-          :tableModel="item.tableModel"
-          :listType="item.listType"
           :path="item.path"
           :uuid="item.uuid"
-        ></dynamic-search-form>
+        >
+          <dynamic-form
+            v-if="item.type === FORM"
+            :type="FORM"
+            :baseURL="baseURL"
+            :controls="item.controls"
+            :description="item.description"
+            :httpMethod="item.httpMethod"
+            :initialized="item.initialized"
+            :path="item.path"
+            :uuid="item.uuid"
+          ></dynamic-form>
+          <dynamic-search-form
+            v-else-if="item.type === LIST || item.type === TABLE"
+            :type="item.type"
+            :baseURL="baseURL"
+            :controls="item.controls"
+            :description="item.description"
+            :httpMethod="item.httpMethod"
+            :initialized="item.initialized"
+            :tableModel="item.tableModel"
+            :listType="item.listType"
+            :path="item.path"
+            :uuid="item.uuid"
+          ></dynamic-search-form>
+        </dynamic-component>
       </grid-item>
     </template>
   </api-layout>
@@ -70,8 +71,8 @@
 <script>
 import ApiLayout from "../components/ApiLayout";
 import GridItem from "../components/GridItem";
+import DynamicComponent from "../components/DynamicComponent";
 import DynamicForm from "../components/DynamicForm";
-import DynamicHeader from "../components/DynamicHeader";
 import DynamicSearchForm from "../components/DynamicSearchForm";
 
 import { FORM, HEADER, LIST, TABLE } from "../types/layout-item-types";
@@ -80,8 +81,8 @@ export default {
   components: {
     GridItem,
     ApiLayout,
+    DynamicComponent,
     DynamicForm,
-    DynamicHeader,
     DynamicSearchForm
   },
   props: {

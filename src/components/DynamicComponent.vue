@@ -1,8 +1,49 @@
+<template>
+  <md-card
+    ref="dynamicComponent"
+    class="md-layout dynamic-component"
+    :class="{ 'component-height': initialized }"
+    md-with-hover
+  >
+    <card-header
+      :description="description"
+      :initialized="initialized"
+      :path="path"
+      :uuid="uuid"
+    ></card-header>
+
+    <md-progress-bar
+      v-if="isLoading"
+      class="md-layout-item md-size-100"
+      md-mode="query"
+    ></md-progress-bar>
+
+    <md-card-content
+      class="md-layout-item md-size-100"
+      :class="{ 'content-height': initialized }"
+    >
+      <slot></slot>
+    </md-card-content>
+    <md-card-actions
+      class="md-layout-item md-size-100"
+      :class="{ 'actions-height': initialized }"
+    >
+      <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
+    </md-card-actions>
+  </md-card>
+</template>
 <script>
 import EventBus from "../utils/event-bus";
+import CardHeader from "../components/CardHeader";
 import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
 
 export default {
+  components: { CardHeader },
+  data() {
+    return {
+      isLoading: false
+    };
+  },
   props: {
     apiVersion: {
       type: String
@@ -29,7 +70,8 @@ export default {
       type: String
     },
     type: {
-      type: String
+      type: String,
+      required: true
     },
     uuid: {
       required: true,
@@ -38,13 +80,21 @@ export default {
   },
   methods: {
     callApiMethod() {
+      this.isLoading = true;
+
       var params = {
         t: "Star wars",
         apiKey: "fa42c8b4"
       };
       var configuration = {
+        crossDomain: true,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Headers": "Content-Type"
+        },
         baseURL: this.baseURL,
-        url: this.path + `?apiKey=fa42c8b4&t=star+wars`,
+        url: this.path,
         method: this.httpMethod.toLowerCase(),
         params
       };
@@ -52,13 +102,13 @@ export default {
       this.$http
         .request(configuration)
         .then(response => {
-          console.log(response);
-          EventBus.$emit(REQUEST_SUCCESSFUL, {
-            successMessage: response.toString()
-          });
+          this.isLoading = false;
+          this.activeTab = "tab-results";
+          this.results = response.data;
+          EventBus.$emit(REQUEST_SUCCESSFUL);
         })
         .catch(reason => {
-          console.log(reason);
+          this.isLoading = false;
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
     }
