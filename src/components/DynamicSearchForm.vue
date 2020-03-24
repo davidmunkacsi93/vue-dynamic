@@ -71,11 +71,6 @@ export default {
     onRequestSuccessful() {
       this.activeTab = "tab-results";
     }
-  },
-  watch: {
-    results: function(value) {
-      console.log(value);
-    }
   }
 };
 </script>

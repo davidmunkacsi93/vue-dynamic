@@ -104,7 +104,6 @@ export default {
         .then(response => {
           this.isLoading = false;
           this.results = response.data;
-          console.log(this.results);
           EventBus.$emit(REQUEST_SUCCESSFUL);
         })
         .catch(reason => {
