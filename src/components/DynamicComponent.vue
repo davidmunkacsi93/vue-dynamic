@@ -12,18 +12,19 @@
       :uuid="uuid"
     ></card-header>
 
-    <md-progress-bar
-      v-if="isLoading"
-      class="md-layout-item md-size-100"
-      md-mode="query"
-    ></md-progress-bar>
-
     <md-card-content
       class="md-layout-item md-size-100"
       :class="{ 'content-height': initialized }"
     >
       <slot :results="results"></slot>
     </md-card-content>
+
+    <md-progress-bar
+      v-if="isLoading"
+      class="md-layout-item md-size-100"
+      md-mode="query"
+    ></md-progress-bar>
+
     <md-card-actions
       class="md-layout-item md-size-100"
       :class="{ 'actions-height': initialized }"
