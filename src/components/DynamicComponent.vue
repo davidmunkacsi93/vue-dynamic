@@ -83,20 +83,16 @@ export default {
     callApiMethod() {
       this.isLoading = true;
 
-      // var params = {
-      //   t: "Star wars",
-      //   apiKey: "fa42c8b4"
-      // };
+      var params = {
+        t: "Star wars",
+        apiKey: "fa42c8b4"
+      };
       var configuration = {
         crossDomain: true,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET",
-          "Access-Control-Allow-Headers": "Content-Type"
-        },
         baseURL: this.baseURL,
         url: this.path,
-        method: this.httpMethod.toLowerCase()
+        method: this.httpMethod.toLowerCase(),
+        params
       };
 
       this.$http
