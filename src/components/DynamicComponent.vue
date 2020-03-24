@@ -38,11 +38,17 @@ export default {
   },
   methods: {
     callApiMethod() {
+      var params = {
+        t: "Star wars",
+        apiKey: "fa42c8b4"
+      };
       var configuration = {
         baseURL: this.baseURL,
-        url: this.path,
-        method: this.httpMethod.toLowerCase()
+        url: this.path + `?apiKey=fa42c8b4&t=star+wars`,
+        method: this.httpMethod.toLowerCase(),
+        params
       };
+
       this.$http
         .request(configuration)
         .then(response => {
