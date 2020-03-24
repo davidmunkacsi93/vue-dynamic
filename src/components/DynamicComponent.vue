@@ -22,7 +22,7 @@
       class="md-layout-item md-size-100"
       :class="{ 'content-height': initialized }"
     >
-      <slot></slot>
+      <slot :results="results"></slot>
     </md-card-content>
     <md-card-actions
       class="md-layout-item md-size-100"
@@ -41,7 +41,8 @@ export default {
   components: { CardHeader },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      results: []
     };
   },
   props: {
@@ -82,10 +83,10 @@ export default {
     callApiMethod() {
       this.isLoading = true;
 
-      var params = {
-        t: "Star wars",
-        apiKey: "fa42c8b4"
-      };
+      // var params = {
+      //   t: "Star wars",
+      //   apiKey: "fa42c8b4"
+      // };
       var configuration = {
         crossDomain: true,
         headers: {
@@ -95,16 +96,15 @@ export default {
         },
         baseURL: this.baseURL,
         url: this.path,
-        method: this.httpMethod.toLowerCase(),
-        params
+        method: this.httpMethod.toLowerCase()
       };
 
       this.$http
         .request(configuration)
         .then(response => {
           this.isLoading = false;
-          this.activeTab = "tab-results";
           this.results = response.data;
+          console.log(this.results);
           EventBus.$emit(REQUEST_SUCCESSFUL);
         })
         .catch(reason => {

@@ -38,30 +38,34 @@
           :path="item.path"
           :uuid="item.uuid"
         >
-          <dynamic-form
-            v-if="item.type === FORM"
-            :type="FORM"
-            :baseURL="baseURL"
-            :controls="item.controls"
-            :description="item.description"
-            :httpMethod="item.httpMethod"
-            :initialized="item.initialized"
-            :path="item.path"
-            :uuid="item.uuid"
-          ></dynamic-form>
-          <dynamic-search-form
-            v-else-if="item.type === LIST || item.type === TABLE"
-            :type="item.type"
-            :baseURL="baseURL"
-            :controls="item.controls"
-            :description="item.description"
-            :httpMethod="item.httpMethod"
-            :initialized="item.initialized"
-            :tableModel="item.tableModel"
-            :listType="item.listType"
-            :path="item.path"
-            :uuid="item.uuid"
-          ></dynamic-search-form>
+          <template v-slot="{ results }">
+            <dynamic-form
+              v-if="item.type === FORM"
+              :type="FORM"
+              :baseURL="baseURL"
+              :controls="item.controls"
+              :description="item.description"
+              :httpMethod="item.httpMethod"
+              :initialized="item.initialized"
+              :path="item.path"
+              :results="results"
+              :uuid="item.uuid"
+            ></dynamic-form>
+            <dynamic-search-form
+              v-else-if="item.type === LIST || item.type === TABLE"
+              :type="item.type"
+              :baseURL="baseURL"
+              :controls="item.controls"
+              :description="item.description"
+              :httpMethod="item.httpMethod"
+              :initialized="item.initialized"
+              :tableModel="item.tableModel"
+              :listType="item.listType"
+              :path="item.path"
+              :results="results"
+              :uuid="item.uuid"
+            ></dynamic-search-form>
+          </template>
         </dynamic-component>
       </grid-item>
     </template>

@@ -38,6 +38,9 @@ export default {
     listType: {
       required: false
     },
+    results: {
+      required: true
+    },
     tableModel: {
       required: false
     },
@@ -51,9 +54,7 @@ export default {
       TABLE: TABLE,
       LIST: LIST,
 
-      results: [],
       activeTab: "tab-search",
-
       isLoading: false
     };
   },
@@ -69,6 +70,11 @@ export default {
     },
     onRequestSuccessful() {
       this.activeTab = "tab-results";
+    }
+  },
+  watch: {
+    results: function(value) {
+      console.log(value);
     }
   }
 };

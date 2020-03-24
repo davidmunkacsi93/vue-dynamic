@@ -68,6 +68,7 @@ export default {
   },
   watch: {
     values: function(value) {
+      console.log(value);
       this.values = value;
     }
   }
