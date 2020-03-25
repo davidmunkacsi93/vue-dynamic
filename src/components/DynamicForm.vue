@@ -6,16 +6,21 @@
           <md-chips
             v-if="control.element === CHIPS"
             v-model="form[control.label]"
+            :class="getValidationClass(control.label)"
           ></md-chips>
           <md-datepicker
             v-model="form[control.label]"
             v-if="control.element === DATE_PICKER"
+            :class="getValidationClass(control.label)"
           >
             <label>{{ control.label }}</label>
           </md-datepicker>
           <md-field v-if="control.element === DROP_DOWN">
             <label>{{ control.label }}</label>
-            <md-select v-model="form[control.label]">
+            <md-select
+              v-model="form[control.label]"
+              :class="getValidationClass(control.label)"
+            >
               <md-option
                 v-for="(value, name, index) in control.values"
                 :value="value"
@@ -38,24 +43,52 @@
               v-model="form[control.label]"
               type="number"
               step="0.01"
+              :class="getValidationClass(control.label)"
             ></md-input>
           </md-field>
           <md-field v-if="control.element === NUMBER_INPUT">
             <label>{{ control.label }}</label>
-            <md-input v-model="form[control.label]" type="number"></md-input>
+            <md-input
+              v-model="form[control.label]"
+              type="number"
+              :class="getValidationClass(control.label)"
+            ></md-input>
           </md-field>
           <md-field v-if="control.element === PASSWORD_INPUT">
             <label>{{ control.label }}</label>
-            <md-input v-model="form[control.label]" type="password"></md-input>
+            <md-input
+              v-model="form[control.label]"
+              type="password"
+              :class="getValidationClass(control.label)"
+            ></md-input>
           </md-field>
           <md-field v-if="control.element === TEXT_INPUT">
             <label>{{ control.label }}</label>
-            <md-input v-model="form[control.label]" type="text"></md-input>
+            <md-input
+              v-model="form[control.label]"
+              type="text"
+              :class="getValidationClass(control.label)"
+            ></md-input>
           </md-field>
           <md-tooltip v-if="control.description" md-direction="left">
             {{ control.description }}
           </md-tooltip>
         </md-list-item>
+        <!-- <span class="md-error" v-if="$v && !$v.form[control.label].minlength">
+          {{ control.label }} is required
+        </span>
+        <span
+          class="md-error"
+          v-else-if="$v && !$v.form[control.label].minlength"
+        >
+          Invalid {{ control.label }}
+        </span>
+        <span
+          class="md-error"
+          v-else-if="$v && !$v.form[control.label].maxlength"
+        >
+          Invalid {{ control.label }}
+        </span> -->
       </draggable>
     </md-list>
   </form>
@@ -75,7 +108,12 @@ import {
 } from "../types/layout-item-types";
 
 import { validationMixin } from "vuelidate";
-import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import {
+  required,
+  minLength,
+  maxLength,
+  email
+} from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
@@ -96,14 +134,11 @@ export default {
       required: true
     }
   },
-  validations: {},
+  validations: { form: {} },
   beforeMount() {
     this.controls.forEach(control => {
       this.form[control.label] = null;
-    });
-  },
-  mounted() {
-    this.controls.forEach(control => {
+
       var controlValidations = {};
       if (control.required) {
         controlValidations.required = required;
@@ -115,6 +150,9 @@ export default {
         controlValidations.maxLength = maxLength(control.maximum);
       }
 
+      if (control.label === "email") {
+        controlValidations.email = email;
+      }
       this.$v[control.label] = controlValidations;
     });
   },
@@ -131,13 +169,33 @@ export default {
     SWITCH: SWITCH
   }),
   methods: {
-    callEndpoint() {},
+    callEndpoint() {
+      console.log(this.$v);
+      console.log("Calling endpoint...");
+    },
+    clearForm() {
+      this.$v.reset();
+      var formFields = Object.keys(this.form);
+      formFields.forEach(field => {
+        this.form[field] = null;
+      });
+    },
+    getValidationClass(fieldName) {
+      if (!this.$v) return;
+
+      const field = this.$v.form[fieldName];
+
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
     validateForm() {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        console.log(this.form);
-        console.log(this.$v);
+        this.callEndpoint();
       }
     }
   }
