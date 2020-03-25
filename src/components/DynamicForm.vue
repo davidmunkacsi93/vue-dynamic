@@ -134,9 +134,16 @@ export default {
       required: true
     }
   },
-  validations: { form: {} },
+  validations: {
+    form: {
+      r: {
+        required
+      }
+    }
+  },
   beforeMount() {
     this.controls.forEach(control => {
+      this.$set(this.form, control.label, "");
       this.form[control.label] = null;
 
       var controlValidations = {};
@@ -153,7 +160,9 @@ export default {
       if (control.label === "email") {
         controlValidations.email = email;
       }
-      this.$v[control.label] = controlValidations;
+
+      if (Object.keys(controlValidations) === 0) return;
+      this.$set(this.$v.form, control.label, controlValidations);
     });
   },
   data: () => ({
@@ -194,6 +203,7 @@ export default {
     validateForm() {
       this.$v.$touch();
 
+      console.log(this.$v);
       if (!this.$v.$invalid) {
         this.callEndpoint();
       }
