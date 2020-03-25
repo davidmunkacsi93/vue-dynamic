@@ -108,12 +108,7 @@ import {
 } from "../types/layout-item-types";
 
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  minLength,
-  maxLength,
-  email
-} from "vuelidate/lib/validators";
+import * as Validators from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
@@ -134,35 +129,12 @@ export default {
       required: true
     }
   },
-  validations: {
-    form: {
-      r: {
-        required
-      }
-    }
+  validations() {
+    return { form: this.createValidationRules(this.controls) };
   },
-  beforeMount() {
+  created() {
     this.controls.forEach(control => {
-      this.$set(this.form, control.label, "");
-      this.form[control.label] = null;
-
-      var controlValidations = {};
-      if (control.required) {
-        controlValidations.required = required;
-      }
-      if (control.minimum) {
-        controlValidations.minLength = minLength(control.minimum);
-      }
-      if (control.maximum) {
-        controlValidations.maxLength = maxLength(control.maximum);
-      }
-
-      if (control.label === "email") {
-        controlValidations.email = email;
-      }
-
-      if (Object.keys(controlValidations) === 0) return;
-      this.$set(this.$v.form, control.label, controlValidations);
+      this.$set(this.form, control.label, null);
     });
   },
   data: () => ({
@@ -179,8 +151,36 @@ export default {
   }),
   methods: {
     callEndpoint() {
-      console.log(this.$v);
       console.log("Calling endpoint...");
+    },
+    createValidationRules(controls) {
+      var validationRules = {};
+      controls.forEach(control => {
+        var controlValidations = {};
+
+        if (control.required) {
+          controlValidations.required = Validators["required"];
+        }
+        if (control.minimum) {
+          controlValidations.minLength = Validators["minLength"](
+            control.minimum
+          );
+        }
+        if (control.maximum) {
+          controlValidations.maxLength = Validators["maxLength"](
+            control.maximum
+          );
+        }
+
+        if (control.label === "email") {
+          controlValidations.email = Validators["email"];
+        }
+        if (Object.keys(controlValidations).length > 0) {
+          validationRules[control.label] = controlValidations;
+        }
+      });
+
+      return validationRules;
     },
     clearForm() {
       this.$v.reset();
@@ -203,7 +203,6 @@ export default {
     validateForm() {
       this.$v.$touch();
 
-      console.log(this.$v);
       if (!this.$v.$invalid) {
         this.callEndpoint();
       }
