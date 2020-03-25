@@ -101,7 +101,6 @@ export default {
     this.controls.forEach(control => {
       this.form[control.label] = null;
     });
-    console.log(this.form);
   },
   mounted() {
     this.controls.forEach(control => {
@@ -109,10 +108,15 @@ export default {
       if (control.required) {
         controlValidations.required = required;
       }
+      if (control.minimum) {
+        controlValidations.minLength = minLength(control.minimum);
+      }
+      if (control.maximum) {
+        controlValidations.maxLength = maxLength(control.maximum);
+      }
 
       this.$v[control.label] = controlValidations;
     });
-    console.log(this.$v);
   },
   data: () => ({
     form: {},
