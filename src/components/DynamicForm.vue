@@ -5,17 +5,17 @@
         <md-list-item v-for="control in controls" :key="control.order">
           <md-chips
             v-if="control.element === CHIPS"
-            v-model="control.value"
+            v-model="form[control.label]"
           ></md-chips>
           <md-datepicker
-            v-model="control.value"
+            v-model="form[control.label]"
             v-if="control.element === DATE_PICKER"
           >
             <label>{{ control.label }}</label>
           </md-datepicker>
           <md-field v-if="control.element === DROP_DOWN">
             <label>{{ control.label }}</label>
-            <md-select v-model="control.value">
+            <md-select v-model="form[control.label]">
               <md-option
                 v-for="(value, name, index) in control.values"
                 :value="value"
@@ -25,28 +25,32 @@
               </md-option>
             </md-select>
           </md-field>
-          <md-switch v-if="control.element === SWITCH" v-model="control.value">
+          <md-switch
+            v-if="control.element === SWITCH"
+            v-model="form[control.label]"
+          >
             {{ control.label }}
           </md-switch>
           <md-field v-if="control.element === FLOAT_INPUT">
-            <label>{{ control.label }}</label>
+            <label :for="control.label">{{ control.label }}</label>
             <md-input
-              v-model="control.value"
+              :id="control.label"
+              v-model="form[control.label]"
               type="number"
               step="0.01"
             ></md-input>
           </md-field>
           <md-field v-if="control.element === NUMBER_INPUT">
             <label>{{ control.label }}</label>
-            <md-input v-model="control.value" type="number"></md-input>
+            <md-input v-model="form[control.label]" type="number"></md-input>
           </md-field>
           <md-field v-if="control.element === PASSWORD_INPUT">
             <label>{{ control.label }}</label>
-            <md-input v-model="control.value" type="password"></md-input>
+            <md-input v-model="form[control.label]" type="password"></md-input>
           </md-field>
           <md-field v-if="control.element === TEXT_INPUT">
             <label>{{ control.label }}</label>
-            <md-input v-model="control.value" type="text"></md-input>
+            <md-input v-model="form[control.label]" type="text"></md-input>
           </md-field>
           <md-tooltip v-if="control.description" md-direction="left">
             {{ control.description }}
@@ -70,7 +74,11 @@ import {
   CHIPS
 } from "../types/layout-item-types";
 
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+
 export default {
+  mixins: [validationMixin],
   components: {
     draggable
   },
@@ -88,21 +96,41 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      CHIPS: CHIPS,
-      DATE_PICKER: DATE_PICKER,
-      DROP_DOWN: DROP_DOWN,
-      FLOAT_INPUT: FLOAT_INPUT,
-      NUMBER_INPUT: NUMBER_INPUT,
-      PASSWORD_INPUT: PASSWORD_INPUT,
-      TEXT_INPUT: TEXT_INPUT,
-      SWITCH: SWITCH
-    };
+  validations: {},
+  beforeMount() {
+    this.controls.forEach(control => {
+      this.form[control.label] = null;
+
+      var controlValidations = {};
+      if (control.required) {
+        controlValidations.required = required;
+      }
+
+      this.$v[control.label] = controlValidations;
+    });
+    console.log(this.validations);
+    console.log(this.form);
   },
+  data: () => ({
+    form: {},
+
+    CHIPS: CHIPS,
+    DATE_PICKER: DATE_PICKER,
+    DROP_DOWN: DROP_DOWN,
+    FLOAT_INPUT: FLOAT_INPUT,
+    NUMBER_INPUT: NUMBER_INPUT,
+    PASSWORD_INPUT: PASSWORD_INPUT,
+    TEXT_INPUT: TEXT_INPUT,
+    SWITCH: SWITCH
+  }),
   methods: {
+    callEndpoint() {},
     validateForm() {
-      console.log(this.uuid);
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        console.log("Valid form");
+      }
     }
   }
 };
