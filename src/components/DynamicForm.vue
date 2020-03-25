@@ -73,41 +73,23 @@
           <md-tooltip v-if="control.description" md-direction="left">
             {{ control.description }}
           </md-tooltip>
-          <template v-if="$v.form[control.label]">
-            <span
-              class="md-error"
-              v-if="
-                $v.form[control.label].required &&
-                  !$v.form[control.label].required.$invalid
-              "
-            >
+          <template v-if="$v.$dirty && $v.form[control.label]">
+            <span class="md-error" v-if="!$v.form[control.label].required">
               {{ control.label }} is required
             </span>
             <span
               class="md-error"
-              v-else-if="
-                $v.form[control.label].minLength &&
-                  !$v.form[control.label].minLength.$invalid
-              "
+              v-else-if="!$v.form[control.label].minLength"
             >
               Invalid {{ control.label }}
             </span>
             <span
               class="md-error"
-              v-else-if="
-                $v.form[control.label].maxLength &&
-                  !$v.form[control.label].maxLength.$invalid
-              "
+              v-else-if="!$v.form[control.label].maxLength"
             >
               Invalid {{ control.label }}
             </span>
-            <span
-              class="md-error"
-              v-else-if="
-                $v.form[control.label].email &&
-                  !$v.form[control.label].email.$invalid
-              "
-            >
+            <span class="md-error" v-else-if="!$v.form[control.label].email">
               Invalid email address
             </span>
           </template>
@@ -229,6 +211,7 @@ export default {
     },
     validateForm() {
       this.$v.$touch();
+      console.log(this.$v.form);
       if (!this.$v.$invalid) {
         this.callEndpoint();
       }
