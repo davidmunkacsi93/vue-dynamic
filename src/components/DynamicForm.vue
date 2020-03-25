@@ -100,7 +100,11 @@ export default {
   beforeMount() {
     this.controls.forEach(control => {
       this.form[control.label] = null;
-
+    });
+    console.log(this.form);
+  },
+  mounted() {
+    this.controls.forEach(control => {
       var controlValidations = {};
       if (control.required) {
         controlValidations.required = required;
@@ -108,8 +112,7 @@ export default {
 
       this.$v[control.label] = controlValidations;
     });
-    console.log(this.validations);
-    console.log(this.form);
+    console.log(this.$v);
   },
   data: () => ({
     form: {},
@@ -129,7 +132,8 @@ export default {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        console.log("Valid form");
+        console.log(this.form);
+        console.log(this.$v);
       }
     }
   }
