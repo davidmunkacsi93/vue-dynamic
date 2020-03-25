@@ -73,22 +73,45 @@
           <md-tooltip v-if="control.description" md-direction="left">
             {{ control.description }}
           </md-tooltip>
+          <template v-if="$v.form[control.label]">
+            <span
+              class="md-error"
+              v-if="
+                $v.form[control.label].required &&
+                  !$v.form[control.label].required.$invalid
+              "
+            >
+              {{ control.label }} is required
+            </span>
+            <span
+              class="md-error"
+              v-else-if="
+                $v.form[control.label].minLength &&
+                  !$v.form[control.label].minLength.$invalid
+              "
+            >
+              Invalid {{ control.label }}
+            </span>
+            <span
+              class="md-error"
+              v-else-if="
+                $v.form[control.label].maxLength &&
+                  !$v.form[control.label].maxLength.$invalid
+              "
+            >
+              Invalid {{ control.label }}
+            </span>
+            <span
+              class="md-error"
+              v-else-if="
+                $v.form[control.label].email &&
+                  !$v.form[control.label].email.$invalid
+              "
+            >
+              Invalid email address
+            </span>
+          </template>
         </md-list-item>
-        <!-- <span class="md-error" v-if="$v && !$v.form[control.label].minlength">
-          {{ control.label }} is required
-        </span>
-        <span
-          class="md-error"
-          v-else-if="$v && !$v.form[control.label].minlength"
-        >
-          Invalid {{ control.label }}
-        </span>
-        <span
-          class="md-error"
-          v-else-if="$v && !$v.form[control.label].maxlength"
-        >
-          Invalid {{ control.label }}
-        </span> -->
       </draggable>
     </md-list>
   </form>
@@ -137,8 +160,12 @@ export default {
       this.$set(this.form, control.label, null);
     });
   },
+  mounted() {
+    console.log(this.$v);
+  },
   data: () => ({
     form: {},
+    isDirty: false,
 
     CHIPS: CHIPS,
     DATE_PICKER: DATE_PICKER,
@@ -202,7 +229,6 @@ export default {
     },
     validateForm() {
       this.$v.$touch();
-
       if (!this.$v.$invalid) {
         this.callEndpoint();
       }
