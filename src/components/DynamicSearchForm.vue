@@ -4,6 +4,7 @@
       <dynamic-form
         :controls="controls"
         :initialized="initialized"
+        :uuid="uuid"
       ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
@@ -48,6 +49,10 @@ export default {
       required: false
     },
     type: {
+      required: true,
+      type: String
+    },
+    uuid: {
       required: true,
       type: String
     }

@@ -1,58 +1,60 @@
 <template>
-  <md-list>
-    <draggable v-model="controls">
-      <md-list-item v-for="control in controls" :key="control.order">
-        <md-chips
-          v-if="control.element === CHIPS"
-          v-model="control.value"
-        ></md-chips>
-        <md-datepicker
-          v-model="control.value"
-          v-if="control.element === DATE_PICKER"
-        >
-          <label>{{ control.label }}</label>
-        </md-datepicker>
-        <md-field v-if="control.element === DROP_DOWN">
-          <label>{{ control.label }}</label>
-          <md-select v-model="control.value">
-            <md-option
-              v-for="(value, name, index) in control.values"
-              :value="value"
-              :key="index"
-            >
-              {{ value }}
-            </md-option>
-          </md-select>
-        </md-field>
-        <md-switch v-if="control.element === SWITCH" v-model="control.value">
-          {{ control.label }}
-        </md-switch>
-        <md-field v-if="control.element === FLOAT_INPUT">
-          <label>{{ control.label }}</label>
-          <md-input
+  <form novalidate @submit.prevent="validateForm" :id="'form-' + uuid">
+    <md-list>
+      <draggable v-model="controls">
+        <md-list-item v-for="control in controls" :key="control.order">
+          <md-chips
+            v-if="control.element === CHIPS"
             v-model="control.value"
-            type="number"
-            step="0.01"
-          ></md-input>
-        </md-field>
-        <md-field v-if="control.element === NUMBER_INPUT">
-          <label>{{ control.label }}</label>
-          <md-input v-model="control.value" type="number"></md-input>
-        </md-field>
-        <md-field v-if="control.element === PASSWORD_INPUT">
-          <label>{{ control.label }}</label>
-          <md-input v-model="control.value" type="password"></md-input>
-        </md-field>
-        <md-field v-if="control.element === TEXT_INPUT">
-          <label>{{ control.label }}</label>
-          <md-input v-model="control.value" type="text"></md-input>
-        </md-field>
-        <md-tooltip v-if="control.description" md-direction="left">
-          {{ control.description }}
-        </md-tooltip>
-      </md-list-item>
-    </draggable>
-  </md-list>
+          ></md-chips>
+          <md-datepicker
+            v-model="control.value"
+            v-if="control.element === DATE_PICKER"
+          >
+            <label>{{ control.label }}</label>
+          </md-datepicker>
+          <md-field v-if="control.element === DROP_DOWN">
+            <label>{{ control.label }}</label>
+            <md-select v-model="control.value">
+              <md-option
+                v-for="(value, name, index) in control.values"
+                :value="value"
+                :key="index"
+              >
+                {{ value }}
+              </md-option>
+            </md-select>
+          </md-field>
+          <md-switch v-if="control.element === SWITCH" v-model="control.value">
+            {{ control.label }}
+          </md-switch>
+          <md-field v-if="control.element === FLOAT_INPUT">
+            <label>{{ control.label }}</label>
+            <md-input
+              v-model="control.value"
+              type="number"
+              step="0.01"
+            ></md-input>
+          </md-field>
+          <md-field v-if="control.element === NUMBER_INPUT">
+            <label>{{ control.label }}</label>
+            <md-input v-model="control.value" type="number"></md-input>
+          </md-field>
+          <md-field v-if="control.element === PASSWORD_INPUT">
+            <label>{{ control.label }}</label>
+            <md-input v-model="control.value" type="password"></md-input>
+          </md-field>
+          <md-field v-if="control.element === TEXT_INPUT">
+            <label>{{ control.label }}</label>
+            <md-input v-model="control.value" type="text"></md-input>
+          </md-field>
+          <md-tooltip v-if="control.description" md-direction="left">
+            {{ control.description }}
+          </md-tooltip>
+        </md-list-item>
+      </draggable>
+    </md-list>
+  </form>
 </template>
 
 <script>
@@ -80,6 +82,10 @@ export default {
     initialized: {
       type: Boolean,
       required: true
+    },
+    uuid: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -93,6 +99,11 @@ export default {
       TEXT_INPUT: TEXT_INPUT,
       SWITCH: SWITCH
     };
+  },
+  methods: {
+    validateForm() {
+      console.log(this.uuid);
+    }
   }
 };
 </script>
