@@ -24,12 +24,13 @@
       class="md-layout-item md-size-100"
       md-mode="query"
     ></md-progress-bar>
-
     <md-card-actions
       class="md-layout-item md-size-100"
       :class="{ 'actions-height': initialized }"
     >
-      <md-button @click="callApiMethod">{{ httpMethod }}</md-button>
+      <md-button type="submit" :form="'form-' + uuid">
+        {{ httpMethod }}
+      </md-button>
     </md-card-actions>
   </md-card>
 </template>

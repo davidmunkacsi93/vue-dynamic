@@ -64,7 +64,7 @@ import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/black-green-light.css";
 
 import VueRouter from "vue-router";
-
+import Vuelidate from "vuelidate";
 import VueForceNextTick from "vue-force-next-tick";
 
 import DynamicContent from "./components/DynamicContent.vue";
@@ -86,6 +86,7 @@ import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
 
 Vue.use(VueForceNextTick);
 Vue.use(VueMaterial);
+Vue.use(Vuelidate);
 Vue.use(VueRouter);
 
 const router = new VueRouter({

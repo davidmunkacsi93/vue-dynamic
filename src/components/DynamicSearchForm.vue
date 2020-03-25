@@ -1,7 +1,11 @@
 <template>
   <md-tabs :md-active-tab.sync="activeTab" :class="{ stretch: initialized }">
     <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
-      <dynamic-form-controls :controls="controls"></dynamic-form-controls>
+      <dynamic-form
+        :controls="controls"
+        :initialized="initialized"
+        :uuid="uuid"
+      ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
       <dynamic-list v-if="type === LIST" :listType="listType" :values="results">
@@ -16,7 +20,7 @@
   </md-tabs>
 </template>
 <script>
-import DynamicFormControls from "./DynamicFormControls";
+import DynamicForm from "./DynamicForm";
 import DynamicList from "./DynamicList";
 import DynamicTable from "./DynamicTable";
 
@@ -25,7 +29,7 @@ import { REQUEST_SUCCESSFUL } from "../types/event-types";
 import { LIST, TABLE } from "../types/layout-item-types";
 
 export default {
-  components: { DynamicFormControls, DynamicTable, DynamicList },
+  components: { DynamicForm, DynamicTable, DynamicList },
   props: {
     controls: {
       type: Array,
@@ -45,6 +49,10 @@ export default {
       required: false
     },
     type: {
+      required: true,
+      type: String
+    },
+    uuid: {
       required: true,
       type: String
     }
