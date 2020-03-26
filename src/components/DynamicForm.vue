@@ -78,17 +78,24 @@
             </template>
           </md-field>
           <template
-            v-if="
-              control.element === CHIPS ||
-                control.element === DATE_PICKER ||
-                control.element === SWITCH
+            v-else-if="
+              control.element === CHIPS || control.element === DATE_PICKER
             "
           >
             <md-chips
               v-if="control.element === CHIPS"
               v-model="form[control.label]"
+              :class="getValidationClass(control.label)"
             >
               <label>{{ control.label }}</label>
+              <template v-if="$v.$dirty && $v.form[control.label]">
+                <span
+                  class="validation-error"
+                  v-if="!$v.form[control.label].required"
+                >
+                  {{ control.label }} is required
+                </span>
+              </template>
             </md-chips>
             <md-datepicker
               v-model="form[control.label]"
@@ -96,21 +103,26 @@
               :class="getValidationClass(control.label)"
             >
               <label>{{ control.label }}</label>
+              <template v-if="$v.$dirty && $v.form[control.label]">
+                <span
+                  class="validation-error"
+                  v-if="!$v.form[control.label].required"
+                >
+                  {{ control.label }} is required
+                </span>
+              </template>
             </md-datepicker>
+            <md-tooltip v-if="control.description" md-direction="left">
+              {{ control.description }}
+            </md-tooltip>
+          </template>
+          <template v-else>
             <md-switch
-              v-else-if="control.element === SWITCH"
+              v-if="control.element === SWITCH"
               v-model="form[control.label]"
             >
               <label>{{ control.label }}</label>
             </md-switch>
-            <md-tooltip v-if="control.description" md-direction="left">
-              {{ control.description }}
-            </md-tooltip>
-            <template v-if="$v.$dirty && $v.form[control.label]">
-              <span class="md-error" v-if="!$v.form[control.label].required">
-                {{ control.label }} is required
-              </span>
-            </template>
           </template>
         </md-list-item>
       </draggable>
@@ -187,6 +199,7 @@ export default {
       controls.forEach(control => {
         var controlValidations = {};
 
+        controlValidations.required = Validators["required"];
         if (control.required) {
           controlValidations.required = Validators["required"];
         }
@@ -200,10 +213,10 @@ export default {
             control.maximum
           );
         }
-
         if (control.label === "email") {
           controlValidations.email = Validators["email"];
         }
+
         if (Object.keys(controlValidations).length > 0) {
           validationRules[control.label] = controlValidations;
         }
@@ -239,4 +252,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.validation-error {
+  display: block !important;
+  left: 0;
+  opacity: 1;
+  transform: translateZ(0);
+  color: var(--md-theme-default-fieldvariant, #ff1744);
+  height: 20px;
+  position: absolute;
+  bottom: -22px;
+  font-size: 12px;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+</style>
