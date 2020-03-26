@@ -90,7 +90,13 @@
             >
               <label>{{ control.label }}</label>
             </md-chips>
-
+            <md-datepicker
+              v-model="form[control.label]"
+              v-if="control.element === DATE_PICKER"
+              :class="getValidationClass(control.label)"
+            >
+              <label>{{ control.label }}</label>
+            </md-datepicker>
             <md-switch
               v-else-if="control.element === SWITCH"
               v-model="form[control.label]"
