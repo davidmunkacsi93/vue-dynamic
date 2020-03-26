@@ -1,39 +1,37 @@
 <template>
-  <div>
-    <md-card
-      ref="dynamicComponent"
-      class="md-layout dynamic-component"
-      :class="{ 'component-height': initialized }"
-      md-with-hover
+  <md-card
+    ref="dynamicComponent"
+    class="md-layout dynamic-component"
+    :class="{ 'component-height': initialized }"
+    md-with-hover
+  >
+    <card-header
+      :description="description"
+      :initialized="initialized"
+      :path="path"
+      :uuid="uuid"
+    ></card-header>
+
+    <md-card-content
+      class="md-layout-item md-size-100"
+      :class="{ 'content-height': initialized }"
     >
-      <card-header
-        :description="description"
-        :initialized="initialized"
-        :path="path"
-        :uuid="uuid"
-      ></card-header>
+      <slot :results="results"></slot>
+    </md-card-content>
 
-      <md-card-content
-        class="md-layout-item md-size-100"
-        :class="{ 'content-height': initialized }"
-      >
-        <slot :results="results"></slot>
-      </md-card-content>
-
-      <md-progress-bar
-        v-if="isLoading"
-        class="md-layout-item md-size-100"
-        md-mode="query"
-      ></md-progress-bar>
-      <md-card-actions
-        class="md-layout-item md-size-100"
-        :class="{ 'actions-height': initialized }"
-      >
-        <md-button type="submit" :form="'form-' + uuid">
-          {{ httpMethod }}
-        </md-button>
-      </md-card-actions>
-    </md-card>
+    <md-progress-bar
+      v-if="isLoading"
+      class="md-layout-item md-size-100"
+      md-mode="query"
+    ></md-progress-bar>
+    <md-card-actions
+      class="md-layout-item md-size-100"
+      :class="{ 'actions-height': initialized }"
+    >
+      <md-button type="submit" :form="'form-' + uuid">
+        {{ httpMethod }}
+      </md-button>
+    </md-card-actions>
     <md-dialog-alert
       :md-active.sync="requestSuccessful"
       md-title="Successful"
@@ -46,7 +44,7 @@
       :md-content="errorMessage"
       md-confirm-text="Ok"
     />
-  </div>
+  </md-card>
 </template>
 <script>
 import CardHeader from "../components/CardHeader";

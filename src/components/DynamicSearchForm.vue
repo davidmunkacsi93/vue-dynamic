@@ -1,5 +1,5 @@
 <template>
-  <md-tabs :md-active-tab.sync="activeTab" :class="{ stretch: initialized }">
+  <md-tabs :md-active-tab.sync="activeTab">
     <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
       <dynamic-form
         :baseURL="baseURL"
