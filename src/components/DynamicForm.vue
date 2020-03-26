@@ -248,7 +248,7 @@ export default {
     },
     validateForm() {
       this.$v.$touch();
-      console.log(this.$v.form);
+
       if (!this.$v.$invalid) {
         this.callEndpoint();
       }
