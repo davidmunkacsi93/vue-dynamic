@@ -136,6 +136,8 @@ export default {
       if (this.httpMethod != HTTP_GET) {
         this.requestSuccessful = true;
         this.successMessage = payload.successMessage;
+      } else {
+        this.results = payload.data;
       }
     }
   }

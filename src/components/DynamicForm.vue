@@ -226,7 +226,6 @@ export default {
             data: response.data,
             uuid: this.uuid
           };
-          console.log(payload);
 
           EventBus.$emit(REQUEST_SUCCESSFUL, payload);
         })

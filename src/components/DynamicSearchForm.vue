@@ -91,7 +91,9 @@ export default {
     onSearchTabClick() {
       this.activeTab = "tab-search";
     },
-    onRequestSuccessful() {
+    onRequestSuccessful(payload) {
+      if (this.uuid !== payload.uuid) return;
+
       this.activeTab = "tab-results";
     }
   }
