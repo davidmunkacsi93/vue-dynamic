@@ -212,9 +212,28 @@ export default {
   }),
   methods: {
     callEndpoint() {
-      var params = {
-        apiKey: "fa42c8b4"
-      };
+      var configuration = this.createRequestConfiguration();
+
+      this.$http
+        .request(configuration)
+        .then(response => {
+          this.results = response.data;
+          console.log(response);
+          EventBus.$emit(REQUEST_SUCCESSFUL);
+        })
+        .catch(reason => {
+          console.log(reason);
+          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
+        });
+    },
+    createRequestConfiguration() {
+      var params = {};
+      var apiKey = this.getApiKey();
+
+      if (apiKey) {
+        params.apiKey = apiKey;
+      }
+
       var bodyFormData = new FormData();
       var finalPath = this.path;
 
@@ -245,21 +264,17 @@ export default {
         params
       };
 
-      this.$http
-        .request(configuration)
-        .then(response => {
-          this.results = response.data;
-          console.log(response);
-          EventBus.$emit(REQUEST_SUCCESSFUL);
-        })
-        .catch(reason => {
-          console.log(reason);
-          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
-        });
+      return configuration;
     },
-    createRequest() {
 
+    getApiKey(baseUrl) {
+      // TODO: Refactor with server-side cookies.
+      var apiKeys = {
+        "http://www.omdbapi.com/": "fa42c8b4"
+      };
+      return apiKeys[baseUrl];
     },
+
     createValidationRules(controls) {
       var validationRules = {};
       controls.forEach(control => {
