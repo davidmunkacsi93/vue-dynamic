@@ -152,7 +152,11 @@ import {
 import { validationMixin } from "vuelidate";
 import * as Validators from "vuelidate/lib/validators";
 import EventBus from "../utils/event-bus";
-import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
+import {
+  REQUEST_SUCCESSFUL,
+  REQUEST_FAILED,
+  REQUEST_STARTED
+} from "../types/event-types";
 
 export default {
   mixins: [validationMixin],
@@ -212,17 +216,21 @@ export default {
   }),
   methods: {
     callEndpoint() {
+      EventBus.$emit(REQUEST_STARTED, { uuid: this.uuid });
       var configuration = this.createRequestConfiguration();
-
+      console.log(configuration);
       this.$http
         .request(configuration)
         .then(response => {
-          this.results = response.data;
-          console.log(response);
-          EventBus.$emit(REQUEST_SUCCESSFUL);
+          var payload = {
+            data: response.data,
+            uuid: this.uuid
+          };
+          console.log(payload);
+
+          EventBus.$emit(REQUEST_SUCCESSFUL, payload);
         })
         .catch(reason => {
-          console.log(reason);
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
     },
