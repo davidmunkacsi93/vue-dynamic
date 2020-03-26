@@ -10,8 +10,8 @@
               v-model="form[control.label]"
             ></md-chips>
             <md-datepicker
+              v-else-if="control.element === DATE_PICKER"
               v-model="form[control.label]"
-              v-if="control.element === DATE_PICKER"
             >
             </md-datepicker>
             <md-input
@@ -27,17 +27,22 @@
               type="number"
             ></md-input>
             <md-input
-              v-else-if="control.element === TEXT_INPUT"
+              v-else-if="
+                control.label !== 'password' && control.element === TEXT_INPUT
+              "
               v-model="form[control.label]"
               type="text"
             ></md-input>
             <md-input
-              v-else-if="control.element === PASSWORD_INPUT"
+              v-else-if="
+                control.label === 'password' ||
+                  control.element === PASSWORD_INPUT
+              "
               v-model="form[control.label]"
               type="password"
             ></md-input>
             <md-select
-              v-if="control.element === DROP_DOWN"
+              v-else-if="control.element === DROP_DOWN"
               v-model="form[control.label]"
             >
               <md-option
@@ -49,7 +54,7 @@
               </md-option>
             </md-select>
             <md-switch
-              v-if="control.element === SWITCH"
+              v-else-if="control.element === SWITCH"
               v-model="form[control.label]"
             >
               {{ control.label }}
