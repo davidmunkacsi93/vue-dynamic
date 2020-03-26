@@ -57,22 +57,28 @@
               {{ control.description }}
             </md-tooltip>
             <template v-if="$v.$dirty && $v.form[control.label]">
-              <span class="md-error" v-if="!$v.form[control.label].required">
+              <span
+                class="md-error"
+                v-if="$v.form[control.label].required === false"
+              >
                 {{ control.label }} is required
               </span>
               <span
                 class="md-error"
-                v-else-if="!$v.form[control.label].minLength"
+                v-else-if="$v.form[control.label].minLength === false"
               >
                 Invalid {{ control.label }}
               </span>
               <span
                 class="md-error"
-                v-else-if="!$v.form[control.label].maxLength"
+                v-else-if="$v.form[control.label].maxLength === false"
               >
                 Invalid {{ control.label }}
               </span>
-              <span class="md-error" v-else-if="!$v.form[control.label].email">
+              <span
+                class="md-error"
+                v-else-if="$v.form[control.label].email === false"
+              >
                 Invalid email address
               </span>
             </template>
@@ -91,7 +97,7 @@
               <template v-if="$v.$dirty && $v.form[control.label]">
                 <span
                   class="validation-error"
-                  v-if="!$v.form[control.label].required"
+                  v-if="$v.form[control.label].required === false"
                 >
                   {{ control.label }} is required
                 </span>
@@ -106,7 +112,7 @@
               <template v-if="$v.$dirty && $v.form[control.label]">
                 <span
                   class="validation-error"
-                  v-if="!$v.form[control.label].required"
+                  v-if="$v.form[control.label].required === false"
                 >
                   {{ control.label }} is required
                 </span>
@@ -199,7 +205,6 @@ export default {
       controls.forEach(control => {
         var controlValidations = {};
 
-        controlValidations.required = Validators["required"];
         if (control.required) {
           controlValidations.required = Validators["required"];
         }
