@@ -228,7 +228,7 @@ export default {
     },
     createRequestConfiguration() {
       var params = {};
-      var apiKey = this.getApiKey();
+      var apiKey = this.getApiKey(this.baseURL);
 
       if (apiKey) {
         params.apiKey = apiKey;
@@ -269,6 +269,7 @@ export default {
 
     getApiKey(baseUrl) {
       // TODO: Refactor with server-side cookies.
+      console.log(baseUrl);
       var apiKeys = {
         "http://www.omdbapi.com/": "fa42c8b4"
       };
