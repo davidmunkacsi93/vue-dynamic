@@ -3,23 +3,42 @@
     <md-list>
       <draggable v-model="controls">
         <md-list-item v-for="control in controls" :key="control.order">
-          <md-chips
-            v-if="control.element === CHIPS"
-            v-model="form[control.label]"
-            :class="getValidationClass(control.label)"
-          ></md-chips>
-          <md-datepicker
-            v-model="form[control.label]"
-            v-if="control.element === DATE_PICKER"
-            :class="getValidationClass(control.label)"
-          >
-            <label>{{ control.label }}</label>
-          </md-datepicker>
-          <md-field v-if="control.element === DROP_DOWN">
-            <label>{{ control.label }}</label>
-            <md-select
+          <md-field :class="getValidationClass(control.label)">
+            <label :for="control.label">{{ control.label }}</label>
+            <md-chips
+              v-if="control.element === CHIPS"
               v-model="form[control.label]"
-              :class="getValidationClass(control.label)"
+            ></md-chips>
+            <md-datepicker
+              v-model="form[control.label]"
+              v-if="control.element === DATE_PICKER"
+            >
+            </md-datepicker>
+            <md-input
+              v-else-if="control.element === FLOAT_INPUT"
+              :id="control.label"
+              v-model="form[control.label]"
+              type="number"
+              step="0.01"
+            ></md-input>
+            <md-input
+              v-else-if="control.element === NUMBER_INPUT"
+              v-model="form[control.label]"
+              type="number"
+            ></md-input>
+            <md-input
+              v-else-if="control.element === TEXT_INPUT"
+              v-model="form[control.label]"
+              type="text"
+            ></md-input>
+            <md-input
+              v-else-if="control.element === PASSWORD_INPUT"
+              v-model="form[control.label]"
+              type="password"
+            ></md-input>
+            <md-select
+              v-if="control.element === DROP_DOWN"
+              v-model="form[control.label]"
             >
               <md-option
                 v-for="(value, name, index) in control.values"
@@ -29,70 +48,36 @@
                 {{ value }}
               </md-option>
             </md-select>
-          </md-field>
-          <md-switch
-            v-if="control.element === SWITCH"
-            v-model="form[control.label]"
-          >
-            {{ control.label }}
-          </md-switch>
-          <md-field v-if="control.element === FLOAT_INPUT">
-            <label :for="control.label">{{ control.label }}</label>
-            <md-input
-              :id="control.label"
+            <md-switch
+              v-if="control.element === SWITCH"
               v-model="form[control.label]"
-              type="number"
-              step="0.01"
-              :class="getValidationClass(control.label)"
-            ></md-input>
-          </md-field>
-          <md-field v-if="control.element === NUMBER_INPUT">
-            <label>{{ control.label }}</label>
-            <md-input
-              v-model="form[control.label]"
-              type="number"
-              :class="getValidationClass(control.label)"
-            ></md-input>
-          </md-field>
-          <md-field v-if="control.element === PASSWORD_INPUT">
-            <label>{{ control.label }}</label>
-            <md-input
-              v-model="form[control.label]"
-              type="password"
-              :class="getValidationClass(control.label)"
-            ></md-input>
-          </md-field>
-          <md-field v-if="control.element === TEXT_INPUT">
-            <label>{{ control.label }}</label>
-            <md-input
-              v-model="form[control.label]"
-              type="text"
-              :class="getValidationClass(control.label)"
-            ></md-input>
-          </md-field>
-          <md-tooltip v-if="control.description" md-direction="left">
-            {{ control.description }}
-          </md-tooltip>
-          <template v-if="$v.$dirty && $v.form[control.label]">
-            <span class="md-error" v-if="!$v.form[control.label].required">
-              {{ control.label }} is required
-            </span>
-            <span
-              class="md-error"
-              v-else-if="!$v.form[control.label].minLength"
             >
-              Invalid {{ control.label }}
-            </span>
-            <span
-              class="md-error"
-              v-else-if="!$v.form[control.label].maxLength"
-            >
-              Invalid {{ control.label }}
-            </span>
-            <span class="md-error" v-else-if="!$v.form[control.label].email">
-              Invalid email address
-            </span>
-          </template>
+              {{ control.label }}
+            </md-switch>
+            <md-tooltip v-if="control.description" md-direction="left">
+              {{ control.description }}
+            </md-tooltip>
+            <template v-if="$v.$dirty && $v.form[control.label]">
+              <span class="md-error" v-if="!$v.form[control.label].required">
+                {{ control.label }} is required
+              </span>
+              <span
+                class="md-error"
+                v-else-if="!$v.form[control.label].minLength"
+              >
+                Invalid {{ control.label }}
+              </span>
+              <span
+                class="md-error"
+                v-else-if="!$v.form[control.label].maxLength"
+              >
+                Invalid {{ control.label }}
+              </span>
+              <span class="md-error" v-else-if="!$v.form[control.label].email">
+                Invalid email address
+              </span>
+            </template>
+          </md-field>
         </md-list-item>
       </draggable>
     </md-list>
@@ -202,7 +187,7 @@ export default {
       if (!this.$v) return;
 
       const field = this.$v.form[fieldName];
-
+      console.log(field);
       if (field) {
         return {
           "md-invalid": field.$invalid && field.$dirty
