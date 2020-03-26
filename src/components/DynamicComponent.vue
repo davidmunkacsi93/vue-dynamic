@@ -35,9 +35,7 @@
   </md-card>
 </template>
 <script>
-import EventBus from "../utils/event-bus";
 import CardHeader from "../components/CardHeader";
-import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
 
 export default {
   components: { CardHeader },
@@ -79,35 +77,6 @@ export default {
     uuid: {
       required: true,
       type: String
-    }
-  },
-  methods: {
-    callApiMethod() {
-      this.isLoading = true;
-
-      var params = {
-        t: "Star wars",
-        apiKey: "fa42c8b4"
-      };
-      var configuration = {
-        crossDomain: true,
-        baseURL: this.baseURL,
-        url: this.path,
-        method: this.httpMethod.toLowerCase(),
-        params
-      };
-
-      this.$http
-        .request(configuration)
-        .then(response => {
-          this.isLoading = false;
-          this.results = response.data;
-          EventBus.$emit(REQUEST_SUCCESSFUL);
-        })
-        .catch(reason => {
-          this.isLoading = false;
-          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
-        });
     }
   }
 };
