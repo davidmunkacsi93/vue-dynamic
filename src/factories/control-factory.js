@@ -70,7 +70,7 @@ class ControlFactory {
         in: parameterIn,
         required:
           requiredProperties &&
-          requiredProperties.some(prop => prop === property),
+          requiredProperties.some(prop => prop === property.name),
         ...controlForSchema
       };
       controls.push(control);
