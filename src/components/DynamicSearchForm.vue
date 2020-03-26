@@ -2,6 +2,9 @@
   <md-tabs :md-active-tab.sync="activeTab" :class="{ stretch: initialized }">
     <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
       <dynamic-form
+        :baseURL="baseURL"
+        :httpMethod="httpMethod"
+        :path="path"
         :controls="controls"
         :initialized="initialized"
         :uuid="uuid"
@@ -31,8 +34,16 @@ import { LIST, TABLE } from "../types/layout-item-types";
 export default {
   components: { DynamicForm, DynamicTable, DynamicList },
   props: {
+    baseURL: {
+      type: String,
+      required: true
+    },
     controls: {
       type: Array,
+      required: true
+    },
+    httpMethod: {
+      type: String,
       required: true
     },
     initialized: {
@@ -41,6 +52,10 @@ export default {
     },
     listType: {
       required: false
+    },
+    path: {
+      type: String,
+      required: true
     },
     results: {
       required: true

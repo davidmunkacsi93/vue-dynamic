@@ -151,6 +151,8 @@ import {
 
 import { validationMixin } from "vuelidate";
 import * as Validators from "vuelidate/lib/validators";
+import EventBus from "../utils/event-bus";
+import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
 
 export default {
   mixins: [validationMixin],
@@ -158,12 +160,24 @@ export default {
     draggable
   },
   props: {
+    baseURL: {
+      type: String,
+      required: true
+    },
     controls: {
       type: Array,
       required: true
     },
+    httpMethod: {
+      type: String,
+      required: true
+    },
     initialized: {
       type: Boolean,
+      required: true
+    },
+    path: {
+      type: String,
       required: true
     },
     uuid: {
@@ -198,7 +212,33 @@ export default {
   }),
   methods: {
     callEndpoint() {
-      console.log("Calling endpoint...");
+      var params = {
+        t: "Game of thrones",
+        apiKey: "fa42c8b4"
+      };
+      var configuration = {
+        crossDomain: true,
+        baseURL: this.baseURL,
+        proxy: {
+          host: "localhost",
+          port: 3000
+        },
+        url: this.path,
+        method: this.httpMethod.toLowerCase(),
+        params
+      };
+
+      this.$http
+        .request(configuration)
+        .then(response => {
+          this.results = response.data;
+          console.log(response);
+          EventBus.$emit(REQUEST_SUCCESSFUL);
+        })
+        .catch(reason => {
+          console.log(reason);
+          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
+        });
     },
     createValidationRules(controls) {
       var validationRules = {};
