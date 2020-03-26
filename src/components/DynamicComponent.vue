@@ -32,18 +32,51 @@
         {{ httpMethod }}
       </md-button>
     </md-card-actions>
+    <md-dialog-alert
+      :md-active.sync="requestSuccessful"
+      md-title="Successful"
+      :md-content="successMessage"
+      md-confirm-text="Ok"
+    />
+    <md-dialog-alert
+      :md-active.sync="requestFailed"
+      md-title="Error"
+      :md-content="errorMessage"
+      md-confirm-text="Ok"
+    />
   </md-card>
 </template>
 <script>
-import EventBus from "../utils/event-bus";
 import CardHeader from "../components/CardHeader";
-import { REQUEST_SUCCESSFUL, REQUEST_FAILED } from "../types/event-types";
+import {
+  REQUEST_STARTED,
+  REQUEST_SUCCESSFUL,
+  REQUEST_FAILED
+} from "../types/event-types";
+import { HTTP_GET } from "../types/http-methods";
+import EventBus from "../utils/event-bus";
 
 export default {
   components: { CardHeader },
+  created() {
+    EventBus.$on(REQUEST_FAILED, this.onRequestFailed);
+    EventBus.$on(REQUEST_STARTED, this.onRequestStarted);
+    EventBus.$on(REQUEST_SUCCESSFUL, this.onRequestSuccessful);
+  },
+  beforeDestroy() {
+    EventBus.$off(REQUEST_FAILED, this.onRequestFailed);
+    EventBus.$off(REQUEST_STARTED, this.onRequestStarted);
+    EventBus.$off(REQUEST_SUCCESSFUL, this.onRequestSuccessful);
+  },
   data() {
     return {
       isLoading: false,
+
+      requestFailed: false,
+      requestSuccessful: false,
+      errorMessage: "",
+      successMessage: "",
+
       results: []
     };
   },
@@ -82,32 +115,28 @@ export default {
     }
   },
   methods: {
-    callApiMethod() {
+    onRequestStarted(payload) {
+      if (this.uuid !== payload.uuid) return;
+
       this.isLoading = true;
+    },
+    onRequestFailed(payload) {
+      if (this.uuid !== payload.uuid) return;
 
-      var params = {
-        t: "Star wars",
-        apiKey: "fa42c8b4"
-      };
-      var configuration = {
-        crossDomain: true,
-        baseURL: this.baseURL,
-        url: this.path,
-        method: this.httpMethod.toLowerCase(),
-        params
-      };
+      this.isLoading = false;
+      this.requestFailed = true;
+      this.errorMessage = payload.errorMessage;
+    },
+    onRequestSuccessful(payload) {
+      if (this.uuid !== payload.uuid) return;
 
-      this.$http
-        .request(configuration)
-        .then(response => {
-          this.isLoading = false;
-          this.results = response.data;
-          EventBus.$emit(REQUEST_SUCCESSFUL);
-        })
-        .catch(reason => {
-          this.isLoading = false;
-          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
-        });
+      this.isLoading = false;
+      if (this.httpMethod != HTTP_GET) {
+        this.requestSuccessful = true;
+        this.successMessage = payload.successMessage;
+      } else {
+        this.results = payload.data;
+      }
     }
   }
 };

@@ -70,7 +70,7 @@ class ControlFactory {
         in: parameterIn,
         required:
           requiredProperties &&
-          requiredProperties.some(prop => prop === property),
+          requiredProperties.some(prop => prop === property.name),
         ...controlForSchema
       };
       controls.push(control);
@@ -124,9 +124,16 @@ class ControlFactory {
           } else if (parameter.items.type === "string") {
             control.element = CHIPS;
             control.value = [];
+          } else if (parameter.items.$ref) {
+            // TODO: Create a list of objects?
+          }
+        } else if (parameter.arrayType) {
+          if (parameter.arrayType === "string") {
+            control.element = CHIPS;
+            control.value = [];
           }
         } else if (parameter.schema) {
-          // Not supported.
+          // TODO: Create a list of objects?
         }
         break;
       case "object":

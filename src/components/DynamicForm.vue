@@ -3,23 +3,20 @@
     <md-list>
       <draggable v-model="controls">
         <md-list-item v-for="control in controls" :key="control.order">
-          <md-chips
-            v-if="control.element === CHIPS"
-            v-model="form[control.label]"
-            :class="getValidationClass(control.label)"
-          ></md-chips>
-          <md-datepicker
-            v-model="form[control.label]"
-            v-if="control.element === DATE_PICKER"
+          <md-field
+            v-if="
+              control.element === DROP_DOWN ||
+                control.element === FLOAT_INPUT ||
+                control.element === NUMBER_INPUT ||
+                control.element === TEXT_INPUT ||
+                control.element === PASSWORD_INPUT
+            "
             :class="getValidationClass(control.label)"
           >
-            <label>{{ control.label }}</label>
-          </md-datepicker>
-          <md-field v-if="control.element === DROP_DOWN">
-            <label>{{ control.label }}</label>
+            <label :for="control.label">{{ control.label }}</label>
             <md-select
+              v-if="control.element === DROP_DOWN"
               v-model="form[control.label]"
-              :class="getValidationClass(control.label)"
             >
               <md-option
                 v-for="(value, name, index) in control.values"
@@ -29,69 +26,109 @@
                 {{ value }}
               </md-option>
             </md-select>
-          </md-field>
-          <md-switch
-            v-if="control.element === SWITCH"
-            v-model="form[control.label]"
-          >
-            {{ control.label }}
-          </md-switch>
-          <md-field v-if="control.element === FLOAT_INPUT">
-            <label :for="control.label">{{ control.label }}</label>
             <md-input
-              :id="control.label"
+              v-else-if="control.element === FLOAT_INPUT"
               v-model="form[control.label]"
               type="number"
               step="0.01"
-              :class="getValidationClass(control.label)"
             ></md-input>
-          </md-field>
-          <md-field v-if="control.element === NUMBER_INPUT">
-            <label>{{ control.label }}</label>
             <md-input
+              v-else-if="control.element === NUMBER_INPUT"
               v-model="form[control.label]"
               type="number"
-              :class="getValidationClass(control.label)"
             ></md-input>
-          </md-field>
-          <md-field v-if="control.element === PASSWORD_INPUT">
-            <label>{{ control.label }}</label>
             <md-input
-              v-model="form[control.label]"
-              type="password"
-              :class="getValidationClass(control.label)"
-            ></md-input>
-          </md-field>
-          <md-field v-if="control.element === TEXT_INPUT">
-            <label>{{ control.label }}</label>
-            <md-input
+              v-else-if="
+                control.label !== 'password' && control.element === TEXT_INPUT
+              "
               v-model="form[control.label]"
               type="text"
-              :class="getValidationClass(control.label)"
             ></md-input>
+            <md-input
+              v-else-if="
+                control.label === 'password' ||
+                  control.element === PASSWORD_INPUT
+              "
+              v-model="form[control.label]"
+              type="password"
+            ></md-input>
+
+            <md-tooltip v-if="control.description" md-direction="left">
+              {{ control.description }}
+            </md-tooltip>
+            <template v-if="$v.$dirty && $v.form[control.label]">
+              <span
+                class="md-error"
+                v-if="$v.form[control.label].required === false"
+              >
+                {{ control.label }} is required
+              </span>
+              <span
+                class="md-error"
+                v-else-if="$v.form[control.label].minLength === false"
+              >
+                Invalid {{ control.label }}
+              </span>
+              <span
+                class="md-error"
+                v-else-if="$v.form[control.label].maxLength === false"
+              >
+                Invalid {{ control.label }}
+              </span>
+              <span
+                class="md-error"
+                v-else-if="$v.form[control.label].email === false"
+              >
+                Invalid email address
+              </span>
+            </template>
           </md-field>
-          <md-tooltip v-if="control.description" md-direction="left">
-            {{ control.description }}
-          </md-tooltip>
-          <template v-if="$v.$dirty && $v.form[control.label]">
-            <span class="md-error" v-if="!$v.form[control.label].required">
-              {{ control.label }} is required
-            </span>
-            <span
-              class="md-error"
-              v-else-if="!$v.form[control.label].minLength"
+          <template
+            v-else-if="
+              control.element === CHIPS || control.element === DATE_PICKER
+            "
+          >
+            <md-chips
+              v-if="control.element === CHIPS"
+              v-model="form[control.label]"
+              :class="getValidationClass(control.label)"
             >
-              Invalid {{ control.label }}
-            </span>
-            <span
-              class="md-error"
-              v-else-if="!$v.form[control.label].maxLength"
+              <label>{{ control.label }}</label>
+              <template v-if="$v.$dirty && $v.form[control.label]">
+                <span
+                  class="validation-error"
+                  v-if="$v.form[control.label].required === false"
+                >
+                  {{ control.label }} is required
+                </span>
+              </template>
+            </md-chips>
+            <md-datepicker
+              v-model="form[control.label]"
+              v-if="control.element === DATE_PICKER"
+              :class="getValidationClass(control.label)"
             >
-              Invalid {{ control.label }}
-            </span>
-            <span class="md-error" v-else-if="!$v.form[control.label].email">
-              Invalid email address
-            </span>
+              <label>{{ control.label }}</label>
+              <template v-if="$v.$dirty && $v.form[control.label]">
+                <span
+                  class="validation-error"
+                  v-if="$v.form[control.label].required === false"
+                >
+                  {{ control.label }} is required
+                </span>
+              </template>
+            </md-datepicker>
+            <md-tooltip v-if="control.description" md-direction="left">
+              {{ control.description }}
+            </md-tooltip>
+          </template>
+          <template v-else>
+            <md-switch
+              v-if="control.element === SWITCH"
+              v-model="form[control.label]"
+            >
+              <label>{{ control.label }}</label>
+            </md-switch>
           </template>
         </md-list-item>
       </draggable>
@@ -114,6 +151,12 @@ import {
 
 import { validationMixin } from "vuelidate";
 import * as Validators from "vuelidate/lib/validators";
+import EventBus from "../utils/event-bus";
+import {
+  REQUEST_SUCCESSFUL,
+  REQUEST_FAILED,
+  REQUEST_STARTED
+} from "../types/event-types";
 
 export default {
   mixins: [validationMixin],
@@ -121,12 +164,24 @@ export default {
     draggable
   },
   props: {
+    baseURL: {
+      type: String,
+      required: true
+    },
     controls: {
       type: Array,
       required: true
     },
+    httpMethod: {
+      type: String,
+      required: true
+    },
     initialized: {
       type: Boolean,
+      required: true
+    },
+    path: {
+      type: String,
       required: true
     },
     uuid: {
@@ -139,11 +194,12 @@ export default {
   },
   created() {
     this.controls.forEach(control => {
-      this.$set(this.form, control.label, null);
+      if (control.element === CHIPS) {
+        this.$set(this.form, control.label, []);
+      } else {
+        this.$set(this.form, control.label, null);
+      }
     });
-  },
-  mounted() {
-    console.log(this.$v);
   },
   data: () => ({
     form: {},
@@ -160,8 +216,73 @@ export default {
   }),
   methods: {
     callEndpoint() {
-      console.log("Calling endpoint...");
+      EventBus.$emit(REQUEST_STARTED, { uuid: this.uuid });
+      var configuration = this.createRequestConfiguration();
+      console.log(configuration);
+      this.$http
+        .request(configuration)
+        .then(response => {
+          var payload = {
+            data: response.data,
+            uuid: this.uuid
+          };
+
+          EventBus.$emit(REQUEST_SUCCESSFUL, payload);
+        })
+        .catch(reason => {
+          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
+        });
     },
+    createRequestConfiguration() {
+      var params = {};
+      var apiKey = this.getApiKey(this.baseURL);
+
+      if (apiKey) {
+        params.apiKey = apiKey;
+      }
+
+      var bodyFormData = new FormData();
+      var finalPath = this.path;
+
+      var formValue = null;
+      for (let control of this.controls) {
+        formValue = this.form[control.label];
+        if (!formValue) continue;
+
+        if (control.in === "query") {
+          params[control.label] = formValue;
+        } else if (control.in === "path") {
+          var pathSegment = `{${control.label}}`;
+          if (!finalPath.includes(pathSegment)) continue;
+          finalPath = finalPath.replace(pathSegment, formValue);
+        } else if (control.in === "body" || control.in === "formData") {
+          bodyFormData.set(control.label, formValue);
+        } else {
+          console.error(`Unknown parameter type: ${control.in}`);
+        }
+      }
+
+      var configuration = {
+        crossDomain: true,
+        baseURL: this.baseURL,
+        data: bodyFormData,
+        url: finalPath,
+        method: this.httpMethod.toLowerCase(),
+        params
+      };
+
+      return configuration;
+    },
+
+    getApiKey(baseUrl) {
+      // TODO: Refactor with server-side cookies.
+      console.log(baseUrl);
+      var apiKeys = {
+        "http://www.omdbapi.com/": "fa42c8b4"
+      };
+      return apiKeys[baseUrl];
+    },
+
     createValidationRules(controls) {
       var validationRules = {};
       controls.forEach(control => {
@@ -180,10 +301,10 @@ export default {
             control.maximum
           );
         }
-
         if (control.label === "email") {
           controlValidations.email = Validators["email"];
         }
+
         if (Object.keys(controlValidations).length > 0) {
           validationRules[control.label] = controlValidations;
         }
@@ -202,7 +323,6 @@ export default {
       if (!this.$v) return;
 
       const field = this.$v.form[fieldName];
-
       if (field) {
         return {
           "md-invalid": field.$invalid && field.$dirty
@@ -211,7 +331,7 @@ export default {
     },
     validateForm() {
       this.$v.$touch();
-      console.log(this.$v.form);
+
       if (!this.$v.$invalid) {
         this.callEndpoint();
       }
@@ -220,4 +340,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.validation-error {
+  display: block !important;
+  left: 0;
+  opacity: 1;
+  transform: translateZ(0);
+  color: var(--md-theme-default-fieldvariant, #ff1744);
+  height: 20px;
+  position: absolute;
+  bottom: -22px;
+  font-size: 12px;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+</style>

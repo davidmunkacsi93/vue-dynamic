@@ -12,6 +12,7 @@ class ApiModelFactory {
 
       var apiModel = {
         type: definition,
+        required: definitionObject.required,
         properties: []
       };
 

@@ -19,18 +19,6 @@
         ></api-tab-content>
       </md-tab>
     </md-tabs>
-    <md-dialog-alert
-      :md-active.sync="requestSuccessful"
-      md-title="Successful"
-      :md-content="successMessage"
-      md-confirm-text="Ok"
-    />
-    <md-dialog-alert
-      :md-active.sync="requestFailed"
-      md-title="Error"
-      :md-content="errorMessage"
-      md-confirm-text="Ok"
-    />
   </div>
 </template>
 <script>
@@ -39,7 +27,7 @@ import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
 import ApiTabContent from "../components/ApiTabContent";
 import { getCurrentScreenClass } from "../utils/responsive-utils";
 import EventBus from "../utils/event-bus";
-import { REQUEST_FAILED, SCREEN_CLASS_CHANGED } from "../types/event-types";
+import { SCREEN_CLASS_CHANGED } from "../types/event-types";
 
 export default {
   components: {
@@ -55,11 +43,6 @@ export default {
       tags: [],
       apiModel: {},
 
-      requestFailed: false,
-      requestSuccessful: false,
-      errorMessage: "",
-      successMessage: "",
-
       apiVersion: null,
       baseURL: null,
       description: null,
@@ -68,12 +51,10 @@ export default {
   },
   created() {
     window.addEventListener("resize", this.onWindowResize);
-    EventBus.$on(REQUEST_FAILED, this.onRequestFailed);
   },
 
   beforeDestroy() {
     window.removeEventListener("resize", this.onWindowResize);
-    EventBus.$off(REQUEST_FAILED, this.onRequestFailed);
   },
 
   mounted() {
@@ -111,10 +92,6 @@ export default {
   },
 
   methods: {
-    onRequestFailed(payload) {
-      this.requestFailed = true;
-      this.errorMessage = payload.errorMessage;
-    },
     onWindowResize() {
       var currentScreenClass = getCurrentScreenClass();
 
