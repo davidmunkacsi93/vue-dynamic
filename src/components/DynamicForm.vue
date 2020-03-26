@@ -213,17 +213,34 @@ export default {
   methods: {
     callEndpoint() {
       var params = {
-        t: "Game of thrones",
         apiKey: "fa42c8b4"
       };
+      var bodyFormData = new FormData();
+      var finalPath = this.path;
+
+      var formValue = null;
+      for (let control of this.controls) {
+        formValue = this.form[control.label];
+        if (!formValue) continue;
+
+        if (control.in === "query") {
+          params[control.label] = formValue;
+        } else if (control.in === "path") {
+          var pathSegment = `{${control.label}}`;
+          if (!finalPath.includes(pathSegment)) continue;
+          finalPath = finalPath.replace(pathSegment, formValue);
+        } else if (control.in === "body" || control.in === "formData") {
+          bodyFormData.set(control.label, formValue);
+        } else {
+          console.error(`Unknown parameter type: ${control.in}`);
+        }
+      }
+
       var configuration = {
         crossDomain: true,
         baseURL: this.baseURL,
-        proxy: {
-          host: "localhost",
-          port: 3000
-        },
-        url: this.path,
+        data: bodyFormData,
+        url: finalPath,
         method: this.httpMethod.toLowerCase(),
         params
       };
@@ -239,6 +256,9 @@ export default {
           console.log(reason);
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
+    },
+    createRequest() {
+
     },
     createValidationRules(controls) {
       var validationRules = {};
