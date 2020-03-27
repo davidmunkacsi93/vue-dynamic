@@ -1,27 +1,28 @@
-import { TABLE } from "../types/layout-item-types";
+import { TREE } from "../types/layout-item-types";
+
 import ControlFactory from "./control-factory";
 
-class DynamicTableFactory {
-  createDynamicTable(path, httpMethod, apiMethod) {
-    var dynamicTable = {
+class DynamicTreeFactory {
+  createDynamicTree(path, httpMethod, apiMethod) {
+    var dynamicTree = {
       httpMethod: httpMethod.toUpperCase(),
       path: path,
       tags: apiMethod.tags,
-      type: TABLE,
+      type: TREE,
       controls: []
     };
 
     if (apiMethod.parameters) {
       var controls = ControlFactory.createControlsForParameters(apiMethod);
-      dynamicTable.controls = controls;
+      dynamicTree.controls = controls;
     }
 
-    console.log(dynamicTable);
+    console.log(dynamicTree);
 
-    return dynamicTable;
+    return dynamicTree;
   }
 }
 
-const instance = new DynamicTableFactory();
+const instance = new DynamicTreeFactory();
 Object.freeze(instance);
 export default instance;
