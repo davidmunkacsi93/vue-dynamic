@@ -15,12 +15,7 @@ var webpackConfig = merge(baseConfig, {
     loaders: {
       js: "babel-loader"
     }
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      "process.env": require("../../config/test.env")
-    })
-  ]
+  }
 });
 
 // no need for app entry during tests

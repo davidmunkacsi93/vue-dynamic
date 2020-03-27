@@ -11,8 +11,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "unit": "karma start test/karma.conf.js --single-run",
-    "test": "npm run unit"
+    "test": "karma start --single-run"
   },
   "dependencies": {
     "acorn": ">=6.4.1",
