@@ -9,10 +9,6 @@
 <script>
 export default {
   props: {
-    listType: {
-      type: String,
-      required: true
-    },
     values: {
       required: true
     }

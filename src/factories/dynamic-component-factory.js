@@ -1,9 +1,9 @@
 import ControlFactory from "../factories/control-factory";
 import DynamicFormFactory from "../factories/dynamic-form-factory";
-import DynamicListFactory from "../factories/dynamic-list-factory";
+import DynamicTreeFactory from "./dynamic-tree-factory";
 import DynamicTableFactory from "../factories/dynamic-table-factory";
 
-import { FORM, TABLE, LIST } from "../types/layout-item-types";
+import { FORM, TABLE, TREE } from "../types/layout-item-types";
 
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
@@ -41,9 +41,9 @@ class DynamicComponentFactory {
               apiModels
             );
             break;
-          case LIST:
+          case TREE:
             console.log(apiMethod);
-            dynamicComponent = DynamicListFactory.createDynamicList(
+            dynamicComponent = DynamicTreeFactory.createDynamicTree(
               path,
               httpMethod,
               apiMethod,
@@ -101,13 +101,13 @@ class DynamicComponentFactory {
       switch (schema.type) {
         case "array":
           if (schema.items.type === "string") {
-            return LIST;
+            return TREE;
           } else if (schema.items.$ref) {
             return TABLE;
           }
           break;
         case "string":
-          return LIST;
+          return TREE;
       }
     }
 

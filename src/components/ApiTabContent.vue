@@ -52,7 +52,7 @@
               :uuid="item.uuid"
             ></dynamic-form>
             <dynamic-search-form
-              v-else-if="item.type === LIST || item.type === TABLE"
+              v-else-if="item.type === TREE || item.type === TABLE"
               :type="item.type"
               :baseURL="baseURL"
               :controls="item.controls"
@@ -79,7 +79,7 @@ import DynamicComponent from "../components/DynamicComponent";
 import DynamicForm from "../components/DynamicForm";
 import DynamicSearchForm from "../components/DynamicSearchForm";
 
-import { FORM, HEADER, LIST, TABLE } from "../types/layout-item-types";
+import { FORM, HEADER, TREE, TABLE } from "../types/layout-item-types";
 
 export default {
   components: {
@@ -103,7 +103,7 @@ export default {
     return {
       FORM: FORM,
       HEADER: HEADER,
-      LIST: LIST,
+      TREE: TREE,
       TABLE: TABLE,
 
       innerApiLayout: []
