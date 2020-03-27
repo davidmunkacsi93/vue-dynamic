@@ -37,8 +37,7 @@ class DynamicComponentFactory {
             dynamicComponent = DynamicTableFactory.createDynamicTable(
               path,
               httpMethod,
-              apiMethod,
-              apiModels
+              apiMethod
             );
             break;
           case TREE:
@@ -46,8 +45,7 @@ class DynamicComponentFactory {
             dynamicComponent = DynamicTreeFactory.createDynamicTree(
               path,
               httpMethod,
-              apiMethod,
-              apiModels
+              apiMethod
             );
             break;
         }
@@ -111,7 +109,7 @@ class DynamicComponentFactory {
       }
     }
 
-    return TABLE;
+    return TREE;
   }
 }
 
