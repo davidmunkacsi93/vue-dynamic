@@ -1,7 +1,8 @@
 import {
   isPrimitive,
   isNestedObject,
-  isSimpleObject
+  isSimpleObject,
+  arrayHasOnlySingleObjects
 } from "../src/utils/object-utils";
 
 describe("object-utils", () => {
@@ -86,6 +87,30 @@ describe("object-utils", () => {
       prop4: true
     };
     var result = isSimpleObject(nestedObject);
+    expect(result).toBe(false);
+  });
+
+  it("validates whether array has only single objects", () => {
+    const array = [
+      { prop1: "test", prop2: 3, prop3: false },
+      { prop1: "test2", prop2: 4, prop3: true },
+      { prop1: "test3", prop2: 5, prop3: false },
+      { prop1: "test4", prop2: 6, prop3: true }
+    ];
+
+    var result = arrayHasOnlySingleObjects(array);
+    expect(result).toBe(true);
+  });
+
+  it("validates whether array has only single objects", () => {
+    const array = [
+      { obj1: { prop1: "test" }, prop2: 3, prop3: false },
+      { prop1: "test2", prop2: 4, prop3: true },
+      { prop1: "test3", prop2: 5, prop3: false },
+      { prop1: "test4", prop2: 6, prop3: true }
+    ];
+
+    var result = arrayHasOnlySingleObjects(array);
     expect(result).toBe(false);
   });
 });

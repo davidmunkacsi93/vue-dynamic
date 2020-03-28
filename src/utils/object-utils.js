@@ -1,3 +1,7 @@
+export function arrayHasOnlySingleObjects(array) {
+  return array.every(item => isSimpleObject(item));
+}
+
 export function isNestedObject(object) {
   return !isSimpleObject(object);
 }
