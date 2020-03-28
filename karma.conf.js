@@ -16,6 +16,7 @@ module.exports = function (config) {
     exclude: [],
 
     webpack: {
+      devtool: "inline-source-map",
       module: {
         rules: [
           {
@@ -27,6 +28,9 @@ module.exports = function (config) {
             }
           }
         ]
+      },
+      optimization: {
+        minimize: false
       }
     },
     preprocessors: {
