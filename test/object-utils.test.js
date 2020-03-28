@@ -1,4 +1,8 @@
-import { isPrimitive } from "../src/utils/object-utils";
+import {
+  isPrimitive,
+  isNestedObject,
+  isSimpleObject
+} from "../src/utils/object-utils";
 
 describe("object-utils", () => {
   it("validates whether object is primitive", () => {
@@ -23,5 +27,65 @@ describe("object-utils", () => {
     const parameter = 1;
     var result = isPrimitive(parameter);
     expect(result).toBe(true);
+  });
+
+  it("validates whether object is nested", () => {
+    const simpleObject = {
+      prop1: "test",
+      prop2: "test",
+      prop3: 3,
+      prop4: true
+    };
+    var result = isNestedObject(simpleObject);
+    expect(result).toBe(false);
+  });
+
+  it("validates whether object is nested", () => {
+    const primitive = true;
+    var result = isNestedObject(primitive);
+    expect(result).toBe(false);
+  });
+
+  it("validates whether object is nested", () => {
+    const nestedObject = {
+      obj1: {
+        prop1: "test"
+      },
+      prop2: "test",
+      prop3: 3,
+      prop4: true
+    };
+    var result = isNestedObject(nestedObject);
+    expect(result).toBe(true);
+  });
+
+  it("validates whether object is simple", () => {
+    const simpleObject = {
+      prop1: "test",
+      prop2: "test",
+      prop3: 3,
+      prop4: true
+    };
+    var result = isSimpleObject(simpleObject);
+    expect(result).toBe(true);
+  });
+
+  it("validates whether object is simple", () => {
+    const primitive = true;
+    var result = isSimpleObject(primitive);
+    expect(result).toBe(true);
+  });
+
+  it("validates whether object is simple", () => {
+    const nestedObject = {
+      obj1: {
+        prop1: "test"
+      },
+      prop2: "test",
+      prop3: 3,
+      prop4: true
+    };
+    var result = isSimpleObject(nestedObject);
+    expect(result).toBe(false);
   });
 });
