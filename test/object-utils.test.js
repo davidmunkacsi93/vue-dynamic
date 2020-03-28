@@ -1,14 +1,27 @@
 import { isPrimitive } from "../src/utils/object-utils";
 
 describe("object-utils", () => {
-  it("validates a primite object", () => {
-    const object = true;
-    var result = isPrimitive(object);
-    expect(object).toBe(true);
+  it("validates whether object is primitive", () => {
+    const parameter = true;
+    var result = isPrimitive(parameter);
+    expect(result).toBe(true);
   });
 
-  it("validates a primite object", () => {
-    const object = false;
-    expect(object).toBe(false);
+  it("validates whether object is primitive", () => {
+    const parameter = { nested: true };
+    var result = isPrimitive(parameter);
+    expect(result).toBe(false);
+  });
+
+  it("validates whether object is primitive", () => {
+    const parameter = "string";
+    var result = isPrimitive(parameter);
+    expect(result).toBe(true);
+  });
+
+  it("validates whether object is primitive", () => {
+    const parameter = 1;
+    var result = isPrimitive(parameter);
+    expect(result).toBe(true);
   });
 });
