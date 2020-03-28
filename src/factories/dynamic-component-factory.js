@@ -1,7 +1,6 @@
 import ControlFactory from "../factories/control-factory";
 import DynamicFormFactory from "../factories/dynamic-form-factory";
 import DynamicTreeFactory from "./dynamic-tree-factory";
-import DynamicTableFactory from "../factories/dynamic-table-factory";
 
 import { FORM, TABLE, TREE } from "../types/layout-item-types";
 
@@ -33,13 +32,6 @@ class DynamicComponentFactory {
               apiModels
             );
             break;
-          case TABLE:
-            dynamicComponent = DynamicTableFactory.createDynamicTable(
-              path,
-              httpMethod,
-              apiMethod
-            );
-            break;
           case TREE:
             console.log(apiMethod);
             dynamicComponent = DynamicTreeFactory.createDynamicTree(
@@ -69,16 +61,12 @@ class DynamicComponentFactory {
       var responseOk = apiMethod.responses["200"];
       if (responseOk) {
         if (responseOk.content) {
-          return this.getDynamicComponentTypeForSchema(
-            responseOk.content["application/json"].schema
-          );
-        } else if (responseOk.schema) {
-          return this.getDynamicComponentTypeForSchema(responseOk.schema);
+          return TREE;
         } else {
           return FORM;
         }
       } else {
-        return FORM;
+        throw new Error(`${httpMethod} - not supported HTTP method.`);
       }
     } else if (
       httpMethod === "post" ||
@@ -90,26 +78,6 @@ class DynamicComponentFactory {
       console.log(httpMethod);
       throw new Error(`${httpMethod} - not supported HTTP method.`);
     }
-  }
-
-  getDynamicComponentTypeForSchema(schema) {
-    if (schema.$ref) {
-      return TABLE;
-    } else if (schema.type) {
-      switch (schema.type) {
-        case "array":
-          if (schema.items.type === "string") {
-            return TREE;
-          } else if (schema.items.$ref) {
-            return TABLE;
-          }
-          break;
-        case "string":
-          return TREE;
-      }
-    }
-
-    return TREE;
   }
 }
 

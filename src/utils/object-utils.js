@@ -1,13 +1,20 @@
-export function isSimpleObject(object) {
-  return !isNestedObject(object);
+export function arrayHasOnlySingleObjects(array) {
+  return array.every(item => isSimpleObject(item));
 }
 
 export function isNestedObject(object) {
-  if (isPrimitive(object)) return false;
+  return !isSimpleObject(object);
+}
 
-  return Object.keys(object).reduce(
-    (acc, key) => acc && isPrimitive(object[key])
-  );
+export function isSimpleObject(object) {
+  if (isPrimitive(object)) return true;
+
+  var isSimple = true;
+  Object.keys(object).forEach(key => {
+    isSimple = isSimple && isPrimitive(object[key]);
+  });
+
+  return isSimple;
 }
 
 export function isPrimitive(object) {
