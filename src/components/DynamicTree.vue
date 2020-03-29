@@ -1,16 +1,23 @@
 <template>
-  <md-list>
-    <md-list-item v-for="(value, index) in values" :key="index">
-      <span>{{ value }}</span>
-    </md-list-item>
-  </md-list>
+  <div>
+    <template v-if="Array.isArray(values)"> </template>
+    <template v-else-if="isSimpleObject(values)"></template>
+    <template v-else-if="isPrimitive(values)"></template>
+  </div>
 </template>
 
 <script>
+import { isSimpleObject, isPrimitive } from '../utils/object-utils';
+
 export default {
   props: {
     values: {
       required: true
+    }
+  },
+  watch: {
+    values: function (value) {
+      this.values = value;
     }
   }
 };
