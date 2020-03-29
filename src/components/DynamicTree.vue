@@ -1,6 +1,22 @@
 <template>
   <div>
-    <template v-if="Array.isArray(model)"> </template>
+    <template v-if="Array.isArray(model)">
+      <dynamic-list
+        v-if="arrayHasOnlyPrimitives(model)"
+        :model="model"
+      ></dynamic-list>
+      <dynamic-table
+        v-else-if="arrayHasOnlySingleObjects(model)"
+        :model="model"
+      ></dynamic-table>
+      <template v-else>
+        <dynamic-tree
+          v-for="objectKey in Object.keys(model)"
+          :key="objectKey"
+          :model="model[objectKey]"
+        ></dynamic-tree>
+      </template>
+    </template>
     <template v-else-if="isNestedObject(model)">
       <template v-for="objectKey in Object.keys(model)">
         <dynamic-tree :model="model[objectKey]" :key="objectKey"></dynamic-tree>
@@ -17,15 +33,19 @@
 
 <script>
 import {
+  arrayHasOnlyPrimitives,
+  arrayHasOnlySingleObjects,
   isNestedObject,
   isSimpleObject,
   isPrimitive
 } from '../utils/object-utils';
 
+import DynamicList from '../components/DynamicList';
 import DynamicObjectView from '../components/DynamicObjectView';
+import DynamicTable from '../components/DynamicTable';
 
 export default {
-  components: { DynamicObjectView },
+  components: { DynamicList, DynamicObjectView, DynamicTable },
   props: {
     model: {
       required: true
