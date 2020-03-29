@@ -7,11 +7,13 @@ export function arrayHasOnlyPrimitives(array) {
 }
 
 export function isNestedObject(object) {
+  if (Array.isArray(object) || isPrimitive(object)) return false;
+
   return !isSimpleObject(object);
 }
 
 export function isSimpleObject(object) {
-  if (isPrimitive(object)) return true;
+  if (Array.isArray(object) || isPrimitive(object)) return false;
 
   var isSimple = true;
   Object.keys(object).forEach((key) => {
@@ -19,10 +21,6 @@ export function isSimpleObject(object) {
   });
 
   return isSimple;
-}
-
-export function isSingleObject(object) {
-  return !Array.isArray(object) && typeof object === 'object';
 }
 
 export function isPrimitive(object) {
