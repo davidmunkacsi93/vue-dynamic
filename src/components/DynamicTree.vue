@@ -10,17 +10,27 @@
         :model="model"
       ></dynamic-table>
       <template v-else>
-        <dynamic-tree
-          v-for="objectKey in Object.keys(model)"
-          :key="objectKey"
-          :model="model[objectKey]"
-        ></dynamic-tree>
+        <md-list md-expand>
+          <md-list-item
+            class="md-inset"
+            v-for="objectKey in Object.keys(model)"
+            :key="objectKey"
+          >
+            <dynamic-tree :model="model[objectKey]"></dynamic-tree>
+          </md-list-item>
+        </md-list>
       </template>
     </template>
     <template v-else-if="isNestedObject(model)">
-      <template v-for="objectKey in Object.keys(model)">
-        <dynamic-tree :model="model[objectKey]" :key="objectKey"></dynamic-tree>
-      </template>
+      <md-list md-expand>
+        <md-list-item
+          class="md-inset"
+          v-for="objectKey in Object.keys(model)"
+          :key="objectKey"
+        >
+          <dynamic-tree :model="model[objectKey]"></dynamic-tree>
+        </md-list-item>
+      </md-list>
     </template>
     <template v-else-if="isSimpleObject(model)">
       <dynamic-object-view :model="model"> </dynamic-object-view>
