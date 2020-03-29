@@ -11,15 +11,12 @@
       ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
-      <dynamic-tree v-if="type === TREE" :values="results"> </dynamic-tree>
-      <dynamic-table v-else-if="type === TABLE" :values="results">
-      </dynamic-table>
+      <dynamic-tree :values="results"> </dynamic-tree>
     </md-tab>
   </md-tabs>
 </template>
 <script>
 import DynamicForm from './DynamicForm';
-import DynamicTable from './DynamicTable';
 import DynamicTree from './DynamicTree';
 
 import EventBus from '../utils/event-bus';
@@ -27,7 +24,7 @@ import { REQUEST_SUCCESSFUL } from '../types/event-types';
 import { TREE, TABLE } from '../types/layout-item-types';
 
 export default {
-  components: { DynamicForm, DynamicTable, DynamicTree },
+  components: { DynamicForm, DynamicTree },
   props: {
     baseURL: {
       type: String,
