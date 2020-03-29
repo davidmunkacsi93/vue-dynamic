@@ -3,7 +3,8 @@ import {
   isNestedObject,
   isSimpleObject,
   arrayHasOnlySingleObjects,
-  arrayHasOnlyPrimitives
+  arrayHasOnlyPrimitives,
+  isSingleObject
 } from '../../src/utils/object-utils';
 
 describe('Tests for isPrimitive utility function:', () => {
@@ -134,6 +135,29 @@ describe('Tests for arrayHasOnlyPrimitives utility function:', () => {
     const array = ['val1', 'val2', 'val3', { prop1: false }];
 
     var result = arrayHasOnlyPrimitives(array);
+    expect(result).toBe(false);
+  });
+});
+
+describe('Tests for isSingleObject utility function:', () => {
+  it('should be an object', () => {
+    var parameter = {};
+
+    var result = isSingleObject(parameter);
+    expect(result).toBe(true);
+  });
+
+  it('should not be an object', () => {
+    const array = ['val1', 'val2', 'val3', { prop1: false }];
+
+    var result = isSingleObject(array);
+    expect(result).toBe(false);
+  });
+
+  it('should not be an object', () => {
+    const num = 1;
+
+    var result = isSingleObject(num);
     expect(result).toBe(false);
   });
 });

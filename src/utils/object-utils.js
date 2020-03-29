@@ -21,6 +21,10 @@ export function isSimpleObject(object) {
   return isSimple;
 }
 
+export function isSingleObject(object) {
+  return !Array.isArray(object) && typeof object === 'object';
+}
+
 export function isPrimitive(object) {
   return object !== Object(object);
 }
