@@ -38,32 +38,28 @@
           :path="item.path"
           :uuid="item.uuid"
         >
-          <template v-slot="{ results }">
-            <dynamic-form
-              v-if="item.type === FORM"
-              :type="FORM"
-              :baseURL="baseURL"
-              :controls="item.controls"
-              :description="item.description"
-              :httpMethod="item.httpMethod"
-              :initialized="item.initialized"
-              :path="item.path"
-              :results="results"
-              :uuid="item.uuid"
-            ></dynamic-form>
-            <dynamic-search-form
-              v-else-if="item.type === SEARCH_FORM"
-              :type="item.type"
-              :baseURL="baseURL"
-              :controls="item.controls"
-              :description="item.description"
-              :httpMethod="item.httpMethod"
-              :initialized="item.initialized"
-              :path="item.path"
-              :results="results"
-              :uuid="item.uuid"
-            ></dynamic-search-form>
-          </template>
+          <dynamic-form
+            v-if="item.type === FORM"
+            :type="FORM"
+            :baseURL="baseURL"
+            :controls="item.controls"
+            :description="item.description"
+            :httpMethod="item.httpMethod"
+            :initialized="item.initialized"
+            :path="item.path"
+            :uuid="item.uuid"
+          ></dynamic-form>
+          <dynamic-search-form
+            v-else-if="item.type === SEARCH_FORM"
+            :type="item.type"
+            :baseURL="baseURL"
+            :controls="item.controls"
+            :description="item.description"
+            :httpMethod="item.httpMethod"
+            :initialized="item.initialized"
+            :path="item.path"
+            :uuid="item.uuid"
+          ></dynamic-search-form>
         </dynamic-component>
       </grid-item>
     </template>
