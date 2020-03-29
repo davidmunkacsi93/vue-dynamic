@@ -55,11 +55,19 @@ import DynamicObjectView from '../components/DynamicObjectView';
 import DynamicTable from '../components/DynamicTable';
 
 export default {
+  name: 'DynamicTree',
   components: { DynamicList, DynamicObjectView, DynamicTable },
   props: {
     model: {
       required: true
     }
+  },
+  methods: {
+    arrayHasOnlyPrimitives,
+    arrayHasOnlySingleObjects,
+    isNestedObject,
+    isSimpleObject,
+    isPrimitive
   },
   watch: {
     model: function (value) {
