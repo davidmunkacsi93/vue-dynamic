@@ -23,7 +23,27 @@ describe('Test for getDynamicComponentType factory logic:', () => {
     expect(result).toBe(SEARCH_FORM);
   });
 
-  it('get method and with unspecified content should be a search form.', () => {
+  it('get method and with schema should be a search form.', () => {
+    var httpMethod = 'get';
+    var apiMethod = {
+      responses: {
+        '200': {
+          description: 'OK',
+          schema: {
+            $ref: '#definitions/Pet'
+          }
+        }
+      }
+    };
+
+    var result = DynamicComponentFactory.getDynamicComponentType(
+      httpMethod,
+      apiMethod
+    );
+    expect(result).toBe(SEARCH_FORM);
+  });
+
+  it('get method and with unspecified content should be a form.', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {

@@ -22,7 +22,6 @@ class DynamicComponentFactory {
           apiMethod,
           path
         );
-        console.log(dynamicComponentType);
         switch (dynamicComponentType) {
           case FORM:
             dynamicComponent = DynamicFormFactory.createDynamicForm(
@@ -56,11 +55,11 @@ class DynamicComponentFactory {
     }
     return dynamicComponents;
   }
-  getDynamicComponentType(httpMethod, apiMethod, path) {
+  getDynamicComponentType(httpMethod, apiMethod) {
     if (httpMethod === 'get') {
       var responseOk = apiMethod.responses['200'];
       if (responseOk) {
-        if (responseOk.content) {
+        if (responseOk.content || responseOk.schema) {
           return SEARCH_FORM;
         } else {
           return FORM;
@@ -75,7 +74,6 @@ class DynamicComponentFactory {
     ) {
       return FORM;
     } else {
-      console.log(httpMethod);
       throw new Error(`${httpMethod} - not supported HTTP method.`);
     }
   }
