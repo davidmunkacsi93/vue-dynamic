@@ -1,6 +1,6 @@
 <template>
   <md-list>
-    <md-list-item v-for="(value, index) in values" :key="index">
+    <md-list-item v-for="(value, index) in model" :key="index">
       <span>{{ value }}</span>
     </md-list-item>
   </md-list>
@@ -9,7 +9,7 @@
 <script>
 export default {
   props: {
-    values: {
+    model: {
       required: true
     }
   }

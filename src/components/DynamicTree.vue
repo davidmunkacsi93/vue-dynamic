@@ -1,31 +1,39 @@
 <template>
   <div>
-    <template v-if="Array.isArray(values)"> </template>
-    <template v-else-if="isNestedObject(values)"> </template>
-    <template v-else-if="isSimpleObject(values)">
-      <dynamic-object-view :values="values"> </dynamic-object-view>
+    <template v-if="Array.isArray(model)"> </template>
+    <template v-else-if="isNestedObject(model)">
+      <template v-for="objectKey in Object.keys(model)">
+        <dynamic-tree :model="model[objectKey]" :key="objectKey"></dynamic-tree>
+      </template>
     </template>
-    <template v-else-if="isPrimitive(values)">
-      <span>{{ values }}</span>
+    <template v-else-if="isSimpleObject(model)">
+      <dynamic-object-view :model="model"> </dynamic-object-view>
+    </template>
+    <template v-else-if="isPrimitive(model)">
+      <span>{{ model }}</span>
     </template>
   </div>
 </template>
 
 <script>
-import { isSimpleObject, isPrimitive } from '../utils/object-utils';
+import {
+  isNestedObject,
+  isSimpleObject,
+  isPrimitive
+} from '../utils/object-utils';
 
 import DynamicObjectView from '../components/DynamicObjectView';
 
 export default {
   components: { DynamicObjectView },
   props: {
-    values: {
+    model: {
       required: true
     }
   },
   watch: {
-    values: function (value) {
-      this.values = value;
+    model: function (value) {
+      this.model = value;
     }
   }
 };

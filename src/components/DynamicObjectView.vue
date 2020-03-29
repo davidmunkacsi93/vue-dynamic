@@ -4,8 +4,8 @@
       <md-list-item v-for="header in headers" :key="header">
         <div class="md-list-item-text">
           <span>{{ header }}</span>
-          <span v-if="Array.isArray(values)">{{ values[0][header] }}</span>
-          <span v-else>{{ values[header] }}</span>
+          <span v-if="Array.isArray(model)">{{ model[0][header] }}</span>
+          <span v-else>{{ model[header] }}</span>
         </div>
       </md-list-item>
     </draggable>
@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    values: {
+    model: {
       required: true
     }
   },
@@ -25,9 +25,9 @@ export default {
     };
   },
   watch: {
-    values: function (value) {
-      this.values = value;
-      this.headers = Object.keys(this.values);
+    model: function (value) {
+      this.model = value;
+      this.headers = Object.keys(this.model);
     }
   }
 };

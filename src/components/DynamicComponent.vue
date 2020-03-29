@@ -16,7 +16,7 @@
       class="md-layout-item md-size-100"
       :class="{ 'content-height': initialized }"
     >
-      <slot :results="results"></slot>
+      <slot :model="results"></slot>
     </md-card-content>
 
     <md-progress-bar

@@ -11,7 +11,7 @@
       ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
-      <dynamic-tree :values="results"> </dynamic-tree>
+      <dynamic-tree :model="results"> </dynamic-tree>
     </md-tab>
   </md-tabs>
 </template>
