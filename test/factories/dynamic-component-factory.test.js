@@ -1,8 +1,8 @@
 import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
 import { FORM, TREE } from '../../src/types/layout-item-types';
 
-describe('Tests for getDynamicComponentType factory logic', () => {
-  it('should be a tree for get method and with specified response', () => {
+describe('Test for getDynamicComponentType factory logic:', () => {
+  it('get method with specified response should be a tree', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -23,7 +23,7 @@ describe('Tests for getDynamicComponentType factory logic', () => {
     expect(result).toBe(TREE);
   });
 
-  it('should be a tree for get method and with unspecified content', () => {
+  it('get method and with unspecified content should be a tree', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -40,7 +40,27 @@ describe('Tests for getDynamicComponentType factory logic', () => {
     expect(result).toBe(FORM);
   });
 
-  it('should be a form for post, put, delete method', () => {
+  it('get method and with unspecified OK status should throw an error', () => {
+    var httpMethod = 'get';
+    var apiMethod = {
+      responses: {
+        '201': {
+          description: 'created'
+        }
+      }
+    };
+    var path = '/test/segment';
+
+    expect(() => {
+      DynamicComponentFactory.getDynamicComponentType(
+        httpMethod,
+        apiMethod,
+        path
+      );
+    }).toThrowError('get - /test/segment does not specify OK status code.');
+  });
+
+  it('post, put, delete methods should be forms', () => {
     var httpMethods = ['post', 'put', 'delete'];
     var apiMethod = {};
 
@@ -51,5 +71,14 @@ describe('Tests for getDynamicComponentType factory logic', () => {
       );
       expect(result).toBe(FORM);
     });
+  });
+
+  it('patch should throw an error', () => {
+    var httpMethod = 'patch';
+    var apiMethod = {};
+
+    expect(() => {
+      DynamicComponentFactory.getDynamicComponentType(httpMethod, apiMethod);
+    }).toThrowError('patch - not supported HTTP method.');
   });
 });

@@ -20,6 +20,7 @@ class DynamicComponentFactory {
 
         var dynamicComponentType = this.getDynamicComponentType(
           httpMethod,
+          path,
           apiMethod
         );
         console.log(dynamicComponentType);
@@ -56,7 +57,7 @@ class DynamicComponentFactory {
     }
     return dynamicComponents;
   }
-  getDynamicComponentType(httpMethod, apiMethod) {
+  getDynamicComponentType(httpMethod, apiMethod, path) {
     if (httpMethod === 'get') {
       var responseOk = apiMethod.responses['200'];
       if (responseOk) {
@@ -66,7 +67,9 @@ class DynamicComponentFactory {
           return FORM;
         }
       } else {
-        throw new Error(`${httpMethod} - not supported HTTP method.`);
+        throw new Error(
+          `${httpMethod} - ${path} does not specify OK status code.`
+        );
       }
     } else if (
       httpMethod === 'post' ||
