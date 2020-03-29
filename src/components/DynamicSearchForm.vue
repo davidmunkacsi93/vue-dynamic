@@ -46,9 +46,6 @@ export default {
       type: String,
       required: true
     },
-    results: {
-      required: true
-    },
     type: {
       required: true,
       type: String
@@ -61,6 +58,7 @@ export default {
   data() {
     return {
       TREE: TREE,
+      results: [],
 
       activeTab: 'tab-search',
       isLoading: false
@@ -79,6 +77,8 @@ export default {
     onRequestSuccessful(payload) {
       if (this.uuid !== payload.uuid) return;
 
+      this.results = payload.response.data;
+      console.log(this.results);
       this.activeTab = 'tab-results';
     }
   }
