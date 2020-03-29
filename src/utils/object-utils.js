@@ -2,6 +2,10 @@ export function arrayHasOnlySingleObjects(array) {
   return array.every((item) => isSimpleObject(item));
 }
 
+export function arrayHasOnlyPrimitives(array) {
+  return array.every((item) => isPrimitive(item));
+}
+
 export function isNestedObject(object) {
   return !isSimpleObject(object);
 }
