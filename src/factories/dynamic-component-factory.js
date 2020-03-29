@@ -1,8 +1,7 @@
 import ControlFactory from '../factories/control-factory';
 import DynamicFormFactory from '../factories/dynamic-form-factory';
-import DynamicTreeFactory from './dynamic-tree-factory';
-
-import { FORM, TABLE, TREE } from '../types/layout-item-types';
+import DynamicSearchFormFactory from './dynamic-search-form-factory';
+import { FORM, SEARCH_FORM } from '../types/layout-item-types';
 
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
@@ -33,9 +32,9 @@ class DynamicComponentFactory {
               apiModels
             );
             break;
-          case TREE:
+          case SEARCH_FORM:
             console.log(apiMethod);
-            dynamicComponent = DynamicTreeFactory.createDynamicTree(
+            dynamicComponent = DynamicSearchFormFactory.createDynamicSearchForm(
               path,
               httpMethod,
               apiMethod
@@ -62,7 +61,7 @@ class DynamicComponentFactory {
       var responseOk = apiMethod.responses['200'];
       if (responseOk) {
         if (responseOk.content) {
-          return TREE;
+          return SEARCH_FORM;
         } else {
           return FORM;
         }

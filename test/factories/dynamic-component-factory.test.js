@@ -1,8 +1,8 @@
 import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
-import { FORM, TREE } from '../../src/types/layout-item-types';
+import { FORM, SEARCH_FORM } from '../../src/types/layout-item-types';
 
 describe('Test for getDynamicComponentType factory logic:', () => {
-  it('get method with specified response should be a tree', () => {
+  it('get method with specified response should be a search form.', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -20,10 +20,10 @@ describe('Test for getDynamicComponentType factory logic:', () => {
       httpMethod,
       apiMethod
     );
-    expect(result).toBe(TREE);
+    expect(result).toBe(SEARCH_FORM);
   });
 
-  it('get method and with unspecified content should be a tree', () => {
+  it('get method and with unspecified content should be a search form.', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -40,7 +40,7 @@ describe('Test for getDynamicComponentType factory logic:', () => {
     expect(result).toBe(FORM);
   });
 
-  it('get method and with unspecified OK status should throw an error', () => {
+  it('get method and with unspecified OK status should throw an error.', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -60,7 +60,7 @@ describe('Test for getDynamicComponentType factory logic:', () => {
     }).toThrowError('get - /test/segment does not specify OK status code.');
   });
 
-  it('post, put, delete methods should be forms', () => {
+  it('post, put, delete methods should be forms.', () => {
     var httpMethods = ['post', 'put', 'delete'];
     var apiMethod = {};
 
