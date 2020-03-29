@@ -1,16 +1,16 @@
 <script>
-import GridLayout from "vue-grid-layout";
-import GridLayoutBase from "../components/GridLayoutBase";
-import EventBus from "../utils/event-bus.js";
-import { SCREEN_CLASS_CHANGED } from "../types/event-types";
-import { SET_API_LAYOUT_ITEMS } from "../types/action-types";
+import GridLayout from 'vue-grid-layout';
+import GridLayoutBase from '../components/GridLayoutBase';
+import EventBus from '../utils/event-bus.js';
+import { SCREEN_CLASS_CHANGED } from '../types/event-types';
+import { SET_API_LAYOUT_ITEMS } from '../types/action-types';
 
 export default {
   mixins: [GridLayoutBase, GridLayout],
-  created: function() {
+  created: function () {
     EventBus.$on(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
   },
   mounted() {
@@ -71,7 +71,7 @@ export default {
     },
 
     sortLayoutItemsByRowCol(layout) {
-      return [].concat(layout).sort(function(a, b) {
+      return [].concat(layout).sort(function (a, b) {
         if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
           return 1;
         }

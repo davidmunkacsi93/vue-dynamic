@@ -22,12 +22,12 @@
   </div>
 </template>
 <script>
-import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from "../types/action-types";
+import { LOAD_API_LAYOUT, SAVE_API_LAYOUT } from '../types/action-types';
 
-import ApiTabContent from "../components/ApiTabContent";
-import { getCurrentScreenClass } from "../utils/responsive-utils";
-import EventBus from "../utils/event-bus";
-import { SCREEN_CLASS_CHANGED } from "../types/event-types";
+import ApiTabContent from '../components/ApiTabContent';
+import { getCurrentScreenClass } from '../utils/responsive-utils';
+import EventBus from '../utils/event-bus';
+import { SCREEN_CLASS_CHANGED } from '../types/event-types';
 
 export default {
   components: {
@@ -50,11 +50,11 @@ export default {
     };
   },
   created() {
-    window.addEventListener("resize", this.onWindowResize);
+    window.addEventListener('resize', this.onWindowResize);
   },
 
   beforeDestroy() {
-    window.removeEventListener("resize", this.onWindowResize);
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   mounted() {
@@ -65,8 +65,8 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if (!vm.$store.state.apiLayouts.apis) next("/addApi");
+    next((vm) => {
+      if (!vm.$store.state.apiLayouts.apis) next('/addApi');
 
       vm.currentApiId = to.params.apiId;
       vm.$store.dispatch(LOAD_API_LAYOUT, vm.currentApiId);
@@ -76,7 +76,7 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     if (!this.$store.state.apiLayouts.apis) {
-      next("/addApi");
+      next('/addApi');
     }
 
     this.currentApiId = to.params.apiId;
@@ -111,8 +111,8 @@ export default {
       this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
 
       this.tags = this.getTags(this.apiLayout);
-      this.tags.forEach(tag => {
-        this.apiLayoutByTags[tag] = this.apiLayout.filter(layoutItem => {
+      this.tags.forEach((tag) => {
+        this.apiLayoutByTags[tag] = this.apiLayout.filter((layoutItem) => {
           if (!layoutItem.tags) return false;
 
           return layoutItem.tags.includes(tag);
@@ -120,10 +120,10 @@ export default {
       });
 
       var notTagged = this.apiLayout.filter(
-        layoutItem => !layoutItem.tags || layoutItem.tags.length === 0
+        (layoutItem) => !layoutItem.tags || layoutItem.tags.length === 0
       );
       if (notTagged && notTagged.length > 0) {
-        let otherTagKey = "Other";
+        let otherTagKey = 'Other';
         this.tags.push(otherTagKey);
         this.apiLayoutByTags[otherTagKey] = notTagged;
       }
@@ -136,12 +136,12 @@ export default {
 
     getTags(apiLayout) {
       var taggedItems = apiLayout
-        .map(layoutItem => layoutItem.tags)
-        .filter(tags => tags);
+        .map((layoutItem) => layoutItem.tags)
+        .filter((tags) => tags);
       if (!taggedItems || taggedItems.length === 0) return [];
 
       return taggedItems
-        .filter(tags => tags)
+        .filter((tags) => tags)
         .reduce((acc, val) => [...acc, ...val])
         .filter(
           (value, index, collection) => collection.indexOf(value) === index

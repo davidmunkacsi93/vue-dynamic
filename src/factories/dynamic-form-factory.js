@@ -1,6 +1,6 @@
-import { FORM } from "../types/layout-item-types";
+import { FORM } from '../types/layout-item-types';
 
-import ControlFactory from "./control-factory";
+import ControlFactory from './control-factory';
 
 class DynamicFormFactory {
   createDynamicForm(path, httpMethod, apiMethod, apiModels) {
@@ -25,9 +25,9 @@ class DynamicFormFactory {
         apiModels
       );
     } else if (apiMethod.requestBody) {
-      var schema = apiMethod.requestBody.content["application/json"].schema;
+      var schema = apiMethod.requestBody.content['application/json'].schema;
       dynamicComponent.controls = ControlFactory.createControlsForSchema(
-        "body",
+        'body',
         schema,
         apiModels
       );

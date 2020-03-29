@@ -1,13 +1,13 @@
-import ControlFactory from "../factories/control-factory";
-import DynamicFormFactory from "../factories/dynamic-form-factory";
-import DynamicTreeFactory from "./dynamic-tree-factory";
+import ControlFactory from '../factories/control-factory';
+import DynamicFormFactory from '../factories/dynamic-form-factory';
+import DynamicTreeFactory from './dynamic-tree-factory';
 
-import { FORM, TABLE, TREE } from "../types/layout-item-types";
+import { FORM, TABLE, TREE } from '../types/layout-item-types';
 
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
     var dynamicComponents = [];
-    var supportedHttpMethods = ["get", "post", "put", "delete"];
+    var supportedHttpMethods = ['get', 'post', 'put', 'delete'];
 
     for (var path in apiPaths) {
       var apiEndpoint = apiPaths[path];
@@ -48,7 +48,7 @@ class DynamicComponentFactory {
           apiEndpoint.parameters
         );
 
-        dynamicComponents.forEach(component => {
+        dynamicComponents.forEach((component) => {
           if (!component.controls) component.controls = [];
           component.controls.push(controlsForEndpointParameters);
         });
@@ -57,8 +57,8 @@ class DynamicComponentFactory {
     return dynamicComponents;
   }
   getDynamicComponentType(httpMethod, apiMethod) {
-    if (httpMethod === "get") {
-      var responseOk = apiMethod.responses["200"];
+    if (httpMethod === 'get') {
+      var responseOk = apiMethod.responses['200'];
       if (responseOk) {
         if (responseOk.content) {
           return TREE;
@@ -69,9 +69,9 @@ class DynamicComponentFactory {
         throw new Error(`${httpMethod} - not supported HTTP method.`);
       }
     } else if (
-      httpMethod === "post" ||
-      httpMethod === "delete" ||
-      httpMethod === "put"
+      httpMethod === 'post' ||
+      httpMethod === 'delete' ||
+      httpMethod === 'put'
     ) {
       return FORM;
     } else {

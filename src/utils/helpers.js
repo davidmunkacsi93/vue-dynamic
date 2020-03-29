@@ -1,3 +1,3 @@
 export function getLastURLSegment(url) {
-  return url.substr(url.lastIndexOf("/") + 1);
+  return url.substr(url.lastIndexOf('/') + 1);
 }

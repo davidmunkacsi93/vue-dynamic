@@ -1,22 +1,22 @@
-import AddApi from "./components/AddApi.vue";
-import ApiContent from "./components/ApiContent.vue";
-import Home from "./components/Home.vue";
+import AddApi from './components/AddApi.vue';
+import ApiContent from './components/ApiContent.vue';
+import Home from './components/Home.vue';
 
-export const API_ROUTE_NAME = "api";
+export const API_ROUTE_NAME = 'api';
 
 export default [
   {
-    path: "/",
+    path: '/',
     component: Home
   },
   {
-    path: "/api/:apiId",
+    path: '/api/:apiId',
     name: API_ROUTE_NAME,
     component: ApiContent
   },
   {
-    path: "/addApi",
-    name: "addApi",
+    path: '/addApi',
+    name: 'addApi',
     component: AddApi
   }
 ];

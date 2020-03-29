@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 import {
   SET_NAVIGATION_BAR_HEIGHT,
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
   DISABLE_EDIT_MODE_MAIN_LAYOUT
-} from "../types/action-types";
-import EventBus from "../utils/event-bus";
-import { API_ADDED, LAYOUT_UPDATED, COMPACT } from "../types/event-types";
+} from '../types/action-types';
+import EventBus from '../utils/event-bus';
+import { API_ADDED, LAYOUT_UPDATED, COMPACT } from '../types/event-types';
 export default {
   props: {
     hidden: {
@@ -53,8 +53,8 @@ export default {
   },
   data() {
     return {
-      addApiPath: "/addApi",
-      homePath: "/"
+      addApiPath: '/addApi',
+      homePath: '/'
     };
   },
   created() {
@@ -62,15 +62,15 @@ export default {
   },
   beforeDestroy() {
     EventBus.$off(API_ADDED, this.onApiAdded);
-    window.removeEventListener("resize", this.setNavigationBarHeight);
+    window.removeEventListener('resize', this.setNavigationBarHeight);
   },
   mounted() {
     this.setNavigationBarHeight();
-    window.addEventListener("resize", this.setNavigationBarHeight);
+    window.addEventListener('resize', this.setNavigationBarHeight);
   },
   computed: {
     ...mapState({
-      availableApis: state => state.apiLayouts.apis
+      availableApis: (state) => state.apiLayouts.apis
     })
   },
   methods: {

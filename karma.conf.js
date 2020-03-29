@@ -1,30 +1,30 @@
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
-    basePath: "",
+    basePath: '',
 
     plugins: [
-      "karma-webpack",
-      "karma-jasmine",
-      "karma-babel-preprocessor",
-      "karma-chrome-launcher"
+      'karma-webpack',
+      'karma-jasmine',
+      'karma-babel-preprocessor',
+      'karma-chrome-launcher'
     ],
 
-    frameworks: ["jasmine"],
+    frameworks: ['jasmine'],
 
-    files: ["test/**/*.js"],
+    files: ['test/**/*.js'],
 
     exclude: [],
 
     webpack: {
-      devtool: "inline-source-map",
+      devtool: 'inline-source-map',
       module: {
         rules: [
           {
             test: /\.js$/i,
             exclude: /(node_modules)/,
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
-              presets: ["@babel/preset-env"]
+              presets: ['@babel/preset-env']
             }
           }
         ]
@@ -34,14 +34,14 @@ module.exports = function(config) {
       }
     },
     preprocessors: {
-      "./test/**/*.js": ["webpack"]
+      './test/**/*.js': ['webpack']
     },
     webpackMiddleware: {
       noInfo: true,
-      stats: "errors-only"
+      stats: 'errors-only'
     },
 
-    reporters: ["progress"],
+    reporters: ['progress'],
 
     port: 9876,
 
@@ -51,7 +51,7 @@ module.exports = function(config) {
 
     autoWatch: true,
 
-    browsers: ["Chrome"],
+    browsers: ['Chrome'],
 
     singleRun: false,
 

@@ -1,22 +1,22 @@
 <script>
-import { GridItem } from "vue-grid-layout";
-import EventBus from "../utils/event-bus.js";
+import { GridItem } from 'vue-grid-layout';
+import EventBus from '../utils/event-bus.js';
 import {
   COMPACT,
   UPDATE_WIDTH,
   SCREEN_CLASS_CHANGED
-} from "../types/event-types";
-import { SET_API_ITEM_SIZE, SET_CONTENT_HEIGHT } from "../types/action-types";
+} from '../types/event-types';
+import { SET_API_ITEM_SIZE, SET_CONTENT_HEIGHT } from '../types/action-types';
 
 export default {
-  name: "GridItem",
+  name: 'GridItem',
   extends: GridItem,
-  created: function() {
+  created: function () {
     EventBus.$on(COMPACT, this.onCompact);
     EventBus.$on(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$on(UPDATE_WIDTH, this.onUpdateWidth);
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     EventBus.$off(COMPACT, this.onCompact);
     EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
@@ -90,7 +90,7 @@ export default {
 
       if (this.innerW !== pos.w || this.innerH !== pos.h) {
         this.$emit(
-          "resize",
+          'resize',
           this.i,
           pos.h,
           pos.w,
@@ -100,7 +100,7 @@ export default {
       }
       if (this.previousW !== pos.w || this.previousH !== pos.h) {
         this.$emit(
-          "resized",
+          'resized',
           this.i,
           pos.h,
           pos.w,
@@ -108,8 +108,8 @@ export default {
           newSize.width
         );
         this.eventBus.$emit(
-          "resizeEvent",
-          "resizeend",
+          'resizeEvent',
+          'resizeend',
           this.i,
           this.innerX,
           this.innerY,

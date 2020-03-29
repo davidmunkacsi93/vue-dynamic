@@ -1,8 +1,8 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-import apiLayouts from "./modules/api-layouts";
-import mainLayout from "./modules/main-layout";
+import apiLayouts from './modules/api-layouts';
+import mainLayout from './modules/main-layout';
 
 Vue.use(Vuex);
 

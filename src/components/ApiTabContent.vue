@@ -73,13 +73,13 @@
 </template>
 
 <script>
-import ApiLayout from "../components/ApiLayout";
-import GridItem from "../components/GridItem";
-import DynamicComponent from "../components/DynamicComponent";
-import DynamicForm from "../components/DynamicForm";
-import DynamicSearchForm from "../components/DynamicSearchForm";
+import ApiLayout from '../components/ApiLayout';
+import GridItem from '../components/GridItem';
+import DynamicComponent from '../components/DynamicComponent';
+import DynamicForm from '../components/DynamicForm';
+import DynamicSearchForm from '../components/DynamicSearchForm';
 
-import { FORM, HEADER, TREE, TABLE } from "../types/layout-item-types";
+import { FORM, HEADER, TREE, TABLE } from '../types/layout-item-types';
 
 export default {
   components: {

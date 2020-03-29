@@ -29,10 +29,10 @@
   </div>
 </template>
 <script>
-import { ADD_NEW_API } from "../types/action-types";
-import { API_ADDED } from "../types/event-types";
+import { ADD_NEW_API } from '../types/action-types';
+import { API_ADDED } from '../types/event-types';
 
-import EventBus from "../utils/event-bus";
+import EventBus from '../utils/event-bus';
 
 export default {
   data() {
@@ -43,7 +43,7 @@ export default {
       apiCreated: false,
       apiTitle: null,
       specificationURL:
-        "https://api.swaggerhub.com/apis/davidmunkacsi93/petstore/1.0.0/swagger.json"
+        'https://api.swaggerhub.com/apis/davidmunkacsi93/petstore/1.0.0/swagger.json'
     };
   },
   methods: {
@@ -52,14 +52,14 @@ export default {
 
       this.$apiIntegrationService
         .integrateNewAPI(this.specificationURL)
-        .then(apiModel => {
+        .then((apiModel) => {
           this.$store.dispatch(ADD_NEW_API, apiModel);
           this.apiTitle = apiModel.title;
           this.loading = false;
           this.apiCreated = true;
           EventBus.$emit(API_ADDED);
         })
-        .catch(reason => {
+        .catch((reason) => {
           this.loading = false;
           this.isNotValid = true;
           this.errorMessage = reason.toString();

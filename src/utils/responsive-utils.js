@@ -13,7 +13,7 @@ export function getCurrentScreenClass() {
 
 function sortBreakpoints(breakpoints) {
   const keys = Object.keys(breakpoints);
-  return keys.sort(function(a, b) {
+  return keys.sort(function (a, b) {
     return breakpoints[a] - breakpoints[b];
   });
 }

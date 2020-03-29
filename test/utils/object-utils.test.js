@@ -3,39 +3,39 @@ import {
   isNestedObject,
   isSimpleObject,
   arrayHasOnlySingleObjects
-} from "../../src/utils/object-utils";
+} from '../../src/utils/object-utils';
 
-describe("Tests for isPrimitive utility function:", () => {
-  it("should be primitive", () => {
+describe('Tests for isPrimitive utility function:', () => {
+  it('should be primitive', () => {
     const parameter = true;
     var result = isPrimitive(parameter);
     expect(result).toBe(true);
   });
 
-  it("should not be primitive", () => {
+  it('should not be primitive', () => {
     const parameter = { nested: true };
     var result = isPrimitive(parameter);
     expect(result).toBe(false);
   });
 
-  it("should be primitive", () => {
-    const parameter = "string";
+  it('should be primitive', () => {
+    const parameter = 'string';
     var result = isPrimitive(parameter);
     expect(result).toBe(true);
   });
 
-  it("should be primitive", () => {
+  it('should be primitive', () => {
     const parameter = 1;
     var result = isPrimitive(parameter);
     expect(result).toBe(true);
   });
 });
 
-describe("Tests for isNestedObject utility function:", () => {
-  it("should not be a nested object", () => {
+describe('Tests for isNestedObject utility function:', () => {
+  it('should not be a nested object', () => {
     const simpleObject = {
-      prop1: "test",
-      prop2: "test",
+      prop1: 'test',
+      prop2: 'test',
       prop3: 3,
       prop4: true
     };
@@ -43,18 +43,18 @@ describe("Tests for isNestedObject utility function:", () => {
     expect(result).toBe(false);
   });
 
-  it("should not be a nested object", () => {
+  it('should not be a nested object', () => {
     const primitive = true;
     var result = isNestedObject(primitive);
     expect(result).toBe(false);
   });
 
-  it("should be a nested object", () => {
+  it('should be a nested object', () => {
     const nestedObject = {
       obj1: {
-        prop1: "test"
+        prop1: 'test'
       },
-      prop2: "test",
+      prop2: 'test',
       prop3: 3,
       prop4: true
     };
@@ -63,11 +63,11 @@ describe("Tests for isNestedObject utility function:", () => {
   });
 });
 
-describe("Tests for isSimpleObject utility function:", () => {
-  it("should be a simple object", () => {
+describe('Tests for isSimpleObject utility function:', () => {
+  it('should be a simple object', () => {
     const simpleObject = {
-      prop1: "test",
-      prop2: "test",
+      prop1: 'test',
+      prop2: 'test',
       prop3: 3,
       prop4: true
     };
@@ -75,18 +75,18 @@ describe("Tests for isSimpleObject utility function:", () => {
     expect(result).toBe(true);
   });
 
-  it("should be a simple object", () => {
+  it('should be a simple object', () => {
     const primitive = true;
     var result = isSimpleObject(primitive);
     expect(result).toBe(true);
   });
 
-  it("should not be a simple object", () => {
+  it('should not be a simple object', () => {
     const nestedObject = {
       obj1: {
-        prop1: "test"
+        prop1: 'test'
       },
-      prop2: "test",
+      prop2: 'test',
       prop3: 3,
       prop4: true
     };
@@ -95,25 +95,25 @@ describe("Tests for isSimpleObject utility function:", () => {
   });
 });
 
-describe("Tests for arrayHasSimpleObjects utility function:", () => {
-  it("should be consisting of single objects", () => {
+describe('Tests for arrayHasSimpleObjects utility function:', () => {
+  it('should be consisting of single objects', () => {
     const array = [
-      { prop1: "test", prop2: 3, prop3: false },
-      { prop1: "test2", prop2: 4, prop3: true },
-      { prop1: "test3", prop2: 5, prop3: false },
-      { prop1: "test4", prop2: 6, prop3: true }
+      { prop1: 'test', prop2: 3, prop3: false },
+      { prop1: 'test2', prop2: 4, prop3: true },
+      { prop1: 'test3', prop2: 5, prop3: false },
+      { prop1: 'test4', prop2: 6, prop3: true }
     ];
 
     var result = arrayHasOnlySingleObjects(array);
     expect(result).toBe(true);
   });
 
-  it("should not be consisting of single objects", () => {
+  it('should not be consisting of single objects', () => {
     const array = [
-      { obj1: { prop1: "test" }, prop2: 3, prop3: false },
-      { prop1: "test2", prop2: 4, prop3: true },
-      { prop1: "test3", prop2: 5, prop3: false },
-      { prop1: "test4", prop2: 6, prop3: true }
+      { obj1: { prop1: 'test' }, prop2: 3, prop3: false },
+      { prop1: 'test2', prop2: 4, prop3: true },
+      { prop1: 'test3', prop2: 5, prop3: false },
+      { prop1: 'test4', prop2: 6, prop3: true }
     ];
 
     var result = arrayHasOnlySingleObjects(array);

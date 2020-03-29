@@ -18,12 +18,12 @@ class OpenApiInformationProvider {
         serverDescription: null,
         serverURL:
           specification.schemes[0] +
-          "://" +
+          '://' +
           specification.host +
           specification.basePath
       };
     } else {
-      throw new Error("Unknown specification!");
+      throw new Error('Unknown specification!');
     }
   }
 }

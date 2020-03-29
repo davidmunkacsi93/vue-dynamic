@@ -47,14 +47,14 @@
   </md-card>
 </template>
 <script>
-import CardHeader from "../components/CardHeader";
+import CardHeader from '../components/CardHeader';
 import {
   REQUEST_STARTED,
   REQUEST_SUCCESSFUL,
   REQUEST_FAILED
-} from "../types/event-types";
-import { HTTP_GET } from "../types/http-methods";
-import EventBus from "../utils/event-bus";
+} from '../types/event-types';
+import { HTTP_GET } from '../types/http-methods';
+import EventBus from '../utils/event-bus';
 
 export default {
   components: { CardHeader },
@@ -74,8 +74,8 @@ export default {
 
       requestFailed: false,
       requestSuccessful: false,
-      errorMessage: "",
-      successMessage: "",
+      errorMessage: '',
+      successMessage: '',
 
       results: []
     };

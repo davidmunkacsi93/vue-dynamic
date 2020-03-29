@@ -1,4 +1,4 @@
-import { getLastURLSegment } from "../utils/helpers";
+import { getLastURLSegment } from '../utils/helpers';
 
 class ApiModelFactory {
   createApiModels(components) {
@@ -33,7 +33,7 @@ class ApiModelFactory {
           property.enumValues = propertyObject.enum;
         }
 
-        if (propertyObject.type === "array") {
+        if (propertyObject.type === 'array') {
           if (propertyObject.items.$ref) {
             property.arrayType = getLastURLSegment(propertyObject.items.$ref);
           } else {

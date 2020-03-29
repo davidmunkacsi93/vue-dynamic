@@ -1,6 +1,6 @@
-import { TREE } from "../types/layout-item-types";
+import { TREE } from '../types/layout-item-types';
 
-import ControlFactory from "./control-factory";
+import ControlFactory from './control-factory';
 
 class DynamicTreeFactory {
   createDynamicTree(path, httpMethod, apiMethod) {

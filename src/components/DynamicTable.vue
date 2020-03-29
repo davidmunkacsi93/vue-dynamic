@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
+import draggable from 'vuedraggable';
 
 export default {
   components: { draggable },
@@ -56,7 +56,7 @@ export default {
       this.runtimeModel = true;
     } else {
       this.staticModel = true;
-      this.headers = this.model.properties.map(property => property.name);
+      this.headers = this.model.properties.map((property) => property.name);
     }
   },
   data() {
@@ -67,7 +67,7 @@ export default {
     };
   },
   watch: {
-    values: function(value) {
+    values: function (value) {
       this.values = value;
       console.log(this.type);
       console.log(this.values);

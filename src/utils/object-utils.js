@@ -1,5 +1,5 @@
 export function arrayHasOnlySingleObjects(array) {
-  return array.every(item => isSimpleObject(item));
+  return array.every((item) => isSimpleObject(item));
 }
 
 export function isNestedObject(object) {
@@ -10,7 +10,7 @@ export function isSimpleObject(object) {
   if (isPrimitive(object)) return true;
 
   var isSimple = true;
-  Object.keys(object).forEach(key => {
+  Object.keys(object).forEach((key) => {
     isSimple = isSimple && isPrimitive(object[key]);
   });
 

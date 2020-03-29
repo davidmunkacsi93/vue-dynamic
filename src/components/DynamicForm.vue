@@ -6,10 +6,10 @@
           <md-field
             v-if="
               control.element === DROP_DOWN ||
-                control.element === FLOAT_INPUT ||
-                control.element === NUMBER_INPUT ||
-                control.element === TEXT_INPUT ||
-                control.element === PASSWORD_INPUT
+              control.element === FLOAT_INPUT ||
+              control.element === NUMBER_INPUT ||
+              control.element === TEXT_INPUT ||
+              control.element === PASSWORD_INPUT
             "
             :class="getValidationClass(control.label)"
           >
@@ -47,7 +47,7 @@
             <md-input
               v-else-if="
                 control.label === 'password' ||
-                  control.element === PASSWORD_INPUT
+                control.element === PASSWORD_INPUT
               "
               v-model="form[control.label]"
               type="password"
@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
+import draggable from 'vuedraggable';
 import {
   DROP_DOWN,
   FLOAT_INPUT,
@@ -147,16 +147,16 @@ import {
   SWITCH,
   DATE_PICKER,
   CHIPS
-} from "../types/layout-item-types";
+} from '../types/layout-item-types';
 
-import { validationMixin } from "vuelidate";
-import * as Validators from "vuelidate/lib/validators";
-import EventBus from "../utils/event-bus";
+import { validationMixin } from 'vuelidate';
+import * as Validators from 'vuelidate/lib/validators';
+import EventBus from '../utils/event-bus';
 import {
   REQUEST_SUCCESSFUL,
   REQUEST_FAILED,
   REQUEST_STARTED
-} from "../types/event-types";
+} from '../types/event-types';
 
 export default {
   mixins: [validationMixin],
@@ -193,7 +193,7 @@ export default {
     return { form: this.createValidationRules(this.controls) };
   },
   created() {
-    this.controls.forEach(control => {
+    this.controls.forEach((control) => {
       if (control.element === CHIPS) {
         this.$set(this.form, control.label, []);
       } else {
@@ -221,7 +221,7 @@ export default {
       console.log(configuration);
       this.$http
         .request(configuration)
-        .then(response => {
+        .then((response) => {
           var payload = {
             data: response.data,
             uuid: this.uuid
@@ -229,7 +229,7 @@ export default {
 
           EventBus.$emit(REQUEST_SUCCESSFUL, payload);
         })
-        .catch(reason => {
+        .catch((reason) => {
           EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
         });
     },
@@ -249,13 +249,13 @@ export default {
         formValue = this.form[control.label];
         if (!formValue) continue;
 
-        if (control.in === "query") {
+        if (control.in === 'query') {
           params[control.label] = formValue;
-        } else if (control.in === "path") {
+        } else if (control.in === 'path') {
           var pathSegment = `{${control.label}}`;
           if (!finalPath.includes(pathSegment)) continue;
           finalPath = finalPath.replace(pathSegment, formValue);
-        } else if (control.in === "body" || control.in === "formData") {
+        } else if (control.in === 'body' || control.in === 'formData') {
           bodyFormData.set(control.label, formValue);
         } else {
           console.error(`Unknown parameter type: ${control.in}`);
@@ -278,31 +278,31 @@ export default {
       // TODO: Refactor with server-side cookies.
       console.log(baseUrl);
       var apiKeys = {
-        "http://www.omdbapi.com/": "fa42c8b4"
+        'http://www.omdbapi.com/': 'fa42c8b4'
       };
       return apiKeys[baseUrl];
     },
 
     createValidationRules(controls) {
       var validationRules = {};
-      controls.forEach(control => {
+      controls.forEach((control) => {
         var controlValidations = {};
 
         if (control.required) {
-          controlValidations.required = Validators["required"];
+          controlValidations.required = Validators['required'];
         }
         if (control.minimum) {
-          controlValidations.minLength = Validators["minLength"](
+          controlValidations.minLength = Validators['minLength'](
             control.minimum
           );
         }
         if (control.maximum) {
-          controlValidations.maxLength = Validators["maxLength"](
+          controlValidations.maxLength = Validators['maxLength'](
             control.maximum
           );
         }
-        if (control.label === "email") {
-          controlValidations.email = Validators["email"];
+        if (control.label === 'email') {
+          controlValidations.email = Validators['email'];
         }
 
         if (Object.keys(controlValidations).length > 0) {
@@ -315,7 +315,7 @@ export default {
     clearForm() {
       this.$v.reset();
       var formFields = Object.keys(this.form);
-      formFields.forEach(field => {
+      formFields.forEach((field) => {
         this.form[field] = null;
       });
     },
@@ -325,7 +325,7 @@ export default {
       const field = this.$v.form[fieldName];
       if (field) {
         return {
-          "md-invalid": field.$invalid && field.$dirty
+          'md-invalid': field.$invalid && field.$dirty
         };
       }
     },

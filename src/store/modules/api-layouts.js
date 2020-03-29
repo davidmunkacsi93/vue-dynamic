@@ -7,10 +7,10 @@ import {
   DISABLE_EDIT_MODE_API_LAYOUT,
   ENABLE_EDIT_MODE_API_LAYOUT,
   SET_API_ITEM_SIZE
-} from "../../types/action-types";
-import { getCurrentScreenClass } from "../../utils/responsive-utils";
+} from '../../types/action-types';
+import { getCurrentScreenClass } from '../../utils/responsive-utils';
 
-const LOCAL_STORAGE_API_LAYOUT_KEY = "api-layouts";
+const LOCAL_STORAGE_API_LAYOUT_KEY = 'api-layouts';
 
 function getNextId() {
   if (!state.apis || state.apis.length === 0) return 0;
@@ -30,7 +30,7 @@ const state = {
 const mutations = {
   addNewApi(state, apiModel) {
     apiModel.apiId = getNextId();
-    apiModel.apiPath = "/api/" + apiModel.apiId;
+    apiModel.apiPath = '/api/' + apiModel.apiId;
     state.apis.push(apiModel);
 
     localStorage.setItem(
@@ -88,7 +88,7 @@ const mutations = {
     var apiLayout =
       state.apis[state.currentApiId].apiLayouts[currentScreenClass];
     var apiItem = apiLayout.find(
-      layoutItem => layoutItem.uuid === payload.uuid
+      (layoutItem) => layoutItem.uuid === payload.uuid
     );
     apiItem.x = payload.x;
     apiItem.y = payload.y;
@@ -102,9 +102,9 @@ const mutations = {
     var currentApiLayout =
       state.apis[state.currentApiId].apiLayouts[currentScreenClass];
 
-    layoutItems.forEach(layoutItem => {
+    layoutItems.forEach((layoutItem) => {
       var index = currentApiLayout.findIndex(
-        item => item.uuid == layoutItem.uuid
+        (item) => item.uuid == layoutItem.uuid
       );
       state.apis[state.currentApiId].apiLayouts[currentScreenClass][
         index

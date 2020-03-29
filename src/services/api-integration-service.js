@@ -1,5 +1,5 @@
-import SwaggerParser from "swagger-parser";
-import OpenApiParser from "../parsers/open-api-parser.js";
+import SwaggerParser from 'swagger-parser';
+import OpenApiParser from '../parsers/open-api-parser.js';
 
 class ApiIntegrationService {
   async integrateNewAPI(url) {
@@ -8,7 +8,7 @@ class ApiIntegrationService {
         let parsedSpecification = await SwaggerParser.parse(url);
         return OpenApiParser.processSpecification(parsedSpecification);
       })
-      .catch(reason => {
+      .catch((reason) => {
         console.error(reason);
         throw new Error(reason);
       });

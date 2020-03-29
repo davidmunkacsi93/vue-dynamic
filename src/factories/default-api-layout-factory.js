@@ -1,9 +1,9 @@
-import { v1 as uuid } from "uuid";
+import { v1 as uuid } from 'uuid';
 
 class DefaultApiLayoutFactory {
   getDefaultApiLayout(dynamicComponents) {
     var layout = [];
-    this.createDynamicComponents(dynamicComponents).forEach(component =>
+    this.createDynamicComponents(dynamicComponents).forEach((component) =>
       layout.push(component)
     );
     return layout;
@@ -13,7 +13,7 @@ class DefaultApiLayoutFactory {
     var result = [];
 
     dynamicComponents
-      .filter(dynamicComponent => Object.keys(dynamicComponent).length > 0)
+      .filter((dynamicComponent) => Object.keys(dynamicComponent).length > 0)
       .forEach((dynamicComponent, index) => {
         var component = {
           x: (index % 3) * 3,

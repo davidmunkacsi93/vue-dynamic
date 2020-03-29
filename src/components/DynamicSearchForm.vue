@@ -18,13 +18,13 @@
   </md-tabs>
 </template>
 <script>
-import DynamicForm from "./DynamicForm";
-import DynamicTable from "./DynamicTable";
-import DynamicTree from "./DynamicTree";
+import DynamicForm from './DynamicForm';
+import DynamicTable from './DynamicTable';
+import DynamicTree from './DynamicTree';
 
-import EventBus from "../utils/event-bus";
-import { REQUEST_SUCCESSFUL } from "../types/event-types";
-import { TREE, TABLE } from "../types/layout-item-types";
+import EventBus from '../utils/event-bus';
+import { REQUEST_SUCCESSFUL } from '../types/event-types';
+import { TREE, TABLE } from '../types/layout-item-types';
 
 export default {
   components: { DynamicForm, DynamicTable, DynamicTree },
@@ -66,7 +66,7 @@ export default {
       TABLE: TABLE,
       TREE: TREE,
 
-      activeTab: "tab-search",
+      activeTab: 'tab-search',
       isLoading: false
     };
   },
@@ -78,12 +78,12 @@ export default {
   },
   methods: {
     onSearchTabClick() {
-      this.activeTab = "tab-search";
+      this.activeTab = 'tab-search';
     },
     onRequestSuccessful(payload) {
       if (this.uuid !== payload.uuid) return;
 
-      this.activeTab = "tab-results";
+      this.activeTab = 'tab-results';
     }
   }
 };

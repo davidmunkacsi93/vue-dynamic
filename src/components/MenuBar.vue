@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 import {
   DISABLE_EDIT_MODE_API_LAYOUT,
@@ -57,15 +57,15 @@ import {
   SAVE_API_LAYOUT,
   SAVE_MAIN_LAYOUT,
   TOGGLE_NAVIGATION_BAR
-} from "../types/action-types";
+} from '../types/action-types';
 
-import { API_ROUTE_NAME } from "../routes.js";
+import { API_ROUTE_NAME } from '../routes.js';
 
 export default {
   computed: {
     ...mapState({
-      isApiLayoutEditable: state => state.apiLayouts.isEditModeActive,
-      isMainLayoutEditable: state => state.mainLayout.isEditModeActive
+      isApiLayoutEditable: (state) => state.apiLayouts.isEditModeActive,
+      isMainLayoutEditable: (state) => state.mainLayout.isEditModeActive
     })
   },
   data() {

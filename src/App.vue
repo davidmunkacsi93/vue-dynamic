@@ -57,32 +57,32 @@
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue';
 
-import VueMaterial from "vue-material";
-import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/black-green-light.css";
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/black-green-light.css';
 
-import VueRouter from "vue-router";
-import Vuelidate from "vuelidate";
-import VueForceNextTick from "vue-force-next-tick";
+import VueRouter from 'vue-router';
+import Vuelidate from 'vuelidate';
+import VueForceNextTick from 'vue-force-next-tick';
 
-import DynamicContent from "./components/DynamicContent.vue";
-import GridItem from "./components/GridItem.vue";
-import GridLayoutBase from "./components/GridLayoutBase.vue";
-import MenuBar from "./components/MenuBar.vue";
-import NavigationBar from "./components/NavigationBar.vue";
+import DynamicContent from './components/DynamicContent.vue';
+import GridItem from './components/GridItem.vue';
+import GridLayoutBase from './components/GridLayoutBase.vue';
+import MenuBar from './components/MenuBar.vue';
+import NavigationBar from './components/NavigationBar.vue';
 
-import routes from "./routes";
+import routes from './routes';
 
-import { getCurrentScreenClass } from "./utils/responsive-utils";
+import { getCurrentScreenClass } from './utils/responsive-utils';
 
 import {
   LOAD_MAIN_LAYOUT,
   LOAD_APIS,
   SET_SCREEN_CLASS
-} from "./types/action-types";
-import { CONTENT, MENU, NAVIGATION_BAR } from "./types/layout-item-types";
+} from './types/action-types';
+import { CONTENT, MENU, NAVIGATION_BAR } from './types/layout-item-types';
 
 Vue.use(VueForceNextTick);
 Vue.use(VueMaterial);
@@ -90,12 +90,12 @@ Vue.use(Vuelidate);
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   routes: routes
 });
 
 export default {
-  name: "app",
+  name: 'app',
   router,
   components: {
     DynamicContent,
@@ -115,7 +115,7 @@ export default {
   },
   beforeCreate() {
     this.$nextTick(() => {
-      window.addEventListener("resize", this.onWindowResize);
+      window.addEventListener('resize', this.onWindowResize);
       this.onWindowResize();
     });
 
@@ -124,7 +124,7 @@ export default {
     this.$store.dispatch(LOAD_APIS);
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.onWindowResize);
+    window.removeEventListener('resize', this.onWindowResize);
   },
   methods: {
     onWindowResize() {

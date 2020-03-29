@@ -1,4 +1,4 @@
-import EventBus from "../../utils/event-bus.js";
+import EventBus from '../../utils/event-bus.js';
 import {
   DISABLE_EDIT_MODE_MAIN_LAYOUT,
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
@@ -9,12 +9,12 @@ import {
   SET_NAVIGATION_BAR_HEIGHT,
   SET_SCREEN_CLASS,
   TOGGLE_NAVIGATION_BAR
-} from "../../types/action-types";
-import { CONTENT, NAVIGATION_BAR } from "../../types/layout-item-types";
-import { COMPACT, LAYOUT_UPDATED } from "../../types/event-types";
-import DefaultMainLayoutFactory from "../../factories/default-main-layout-factory";
+} from '../../types/action-types';
+import { CONTENT, NAVIGATION_BAR } from '../../types/layout-item-types';
+import { COMPACT, LAYOUT_UPDATED } from '../../types/event-types';
+import DefaultMainLayoutFactory from '../../factories/default-main-layout-factory';
 
-const LOCAL_STORAGE_MAIN_LAYOUTS_KEY = "main-layouts";
+const LOCAL_STORAGE_MAIN_LAYOUTS_KEY = 'main-layouts';
 
 const state = {
   currentScreenClass: null,
@@ -75,7 +75,7 @@ const mutations = {
     if (!state.currentScreenClass) return;
 
     var content = state.mainLayouts[state.currentScreenClass].find(
-      item => item.type === CONTENT
+      (item) => item.type === CONTENT
     );
     content.h = height;
   },
@@ -83,7 +83,7 @@ const mutations = {
     if (!state.currentScreenClass) return;
 
     var navigationBar = state.mainLayouts[state.currentScreenClass].find(
-      item => item.type === NAVIGATION_BAR
+      (item) => item.type === NAVIGATION_BAR
     );
     navigationBar.h = height;
   },
@@ -94,7 +94,7 @@ const mutations = {
     var screenClasses = Object.keys(state.mainLayouts);
     for (var screenClass of screenClasses) {
       var layout = state.mainLayouts[screenClass];
-      var navigationBar = layout.find(item => item.type === NAVIGATION_BAR);
+      var navigationBar = layout.find((item) => item.type === NAVIGATION_BAR);
       navigationBar.hidden = !navigationBar.hidden;
     }
   }

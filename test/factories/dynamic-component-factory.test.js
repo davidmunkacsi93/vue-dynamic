@@ -1,15 +1,15 @@
-import DynamicComponentFactory from "../../src/factories/dynamic-component-factory";
-import { FORM, TREE } from "../../src/types/layout-item-types";
+import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
+import { FORM, TREE } from '../../src/types/layout-item-types';
 
-describe("Tests for getDynamicComponentType factory logic", () => {
-  it("should be a tree for get method and with specified response", () => {
-    var httpMethod = "get";
+describe('Tests for getDynamicComponentType factory logic', () => {
+  it('should be a tree for get method and with specified response', () => {
+    var httpMethod = 'get';
     var apiMethod = {
       responses: {
-        "200": {
+        '200': {
           content: {
             schema: {
-              type: "array"
+              type: 'array'
             }
           }
         }
@@ -23,12 +23,12 @@ describe("Tests for getDynamicComponentType factory logic", () => {
     expect(result).toBe(TREE);
   });
 
-  it("should be a tree for get method and with unspecified content", () => {
-    var httpMethod = "get";
+  it('should be a tree for get method and with unspecified content', () => {
+    var httpMethod = 'get';
     var apiMethod = {
       responses: {
-        "200": {
-          description: "OK"
+        '200': {
+          description: 'OK'
         }
       }
     };
@@ -40,11 +40,11 @@ describe("Tests for getDynamicComponentType factory logic", () => {
     expect(result).toBe(FORM);
   });
 
-  it("should be a form for post, put, delete method", () => {
-    var httpMethods = ["post", "put", "delete"];
+  it('should be a form for post, put, delete method', () => {
+    var httpMethods = ['post', 'put', 'delete'];
     var apiMethod = {};
 
-    httpMethods.forEach(httpMethod => {
+    httpMethods.forEach((httpMethod) => {
       var result = DynamicComponentFactory.getDynamicComponentType(
         httpMethod,
         apiMethod

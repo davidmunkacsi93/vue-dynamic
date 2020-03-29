@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import DynamicComponent from "./DynamicComponent.vue";
+import DynamicComponent from './DynamicComponent.vue';
 export default {
   extends: DynamicComponent
 };

@@ -7,13 +7,13 @@ import {
   DATE_PICKER,
   PASSWORD_INPUT,
   CHIPS
-} from "../types/layout-item-types";
-import { getLastURLSegment } from "../utils/helpers";
+} from '../types/layout-item-types';
+import { getLastURLSegment } from '../utils/helpers';
 
 class ControlFactory {
   createControlsForEndpointParameters(parameters) {
     var controls = [];
-    parameters.forEach(parameter => {
+    parameters.forEach((parameter) => {
       var controlForParameter = this.createControl(parameter);
       controls.push(controlForParameter);
     });
@@ -61,7 +61,9 @@ class ControlFactory {
     var controls = [];
     var apiModelKey = getLastURLSegment(schema.$ref);
 
-    var apiModelForSchema = apiModels.find(model => model.type === apiModelKey);
+    var apiModelForSchema = apiModels.find(
+      (model) => model.type === apiModelKey
+    );
     var requiredProperties = apiModelForSchema.required;
     for (var property of apiModelForSchema.properties) {
       var controlForSchema = this.createControl(property);
@@ -70,7 +72,7 @@ class ControlFactory {
         in: parameterIn,
         required:
           requiredProperties &&
-          requiredProperties.some(prop => prop === property.name),
+          requiredProperties.some((prop) => prop === property.name),
         ...controlForSchema
       };
       controls.push(control);
@@ -89,20 +91,20 @@ class ControlFactory {
     };
 
     switch (parameter.type) {
-      case "integer":
+      case 'integer':
         control.element = NUMBER_INPUT;
         break;
-      case "number":
+      case 'number':
         control.element = FLOAT_INPUT;
         break;
-      case "string":
+      case 'string':
         if (parameter.format) {
           switch (parameter.format) {
-            case "date":
-            case "date-time":
+            case 'date':
+            case 'date-time':
               control.element = DATE_PICKER;
               break;
-            case "password":
+            case 'password':
               control.element = PASSWORD_INPUT;
               break;
             default:
@@ -113,22 +115,22 @@ class ControlFactory {
           control.element = TEXT_INPUT;
         }
         break;
-      case "boolean":
+      case 'boolean':
         control.element = SWITCH;
         break;
-      case "array":
+      case 'array':
         if (parameter.items) {
           if (parameter.items.enum) {
             let dropDown = this.createDropDown(parameter.items);
             control = { ...control, ...dropDown };
-          } else if (parameter.items.type === "string") {
+          } else if (parameter.items.type === 'string') {
             control.element = CHIPS;
             control.value = [];
           } else if (parameter.items.$ref) {
             // TODO: Create a list of objects?
           }
         } else if (parameter.arrayType) {
-          if (parameter.arrayType === "string") {
+          if (parameter.arrayType === 'string') {
             control.element = CHIPS;
             control.value = [];
           }
@@ -136,7 +138,7 @@ class ControlFactory {
           // TODO: Create a list of objects?
         }
         break;
-      case "object":
+      case 'object':
         console.log(parameter);
         break;
       default:
@@ -155,7 +157,7 @@ class ControlFactory {
 
   createDropDown(parameter) {
     var control = {};
-    if (parameter.enum.every(value => value === true || value === false)) {
+    if (parameter.enum.every((value) => value === true || value === false)) {
       control.element = SWITCH;
     } else {
       control.element = DROP_DOWN;

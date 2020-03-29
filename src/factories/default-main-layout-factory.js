@@ -1,5 +1,5 @@
-import { v1 as uuid } from "uuid";
-import { CONTENT, MENU, NAVIGATION_BAR } from "../types/layout-item-types";
+import { v1 as uuid } from 'uuid';
+import { CONTENT, MENU, NAVIGATION_BAR } from '../types/layout-item-types';
 
 class DefaultMainLayoutFactory {
   getDefaultMainLayout() {
