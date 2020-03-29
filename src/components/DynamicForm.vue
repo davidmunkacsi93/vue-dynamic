@@ -223,7 +223,7 @@ export default {
         .request(configuration)
         .then((response) => {
           var payload = {
-            data: response.data,
+            response: response,
             uuid: this.uuid
           };
 
@@ -258,7 +258,7 @@ export default {
         } else if (control.in === 'body' || control.in === 'formData') {
           bodyFormData.set(control.label, formValue);
         } else {
-          console.error(`Unknown parameter type: ${control.in}`);
+          throw new Error(`Unknown parameter type: ${control.in}`);
         }
       }
 

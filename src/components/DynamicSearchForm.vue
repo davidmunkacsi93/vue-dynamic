@@ -11,23 +11,20 @@
       ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
-      <dynamic-tree v-if="type === TREE" :values="results"> </dynamic-tree>
-      <dynamic-table v-else-if="type === TABLE" :values="results">
-      </dynamic-table>
+      <dynamic-tree :model="results"> </dynamic-tree>
     </md-tab>
   </md-tabs>
 </template>
 <script>
 import DynamicForm from './DynamicForm';
-import DynamicTable from './DynamicTable';
 import DynamicTree from './DynamicTree';
 
 import EventBus from '../utils/event-bus';
 import { REQUEST_SUCCESSFUL } from '../types/event-types';
-import { TREE, TABLE } from '../types/layout-item-types';
+import { TREE } from '../types/layout-item-types';
 
 export default {
-  components: { DynamicForm, DynamicTable, DynamicTree },
+  components: { DynamicForm, DynamicTree },
   props: {
     baseURL: {
       type: String,
@@ -49,9 +46,6 @@ export default {
       type: String,
       required: true
     },
-    results: {
-      required: true
-    },
     type: {
       required: true,
       type: String
@@ -63,8 +57,8 @@ export default {
   },
   data() {
     return {
-      TABLE: TABLE,
       TREE: TREE,
+      results: [],
 
       activeTab: 'tab-search',
       isLoading: false
@@ -83,6 +77,8 @@ export default {
     onRequestSuccessful(payload) {
       if (this.uuid !== payload.uuid) return;
 
+      this.results = payload.response.data;
+      console.log(this.results);
       this.activeTab = 'tab-results';
     }
   }

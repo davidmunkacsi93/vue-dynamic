@@ -1,8 +1,8 @@
 import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
-import { FORM, TREE } from '../../src/types/layout-item-types';
+import { FORM, SEARCH_FORM } from '../../src/types/layout-item-types';
 
-describe('Tests for getDynamicComponentType factory logic', () => {
-  it('should be a tree for get method and with specified response', () => {
+describe('Test for getDynamicComponentType factory logic:', () => {
+  it('get method with specified response should be a search form.', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -20,10 +20,30 @@ describe('Tests for getDynamicComponentType factory logic', () => {
       httpMethod,
       apiMethod
     );
-    expect(result).toBe(TREE);
+    expect(result).toBe(SEARCH_FORM);
   });
 
-  it('should be a tree for get method and with unspecified content', () => {
+  it('get method and with schema should be a search form.', () => {
+    var httpMethod = 'get';
+    var apiMethod = {
+      responses: {
+        '200': {
+          description: 'OK',
+          schema: {
+            $ref: '#definitions/Pet'
+          }
+        }
+      }
+    };
+
+    var result = DynamicComponentFactory.getDynamicComponentType(
+      httpMethod,
+      apiMethod
+    );
+    expect(result).toBe(SEARCH_FORM);
+  });
+
+  it('get method and with unspecified content should be a form.', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -40,7 +60,25 @@ describe('Tests for getDynamicComponentType factory logic', () => {
     expect(result).toBe(FORM);
   });
 
-  it('should be a form for post, put, delete method', () => {
+  it('get method and with unspecified OK status should be a form.', () => {
+    var httpMethod = 'get';
+    var apiMethod = {
+      responses: {
+        '201': {
+          description: 'created'
+        }
+      }
+    };
+
+    expect(() => {
+      DynamicComponentFactory.getDynamicComponentType(
+        httpMethod,
+        apiMethod
+      ).toBe(FORM);
+    });
+  });
+
+  it('post, put, delete methods should be forms.', () => {
     var httpMethods = ['post', 'put', 'delete'];
     var apiMethod = {};
 
@@ -51,5 +89,14 @@ describe('Tests for getDynamicComponentType factory logic', () => {
       );
       expect(result).toBe(FORM);
     });
+  });
+
+  it('patch should throw an error', () => {
+    var httpMethod = 'patch';
+    var apiMethod = {};
+
+    expect(() => {
+      DynamicComponentFactory.getDynamicComponentType(httpMethod, apiMethod);
+    }).toThrowError('patch - not supported HTTP method.');
   });
 });

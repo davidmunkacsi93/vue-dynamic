@@ -1,8 +1,7 @@
 import ControlFactory from '../factories/control-factory';
 import DynamicFormFactory from '../factories/dynamic-form-factory';
-import DynamicTreeFactory from './dynamic-tree-factory';
-
-import { FORM, TABLE, TREE } from '../types/layout-item-types';
+import DynamicSearchFormFactory from './dynamic-search-form-factory';
+import { FORM, SEARCH_FORM } from '../types/layout-item-types';
 
 class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
@@ -20,9 +19,9 @@ class DynamicComponentFactory {
 
         var dynamicComponentType = this.getDynamicComponentType(
           httpMethod,
-          apiMethod
+          apiMethod,
+          path
         );
-        console.log(dynamicComponentType);
         switch (dynamicComponentType) {
           case FORM:
             dynamicComponent = DynamicFormFactory.createDynamicForm(
@@ -32,9 +31,9 @@ class DynamicComponentFactory {
               apiModels
             );
             break;
-          case TREE:
+          case SEARCH_FORM:
             console.log(apiMethod);
-            dynamicComponent = DynamicTreeFactory.createDynamicTree(
+            dynamicComponent = DynamicSearchFormFactory.createDynamicSearchForm(
               path,
               httpMethod,
               apiMethod
@@ -60,13 +59,13 @@ class DynamicComponentFactory {
     if (httpMethod === 'get') {
       var responseOk = apiMethod.responses['200'];
       if (responseOk) {
-        if (responseOk.content) {
-          return TREE;
+        if (responseOk.content || responseOk.schema) {
+          return SEARCH_FORM;
         } else {
           return FORM;
         }
       } else {
-        throw new Error(`${httpMethod} - not supported HTTP method.`);
+        return FORM;
       }
     } else if (
       httpMethod === 'post' ||
@@ -75,7 +74,6 @@ class DynamicComponentFactory {
     ) {
       return FORM;
     } else {
-      console.log(httpMethod);
       throw new Error(`${httpMethod} - not supported HTTP method.`);
     }
   }

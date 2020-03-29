@@ -2,12 +2,18 @@ export function arrayHasOnlySingleObjects(array) {
   return array.every((item) => isSimpleObject(item));
 }
 
+export function arrayHasOnlyPrimitives(array) {
+  return array.every((item) => isPrimitive(item));
+}
+
 export function isNestedObject(object) {
+  if (Array.isArray(object) || isPrimitive(object)) return false;
+
   return !isSimpleObject(object);
 }
 
 export function isSimpleObject(object) {
-  if (isPrimitive(object)) return true;
+  if (Array.isArray(object) || isPrimitive(object)) return false;
 
   var isSimple = true;
   Object.keys(object).forEach((key) => {
