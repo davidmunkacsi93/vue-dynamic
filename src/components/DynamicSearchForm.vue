@@ -21,7 +21,7 @@ import DynamicTree from './DynamicTree';
 
 import EventBus from '../utils/event-bus';
 import { REQUEST_SUCCESSFUL } from '../types/event-types';
-import { TREE, TABLE } from '../types/layout-item-types';
+import { TREE } from '../types/layout-item-types';
 
 export default {
   components: { DynamicForm, DynamicTree },
@@ -60,7 +60,6 @@ export default {
   },
   data() {
     return {
-      TABLE: TABLE,
       TREE: TREE,
 
       activeTab: 'tab-search',
