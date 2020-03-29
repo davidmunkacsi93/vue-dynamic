@@ -40,7 +40,7 @@ describe('Test for getDynamicComponentType factory logic:', () => {
     expect(result).toBe(FORM);
   });
 
-  it('get method and with unspecified OK status should throw an error.', () => {
+  it('get method and with unspecified OK status should be a form.', () => {
     var httpMethod = 'get';
     var apiMethod = {
       responses: {
@@ -49,15 +49,13 @@ describe('Test for getDynamicComponentType factory logic:', () => {
         }
       }
     };
-    var path = '/test/segment';
 
     expect(() => {
       DynamicComponentFactory.getDynamicComponentType(
         httpMethod,
-        apiMethod,
-        path
-      );
-    }).toThrowError('get - /test/segment does not specify OK status code.');
+        apiMethod
+      ).toBe(FORM);
+    });
   });
 
   it('post, put, delete methods should be forms.', () => {

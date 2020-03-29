@@ -19,8 +19,8 @@ class DynamicComponentFactory {
 
         var dynamicComponentType = this.getDynamicComponentType(
           httpMethod,
-          path,
-          apiMethod
+          apiMethod,
+          path
         );
         console.log(dynamicComponentType);
         switch (dynamicComponentType) {
@@ -66,9 +66,7 @@ class DynamicComponentFactory {
           return FORM;
         }
       } else {
-        throw new Error(
-          `${httpMethod} - ${path} does not specify OK status code.`
-        );
+        return FORM;
       }
     } else if (
       httpMethod === 'post' ||
