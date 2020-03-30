@@ -8,7 +8,11 @@
 </template>
 
 <script>
+import DynamicTreeViewItem from './DynamicTreeViewItem';
 export default {
+  components: {
+    DynamicTreeViewItem
+  },
   props: {
     model: {
       required: true
