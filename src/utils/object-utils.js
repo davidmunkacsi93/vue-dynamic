@@ -6,6 +6,10 @@ export function arrayHasOnlyPrimitives(array) {
   return array.every((item) => isPrimitive(item));
 }
 
+export function arrayHasNestedObject(array) {
+  return array.some((item) => isNestedObject(item));
+}
+
 export function isNestedObject(object) {
   if (Array.isArray(object) || isPrimitive(object)) return false;
 

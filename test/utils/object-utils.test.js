@@ -3,7 +3,8 @@ import {
   isNestedObject,
   isSimpleObject,
   arrayHasOnlySingleObjects,
-  arrayHasOnlyPrimitives
+  arrayHasOnlyPrimitives,
+  arrayHasNestedObject
 } from '../../src/utils/object-utils';
 
 describe('Test for isPrimitive utility function:', () => {
@@ -103,7 +104,7 @@ describe('Tests for isSimpleObject utility function:', () => {
 });
 
 describe('Test for arrayHasSimpleObjects utility function:', () => {
-  it('array should be consisting of single objects.', () => {
+  it('array of single objects should return true.', () => {
     const array = [
       { prop1: 'test', prop2: 3, prop3: false },
       { prop1: 'test2', prop2: 4, prop3: true },
@@ -115,7 +116,7 @@ describe('Test for arrayHasSimpleObjects utility function:', () => {
     expect(result).toBe(true);
   });
 
-  it('array with nested object should not be consisting of single objects.', () => {
+  it('array with nested object should return false.', () => {
     const array = [
       { obj1: { prop1: 'test' }, prop2: 3, prop3: false },
       { prop1: 'test2', prop2: 4, prop3: true },
@@ -129,17 +130,50 @@ describe('Test for arrayHasSimpleObjects utility function:', () => {
 });
 
 describe('Test for arrayHasOnlyPrimitives utility function:', () => {
-  it('array with primitives should be consisting of primitives.', () => {
+  it('array with primitives should return true.', () => {
     const array = ['val1', 'val2', 'val3'];
 
     var result = arrayHasOnlyPrimitives(array);
     expect(result).toBe(true);
   });
 
-  it('array with object should not be consisting of primitives.', () => {
+  it('array with object should return false.', () => {
     const array = ['val1', 'val2', 'val3', { prop1: false }];
 
     var result = arrayHasOnlyPrimitives(array);
     expect(result).toBe(false);
+  });
+});
+
+describe('Test for arrayHasNestedObject utility function:', () => {
+  it('array with primitives should return false.', () => {
+    const array = ['val1', 'val2', 'val3'];
+
+    var result = arrayHasNestedObject(array);
+    expect(result).toBe(false);
+  });
+
+  it('array with simple objects should return false.', () => {
+    const array = [
+      { prop1: true },
+      { prop1: false },
+      { prop1: true },
+      { prop1: false }
+    ];
+
+    var result = arrayHasNestedObject(array);
+    expect(result).toBe(false);
+  });
+
+  it('array with nested objects should return true.', () => {
+    const array = [
+      { obj: { prop1: true } },
+      { obj: { prop1: true } },
+      { obj: { prop1: true } },
+      { obj: { prop1: true } }
+    ];
+
+    var result = arrayHasNestedObject(array);
+    expect(result).toBe(true);
   });
 });
