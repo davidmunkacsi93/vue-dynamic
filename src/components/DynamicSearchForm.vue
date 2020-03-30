@@ -11,20 +11,20 @@
       ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
-      <dynamic-tree :model="results"> </dynamic-tree>
+      <dynamic-tree-view :model="results"></dynamic-tree-view>
     </md-tab>
   </md-tabs>
 </template>
 <script>
 import DynamicForm from './DynamicForm';
-import DynamicTree from './DynamicTree';
+import DynamicTreeView from './DynamicTreeView';
 
 import EventBus from '../utils/event-bus';
 import { REQUEST_SUCCESSFUL } from '../types/event-types';
 import { TREE } from '../types/layout-item-types';
 
 export default {
-  components: { DynamicForm, DynamicTree },
+  components: { DynamicForm, DynamicTreeView },
   props: {
     baseURL: {
       type: String,
