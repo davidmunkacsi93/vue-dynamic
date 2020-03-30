@@ -21,7 +21,6 @@ export default {
   watch: {
     model: function (value) {
       this.model = value;
-      console.log(this.model);
     }
   }
 };
