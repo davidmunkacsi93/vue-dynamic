@@ -1,47 +1,43 @@
 <template>
-  <md-list>
-    <md-list-item>
-      <template v-if="Array.isArray(model)">
-        <dynamic-list
-          v-if="arrayHasOnlyPrimitives(model)"
-          :model="model"
-        ></dynamic-list>
-        <dynamic-table
-          v-else-if="arrayHasOnlySingleObjects(model)"
-          :model="model"
-        ></dynamic-table>
-        <template v-else>
-          <md-list md-expand>
-            <md-list-item
+  <div>
+    <template v-if="Array.isArray(model)">
+      <div @click.stop="toggleOpen()">
+        <div v-if="this.isOpen">
+          <dynamic-list
+            v-if="arrayHasOnlyPrimitives(model)"
+            :model="model"
+          ></dynamic-list>
+          <dynamic-table
+            v-else-if="arrayHasOnlySingleObjects(model)"
+            :model="model"
+          ></dynamic-table>
+          <template v-else>
+            <span class="md-list-item-text">{{ objectKey }}</span>
+            <dynamic-tree
               v-for="objectKey in Object.keys(model)"
               :key="objectKey"
-            >
-              <span class="md-list-item-text">{{ objectKey }}</span>
-              <dynamic-tree :model="model[objectKey]"></dynamic-tree>
-            </md-list-item>
-          </md-list>
-        </template>
-      </template>
-      <template v-else-if="isNestedObject(model)">
-        <md-list md-expand>
-          <md-list-item
-            v-for="objectKey in Object.keys(model)"
-            :key="objectKey"
-          >
-            <dynamic-tree :model="model[objectKey]"></dynamic-tree>
-          </md-list-item>
-        </md-list>
-      </template>
-      <template v-else-if="isSimpleObject(model)">
-        <dynamic-object-view :model="model"> </dynamic-object-view>
-      </template>
-      <template v-else-if="isPrimitive(model)">
-        <div>
-          <span>{{ model }}</span>
+              :model="model[objectKey]"
+            ></dynamic-tree>
+          </template>
         </div>
-      </template>
-    </md-list-item>
-  </md-list>
+      </div>
+    </template>
+    <template v-else-if="isNestedObject(model)">
+      <md-list md-expand>
+        <md-list-item v-for="objectKey in Object.keys(model)" :key="objectKey">
+          <dynamic-tree :model="model[objectKey]"></dynamic-tree>
+        </md-list-item>
+      </md-list>
+    </template>
+    <template v-else-if="isSimpleObject(model)">
+      <dynamic-object-view :model="model"> </dynamic-object-view>
+    </template>
+    <template v-else-if="isPrimitive(model)">
+      <div>
+        <span>{{ model }}</span>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -58,6 +54,7 @@ import DynamicObjectView from '../components/DynamicObjectView';
 import DynamicTable from '../components/DynamicTable';
 
 export default {
+  name: 'DynamicTreeViewItem',
   components: { DynamicList, DynamicObjectView, DynamicTable },
   props: {
     currentDepth: {
@@ -68,7 +65,15 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      open: false
+    };
+  },
   methods: {
+    toggleOpen() {
+      this.open = !this.open;
+    },
     arrayHasOnlyPrimitives,
     arrayHasOnlySingleObjects,
     isNestedObject,
