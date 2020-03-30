@@ -1,44 +1,33 @@
 <template>
-  <div>
-    <template v-if="Array.isArray(model)">
-      <dynamic-list
-        v-if="arrayHasOnlyPrimitives(model)"
-        :model="model"
-      ></dynamic-list>
-      <dynamic-table
-        v-else-if="arrayHasOnlySingleObjects(model)"
-        :model="model"
-      ></dynamic-table>
-      <template v-else>
-        <md-list md-expand>
-          <md-list-item
-            class="md-inset"
-            v-for="objectKey in Object.keys(model)"
-            :key="objectKey"
-          >
-            <dynamic-tree :model="model[objectKey]"></dynamic-tree>
-          </md-list-item>
-        </md-list>
-      </template>
-    </template>
-    <template v-else-if="isNestedObject(model)">
-      <md-list md-expand>
-        <md-list-item
-          class="md-inset"
-          v-for="objectKey in Object.keys(model)"
-          :key="objectKey"
-        >
+  <md-list md-expand>
+    <md-list-item v-for="objectKey in Object.keys(model)" :key="objectKey">
+      <template v-if="Array.isArray(model[objectKey])">
+        <dynamic-list
+          v-if="arrayHasOnlyPrimitives(model[objectKey])"
+          :model="model[objectKey]"
+        ></dynamic-list>
+        <dynamic-table
+          v-else-if="arrayHasOnlySingleObjects(model[objectKey])"
+          :model="model[objectKey]"
+        ></dynamic-table>
+        <template v-else>
           <dynamic-tree :model="model[objectKey]"></dynamic-tree>
-        </md-list-item>
-      </md-list>
-    </template>
-    <template v-else-if="isSimpleObject(model)">
-      <dynamic-object-view :model="model"> </dynamic-object-view>
-    </template>
-    <template v-else-if="isPrimitive(model)">
-      <span>{{ model }}</span>
-    </template>
-  </div>
+        </template>
+      </template>
+      <template v-else-if="isNestedObject(model[objectKey])">
+        <dynamic-tree :model="model[objectKey]"></dynamic-tree>
+      </template>
+      <template v-else-if="isSimpleObject(model[objectKey])">
+        <dynamic-object-view :model="model[objectKey]"> </dynamic-object-view>
+      </template>
+      <template v-else-if="isPrimitive(model[objectKey])">
+        <div>
+          <h4>{{ objectKey }}</h4>
+          <span>{{ model[objectKey] }}</span>
+        </div>
+      </template>
+    </md-list-item>
+  </md-list>
 </template>
 
 <script>
@@ -72,6 +61,7 @@ export default {
   watch: {
     model: function (value) {
       this.model = value;
+      console.log(this.model);
     }
   }
 };
