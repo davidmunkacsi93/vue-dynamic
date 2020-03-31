@@ -1,5 +1,5 @@
 <template>
-  <md-list>
+  <div>
     <template v-if="Array.isArray(model)">
       <div @click.stop="toggleOpen()">
         <h4>{{ label }}</h4>
@@ -37,12 +37,12 @@
       <dynamic-object-view :model="model"> </dynamic-object-view>
     </template>
     <template v-if="isPrimitive(model)">
-      <div>
+      <div class="md-list-item-text">
         <h4>{{ label }}</h4>
         <span>{{ model }}</span>
       </div>
     </template>
-  </md-list>
+  </div>
 </template>
 
 <script>

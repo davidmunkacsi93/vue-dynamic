@@ -91,6 +91,11 @@ export default {
         }
       });
       instance.$mount();
+      while (this.$refs.resultsContainer.firstChild) {
+        this.$refs.resultsContainer.removeChild(
+          this.$refs.resultsContainer.lastChild
+        );
+      }
       this.$refs.resultsContainer.appendChild(instance.$el);
     }
   }
