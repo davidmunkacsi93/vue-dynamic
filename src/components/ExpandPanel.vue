@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click.stop="toggleOpen()">
+    <div @click.stop="toggleOpen()" v-if="toggleRequired">
       <h4 class="display-inline">{{ title }}</h4>
       <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
       <md-icon class="display-inline" v-if="isOpen">expand_less</md-icon>
@@ -18,7 +18,7 @@ export default {
       required: false,
       type: String
     },
-    isExpanded: {
+    toggleRequired: {
       required: true,
       type: Boolean
     }
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     isOpen: function () {
-      return this.open || this.currentDepth === 0;
+      return this.open || this.toggleRequired === false;
     }
   },
   methods: {
