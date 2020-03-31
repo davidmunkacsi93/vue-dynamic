@@ -1,12 +1,7 @@
 <template>
   <div>
     <template v-if="Array.isArray(model)">
-      <div @click.stop="toggleOpen()">
-        <h4 class="display-inline">{{ label }}</h4>
-        <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
-        <md-icon class="display-inline" v-if="isOpen">expand_less</md-icon>
-      </div>
-      <div v-if="isOpen">
+      <expand-panel :title="label" :toggleRequired="currentDepth !== 0">
         <dynamic-list
           v-if="arrayHasOnlyPrimitives(model)"
           :model="model"
@@ -24,15 +19,10 @@
             :currentDepth="currentDepth + 1"
           ></dynamic-tree-view-item>
         </template>
-      </div>
+      </expand-panel>
     </template>
     <template v-if="isNestedObject(model)">
-      <div @click.stop="toggleOpen()">
-        <h4 class="display-inline">{{ label }}</h4>
-        <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
-        <md-icon class="display-inline" v-if="isOpen">expand_less</md-icon>
-      </div>
-      <div>
+      <expand-panel :title="label" :toggleRequired="currentDepth !== 0">
         <dynamic-tree-view-item
           v-for="objectKey in Object.keys(model)"
           :key="objectKey"
@@ -40,23 +30,16 @@
           :model="model[objectKey]"
           :currentDepth="currentDepth + 1"
         ></dynamic-tree-view-item>
-      </div>
+      </expand-panel>
     </template>
     <template v-if="isSimpleObject(model)">
-      <div @click.stop="toggleOpen()">
-        <h4 class="display-inline">{{ label }}</h4>
-        <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
-        <md-icon class="display-inline" v-if="isOpen">expand_less</md-icon>
-      </div>
-      <div v-if="isOpen">
+      <expand-panel :title="label" :toggleRequired="currentDepth !== 0">
         <dynamic-object-view :model="model"> </dynamic-object-view>
-      </div>
+      </expand-panel>
     </template>
     <template v-if="isPrimitive(model)">
-      <div class="md-list-item-text">
-        <h4>{{ label }}</h4>
-        <span>{{ model }}</span>
-      </div>
+      <h4>{{ label }}</h4>
+      <span>{{ model }}</span>
     </template>
   </div>
 </template>
@@ -74,10 +57,11 @@ import {
 import DynamicList from '../components/DynamicList';
 import DynamicObjectView from '../components/DynamicObjectView';
 import DynamicTable from '../components/DynamicTable';
+import ExpandPanel from '../components/ExpandPanel';
 
 export default {
   name: 'dynamic-tree-view-item',
-  components: { DynamicList, DynamicObjectView, DynamicTable },
+  components: { DynamicList, DynamicObjectView, DynamicTable, ExpandPanel },
   props: {
     currentDepth: {
       type: Number,
@@ -91,16 +75,7 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      isOpen: false
-    };
-  },
   methods: {
-    toggleOpen() {
-      this.isOpen = !this.isOpen;
-      console.log(this.isOpen);
-    },
     arrayHasOnlyPrimitives,
     arrayHasOnlySingleObjects,
     arrayHasNestedObject,
@@ -111,8 +86,4 @@ export default {
 };
 </script>
 
-<style>
-.display-inline {
-  display: inline !important;
-}
-</style>
+<style></style>
