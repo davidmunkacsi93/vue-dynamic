@@ -1,7 +1,12 @@
 <template>
-  <md-table v-if="Array.isArray(model)">
+  <md-table>
     <draggable v-model="headers" tag="tr">
-      <md-table-head v-for="header in headers" :key="header" scope="col">
+      <md-table-head
+        class="color-green"
+        v-for="header in headers"
+        :key="header"
+        scope="col"
+      >
         {{ header }}
       </md-table-head>
     </draggable>
@@ -28,13 +33,16 @@ export default {
       headers: []
     };
   },
-  watch: {
-    model: function (value) {
-      this.model = value;
-      this.headers = Object.keys(this.model);
-    }
+  beforeMount() {
+    console.log(this.model);
+    this.headers = Object.keys(this.model[0]);
   }
 };
 </script>
 
-<style></style>
+<style>
+.color-green {
+  color: #ffffff !important;
+  background: #212121;
+}
+</style>
