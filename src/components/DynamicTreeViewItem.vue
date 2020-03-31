@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <md-list>
     <template v-if="Array.isArray(model)">
       <div @click.stop="toggleOpen()">
         <h4>{{ label }}</h4>
@@ -42,7 +42,7 @@
         <span>{{ model }}</span>
       </div>
     </template>
-  </div>
+  </md-list>
 </template>
 
 <script>
