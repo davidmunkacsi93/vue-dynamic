@@ -91,15 +91,6 @@ export default {
     isNestedObject,
     isSimpleObject,
     isPrimitive
-  },
-  watch: {
-    model: function (value) {
-      this.model = value;
-      Object.keys(this.model).forEach((item) => {
-        console.log(item);
-        console.log(this.model[item]);
-      });
-    }
   }
 };
 </script>

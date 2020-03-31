@@ -11,11 +11,12 @@
       ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
-      <dynamic-tree-view :model="results"></dynamic-tree-view>
+      <div ref="resultsContainer"></div>
     </md-tab>
   </md-tabs>
 </template>
 <script>
+import Vue from 'vue';
 import DynamicForm from './DynamicForm';
 import DynamicTreeView from './DynamicTreeView';
 
@@ -24,7 +25,7 @@ import { REQUEST_SUCCESSFUL } from '../types/event-types';
 import { TREE } from '../types/layout-item-types';
 
 export default {
-  components: { DynamicForm, DynamicTreeView },
+  components: { DynamicForm },
   props: {
     baseURL: {
       type: String,
@@ -79,7 +80,18 @@ export default {
 
       this.results = payload.response.data;
       console.log(this.results);
+      this.createDynamicTreeView(this.results);
       this.activeTab = 'tab-results';
+    },
+    createDynamicTreeView(model) {
+      var DynamicTreeViewClass = Vue.extend(DynamicTreeView);
+      var instance = new DynamicTreeViewClass({
+        propsData: {
+          model: this.results
+        }
+      });
+      instance.$mount();
+      this.$refs.resultsContainer.appendChild(instance.$el);
     }
   }
 };

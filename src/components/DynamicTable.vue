@@ -28,11 +28,8 @@ export default {
       headers: []
     };
   },
-  watch: {
-    model: function (value) {
-      this.model = value;
-      this.headers = Object.keys(this.model);
-    }
+  beforeMount() {
+    this.headers = Object.keys(this.model);
   }
 };
 </script>

@@ -17,11 +17,6 @@ export default {
     model: {
       required: true
     }
-  },
-  watch: {
-    model: function (value) {
-      this.model = value;
-    }
   }
 };
 </script>
