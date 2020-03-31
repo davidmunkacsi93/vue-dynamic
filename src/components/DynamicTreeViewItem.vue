@@ -2,7 +2,11 @@
   <div>
     <template v-if="Array.isArray(model)">
       <div @click.stop="toggleOpen()">
-        <h4>{{ label }}</h4>
+        <h4 class="display-inline">{{ label }}</h4>
+        <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
+        <md-icon class="display-inline" v-if="isOpen">expand_less</md-icon>
+      </div>
+      <div v-if="isOpen">
         <dynamic-list
           v-if="arrayHasOnlyPrimitives(model)"
           :model="model"
@@ -24,6 +28,11 @@
     </template>
     <template v-if="isNestedObject(model)">
       <div @click.stop="toggleOpen()">
+        <h4 class="display-inline">{{ label }}</h4>
+        <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
+        <md-icon class="display-inline" v-if="isOpen">expand_less</md-icon>
+      </div>
+      <div>
         <dynamic-tree-view-item
           v-for="objectKey in Object.keys(model)"
           :key="objectKey"
@@ -34,7 +43,14 @@
       </div>
     </template>
     <template v-if="isSimpleObject(model)">
-      <dynamic-object-view :model="model"> </dynamic-object-view>
+      <div @click.stop="toggleOpen()">
+        <h4 class="display-inline">{{ label }}</h4>
+        <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
+        <md-icon class="display-inline" v-if="isOpen">expand_less</md-icon>
+      </div>
+      <div v-if="isOpen">
+        <dynamic-object-view :model="model"> </dynamic-object-view>
+      </div>
     </template>
     <template v-if="isPrimitive(model)">
       <div class="md-list-item-text">
@@ -95,4 +111,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.display-inline {
+  display: inline !important;
+}
+</style>
