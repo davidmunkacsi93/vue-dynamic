@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tree-view-item">
     <template v-if="Array.isArray(model)">
       <expand-panel :title="label" :toggleRequired="currentDepth !== 0">
         <dynamic-list
@@ -38,8 +38,12 @@
       </expand-panel>
     </template>
     <template v-if="isPrimitive(model)">
-      <h4>{{ label }}</h4>
-      <span>{{ model }}</span>
+      <div class="md-list-item-content md-ripple md-disabled no-padding">
+        <div class="md-list-item-text">
+          <h4>{{ label }}</h4>
+          <span class="md-span">{{ model }}</span>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -86,4 +90,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.tree-view-item {
+  margin-left: 10px;
+}
+.no-padding {
+  padding: 0px;
+}
+
+.md-span {
+  color: rgba(0, 0, 0, 0.54);
+}
+</style>

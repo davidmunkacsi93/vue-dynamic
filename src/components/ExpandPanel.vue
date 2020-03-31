@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="expand-panel">
     <div @click.stop="toggleOpen()" v-if="toggleRequired">
       <h4 class="display-inline">{{ title }}</h4>
       <md-icon class="display-inline" v-if="!isOpen">expand_more</md-icon>
@@ -44,5 +44,8 @@ export default {
 <style>
 .display-inline {
   display: inline !important;
+}
+.expand-panel {
+  margin-top: 10px;
 }
 </style>
