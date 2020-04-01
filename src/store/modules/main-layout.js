@@ -1,4 +1,3 @@
-import EventBus from '../../utils/event-bus.js';
 import {
   DISABLE_EDIT_MODE_MAIN_LAYOUT,
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
@@ -11,7 +10,6 @@ import {
   TOGGLE_NAVIGATION_BAR
 } from '../../types/action-types';
 import { CONTENT, NAVIGATION_BAR } from '../../types/layout-item-types';
-import { COMPACT, LAYOUT_UPDATED } from '../../types/event-types';
 import DefaultMainLayoutFactory from '../../factories/default-main-layout-factory';
 
 const LOCAL_STORAGE_MAIN_LAYOUTS_KEY = 'main-layouts';
@@ -61,9 +59,6 @@ const mutations = {
     }
     const parsedLayouts = JSON.parse(layoutString);
     state.mainLayouts = parsedLayouts;
-
-    EventBus.$emit(LAYOUT_UPDATED);
-    EventBus.$emit(COMPACT);
   },
   saveMainLayout(state) {
     localStorage.setItem(
