@@ -47,6 +47,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, url } from 'vuelidate/lib/validators';
+import { ADD_API_KEY } from '../types/action-types';
 
 export default {
   mixins: [validationMixin],
@@ -75,7 +76,11 @@ export default {
   },
   methods: {
     addApiKey() {
-      console.log('Add api key...');
+      var payload = {
+        apiKey: this.form.apiKey,
+        url: this.form.url
+      };
+      this.$store.dispatch(ADD_API_KEY, payload);
     },
     getValidationClass(fieldName) {
       if (!this.$v) return;

@@ -7,16 +7,20 @@ const state = {
 };
 
 const mutations = {
-  addApiKey(payload) {
-    apiKeys[payload.baseUrl] = payload.apiKeys;
+  addApiKey(state, payload) {
+    state.apiKeys[payload.url] = payload.apiKey;
   },
   saveApiKeys() {
-    localStorage.setItem(LOCAL_STORAGE_API_KEYS_KEY, state.apiKeys);
+    localStorage.setItem(
+      LOCAL_STORAGE_API_KEYS_KEY,
+      JSON.stringify(state.apiKeys)
+    );
   }
 };
 
 const actions = {
   addApiKey({ commit }, payload) {
+    console.log(payload);
     commit(ADD_API_KEY, payload);
     commit(SAVE_API_KEYS);
   }
