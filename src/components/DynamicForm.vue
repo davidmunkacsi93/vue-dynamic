@@ -278,11 +278,7 @@ export default {
     },
 
     getApiKey(baseUrl) {
-      // TODO: Refactor with server-side cookies.
-      var apiKeys = {
-        'http://www.omdbapi.com/': 'fa42c8b4'
-      };
-      return apiKeys[baseUrl];
+      return this.$store.state.apiKeys.apiKeys[baseUrl];
     },
 
     createValidationRules(controls) {
