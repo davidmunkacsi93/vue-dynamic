@@ -1,4 +1,5 @@
 export const ADD_NEW_API = 'addNewApi';
+export const ADD_API_KEY = 'addApiKey';
 export const ENABLE_EDIT_MODE_API_LAYOUT = 'enableEditModeApiLayout';
 export const ENABLE_EDIT_MODE_MAIN_LAYOUT = 'enableEditModeMainLayout';
 export const DISABLE_EDIT_MODE_API_LAYOUT = 'disableEditModeApiLayout';
@@ -7,6 +8,7 @@ export const INITIALIZE_MAIN_LAYOUT = 'initializeMainLayout';
 export const LOAD_APIS = 'loadApis';
 export const LOAD_API_LAYOUT = 'loadApiLayout';
 export const LOAD_MAIN_LAYOUT = 'loadMainLayout';
+export const SAVE_API_KEYS = 'saveApiKeys';
 export const SAVE_API_LAYOUT = 'saveApiLayout';
 export const SAVE_MAIN_LAYOUT = 'saveMainLayout';
 export const SET_API_ITEM_SIZE = 'setApiItemSize';
