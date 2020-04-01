@@ -9,96 +9,37 @@
     >
       <div>
         <span class="empty-state-span">Go on and add your first key! </span>
-        <form
-          novalidate
-          class="md-layout"
-          @submit.prevent="validateForm"
-          id="form"
-        >
-          <md-field class="md-size-100" :class="getValidationClass('url')">
-            <label for="url">URL</label>
-            <md-input id="url" v-model="form.url" type="text"></md-input>
-            <span class="md-error" v-if="$v.form.url.required === false">
-              URL is required.
-            </span>
-            <span class="md-error" v-if="$v.form.url.url === false">
-              Invalid format.
-            </span>
-          </md-field>
-          <md-field class="md-size-100" :class="getValidationClass('apiKey')">
-            <label for="apiKey">API key</label>
-            <md-input
-              id="apiKey"
-              v-model="form.apiKey"
-              type="password"
-            ></md-input>
-            <span class="md-error" v-if="$v.form.apiKey.required === false">
-              API key is required.
-            </span>
-          </md-field>
-          <md-button class="md-raised md-primary" type="submit">Add</md-button>
-        </form>
+        <api-key-form></api-key-form>
       </div>
     </md-empty-state>
-    <template v-if="apiKeys.length > 0"> </template>
+    <template v-if="apiKeys.length > 0">
+      <md-list>
+        <md-list-item v-for="apiKey in apiKeys" :key="apiKey.key">
+          <span>{{ apiKey[0] }}</span>
+        </md-list-item>
+        <api-key-form></api-key-form>
+      </md-list>
+    </template>
   </div>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
-import { required, url } from 'vuelidate/lib/validators';
-import { ADD_API_KEY } from '../types/action-types';
+import ApiKeyForm from '../components/ApiKeyForm';
 
 export default {
-  mixins: [validationMixin],
+  components: { ApiKeyForm },
   beforeMount() {
-    this.loadApiKeys();
+    this.apiKeys = this.getApiKeys();
+    console.log(this.apiKeys);
   },
   data() {
     return {
-      form: {
-        url: null,
-        apiKey: null
-      },
       apiKeys: []
     };
   },
-  validations: {
-    form: {
-      apiKey: {
-        required
-      },
-      url: {
-        required,
-        url
-      }
-    }
-  },
   methods: {
-    addApiKey() {
-      var payload = {
-        apiKey: this.form.apiKey,
-        url: this.form.url
-      };
-      this.$store.dispatch(ADD_API_KEY, payload);
-    },
-    getValidationClass(fieldName) {
-      if (!this.$v) return;
-
-      const field = this.$v.form[fieldName];
-      if (field) {
-        return {
-          'md-invalid': field.$invalid && field.$dirty
-        };
-      }
-    },
-    loadApiKeys() {},
-    validateForm() {
-      this.$v.$touch();
-
-      if (!this.$v.$invalid) {
-        this.addApiKey();
-      }
+    getApiKeys() {
+      return Object.entries(this.$store.state.apiKeys.apiKeys);
     }
   }
 };
@@ -107,9 +48,5 @@ export default {
 <style scoped>
 .empty-state-span {
   font-size: 16px;
-}
-
-.md-layout {
-  margin-top: 20px;
 }
 </style>
