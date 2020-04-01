@@ -25,35 +25,35 @@ const apiKeys = [
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
     url:
-      'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-play-by-play/1.0/swagger.yaml'
+      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-play-by-play/1.0/swagger.yaml'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
     url:
-      'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-projections/1.0/swagger.yaml'
+      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-projections/1.0/swagger.yaml'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
     url:
-      'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-articles/1.0/swagger.yaml'
+      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-articles/1.0/swagger.yaml'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
     url:
-      'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-premium-news/1.0/swagger.yaml'
+      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-premium-news/1.0/swagger.yaml'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
     url:
-      'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-scores/1.0/swagger.yaml'
+      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-scores/1.0/swagger.yaml'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
