@@ -9,7 +9,6 @@ class ApiIntegrationService {
         return OpenApiParser.processSpecification(parsedSpecification);
       })
       .catch((reason) => {
-        console.error(reason);
         throw new Error(reason);
       });
   }

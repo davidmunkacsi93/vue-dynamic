@@ -17,8 +17,6 @@ class DynamicSearchFormFactory {
       dynamicSearchForm.controls = controls;
     }
 
-    console.log(dynamicSearchForm);
-
     return dynamicSearchForm;
   }
 }

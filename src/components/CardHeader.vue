@@ -30,7 +30,7 @@
 export default {
   methods: {
     removeGridItem() {
-      console.log(this.uuid);
+      // TODO: Implement remove grid item.
     }
   },
   props: {

@@ -32,7 +32,6 @@ class DynamicComponentFactory {
             );
             break;
           case SEARCH_FORM:
-            console.log(apiMethod);
             dynamicComponent = DynamicSearchFormFactory.createDynamicSearchForm(
               path,
               httpMethod,

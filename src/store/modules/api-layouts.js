@@ -59,7 +59,6 @@ const mutations = {
         layoutItem.static = false;
       }
     }
-    console.log(apiLayouts);
     state.isEditModeActive = true;
   },
 

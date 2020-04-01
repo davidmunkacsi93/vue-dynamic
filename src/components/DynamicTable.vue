@@ -34,7 +34,6 @@ export default {
     };
   },
   beforeMount() {
-    console.log(this.model);
     this.headers = Object.keys(this.model[0]);
   }
 };

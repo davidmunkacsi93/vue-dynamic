@@ -241,8 +241,6 @@ export default {
       var headers = {};
       var apiKeyData = this.getApiKeyData(this.baseURL);
 
-      console.log(apiKeyData);
-
       if (apiKeyData) {
         if (apiKeyData.type === 'header') {
           headers[apiKeyData.parameterName] = apiKeyData.apiKey;

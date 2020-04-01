@@ -139,7 +139,7 @@ class ControlFactory {
         }
         break;
       case 'object':
-        console.log(parameter);
+        // TODO: Object as parameter?
         break;
       default:
         break;

@@ -32,7 +32,7 @@ class DynamicFormFactory {
         apiModels
       );
     } else {
-      console.error(
+      throw new Error(
         `Can't generate dynamic component for endpoint ${apiMethod.description}`
       );
     }
