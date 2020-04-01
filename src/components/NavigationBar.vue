@@ -29,7 +29,7 @@
         <span class="md-list-item-text">My APIs</span>
       </md-list-item>
       <md-list-item :to="apiKeys">
-        <md-icon>vpn-key</md-icon>
+        <md-icon>vpn_key</md-icon>
         <span class="md-list-item-text">API keys</span>
       </md-list-item>
       <md-list-item :to="addApiPath">
@@ -59,6 +59,7 @@ export default {
   data() {
     return {
       addApiPath: '/addApi',
+      apiKeys: '/apiKeys',
       homePath: '/'
     };
   },
