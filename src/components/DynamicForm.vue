@@ -238,10 +238,17 @@ export default {
     },
     createRequestConfiguration() {
       var params = {};
-      var apiKey = this.getApiKey(this.baseURL);
+      var headers = {};
+      var apiKeyData = this.getApiKeyData(this.baseURL);
 
-      if (apiKey) {
-        params.apiKey = apiKey;
+      console.log(apiKeyData);
+
+      if (apiKeyData) {
+        if (apiKeyData.type === 'header') {
+          headers[apiKeyData.parameterName] = apiKeyData.apiKey;
+        } else if (apiKeyData.type === 'query') {
+          params[apiKeyData.parameterName] = apiKeyData.apiKey;
+        }
       }
 
       var bodyFormData = new FormData();
@@ -269,6 +276,7 @@ export default {
         crossDomain: true,
         baseURL: this.baseURL,
         data: bodyFormData,
+        headers: headers,
         url: finalPath,
         method: this.httpMethod.toLowerCase(),
         params
@@ -277,13 +285,13 @@ export default {
       return configuration;
     },
 
-    getApiKey(baseUrl) {
+    getApiKeyData(baseUrl) {
       var entry = this.$store.state.apiKeys.apiKeys.find(
         (item) => item.url === baseUrl
       );
       if (!entry) return null;
 
-      return entry.apiKey;
+      return entry;
     },
 
     createValidationRules(controls) {
