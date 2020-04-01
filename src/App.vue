@@ -122,7 +122,11 @@ export default {
       this.onWindowResize();
     });
 
-    ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
+    let isBootstrapped = Boolean(localStorage.getItem('is-bootstrapped'));
+    if (!isBootstrapped) {
+      ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
+      localStorage.setItem('is-bootstrapped', 'true');
+    }
 
     this.screenClass = getCurrentScreenClass();
     this.$store.dispatch(LOAD_MAIN_LAYOUT, this.screenClass);
