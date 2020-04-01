@@ -9,16 +9,21 @@
     >
       <div>
         <span class="empty-state-span">Go on and add your first key! </span>
-        <form class="md-layout">
+        <form
+          novalidate
+          class="md-layout"
+          @submit.prevent="validateForm"
+          id="form"
+        >
           <md-field class="md-size-100">
-            <label>URL</label>
+            <label for="url">URL</label>
             <md-input v-model="url" type="text"></md-input>
           </md-field>
           <md-field class="md-size-100">
-            <label>API key</label>
+            <label for="apiKey">API key</label>
             <md-input v-model="apiKey" type="password"></md-input>
           </md-field>
-          <md-button class="md-primary" type="submit">Add</md-button>
+          <md-button class="md-raised md-primary" type="submit">Add</md-button>
         </form>
       </div>
     </md-empty-state>
@@ -27,7 +32,11 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
+
 export default {
+  mixins: [validationMixin],
   beforeMount() {
     this.loadApiKeys();
   },
@@ -38,8 +47,28 @@ export default {
       apiKeys: []
     };
   },
+  validation() {
+    return {
+      form: {
+        apiKey: {
+          required
+        },
+        url: {
+          required
+        }
+      }
+    };
+  },
   methods: {
-    loadApiKeys() {}
+    addApiKey() {},
+    loadApiKeys() {},
+    validateForm() {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.addApiKey();
+      }
+    }
   }
 };
 </script>
