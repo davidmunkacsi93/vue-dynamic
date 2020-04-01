@@ -23,9 +23,14 @@
           </md-list-item>
         </md-list>
       </md-list-item>
+
       <md-list-item v-if="availableApis.length === 0">
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
+      </md-list-item>
+      <md-list-item :to="apiKeys">
+        <md-icon>vpn-key</md-icon>
+        <span class="md-list-item-text">API keys</span>
       </md-list-item>
       <md-list-item :to="addApiPath">
         <md-icon>http</md-icon>
