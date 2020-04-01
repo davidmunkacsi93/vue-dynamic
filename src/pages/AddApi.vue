@@ -43,7 +43,7 @@ export default {
       apiCreated: false,
       apiTitle: null,
       specificationURL:
-        'https://api.swaggerhub.com/apis/davidmunkacsi93/petstore/1.0.0/swagger.json'
+        'https://api.apis.guru/v2/specs/apis.guru/2.0.1/swagger.yaml'
     };
   },
   methods: {
