@@ -62,6 +62,13 @@ export default {
           'md-invalid': field.$invalid && field.$dirty
         };
       }
+    },
+    validateForm() {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.addApiKey();
+      }
     }
   }
 };

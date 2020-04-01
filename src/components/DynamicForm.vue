@@ -278,7 +278,12 @@ export default {
     },
 
     getApiKey(baseUrl) {
-      return this.$store.state.apiKeys.apiKeys[baseUrl];
+      var entry = this.$store.state.apiKeys.apiKeys.find(
+        (item) => item.url === baseUrl
+      );
+      if (!entry) return null;
+
+      return entry.apiKey;
     },
 
     createValidationRules(controls) {

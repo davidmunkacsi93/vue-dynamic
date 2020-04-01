@@ -7,12 +7,12 @@ import {
 const LOCAL_STORAGE_API_KEYS_KEY = 'api-keys';
 
 const state = {
-  apiKeys: {}
+  apiKeys: []
 };
 
 const mutations = {
   addApiKey(state, payload) {
-    state.apiKeys[payload.url] = payload.apiKey;
+    state.apiKeys.push(payload);
   },
   loadApiKeys(state) {
     const apiKeyString = localStorage.getItem(LOCAL_STORAGE_API_KEYS_KEY);
