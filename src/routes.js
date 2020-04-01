@@ -1,6 +1,6 @@
-import AddApi from './components/AddApi.vue';
-import ApiContent from './components/ApiContent.vue';
-import Home from './components/Home.vue';
+import AddApi from './pages/AddApi.vue';
+import ApiContent from './pages/ApiContent.vue';
+import Home from './pages/Home.vue';
 
 export const API_ROUTE_NAME = 'api';
 

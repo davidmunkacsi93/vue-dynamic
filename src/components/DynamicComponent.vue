@@ -123,8 +123,6 @@ export default {
     onRequestFailed(payload) {
       if (this.uuid !== payload.uuid) return;
 
-      console.log(payload);
-
       this.isLoading = false;
       this.requestFailed = true;
       this.errorMessage = payload.errorMessage;
