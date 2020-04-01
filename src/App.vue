@@ -75,6 +75,8 @@ import NavigationBar from './components/NavigationBar.vue';
 
 import routes from './routes';
 
+import ApiBootstrapper from './api-bootstrapper';
+
 import { getCurrentScreenClass } from './utils/responsive-utils';
 
 import {
@@ -119,6 +121,8 @@ export default {
       window.addEventListener('resize', this.onWindowResize);
       this.onWindowResize();
     });
+
+    ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
 
     this.screenClass = getCurrentScreenClass();
     this.$store.dispatch(LOAD_MAIN_LAYOUT, this.screenClass);
