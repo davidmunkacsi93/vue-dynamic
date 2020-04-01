@@ -6,6 +6,7 @@ export const DISABLE_EDIT_MODE_API_LAYOUT = 'disableEditModeApiLayout';
 export const DISABLE_EDIT_MODE_MAIN_LAYOUT = 'disableEditModeMainLayout';
 export const INITIALIZE_MAIN_LAYOUT = 'initializeMainLayout';
 export const LOAD_APIS = 'loadApis';
+export const LOAD_API_KEYS = 'loadApiKeys';
 export const LOAD_API_LAYOUT = 'loadApiLayout';
 export const LOAD_MAIN_LAYOUT = 'loadMainLayout';
 export const SAVE_API_KEYS = 'saveApiKeys';
