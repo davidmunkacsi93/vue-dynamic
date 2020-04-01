@@ -1,4 +1,4 @@
-import { ADD_NEW_API, ADD_API_KEY } from "./types/action-types";
+import { ADD_NEW_API, ADD_API_KEY } from './types/action-types';
 
 const apiList = [
   'https://api.apis.guru/v2/specs/apis.guru/2.0.1/swagger.yaml',
@@ -18,49 +18,43 @@ const apiKeys = [
     apiKey: 'fa42c8b4',
     parameterName: 'apiKey',
     type: 'query',
-    url: 'http://omdbapi.com'
+    url: 'http://www.omdbapi.com/'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
-    url:
-      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-play-by-play/1.0/swagger.yaml'
+    url: 'http://api.sportsdata.io/v3/nba/pbp'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
-    url:
-      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-projections/1.0/swagger.yaml'
+    url: 'http://api.sportsdata.io/v3/nba/projections'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
-    url:
-      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-articles/1.0/swagger.yaml'
+    url: 'http://api.sportsdata.io/v3/nba/articles-rotoballer'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
-    url:
-      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-premium-news/1.0/swagger.yaml'
+    url: 'http://api.sportsdata.io/v3/nba/news-rotoballer'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
-    url:
-      'http://api.apis.guru/v2/specs/sportsdata.io/nba-v3-scores/1.0/swagger.yaml'
+    url: 'http://api.sportsdata.io/v3/nba/scores'
   },
   {
     apiKey: '0567862bf59f462a9f52ecb368cd8f1b',
     parameterName: 'Ocp-Apim-Subscription-Key',
     type: 'header',
-    url:
-      'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-stats/1.0/swagger.yaml'
+    url: 'http://api.sportsdata.io/v3/nba/stats'
   }
 ];
 
