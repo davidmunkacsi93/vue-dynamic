@@ -17,6 +17,27 @@
         API key is required.
       </span>
     </md-field>
+    <md-field class="md-size-100" :class="getValidationClass('type')">
+      <label for="type">Type</label>
+      <md-select id="type" v-model="form.type">
+        <md-option value="header"></md-option>
+        <md-option value="query"></md-option>
+      </md-select>
+      <span class="md-error" v-if="$v.form.type.required === false">
+        Type is required.
+      </span>
+    </md-field>
+    <md-field :class="getValidationClass('parameterName')">
+      <label for="parameterName">Parameter name</label>
+      <md-input
+        id="parameterName"
+        v-model="form.parameterName"
+        type="text"
+      ></md-input>
+      <span class="md-error" v-if="$v.form.parameterName.required === false">
+        Parameter name is required.
+      </span>
+    </md-field>
     <md-button class="md-raised md-primary" type="submit">Add</md-button>
   </form>
 </template>
@@ -29,14 +50,22 @@ export default {
   data() {
     return {
       form: {
-        url: null,
-        apiKey: null
+        apiKey: null,
+        parameterName: null,
+        type: null,
+        url: null
       }
     };
   },
   validations: {
     form: {
       apiKey: {
+        required
+      },
+      parameterName: {
+        required
+      },
+      type: {
         required
       },
       url: {

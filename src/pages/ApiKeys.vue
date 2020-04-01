@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="api-keys-content">
     <md-empty-state
       v-if="apiKeys.length === 0"
       class="md-primary"
@@ -12,40 +12,37 @@
         <api-key-form></api-key-form>
       </div>
     </md-empty-state>
-    <template v-if="apiKeys.length > 0">
-      <md-list>
-        <md-list-item v-for="apiKey in apiKeys" :key="apiKey.key">
-          <span>{{ apiKey[0] }}</span>
-        </md-list-item>
-        <api-key-form></api-key-form>
-      </md-list>
-    </template>
+    <div class="md-layout" v-if="apiKeys.length > 0">
+      <dynamic-table
+        class="md-layout-item md-size-100"
+        :model="apiKeys"
+      ></dynamic-table>
+      <api-key-form class="md-layout-item md-size-50"></api-key-form>
+    </div>
   </div>
 </template>
 
 <script>
 import ApiKeyForm from '../components/ApiKeyForm';
+import DynamicTable from '../components/DynamicTable';
 
 export default {
-  components: { ApiKeyForm },
+  components: { ApiKeyForm, DynamicTable },
   beforeMount() {
-    this.apiKeys = this.getApiKeys();
-    console.log(this.apiKeys);
+    this.apiKeys = this.$store.state.apiKeys.apiKeys;
   },
   data() {
     return {
       apiKeys: []
     };
-  },
-  methods: {
-    getApiKeys() {
-      return Object.entries(this.$store.state.apiKeys.apiKeys);
-    }
   }
 };
 </script>
 
 <style scoped>
+.api-keys-content {
+  padding: 10px;
+}
 .empty-state-span {
   font-size: 16px;
 }
