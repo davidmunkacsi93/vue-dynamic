@@ -17,11 +17,11 @@
         >
           <md-field class="md-size-100">
             <label for="url">URL</label>
-            <md-input v-model="url" type="text"></md-input>
+            <md-input id="url" v-model="url" type="text"></md-input>
           </md-field>
           <md-field class="md-size-100">
             <label for="apiKey">API key</label>
-            <md-input v-model="apiKey" type="password"></md-input>
+            <md-input id="apiKey" v-model="apiKey" type="password"></md-input>
           </md-field>
           <md-button class="md-raised md-primary" type="submit">Add</md-button>
         </form>
@@ -33,7 +33,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required } from 'vuelidate/lib/validators';
+import { required, url } from 'vuelidate/lib/validators';
 
 export default {
   mixins: [validationMixin],
@@ -47,20 +47,24 @@ export default {
       apiKeys: []
     };
   },
-  validation() {
-    return {
-      form: {
-        apiKey: {
-          required
-        },
-        url: {
-          required
-        }
+  validations: {
+    form: {
+      apiKey: {
+        required
+      },
+      url: {
+        required,
+        url
       }
-    };
+    }
+  },
+  mounted() {
+    console.log(this.$v);
   },
   methods: {
-    addApiKey() {},
+    addApiKey() {
+      console.log('Add api key...');
+    },
     loadApiKeys() {},
     validateForm() {
       this.$v.$touch();
