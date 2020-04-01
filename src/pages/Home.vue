@@ -3,7 +3,7 @@
     <md-empty-state
       class="md-primary"
       md-icon="home"
-      md-label="Welcome to VueGeneric!"
+      md-label="Welcome to VueDynamic!"
       md-description="Add and use your services in one single application."
     >
       <md-button class="md-primary md-raised" to="/addApi">
