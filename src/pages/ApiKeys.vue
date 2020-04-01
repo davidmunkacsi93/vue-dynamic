@@ -15,13 +15,26 @@
           @submit.prevent="validateForm"
           id="form"
         >
-          <md-field class="md-size-100">
+          <md-field class="md-size-100" :class="getValidationClass('url')">
             <label for="url">URL</label>
-            <md-input id="url" v-model="url" type="text"></md-input>
+            <md-input id="url" v-model="form.url" type="text"></md-input>
+            <span class="md-error" v-if="$v.form.url.required === false">
+              URL is required.
+            </span>
+            <span class="md-error" v-if="$v.form.url.url === false">
+              Invalid format.
+            </span>
           </md-field>
-          <md-field class="md-size-100">
+          <md-field class="md-size-100" :class="getValidationClass('apiKey')">
             <label for="apiKey">API key</label>
-            <md-input id="apiKey" v-model="apiKey" type="password"></md-input>
+            <md-input
+              id="apiKey"
+              v-model="form.apiKey"
+              type="password"
+            ></md-input>
+            <span class="md-error" v-if="$v.form.apiKey.required === false">
+              API key is required.
+            </span>
           </md-field>
           <md-button class="md-raised md-primary" type="submit">Add</md-button>
         </form>
@@ -42,8 +55,10 @@ export default {
   },
   data() {
     return {
-      url: null,
-      apiKey: null,
+      form: {
+        url: null,
+        apiKey: null
+      },
       apiKeys: []
     };
   },
@@ -58,12 +73,19 @@ export default {
       }
     }
   },
-  mounted() {
-    console.log(this.$v);
-  },
   methods: {
     addApiKey() {
       console.log('Add api key...');
+    },
+    getValidationClass(fieldName) {
+      if (!this.$v) return;
+
+      const field = this.$v.form[fieldName];
+      if (field) {
+        return {
+          'md-invalid': field.$invalid && field.$dirty
+        };
+      }
     },
     loadApiKeys() {},
     validateForm() {
