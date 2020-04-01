@@ -229,7 +229,11 @@ export default {
           EventBus.$emit(REQUEST_SUCCESSFUL, payload);
         })
         .catch((reason) => {
-          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
+          var payload = {
+            errorMessage: reason.toString(),
+            uuid: this.uuid
+          };
+          EventBus.$emit(REQUEST_FAILED, payload);
         });
     },
     createRequestConfiguration() {
