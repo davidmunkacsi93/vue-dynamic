@@ -20,8 +20,8 @@
     <md-field class="md-size-100" :class="getValidationClass('type')">
       <label for="type">Type</label>
       <md-select id="type" v-model="form.type">
-        <md-option value="header"></md-option>
-        <md-option value="query"></md-option>
+        <md-option value="header">Header</md-option>
+        <md-option value="query">Query</md-option>
       </md-select>
       <span class="md-error" v-if="$v.form.type.required === false">
         Type is required.
@@ -78,6 +78,8 @@ export default {
     addApiKey() {
       var payload = {
         apiKey: this.form.apiKey,
+        parameterName: this.form.parameterName,
+        type: this.form.type,
         url: this.form.url
       };
       this.$store.dispatch(ADD_API_KEY, payload);
