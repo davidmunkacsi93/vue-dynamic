@@ -6,7 +6,7 @@
           <md-icon>menu</md-icon>
         </md-button>
       </div>
-      <h3 class="md-title">VueGenericUI</h3>
+      <h3 class="md-title">VueDynamic</h3>
 
       <div class="md-toolbar-section-end">
         <md-menu md-size="big" md-direction="bottom-end">

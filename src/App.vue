@@ -80,7 +80,8 @@ import { getCurrentScreenClass } from './utils/responsive-utils';
 import {
   LOAD_MAIN_LAYOUT,
   LOAD_APIS,
-  SET_SCREEN_CLASS
+  SET_SCREEN_CLASS,
+  LOAD_API_KEYS
 } from './types/action-types';
 import { CONTENT, MENU, NAVIGATION_BAR } from './types/layout-item-types';
 
@@ -122,6 +123,7 @@ export default {
     this.screenClass = getCurrentScreenClass();
     this.$store.dispatch(LOAD_MAIN_LAYOUT, this.screenClass);
     this.$store.dispatch(LOAD_APIS);
+    this.$store.dispatch(LOAD_API_KEYS);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onWindowResize);

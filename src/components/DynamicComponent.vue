@@ -155,7 +155,7 @@ export default {
 .content-height {
   -webkit-flex: 1 1 auto;
   flex: 1 1 auto;
-  overflow-y: auto;
+  overflow: auto;
   height: 60%;
 }
 

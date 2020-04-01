@@ -229,15 +229,26 @@ export default {
           EventBus.$emit(REQUEST_SUCCESSFUL, payload);
         })
         .catch((reason) => {
-          EventBus.$emit(REQUEST_FAILED, { errorMessage: reason.toString() });
+          var payload = {
+            errorMessage: reason.toString(),
+            uuid: this.uuid
+          };
+          EventBus.$emit(REQUEST_FAILED, payload);
         });
     },
     createRequestConfiguration() {
       var params = {};
-      var apiKey = this.getApiKey(this.baseURL);
+      var headers = {};
+      var apiKeyData = this.getApiKeyData(this.baseURL);
 
-      if (apiKey) {
-        params.apiKey = apiKey;
+      console.log(apiKeyData);
+
+      if (apiKeyData) {
+        if (apiKeyData.type === 'header') {
+          headers[apiKeyData.parameterName] = apiKeyData.apiKey;
+        } else if (apiKeyData.type === 'query') {
+          params[apiKeyData.parameterName] = apiKeyData.apiKey;
+        }
       }
 
       var bodyFormData = new FormData();
@@ -265,6 +276,7 @@ export default {
         crossDomain: true,
         baseURL: this.baseURL,
         data: bodyFormData,
+        headers: headers,
         url: finalPath,
         method: this.httpMethod.toLowerCase(),
         params
@@ -273,12 +285,13 @@ export default {
       return configuration;
     },
 
-    getApiKey(baseUrl) {
-      // TODO: Refactor with server-side cookies.
-      var apiKeys = {
-        'http://www.omdbapi.com/': 'fa42c8b4'
-      };
-      return apiKeys[baseUrl];
+    getApiKeyData(baseUrl) {
+      var entry = this.$store.state.apiKeys.apiKeys.find(
+        (item) => item.url === baseUrl
+      );
+      if (!entry) return null;
+
+      return entry;
     },
 
     createValidationRules(controls) {
