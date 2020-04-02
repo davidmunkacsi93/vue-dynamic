@@ -6,8 +6,7 @@ import {
   SAVE_MAIN_LAYOUT,
   SET_CONTENT_HEIGHT,
   SET_NAVIGATION_BAR_HEIGHT,
-  SET_SCREEN_CLASS,
-  TOGGLE_NAVIGATION_BAR
+  SET_SCREEN_CLASS
 } from '../../types/action-types';
 import { CONTENT, NAVIGATION_BAR } from '../../types/layout-item-types';
 import DefaultMainLayoutFactory from '../../factories/default-main-layout-factory';
@@ -84,14 +83,6 @@ const mutations = {
   },
   setScreenClass(state, screenClass) {
     state.currentScreenClass = screenClass;
-  },
-  toggleNavigationBar(state) {
-    var screenClasses = Object.keys(state.mainLayouts);
-    for (var screenClass of screenClasses) {
-      var layout = state.mainLayouts[screenClass];
-      var navigationBar = layout.find((item) => item.type === NAVIGATION_BAR);
-      navigationBar.hidden = !navigationBar.hidden;
-    }
   }
 };
 
@@ -118,9 +109,6 @@ const actions = {
   },
   setScreenClass({ commit }, screenClass) {
     commit(SET_SCREEN_CLASS, screenClass);
-  },
-  toggleNavigationBar({ commit }) {
-    commit(TOGGLE_NAVIGATION_BAR);
   }
 };
 

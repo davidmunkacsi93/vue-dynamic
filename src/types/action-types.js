@@ -19,5 +19,4 @@ export const SET_MAIN_LAYOUT_ITEM = 'setMainLayoutItem';
 export const SET_MAIN_LAYOUT_ITEMS = 'setMainLayoutItems';
 export const SET_NAVIGATION_BAR_HEIGHT = 'setNavigationBarHeight';
 export const SET_SCREEN_CLASS = 'setScreenClass';
-export const TOGGLE_NAVIGATION_BAR = 'toggleNavigationBar';
 export const REMOVE_FORM = 'removeForm';

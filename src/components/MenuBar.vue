@@ -1,11 +1,7 @@
 <template>
   <md-toolbar class="menu-bar md-primary">
     <div class="md-toolbar-row">
-      <div class="md-toolbar-section-start">
-        <md-button class="md-icon-button" @click="onMenuClick">
-          <md-icon>menu</md-icon>
-        </md-button>
-      </div>
+      <div class="md-toolbar-section-start"></div>
       <h3 class="md-title">VueDynamic</h3>
 
       <div class="md-toolbar-section-end">
@@ -55,8 +51,7 @@ import {
   DISABLE_EDIT_MODE_MAIN_LAYOUT,
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
   SAVE_API_LAYOUT,
-  SAVE_MAIN_LAYOUT,
-  TOGGLE_NAVIGATION_BAR
+  SAVE_MAIN_LAYOUT
 } from '../types/action-types';
 
 import { API_ROUTE_NAME } from '../routes.js';
@@ -74,9 +69,6 @@ export default {
     };
   },
   methods: {
-    onMenuClick() {
-      this.$store.dispatch(TOGGLE_NAVIGATION_BAR);
-    },
     editApiLayout() {
       this.$store.dispatch(ENABLE_EDIT_MODE_API_LAYOUT);
     },
