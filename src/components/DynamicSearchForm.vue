@@ -79,6 +79,10 @@ export default {
       if (this.uuid !== payload.uuid) return;
 
       this.results = payload.response.data;
+
+      if (this.results.data) {
+        this.results = this.results.data;
+      }
       this.createDynamicTreeView(this.results);
       this.activeTab = 'tab-results';
     },
