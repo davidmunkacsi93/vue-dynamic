@@ -10,7 +10,8 @@ const apiList = [
   'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-articles/1.0/swagger.yaml',
   'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-premium-news/1.0/swagger.yaml',
   'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-scores/1.0/swagger.yaml',
-  'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-stats/1.0/swagger.yaml'
+  'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-stats/1.0/swagger.yaml',
+  'https://api.apis.guru/v2/specs/corona-virus-stats.herokuapp.com/v1/swagger.yaml'
 ];
 
 const apiKeys = [
