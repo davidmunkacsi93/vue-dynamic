@@ -1,5 +1,5 @@
 <template>
-  <md-tabs :md-active-tab.sync="activeTab">
+  <md-tabs id="search-form-tabs" :md-active-tab.sync="activeTab">
     <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
       <dynamic-form
         :baseURL="baseURL"
@@ -11,7 +11,7 @@
       ></dynamic-form>
     </md-tab>
     <md-tab id="tab-results" md-label="Results">
-      <div ref="resultsContainer"></div>
+      <div class="tab-content" ref="resultsContainer"></div>
     </md-tab>
   </md-tabs>
 </template>
@@ -104,4 +104,23 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+#search-form-tabs {
+  max-height: 100%;
+}
+
+#search-form-tabs > .md-tab {
+  max-height: 100%;
+  overflow: auto;
+}
+
+#search-form-tabs > .md-tabs-content {
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.md-tabs-container {
+  max-height: 100%;
+}
+</style>
