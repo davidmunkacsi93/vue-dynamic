@@ -1,8 +1,37 @@
 <template>
   <form novalidate @submit.prevent="validateForm" :id="'form-' + uuid">
-    <md-list>
-      <draggable v-model="controls">
-        <md-list-item v-for="control in controls" :key="control.order">
+    <grid-layout-base
+      v-if="innerControls.length > 0"
+      ref="controlLayout"
+      class="control-layout"
+      :layout.sync="innerControls"
+      :col-num="12"
+      :row-height="30"
+      :margin="[10, 10]"
+      :is-draggable="true"
+      :is-resizable="true"
+      :is-mirrored="false"
+      :responsive="true"
+      :vertical-compact="true"
+      :use-css-transforms="true"
+    >
+      <template v-if="innerControls.length > 0">
+        <grid-item
+          v-for="control in innerControls"
+          :x="control.x"
+          :y="control.y"
+          :w="control.w"
+          :h="control.h"
+          :i="control.i"
+          :isDraggable="control.isDraggable"
+          :isResizable="control.isResizable"
+          :initialized="control.initialized"
+          :autoSizeRequired="false"
+          :type="control.type"
+          :static="control.static"
+          :key="control.i"
+          :uuid="control.uuid"
+        >
           <md-field
             v-if="
               control.element === DROP_DOWN ||
@@ -130,14 +159,16 @@
               <label>{{ control.label }}</label>
             </md-switch>
           </template>
-        </md-list-item>
-      </draggable>
-    </md-list>
+        </grid-item>
+      </template>
+    </grid-layout-base>
   </form>
 </template>
 
 <script>
-import draggable from 'vuedraggable';
+import GridLayoutBase from '../components/GridLayoutBase';
+import GridItem from '../components/GridItem';
+
 import {
   DROP_DOWN,
   FLOAT_INPUT,
@@ -161,7 +192,8 @@ import {
 export default {
   mixins: [validationMixin],
   components: {
-    draggable
+    GridLayoutBase,
+    GridItem
   },
   props: {
     baseURL: {
@@ -190,10 +222,11 @@ export default {
     }
   },
   validations() {
-    return { form: this.createValidationRules(this.controls) };
+    return { form: this.createValidationRules(this.innerControls) };
   },
   created() {
-    this.controls.forEach((control) => {
+    this.innerControls = this.controls;
+    this.innerControls.forEach((control) => {
       if (control.element === CHIPS) {
         this.$set(this.form, control.label, []);
       } else {
@@ -204,6 +237,7 @@ export default {
   data: () => ({
     form: {},
     isDirty: false,
+    innerControls: [],
 
     CHIPS: CHIPS,
     DATE_PICKER: DATE_PICKER,

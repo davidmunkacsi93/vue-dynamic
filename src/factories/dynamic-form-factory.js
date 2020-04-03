@@ -5,6 +5,7 @@ import ControlFactory from './control-factory';
 class DynamicFormFactory {
   createDynamicForm(path, httpMethod, apiMethod, apiModels) {
     var dynamicComponent = {};
+    var controls = [];
     dynamicComponent.path = path;
 
     if (apiMethod.description) {
@@ -20,13 +21,13 @@ class DynamicFormFactory {
     dynamicComponent.tags = apiMethod.tags;
 
     if (apiMethod.parameters) {
-      dynamicComponent.controls = ControlFactory.createControlsForParameters(
+      controls = ControlFactory.createControlsForParameters(
         apiMethod,
         apiModels
       );
     } else if (apiMethod.requestBody) {
       var schema = apiMethod.requestBody.content['application/json'].schema;
-      dynamicComponent.controls = ControlFactory.createControlsForSchema(
+      controls = ControlFactory.createControlsForSchema(
         'body',
         schema,
         apiModels
@@ -36,6 +37,11 @@ class DynamicFormFactory {
         `Can't generate dynamic component for endpoint ${apiMethod.description}`
       );
     }
+
+    if (controls.length > 0) {
+      dynamicComponent.controls = controls;
+    }
+
     dynamicComponent.responses = apiMethod.responses;
 
     return dynamicComponent;

@@ -48,7 +48,9 @@ class DynamicComponentFactory {
 
         dynamicComponents.forEach((component) => {
           if (!component.controls) component.controls = [];
-          component.controls.push(controlsForEndpointParameters);
+          if (controlsForEndpointParameters.length > 0) {
+            component.controls.push(controlsForEndpointParameters);
+          }
         });
       }
     }

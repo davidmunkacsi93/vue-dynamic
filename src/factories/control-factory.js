@@ -9,6 +9,7 @@ import {
   CHIPS
 } from '../types/layout-item-types';
 import { getLastURLSegment } from '../utils/helpers';
+import { v1 as uuid } from 'uuid';
 
 class ControlFactory {
   createControlsForEndpointParameters(parameters) {
@@ -17,6 +18,8 @@ class ControlFactory {
       var controlForParameter = this.createControl(parameter);
       controls.push(controlForParameter);
     });
+
+    this.addLayoutProperties(controls);
 
     return controls;
   }
@@ -54,6 +57,8 @@ class ControlFactory {
       controls.push(control);
     }
 
+    this.addLayoutProperties(controls);
+
     return controls;
   }
 
@@ -77,7 +82,25 @@ class ControlFactory {
       };
       controls.push(control);
     }
+
+    this.addLayoutProperties(controls);
+
     return controls;
+  }
+
+  addLayoutProperties(controls) {
+    controls.forEach((control, index) => {
+      control.w = 12;
+      control.h = 2;
+      control.x = 0;
+      control.y = index * 2;
+      control.i = index;
+      control.uuid = uuid();
+      control.isDraggable = true;
+      control.isResizable = true;
+      control.initialized = false;
+      control.static = false;
+    });
   }
 
   createControl(parameter) {

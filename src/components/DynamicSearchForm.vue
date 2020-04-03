@@ -2,6 +2,7 @@
   <md-tabs id="search-form-tabs" :md-active-tab.sync="activeTab">
     <md-tab id="tab-search" md-label="Search" @click="onSearchTabClick">
       <dynamic-form
+        v-if="controls.length > 0"
         :baseURL="baseURL"
         :httpMethod="httpMethod"
         :path="path"
