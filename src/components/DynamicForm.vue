@@ -15,8 +15,9 @@
       :vertical-compact="true"
       :use-css-transforms="true"
     >
-      <template v-for="control in innerControls">
+      <template v-if="innerControls.length > 0">
         <grid-item
+          v-for="control in innerControls"
           :x="control.x"
           :y="control.y"
           :w="control.w"
