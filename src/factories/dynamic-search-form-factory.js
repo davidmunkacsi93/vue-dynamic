@@ -14,7 +14,9 @@ class DynamicSearchFormFactory {
 
     if (apiMethod.parameters) {
       var controls = ControlFactory.createControlsForParameters(apiMethod);
-      dynamicSearchForm.controls = controls;
+      if (controls.length > 0) {
+        dynamicSearchForm.controls = controls;
+      }
     }
 
     return dynamicSearchForm;

@@ -58,7 +58,6 @@ class ControlFactory {
     }
 
     this.addLayoutProperties(controls);
-    console.log(controls);
 
     return controls;
   }
