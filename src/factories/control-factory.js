@@ -62,21 +62,6 @@ class ControlFactory {
     return controls;
   }
 
-  addLayoutProperties(controls) {
-    controls.forEach((control, index) => {
-      control.w = 12;
-      control.h = 3;
-      control.x = 0;
-      control.y = index * 3;
-      control.i = index;
-      control.uuid = uuid();
-      control.isDraggable = true;
-      control.isResizable = true;
-      control.initialized = false;
-      control.static = false;
-    });
-  }
-
   createControlsForSchema(parameterIn, schema, apiModels) {
     var controls = [];
     var apiModelKey = getLastURLSegment(schema.$ref);
@@ -97,7 +82,25 @@ class ControlFactory {
       };
       controls.push(control);
     }
+
+    this.addLayoutProperties(controls);
+
     return controls;
+  }
+
+  addLayoutProperties(controls) {
+    controls.forEach((control, index) => {
+      control.w = 12;
+      control.h = 2;
+      control.x = 0;
+      control.y = index * 2;
+      control.i = index;
+      control.uuid = uuid();
+      control.isDraggable = true;
+      control.isResizable = true;
+      control.initialized = false;
+      control.static = false;
+    });
   }
 
   createControl(parameter) {

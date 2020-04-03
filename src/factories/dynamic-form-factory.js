@@ -39,8 +39,7 @@ class DynamicFormFactory {
     }
 
     if (controls.length > 0) {
-      dynamicComponent.controls = controlsForParameters;
-      F;
+      dynamicComponent.controls = controls;
     }
 
     dynamicComponent.responses = apiMethod.responses;
