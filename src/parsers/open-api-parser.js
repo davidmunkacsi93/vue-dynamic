@@ -3,8 +3,8 @@ import DynamicComponentFactory from '../factories/dynamic-component-factory';
 import OpenApiInformationProvider from '../providers/open-api-information-provider';
 import DefaultApiLayoutFactory from '../factories/default-api-layout-factory';
 
-class OpenApiParser {
-  processSpecification(specification) {
+export default class OpenApiParser {
+  static processSpecification(specification) {
     var specificationVersion = specification.openapi || specification.swagger;
     var apiInformation = OpenApiInformationProvider.getApiInformation(
       specification.info
@@ -45,7 +45,3 @@ class OpenApiParser {
     return apiUIModel;
   }
 }
-
-const instance = new OpenApiParser();
-Object.freeze(instance);
-export default instance;

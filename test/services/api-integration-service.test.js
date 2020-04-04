@@ -27,19 +27,32 @@ describe('Tests for api-integration-service integrateNewApi function:', () => {
     });
   });
 
-  // it('must throw an error, when OpenAPI parser throws an error.', async () => {
-  //   const swagger = { swagger: '2.0.' };
-  //   spyOn(SwaggerParser, 'validate').and.returnValue(Promise.resolve(swagger));
+  it('must throw an error, when OpenAPI parser throws an error.', async () => {
+    const swagger = { swagger: '2.0.' };
+    spyOn(SwaggerParser, 'validate').and.returnValue(Promise.resolve(swagger));
+    spyOn(SwaggerParser, 'parse').and.returnValue(Promise.resolve(swagger));
+    spyOn(OpenApiParser, 'processSpecification').and.throwError(
+      'Parsing failed'
+    );
 
-  //   spyOn(SwaggerParser, 'parse').and.returnValue(Promise.resolve(swagger));
+    const result = await ApiIntegrationService.integrateNewAPI('URL').catch(
+      (reason) => {
+        expect(reason.message).toEqual('Error: Parsing failed');
+      }
+    );
+  });
 
-  //   spyOn(OpenApiParser, 'processSpecification').and.callFake(() => {
-  //     throw new Error('Parsing failed');
-  //   });
+  it('must throw an error, when OpenAPI parser throws an error.', async () => {
+    const swagger = { swagger: '2.0.' };
+    spyOn(SwaggerParser, 'validate').and.returnValue(Promise.resolve(swagger));
+    spyOn(SwaggerParser, 'parse').and.returnValue(Promise.resolve(swagger));
 
-  //   apiIntegrationService.integrateNewAPI('URL').catch((reason) => {
-  //     console.log(reason);
-  //     expect(reason.message).toBe('Parsing failed');
-  //   });
-  // });
+    var uiModel = {
+      specificationVersion: '2.0'
+    };
+    spyOn(OpenApiParser, 'processSpecification').and.returnValue(uiModel);
+
+    const result = await ApiIntegrationService.integrateNewAPI('URL');
+    expect(result).toEqual(uiModel);
+  });
 });
