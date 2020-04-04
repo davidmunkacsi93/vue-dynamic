@@ -5,6 +5,9 @@ import DefaultApiLayoutFactory from '../factories/default-api-layout-factory';
 
 export default class OpenApiParser {
   static processSpecification(specification) {
+    if (!specification) {
+      throw new Error('Specification cannot be determined.');
+    }
     var specificationVersion = specification.openapi || specification.swagger;
     var apiInformation = OpenApiInformationProvider.getApiInformation(
       specification.info
