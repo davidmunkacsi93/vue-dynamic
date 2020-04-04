@@ -4,7 +4,7 @@ import DynamicSearchFormFactory from './dynamic-search-form-factory';
 import { FORM, SEARCH_FORM } from '../types/layout-item-types';
 
 export default class DynamicComponentFactory {
-  createDynamicComponents(apiPaths, apiModels) {
+  static createDynamicComponents(apiPaths, apiModels) {
     var dynamicComponents = [];
     var supportedHttpMethods = ['get', 'post', 'put', 'delete'];
 
@@ -56,7 +56,7 @@ export default class DynamicComponentFactory {
     }
     return dynamicComponents;
   }
-  getDynamicComponentType(httpMethod, apiMethod) {
+  static getDynamicComponentType(httpMethod, apiMethod) {
     if (httpMethod === 'get') {
       var responseOk = apiMethod.responses['200'];
       if (responseOk) {
