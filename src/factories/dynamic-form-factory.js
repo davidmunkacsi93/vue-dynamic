@@ -2,8 +2,8 @@ import { FORM } from '../types/layout-item-types';
 
 import ControlFactory from './control-factory';
 
-class DynamicFormFactory {
-  createDynamicForm(path, httpMethod, apiMethod, apiModels) {
+export default class DynamicFormFactory {
+  static createDynamicForm(path, httpMethod, apiMethod, apiModels) {
     var dynamicComponent = {};
     var controls = [];
     dynamicComponent.path = path;
@@ -47,7 +47,3 @@ class DynamicFormFactory {
     return dynamicComponent;
   }
 }
-
-const instance = new DynamicFormFactory();
-Object.freeze(instance);
-export default instance;

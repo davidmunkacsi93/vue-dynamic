@@ -1,5 +1,5 @@
-class OpenApiInformationProvider {
-  getApiInformation(specificationInfo) {
+export default class OpenApiInformationProvider {
+  static getApiInformation(specificationInfo) {
     return {
       apiVersion: specificationInfo.version,
       title: specificationInfo.title,
@@ -7,7 +7,7 @@ class OpenApiInformationProvider {
     };
   }
 
-  getServerInformation(specification) {
+  static getServerInformation(specification) {
     if (specification.servers) {
       return {
         serverDescription: specification.servers[0].description,
@@ -27,7 +27,3 @@ class OpenApiInformationProvider {
     }
   }
 }
-
-const instance = new OpenApiInformationProvider();
-Object.freeze(instance);
-export default instance;

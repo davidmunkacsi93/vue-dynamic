@@ -3,7 +3,7 @@ import DynamicFormFactory from '../factories/dynamic-form-factory';
 import DynamicSearchFormFactory from './dynamic-search-form-factory';
 import { FORM, SEARCH_FORM } from '../types/layout-item-types';
 
-class DynamicComponentFactory {
+export default class DynamicComponentFactory {
   createDynamicComponents(apiPaths, apiModels) {
     var dynamicComponents = [];
     var supportedHttpMethods = ['get', 'post', 'put', 'delete'];
@@ -79,7 +79,3 @@ class DynamicComponentFactory {
     }
   }
 }
-
-const instance = new DynamicComponentFactory();
-Object.freeze(instance);
-export default instance;

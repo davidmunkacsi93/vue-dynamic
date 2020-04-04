@@ -1,7 +1,7 @@
 import { v1 as uuid } from 'uuid';
 
-class DefaultApiLayoutFactory {
-  getDefaultApiLayout(dynamicComponents) {
+export default class DefaultApiLayoutFactory {
+  static getDefaultApiLayout(dynamicComponents) {
     var layout = [];
     this.createDynamicComponents(dynamicComponents).forEach((component) =>
       layout.push(component)
@@ -9,7 +9,7 @@ class DefaultApiLayoutFactory {
     return layout;
   }
 
-  createDynamicComponents(dynamicComponents) {
+  static createDynamicComponents(dynamicComponents) {
     var result = [];
 
     dynamicComponents
@@ -34,7 +34,3 @@ class DefaultApiLayoutFactory {
     return result;
   }
 }
-
-const instance = new DefaultApiLayoutFactory();
-Object.freeze(instance);
-export default instance;
