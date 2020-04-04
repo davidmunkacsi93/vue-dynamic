@@ -1,6 +1,6 @@
 import ControlFactory from '../factories/control-factory';
 import DynamicFormFactory from '../factories/dynamic-form-factory';
-import DynamicSearchFormFactory from './dynamic-search-form-factory';
+import DynamicSearchFormFactory from '../factories/dynamic-search-form-factory';
 import { FORM, SEARCH_FORM } from '../types/layout-item-types';
 
 export default class DynamicComponentFactory {
