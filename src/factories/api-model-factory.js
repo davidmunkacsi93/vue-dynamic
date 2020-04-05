@@ -1,7 +1,7 @@
 import { getLastURLSegment } from '../utils/helpers';
 
-class ApiModelFactory {
-  createApiModels(components) {
+export default class ApiModelFactory {
+  static createApiModels(components) {
     var apiModels = [];
     if (!components) return;
 
@@ -47,7 +47,3 @@ class ApiModelFactory {
     return apiModels;
   }
 }
-
-const instance = new ApiModelFactory();
-Object.freeze(instance);
-export default instance;

@@ -2,8 +2,8 @@ import { SEARCH_FORM } from '../types/layout-item-types';
 
 import ControlFactory from './control-factory';
 
-class DynamicSearchFormFactory {
-  createDynamicSearchForm(path, httpMethod, apiMethod) {
+export default class DynamicSearchFormFactory {
+  static createDynamicSearchForm(path, httpMethod, apiMethod) {
     var dynamicSearchForm = {
       httpMethod: httpMethod.toUpperCase(),
       path: path,
@@ -22,7 +22,3 @@ class DynamicSearchFormFactory {
     return dynamicSearchForm;
   }
 }
-
-const instance = new DynamicSearchFormFactory();
-Object.freeze(instance);
-export default instance;

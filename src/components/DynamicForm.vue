@@ -1,7 +1,6 @@
 <template>
   <form novalidate @submit.prevent="validateForm" :id="'form-' + uuid">
     <grid-layout-base
-      v-if="innerControls.length > 0"
       ref="controlLayout"
       class="control-layout"
       :layout.sync="innerControls"
@@ -15,152 +14,149 @@
       :vertical-compact="true"
       :use-css-transforms="true"
     >
-      <template v-if="innerControls.length > 0">
-        <grid-item
-          v-for="control in innerControls"
-          :x="control.x"
-          :y="control.y"
-          :w="control.w"
-          :h="control.h"
-          :i="control.i"
-          :isDraggable="control.isDraggable"
-          :isResizable="control.isResizable"
-          :initialized="control.initialized"
-          :autoSizeRequired="false"
-          :type="control.type"
-          :static="control.static"
-          :key="control.i"
-          :uuid="control.uuid"
+      <grid-item
+        v-for="control in innerControls"
+        :x="control.x"
+        :y="control.y"
+        :w="control.w"
+        :h="control.h"
+        :i="control.i"
+        :isDraggable="control.isDraggable"
+        :isResizable="control.isResizable"
+        :initialized="control.initialized"
+        :autoSizeRequired="false"
+        :type="control.type"
+        :static="control.static"
+        :key="control.i"
+        :uuid="control.uuid"
+      >
+        <md-field
+          v-if="
+            control.element === DROP_DOWN ||
+            control.element === FLOAT_INPUT ||
+            control.element === NUMBER_INPUT ||
+            control.element === TEXT_INPUT ||
+            control.element === PASSWORD_INPUT
+          "
+          :class="getValidationClass(control.label)"
         >
-          <md-field
-            v-if="
-              control.element === DROP_DOWN ||
-              control.element === FLOAT_INPUT ||
-              control.element === NUMBER_INPUT ||
-              control.element === TEXT_INPUT ||
-              control.element === PASSWORD_INPUT
+          <label :for="control.label">{{ control.label }}</label>
+          <md-select
+            v-if="control.element === DROP_DOWN"
+            v-model="form[control.label]"
+          >
+            <md-option
+              v-for="(value, name, index) in control.values"
+              :value="value"
+              :key="index"
+            >
+              {{ value }}
+            </md-option>
+          </md-select>
+          <md-input
+            v-else-if="control.element === FLOAT_INPUT"
+            v-model="form[control.label]"
+            type="number"
+            step="0.01"
+          ></md-input>
+          <md-input
+            v-else-if="control.element === NUMBER_INPUT"
+            v-model="form[control.label]"
+            type="number"
+          ></md-input>
+          <md-input
+            v-else-if="
+              control.label !== 'password' && control.element === TEXT_INPUT
             "
+            v-model="form[control.label]"
+            type="text"
+          ></md-input>
+          <md-input
+            v-else-if="
+              control.label === 'password' || control.element === PASSWORD_INPUT
+            "
+            v-model="form[control.label]"
+            type="password"
+          ></md-input>
+
+          <md-tooltip v-if="control.description" md-direction="left">
+            {{ control.description }}
+          </md-tooltip>
+          <template v-if="$v.$dirty && $v.form[control.label]">
+            <span
+              class="md-error"
+              v-if="$v.form[control.label].required === false"
+            >
+              {{ control.label }} is required
+            </span>
+            <span
+              class="md-error"
+              v-else-if="$v.form[control.label].minLength === false"
+            >
+              Invalid {{ control.label }}
+            </span>
+            <span
+              class="md-error"
+              v-else-if="$v.form[control.label].maxLength === false"
+            >
+              Invalid {{ control.label }}
+            </span>
+            <span
+              class="md-error"
+              v-else-if="$v.form[control.label].email === false"
+            >
+              Invalid email address
+            </span>
+          </template>
+        </md-field>
+        <template
+          v-else-if="
+            control.element === CHIPS || control.element === DATE_PICKER
+          "
+        >
+          <md-chips
+            v-if="control.element === CHIPS"
+            v-model="form[control.label]"
             :class="getValidationClass(control.label)"
           >
-            <label :for="control.label">{{ control.label }}</label>
-            <md-select
-              v-if="control.element === DROP_DOWN"
-              v-model="form[control.label]"
-            >
-              <md-option
-                v-for="(value, name, index) in control.values"
-                :value="value"
-                :key="index"
-              >
-                {{ value }}
-              </md-option>
-            </md-select>
-            <md-input
-              v-else-if="control.element === FLOAT_INPUT"
-              v-model="form[control.label]"
-              type="number"
-              step="0.01"
-            ></md-input>
-            <md-input
-              v-else-if="control.element === NUMBER_INPUT"
-              v-model="form[control.label]"
-              type="number"
-            ></md-input>
-            <md-input
-              v-else-if="
-                control.label !== 'password' && control.element === TEXT_INPUT
-              "
-              v-model="form[control.label]"
-              type="text"
-            ></md-input>
-            <md-input
-              v-else-if="
-                control.label === 'password' ||
-                control.element === PASSWORD_INPUT
-              "
-              v-model="form[control.label]"
-              type="password"
-            ></md-input>
-
-            <md-tooltip v-if="control.description" md-direction="left">
-              {{ control.description }}
-            </md-tooltip>
+            <label>{{ control.label }}</label>
             <template v-if="$v.$dirty && $v.form[control.label]">
               <span
-                class="md-error"
+                class="validation-error"
                 v-if="$v.form[control.label].required === false"
               >
                 {{ control.label }} is required
               </span>
+            </template>
+          </md-chips>
+          <md-datepicker
+            v-model="form[control.label]"
+            v-if="control.element === DATE_PICKER"
+            :class="getValidationClass(control.label)"
+          >
+            <label>{{ control.label }}</label>
+            <template v-if="$v.$dirty && $v.form[control.label]">
               <span
-                class="md-error"
-                v-else-if="$v.form[control.label].minLength === false"
+                class="validation-error"
+                v-if="$v.form[control.label].required === false"
               >
-                Invalid {{ control.label }}
-              </span>
-              <span
-                class="md-error"
-                v-else-if="$v.form[control.label].maxLength === false"
-              >
-                Invalid {{ control.label }}
-              </span>
-              <span
-                class="md-error"
-                v-else-if="$v.form[control.label].email === false"
-              >
-                Invalid email address
+                {{ control.label }} is required
               </span>
             </template>
-          </md-field>
-          <template
-            v-else-if="
-              control.element === CHIPS || control.element === DATE_PICKER
-            "
+          </md-datepicker>
+          <md-tooltip v-if="control.description" md-direction="left">
+            {{ control.description }}
+          </md-tooltip>
+        </template>
+        <template v-else>
+          <md-switch
+            v-if="control.element === SWITCH"
+            v-model="form[control.label]"
           >
-            <md-chips
-              v-if="control.element === CHIPS"
-              v-model="form[control.label]"
-              :class="getValidationClass(control.label)"
-            >
-              <label>{{ control.label }}</label>
-              <template v-if="$v.$dirty && $v.form[control.label]">
-                <span
-                  class="validation-error"
-                  v-if="$v.form[control.label].required === false"
-                >
-                  {{ control.label }} is required
-                </span>
-              </template>
-            </md-chips>
-            <md-datepicker
-              v-model="form[control.label]"
-              v-if="control.element === DATE_PICKER"
-              :class="getValidationClass(control.label)"
-            >
-              <label>{{ control.label }}</label>
-              <template v-if="$v.$dirty && $v.form[control.label]">
-                <span
-                  class="validation-error"
-                  v-if="$v.form[control.label].required === false"
-                >
-                  {{ control.label }} is required
-                </span>
-              </template>
-            </md-datepicker>
-            <md-tooltip v-if="control.description" md-direction="left">
-              {{ control.description }}
-            </md-tooltip>
-          </template>
-          <template v-else>
-            <md-switch
-              v-if="control.element === SWITCH"
-              v-model="form[control.label]"
-            >
-              <label>{{ control.label }}</label>
-            </md-switch>
-          </template>
-        </grid-item>
-      </template>
+            <label>{{ control.label }}</label>
+          </md-switch>
+        </template>
+      </grid-item>
     </grid-layout-base>
   </form>
 </template>
@@ -252,6 +248,7 @@ export default {
     callEndpoint() {
       EventBus.$emit(REQUEST_STARTED, { uuid: this.uuid });
       var configuration = this.createRequestConfiguration();
+      console.log(configuration);
       this.$http
         .request(configuration)
         .then((response) => {

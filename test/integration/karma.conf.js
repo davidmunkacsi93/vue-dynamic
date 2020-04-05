@@ -6,12 +6,14 @@ module.exports = function (config) {
       'karma-webpack',
       'karma-jasmine',
       'karma-babel-preprocessor',
-      'karma-chrome-launcher'
+      'karma-chrome-launcher',
+      'karma-safari-private-launcher',
+      'karma-firefox-launcher'
     ],
 
     frameworks: ['jasmine'],
 
-    files: ['test/**/*.js'],
+    files: ['./specs/**/*.js'],
 
     exclude: [],
 
@@ -34,7 +36,7 @@ module.exports = function (config) {
       }
     },
     preprocessors: {
-      './test/**/*.js': ['webpack']
+      './specs/**/*.js': ['webpack']
     },
     webpackMiddleware: {
       noInfo: true,
@@ -52,6 +54,7 @@ module.exports = function (config) {
     autoWatch: true,
 
     browsers: ['Chrome'],
+    // browsers: ['Chrome', 'Firefox', 'SafariPrivate'],
 
     singleRun: false,
 

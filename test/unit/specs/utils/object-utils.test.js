@@ -5,7 +5,7 @@ import {
   arrayHasOnlySingleObjects,
   arrayHasOnlyPrimitives,
   arrayHasNestedObject
-} from '../../src/utils/object-utils';
+} from '../../../../src/utils/object-utils';
 
 describe('Test for isPrimitive utility function:', () => {
   it('boolean should be primitive.', () => {

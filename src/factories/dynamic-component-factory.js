@@ -1,10 +1,10 @@
 import ControlFactory from '../factories/control-factory';
 import DynamicFormFactory from '../factories/dynamic-form-factory';
-import DynamicSearchFormFactory from './dynamic-search-form-factory';
+import DynamicSearchFormFactory from '../factories/dynamic-search-form-factory';
 import { FORM, SEARCH_FORM } from '../types/layout-item-types';
 
-class DynamicComponentFactory {
-  createDynamicComponents(apiPaths, apiModels) {
+export default class DynamicComponentFactory {
+  static createDynamicComponents(apiPaths, apiModels) {
     var dynamicComponents = [];
     var supportedHttpMethods = ['get', 'post', 'put', 'delete'];
 
@@ -49,14 +49,16 @@ class DynamicComponentFactory {
         dynamicComponents.forEach((component) => {
           if (!component.controls) component.controls = [];
           if (controlsForEndpointParameters.length > 0) {
-            component.controls.push(controlsForEndpointParameters);
+            controlsForEndpointParameters.forEach((control) => {
+              component.controls.push(control);
+            });
           }
         });
       }
     }
     return dynamicComponents;
   }
-  getDynamicComponentType(httpMethod, apiMethod) {
+  static getDynamicComponentType(httpMethod, apiMethod) {
     if (httpMethod === 'get') {
       var responseOk = apiMethod.responses['200'];
       if (responseOk) {
@@ -79,7 +81,3 @@ class DynamicComponentFactory {
     }
   }
 }
-
-const instance = new DynamicComponentFactory();
-Object.freeze(instance);
-export default instance;

@@ -11,8 +11,8 @@ import {
 import { getLastURLSegment } from '../utils/helpers';
 import { v1 as uuid } from 'uuid';
 
-class ControlFactory {
-  createControlsForEndpointParameters(parameters) {
+export default class ControlFactory {
+  static createControlsForEndpointParameters(parameters) {
     var controls = [];
     parameters.forEach((parameter) => {
       var controlForParameter = this.createControl(parameter);
@@ -24,7 +24,7 @@ class ControlFactory {
     return controls;
   }
 
-  createControlsForParameters(apiMethod, apiModels) {
+  static createControlsForParameters(apiMethod, apiModels) {
     var controls = [];
 
     for (var parameter of apiMethod.parameters) {
@@ -62,7 +62,7 @@ class ControlFactory {
     return controls;
   }
 
-  createControlsForSchema(parameterIn, schema, apiModels) {
+  static createControlsForSchema(parameterIn, schema, apiModels) {
     var controls = [];
     var apiModelKey = getLastURLSegment(schema.$ref);
 
@@ -88,7 +88,7 @@ class ControlFactory {
     return controls;
   }
 
-  addLayoutProperties(controls) {
+  static addLayoutProperties(controls) {
     controls.forEach((control, index) => {
       control.w = 12;
       control.h = 2;
@@ -103,7 +103,7 @@ class ControlFactory {
     });
   }
 
-  createControl(parameter) {
+  static createControl(parameter) {
     var control = {
       type: parameter.type,
       format: parameter.format,
@@ -178,7 +178,7 @@ class ControlFactory {
     return control;
   }
 
-  createDropDown(parameter) {
+  static createDropDown(parameter) {
     var control = {};
     if (parameter.enum.every((value) => value === true || value === false)) {
       control.element = SWITCH;
@@ -192,7 +192,3 @@ class ControlFactory {
     return control;
   }
 }
-
-const instance = new ControlFactory();
-Object.freeze(instance);
-export default instance;

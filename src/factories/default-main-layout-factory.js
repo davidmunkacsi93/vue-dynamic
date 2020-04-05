@@ -1,8 +1,8 @@
 import { v1 as uuid } from 'uuid';
 import { CONTENT, MENU, NAVIGATION_BAR } from '../types/layout-item-types';
 
-class DefaultMainLayoutFactory {
-  getDefaultMainLayout() {
+export default class DefaultMainLayoutFactory {
+  static getDefaultMainLayout() {
     return {
       lg: this.getLayoutItemsForLg(),
       md: this.getLayoutItemsForMd(),
@@ -12,7 +12,7 @@ class DefaultMainLayoutFactory {
     };
   }
 
-  getLayoutItemsForLg() {
+  static getLayoutItemsForLg() {
     var layoutItems = [];
     const menu = {
       x: 0,
@@ -64,7 +64,7 @@ class DefaultMainLayoutFactory {
     return layoutItems;
   }
 
-  getLayoutItemsForMd() {
+  static getLayoutItemsForMd() {
     var layoutItems = [];
     const menu = {
       x: 2,
@@ -116,7 +116,7 @@ class DefaultMainLayoutFactory {
     return layoutItems;
   }
 
-  getLayoutItemsForSm() {
+  static getLayoutItemsForSm() {
     var layoutItems = [];
     const menu = {
       x: 0,
@@ -168,15 +168,11 @@ class DefaultMainLayoutFactory {
     return layoutItems;
   }
 
-  getLayoutItemsForXs() {
+  static getLayoutItemsForXs() {
     return this.getLayoutItemsForSm();
   }
 
-  getLayoutItemsForXxs() {
+  static getLayoutItemsForXxs() {
     return this.getLayoutItemsForXs();
   }
 }
-
-const instance = new DefaultMainLayoutFactory();
-Object.freeze(instance);
-export default instance;
