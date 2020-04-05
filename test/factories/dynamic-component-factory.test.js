@@ -1,5 +1,7 @@
 import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
 import { FORM, SEARCH_FORM } from '../../src/types/layout-item-types';
+import DynamicSearchFormFactory from '../../src/factories/dynamic-search-form-factory';
+import DynamicFormFactory from '../../src/factories/dynamic-form-factory';
 
 describe('Test for createDynamicComponents: ', () => {
   it('empty array when no paths are defined.', () => {
@@ -13,7 +15,7 @@ describe('Test for createDynamicComponents: ', () => {
     expect(result).toEqual([]);
   });
 
-  it('throws error, when getDynamicComponentyType throws error.', () => {
+  it('throws an error, when getDynamicComponentyType throws an error.', () => {
     var apiPaths = {
       '/segment1/segment2': {
         get: {
@@ -24,6 +26,48 @@ describe('Test for createDynamicComponents: ', () => {
     var apiModels = [];
 
     spyOn(DynamicComponentFactory, 'getDynamicComponentType').and.throwError();
+
+    expect(() =>
+      DynamicComponentFactory.createDynamicComponents(apiPaths, apiModels)
+    ).toThrowError();
+  });
+
+  it('throws error, when createDynamicForm throws error.', () => {
+    var apiPaths = {
+      '/segment1/segment2': {
+        get: {
+          parameters: {}
+        }
+      }
+    };
+    var apiModels = [];
+
+    spyOn(DynamicComponentFactory, 'getDynamicComponentType').and.returnValue(
+      FORM
+    );
+
+    spyOn(DynamicFormFactory, 'createDynamicForm').and.throwError();
+
+    expect(() =>
+      DynamicComponentFactory.createDynamicComponents(apiPaths, apiModels)
+    ).toThrowError();
+  });
+
+  it('throws error, when createDynamicSearchForm throws error.', () => {
+    var apiPaths = {
+      '/segment1/segment2': {
+        get: {
+          parameters: {}
+        }
+      }
+    };
+    var apiModels = [];
+
+    spyOn(DynamicComponentFactory, 'getDynamicComponentType').and.returnValue(
+      SEARCH_FORM
+    );
+
+    spyOn(DynamicSearchFormFactory, 'createDynamicSearchForm').and.throwError();
 
     expect(() =>
       DynamicComponentFactory.createDynamicComponents(apiPaths, apiModels)
