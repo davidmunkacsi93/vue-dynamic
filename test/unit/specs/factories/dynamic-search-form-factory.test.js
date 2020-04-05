@@ -1,10 +1,10 @@
-import DynamicSearchFormFactory from '../../../../src/factories/dynamic-search-form-factory';
+import DynamicSearchFormFactory from '../../../../../src/factories/dynamic-search-form-factory';
 import {
   SEARCH_FORM,
   TEXT_INPUT,
   NUMBER_INPUT
-} from '../../../../src/types/layout-item-types';
-import ControlFactory from '../../../../src/factories/control-factory';
+} from '../../../../../src/types/layout-item-types';
+import ControlFactory from '../../../../../src/factories/control-factory';
 
 describe('Tests for DynamicSearchFormFactory: ', () => {
   it('returns search form without parameters when no parameters defined', () => {

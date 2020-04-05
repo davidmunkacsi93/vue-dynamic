@@ -1,13 +1,13 @@
-import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
+import DynamicComponentFactory from '../../../../src/factories/dynamic-component-factory';
 import {
   FORM,
   SEARCH_FORM,
   TEXT_INPUT,
   CHIPS
-} from '../../src/types/layout-item-types';
-import DynamicSearchFormFactory from '../../src/factories/dynamic-search-form-factory';
-import DynamicFormFactory from '../../src/factories/dynamic-form-factory';
-import ControlFactory from '../../src/factories/control-factory';
+} from '../../../../src/types/layout-item-types';
+import DynamicSearchFormFactory from '../../../../src/factories/dynamic-search-form-factory';
+import DynamicFormFactory from '../../../../src/factories/dynamic-form-factory';
+import ControlFactory from '../../../../src/factories/control-factory';
 
 describe('Test for createDynamicComponents: ', () => {
   it('empty array when no paths are defined.', () => {

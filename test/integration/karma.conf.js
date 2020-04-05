@@ -13,7 +13,7 @@ module.exports = function (config) {
 
     frameworks: ['jasmine'],
 
-    files: ['test/**/*.js'],
+    files: ['./specs/**/*.js'],
 
     exclude: [],
 
@@ -36,7 +36,7 @@ module.exports = function (config) {
       }
     },
     preprocessors: {
-      './test/**/*.js': ['webpack']
+      './specs/**/*.js': ['webpack']
     },
     webpackMiddleware: {
       noInfo: true,

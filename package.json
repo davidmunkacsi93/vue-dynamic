@@ -11,8 +11,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "unit": "karma --conf ./test-unit/karma.conf.js start",
-    "integrate": "karma --conf ./test-unit/karma.conf.js start"
+    "unit": "karma start ./test/unit/karma.conf.js",
+    "integrate": "karma start ./test/integrate/karma.conf.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
