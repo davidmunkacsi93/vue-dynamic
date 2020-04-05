@@ -7,7 +7,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-babel-preprocessor',
       'karma-chrome-launcher',
-      'karma-safari-launcher',
+      'karma-safari-private-launcher',
       'karma-firefox-launcher'
     ],
 
@@ -53,7 +53,7 @@ module.exports = function (config) {
 
     autoWatch: true,
 
-    browsers: ['Chrome', 'Firefox', 'Safari'],
+    browsers: ['Chrome', 'Firefox', 'SafariPrivate'],
 
     singleRun: false,
 
