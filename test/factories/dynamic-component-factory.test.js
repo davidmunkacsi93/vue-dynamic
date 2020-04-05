@@ -1,5 +1,10 @@
 import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
-import { FORM, SEARCH_FORM } from '../../src/types/layout-item-types';
+import {
+  FORM,
+  SEARCH_FORM,
+  TEXT_INPUT,
+  CHIPS
+} from '../../src/types/layout-item-types';
 import DynamicSearchFormFactory from '../../src/factories/dynamic-search-form-factory';
 import DynamicFormFactory from '../../src/factories/dynamic-form-factory';
 import ControlFactory from '../../src/factories/control-factory';
@@ -175,6 +180,75 @@ describe('Test for createDynamicComponents: ', () => {
 
     expect(createdForm.httpMethod).toBe('post');
     expect(createdSearchForm.httpMethod).toBe('get');
+  });
+
+  it('creates form and search form for endpoints with additional common parameters.', () => {
+    var path = '/segment1/segment2';
+    var getApiMethod = {
+      parameters: {
+        schema: {
+          name: 'id',
+          type: 'int32'
+        }
+      }
+    };
+    var postApiMethod = {
+      parameters: {
+        name: 'id'
+      }
+    };
+    var endpointParameters = [{ name: 'param1' }, { name: 'param2' }];
+    var apiPaths = {
+      '/segment1/segment2': {
+        get: getApiMethod,
+        post: postApiMethod,
+        parameters: endpointParameters
+      }
+    };
+    var apiModels = [];
+
+    spyOn(DynamicComponentFactory, 'getDynamicComponentType')
+      .withArgs('get', getApiMethod, path)
+      .and.returnValue(SEARCH_FORM)
+      .withArgs('post', postApiMethod, path)
+      .and.returnValue(FORM);
+
+    var searchForm = {
+      httpMethod: 'get',
+      path: '/segment1/segment2',
+      tags: 'tag',
+      type: SEARCH_FORM
+    };
+    spyOn(DynamicSearchFormFactory, 'createDynamicSearchForm').and.returnValue(
+      searchForm
+    );
+
+    var form = {
+      httpMethod: 'post',
+      path: '/segment1/segment2',
+      tags: 'tag',
+      type: FORM
+    };
+    spyOn(DynamicFormFactory, 'createDynamicForm').and.returnValue(form);
+
+    var controlsForEndpointParameters = [{ type: TEXT_INPUT }, { type: CHIPS }];
+    spyOn(ControlFactory, 'createControlsForEndpointParameters')
+      .withArgs(endpointParameters)
+      .and.returnValue(controlsForEndpointParameters);
+
+    var result = DynamicComponentFactory.createDynamicComponents(
+      apiPaths,
+      apiModels
+    );
+
+    var createdForm = result.find((item) => item.type === FORM);
+    var createdSearchForm = result.find((item) => item.type === SEARCH_FORM);
+
+    expect(createdForm.httpMethod).toBe('post');
+    expect(createdSearchForm.httpMethod).toBe('get');
+    result.forEach((component) => {
+      expect(component.controls).toEqual(controlsForEndpointParameters);
+    });
   });
 });
 
