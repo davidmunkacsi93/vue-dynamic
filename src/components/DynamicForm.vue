@@ -248,6 +248,7 @@ export default {
     callEndpoint() {
       EventBus.$emit(REQUEST_STARTED, { uuid: this.uuid });
       var configuration = this.createRequestConfiguration();
+      console.log(configuration);
       this.$http
         .request(configuration)
         .then((response) => {
@@ -370,7 +371,7 @@ export default {
     },
     validateForm() {
       this.$v.$touch();
-      console.log(this.$v);
+
       if (!this.$v.$invalid) {
         this.callEndpoint();
       }
