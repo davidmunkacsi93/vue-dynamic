@@ -22,26 +22,33 @@ describe('run test for apis.guru swaggers', () => {
 
       var processed = 0;
       var failedApis = [];
+      var results = [];
 
       for (var api in apis) {
-        console.log(`Progress: ${processed} of ${metrics.numSpecs}`);
         var apiObject = apis[api];
         for (var version in apiObject.versions) {
+          console.log(`Progress: ${processed} of ${metrics.numSpecs}`);
+
           var versionObject = apiObject.versions[version];
           try {
             const result = await ApiIntegrationService.integrateNewAPI(
               versionObject.swaggerYamlUrl
             );
+            results.push(result);
           } catch (error) {
             failedApis.push({
               api: api,
               version: version,
-              error: JSON.stringify(error)
+              error: error
             });
           }
           processed++;
         }
       }
+
+      console.log(`Succesful: ${results.length}`);
+      console.log(`Failed: ${failedApis.length}`);
+      console.log(failedApis);
     },
     MAX_SAFE_TIMEOUT
   );
