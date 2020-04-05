@@ -1,6 +1,6 @@
 import SwaggerParser from 'swagger-parser';
-import OpenApiParser from '../../src/parsers/open-api-parser.js';
-import ApiIntegrationService from '../../src/services/api-integration-service.js';
+import OpenApiParser from '../../../../src/parsers/open-api-parser.js';
+import ApiIntegrationService from '../../../../src/services/api-integration-service.js';
 
 describe('Tests for api-integration-service integrateNewApi function:', () => {
   it('must throw an error, when swagger validation fails.', async () => {

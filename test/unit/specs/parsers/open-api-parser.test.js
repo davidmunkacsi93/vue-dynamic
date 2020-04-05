@@ -1,8 +1,8 @@
-import ApiModelFactory from '../../src/factories/api-model-factory';
-import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
-import OpenApiParser from '../../src/parsers/open-api-parser.js';
-import OpenApiInformationProvider from '../../src/providers/open-api-information-provider.js';
-import DefaultApiLayoutFactory from '../../src/factories/default-api-layout-factory';
+import ApiModelFactory from '../../../../src/factories/api-model-factory';
+import DynamicComponentFactory from '../../../../src/factories/dynamic-component-factory';
+import OpenApiParser from '../../../../src/parsers/open-api-parser.js';
+import OpenApiInformationProvider from '../../../../src/providers/open-api-information-provider.js';
+import DefaultApiLayoutFactory from '../../../../src/factories/default-api-layout-factory';
 
 describe('Tests for OpenApiParser processSpecification: ', () => {
   it('throws error, when specification cannot be determined', () => {

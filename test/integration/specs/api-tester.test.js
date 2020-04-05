@@ -1,4 +1,4 @@
-import ApiIntegrationService from '../../src/services/api-integration-service.js';
+import ApiIntegrationService from '../../../src/services/api-integration-service.js';
 import Axios from 'axios';
 
 const MAX_SAFE_TIMEOUT = Math.pow(2, 31) - 1;
