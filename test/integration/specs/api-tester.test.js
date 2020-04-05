@@ -20,10 +20,11 @@ describe('run test for apis.guru swaggers', () => {
       const apis = listResponse.data;
       const metrics = metricsResponse.data;
 
-      var numOfApis = Object.keys(apis).length;
-      var processedApis = 0;
+      var processed = 0;
+      var failedApis = [];
+
       for (var api in apis) {
-        console.log(`Progress: ${processedApis} of ${numOfApis}`);
+        console.log(`Progress: ${processed} of ${metrics.numSpecs}`);
         var apiObject = apis[api];
         for (var version in apiObject.versions) {
           var versionObject = apiObject.versions[version];
@@ -32,13 +33,14 @@ describe('run test for apis.guru swaggers', () => {
               versionObject.swaggerYamlUrl
             );
           } catch (error) {
-            console.log(
-              `Could not integrate following api: ${api} version ${version}`
-            );
-            console.log(error.toString());
+            failedApis.push({
+              api: api,
+              version: version,
+              error: JSON.stringify(error)
+            });
           }
+          processed++;
         }
-        processedApis++;
       }
     },
     MAX_SAFE_TIMEOUT
