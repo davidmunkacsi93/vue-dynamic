@@ -1,6 +1,36 @@
 import DynamicComponentFactory from '../../src/factories/dynamic-component-factory';
 import { FORM, SEARCH_FORM } from '../../src/types/layout-item-types';
 
+describe('Test for createDynamicComponents: ', () => {
+  it('empty array when no paths are defined.', () => {
+    var apiPaths = {};
+    var apiModels = [];
+
+    var result = DynamicComponentFactory.createDynamicComponents(
+      apiPaths,
+      apiModels
+    );
+    expect(result).toEqual([]);
+  });
+
+  it('throws error, when getDynamicComponentyType throws error.', () => {
+    var apiPaths = {
+      '/segment1/segment2': {
+        get: {
+          parameters: {}
+        }
+      }
+    };
+    var apiModels = [];
+
+    spyOn(DynamicComponentFactory, 'getDynamicComponentType').and.throwError();
+
+    expect(() =>
+      DynamicComponentFactory.createDynamicComponents(apiPaths, apiModels)
+    ).toThrowError();
+  });
+});
+
 describe('Test for getDynamicComponentType factory logic:', () => {
   it('get method with specified response should be a search form.', () => {
     var httpMethod = 'get';
