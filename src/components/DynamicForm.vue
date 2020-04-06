@@ -1,6 +1,7 @@
 <template>
   <form novalidate @submit.prevent="validateForm" :id="'form-' + uuid">
     <grid-layout-base
+      v-if="innerControls && innerControls.length > 0"
       ref="controlLayout"
       class="control-layout"
       :layout.sync="innerControls"

@@ -39,6 +39,7 @@ export default class DynamicComponentFactory {
             );
             break;
         }
+
         dynamicComponents.push(dynamicComponent);
       }
       if (apiEndpoint.parameters) {

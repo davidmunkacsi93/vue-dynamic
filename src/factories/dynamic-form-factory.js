@@ -39,6 +39,10 @@ export default class DynamicFormFactory {
       dynamicComponent.controls = controls;
     }
 
+    if (!dynamicComponent.controls) {
+      dynamicComponent.controls = [];
+    }
+
     dynamicComponent.responses = apiMethod.responses;
 
     return dynamicComponent;
