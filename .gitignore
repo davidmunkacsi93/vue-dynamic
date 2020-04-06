@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-/test-unit/coverage
+/test/integration/logs
+/test/unit/coverage
 
 # local env files
 .env.local

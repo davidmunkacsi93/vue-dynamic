@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 const MAX_SAFE_TIMEOUT = Math.pow(2, 31) - 1;
 
-const blacklistedUrls = ['bungie.net', 'microsoft.com:graph'];
+const blacklistedUrls = ['bungie.net', 'microsoft.com:graph', 'stripe.com'];
 
 describe('run test for apis.guru swaggers', () => {
   it(
@@ -22,7 +22,7 @@ describe('run test for apis.guru swaggers', () => {
       const apis = Object.entries(listResponse.data);
       const metrics = metricsResponse.data;
 
-      var processed = 0;
+      var processed = 1;
       var failedApis = [];
       var results = [];
 
@@ -64,9 +64,7 @@ describe('run test for apis.guru swaggers', () => {
       console.info(`Succesful: ${results.length}`);
       console.info(`Failed: ${failedApis.length}`);
       console.info(
-        `Precision: ${Math.round(
-          ((results.length / metrics.numSpecs) * 100) / 100
-        )}%`
+        `Precision: ${Math.round((results.length / metrics.numSpecs) * 100)}%`
       );
     },
     MAX_SAFE_TIMEOUT
