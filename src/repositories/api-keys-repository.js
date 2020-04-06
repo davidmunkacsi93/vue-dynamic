@@ -1,11 +1,10 @@
 import Dexie from 'dexie';
+import IndexedDbSchemaProvider from '../providers/indexed-db-schema-provider';
 import { DB_NAME } from '../types/constants';
 
 const db = new Dexie(DB_NAME);
-db.version(1).stores({
-  configurations: '++id,name,value',
-  apiKeys: '++id,apiKey,parameterName,type,url'
-});
+var schema = IndexedDbSchemaProvider.getSchema();
+db.version(1).stores(schema);
 
 export default class ApiKeysRepository {
   static async addApiKeys(apiKeys) {
