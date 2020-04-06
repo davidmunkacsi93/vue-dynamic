@@ -124,19 +124,21 @@ export default {
       this.onWindowResize();
     });
 
-    ConfigurationRepository.initializeConfigurations();
-
-    let isBootstrapped = ConfigurationRepository.isApplicationBootstrapped();
-    console.log(isBootstrapped);
-    if (!isBootstrapped) {
-      // ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
-      ConfigurationRepository.setBootstrapped();
-    }
-
     this.screenClass = getCurrentScreenClass();
     this.$store.dispatch(LOAD_MAIN_LAYOUT, this.screenClass);
-    this.$store.dispatch(LOAD_APIS);
-    this.$store.dispatch(LOAD_API_KEYS);
+
+    ConfigurationRepository.initializeConfigurations().then(() => {
+      ConfigurationRepository.isApplicationBootstrapped().then((result) => {
+        console.log(result);
+        if (!result) {
+          // ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
+          ConfigurationRepository.setBootstrapped().then(() => {
+            this.$store.dispatch(LOAD_APIS);
+            this.$store.dispatch(LOAD_API_KEYS);
+          });
+        }
+      });
+    });
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onWindowResize);
