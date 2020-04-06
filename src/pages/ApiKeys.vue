@@ -25,11 +25,18 @@
 <script>
 import ApiKeyForm from '../components/ApiKeyForm';
 import DynamicTable from '../components/DynamicTable';
+import ApiKeysRepository from '../repositories/api-keys-repository';
 
 export default {
   components: { ApiKeyForm, DynamicTable },
   beforeMount() {
-    this.apiKeys = this.$store.state.apiKeys.apiKeys;
+    ApiKeysRepository.loadApiKeys()
+      .then((apiKeys) => {
+        this.apiKeys = apiKeys;
+      })
+      .catch((reject) => {
+        console.error(reject);
+      });
   },
   data() {
     return {
