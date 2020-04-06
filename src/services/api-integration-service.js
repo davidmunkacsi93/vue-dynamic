@@ -4,8 +4,8 @@ import OpenApiParser from '../parsers/open-api-parser.js';
 class ApiIntegrationService {
   async integrateNewAPI(url) {
     return SwaggerParser.validate(url)
-      .then(async () => {
-        let parsedSpecification = await SwaggerParser.parse(url);
+      .then(async (parsedSpecification) => {
+        console.log(parsedSpecification);
         return OpenApiParser.processSpecification(parsedSpecification);
       })
       .catch((reason) => {

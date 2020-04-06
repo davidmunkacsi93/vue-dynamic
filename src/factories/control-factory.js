@@ -65,14 +65,23 @@ export default class ControlFactory {
   static createControlsForSchema(parameterIn, schema, schemas) {
     var controls = [];
 
-    var schemaRefEntry = Object.entries(schemas).find(
-      (entry) => entry[0] === getLastURLSegment(schema.$ref)
-    );
-    var schemaRef = schemaRefEntry[1];
-    var requiredProperties = schemaRef.required;
+    var properties;
+    var requiredProperties = [];
+    console.log(schema);
+    if (schema.$ref) {
+      var schemaRefEntry = Object.entries(schemas).find(
+        (entry) => entry[0] === getLastURLSegment(schema.$ref)
+      );
+      var schemaRef = schemaRefEntry[1];
 
-    for (var propertyName in schemaRef.properties) {
-      var property = schemaRef.properties[propertyName];
+      requiredProperties = schemaRef.required;
+      properties = schemaRef.properties;
+    } else {
+      properties = schema.properties;
+    }
+
+    for (var propertyName in properties) {
+      var property = properties[propertyName];
       var controlForSchema = this.createControl(property);
       var control = {
         label: propertyName,
