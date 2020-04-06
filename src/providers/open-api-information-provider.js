@@ -23,7 +23,7 @@ export default class OpenApiInformationProvider {
           specification.basePath
       };
     } else {
-      throw new Error('Unknown specification!');
+      throw new Error(`Server information could not be determined!`);
     }
   }
 }
