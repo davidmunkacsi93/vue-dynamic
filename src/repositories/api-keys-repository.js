@@ -14,4 +14,8 @@ export default class ApiKeysRepository {
   static async loadApiKeys() {
     return db.apiKeys.toArray();
   }
+
+  static async addApiKey(apiKey) {
+    db.apiKeys.add(apiKey);
+  }
 }
