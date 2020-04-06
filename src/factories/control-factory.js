@@ -24,7 +24,7 @@ export default class ControlFactory {
     return controls;
   }
 
-  static createControlsForParameters(apiMethod, apiModels) {
+  static createControlsForParameters(apiMethod, schemas) {
     var controls = [];
 
     for (var parameter of apiMethod.parameters) {
@@ -34,7 +34,7 @@ export default class ControlFactory {
           controls = this.createControlsForSchema(
             parameter.in,
             parameter.schema,
-            apiModels
+            schemas
           );
           return controls;
         }
@@ -62,22 +62,32 @@ export default class ControlFactory {
     return controls;
   }
 
-  static createControlsForSchema(parameterIn, schema, apiModels) {
+  static createControlsForSchema(parameterIn, schema, schemas) {
     var controls = [];
-    var apiModelKey = getLastURLSegment(schema.$ref);
 
-    var apiModelForSchema = apiModels.find(
-      (model) => model.type === apiModelKey
-    );
-    var requiredProperties = apiModelForSchema.required;
-    for (var property of apiModelForSchema.properties) {
+    var properties;
+    var requiredProperties = [];
+    if (schema.$ref) {
+      var schemaRefEntry = Object.entries(schemas).find(
+        (entry) => entry[0] === getLastURLSegment(schema.$ref)
+      );
+      var schemaRef = schemaRefEntry[1];
+
+      requiredProperties = schemaRef.required;
+      properties = schemaRef.properties;
+    } else {
+      properties = schema.properties;
+    }
+
+    for (var propertyName in properties) {
+      var property = properties[propertyName];
       var controlForSchema = this.createControl(property);
       var control = {
-        label: property.name,
+        label: propertyName,
         in: parameterIn,
         required:
           requiredProperties &&
-          requiredProperties.some((prop) => prop === property.name),
+          requiredProperties.some((prop) => prop === propertyName),
         ...controlForSchema
       };
       controls.push(control);

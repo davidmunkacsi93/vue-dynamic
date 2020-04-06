@@ -3,9 +3,19 @@ import OpenApiParser from '../parsers/open-api-parser.js';
 
 class ApiIntegrationService {
   async integrateNewAPI(url) {
-    return SwaggerParser.validate(url)
-      .then(async () => {
-        let parsedSpecification = await SwaggerParser.parse(url);
+    const timeOut = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Timed out')), 10000)
+    );
+
+    return Promise.race([
+      SwaggerParser.validate(url, {
+        dereference: {
+          circular: false
+        }
+      }),
+      timeOut
+    ])
+      .then(async (parsedSpecification) => {
         return OpenApiParser.processSpecification(parsedSpecification);
       })
       .catch((reason) => {
