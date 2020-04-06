@@ -30,9 +30,7 @@ export default class DynamicFormFactory {
         schemas
       );
     } else {
-      throw new Error(
-        `Can't generate dynamic component for endpoint ${apiMethod.description}`
-      );
+      throw new Error(`Could not generate dynamic form for endpoint ${path}`);
     }
 
     if (controls.length > 0) {

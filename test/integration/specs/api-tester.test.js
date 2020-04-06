@@ -17,45 +17,48 @@ describe('run test for apis.guru swaggers', () => {
       configuration.url = '/v2/metrics.json';
       const metricsResponse = await Axios.request(configuration);
 
-      const apis = listResponse.data;
+      const apis = Object.entries(listResponse.data);
       const metrics = metricsResponse.data;
 
       var processed = 0;
       var failedApis = [];
       var results = [];
 
-      for (var api in apis) {
-        if (processed === 100) break;
-        var apiObject = apis[api];
+      for (var entry of apis) {
+        var apiObject = entry[1];
         for (var version in apiObject.versions) {
-          console.log(`Progress: ${processed} of ${metrics.numSpecs}`);
+          console.info(`Progress: ${processed} of ${metrics.numSpecs}`);
 
           var versionObject = apiObject.versions[version];
+          const timeOut = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Timed out')), 10000)
+          );
 
           await Promise.race([
             ApiIntegrationService.integrateNewAPI(versionObject.swaggerYamlUrl),
-            new Promise((_, reject) =>
-              setTimeout(() => reject(new Error('Timed out')), 30000)
-            )
+            timeOut
           ])
             .then((result) => {
               results.push(result);
               processed++;
             })
             .catch((reason) => {
-              failedApis.push({
-                api: api,
-                version: version,
-                error: reason
-              });
+              console.error(
+                `Parsing failed for API: ${versionObject.swaggerYamlUrl}`
+              );
+              console.error(reason);
               processed++;
             });
         }
       }
 
-      console.log(`Succesful: ${results.length}`);
-      console.log(`Failed: ${failedApis.length}`);
-      console.log(failedApis);
+      console.info(`Succesful: ${results.length}`);
+      console.info(`Failed: ${failedApis.length}`);
+      console.info(
+        `Precision: ${Math.round(
+          ((results.length / metrics.numSpecs) * 100) / 100
+        )}%`
+      );
     },
     MAX_SAFE_TIMEOUT
   );
