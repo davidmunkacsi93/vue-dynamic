@@ -3,6 +3,8 @@ import Axios from 'axios';
 
 const MAX_SAFE_TIMEOUT = Math.pow(2, 31) - 1;
 
+const blacklistedUrls = ['bungie.net', 'microsoft.com:graph'];
+
 describe('run test for apis.guru swaggers', () => {
   it(
     'integration of defined apis must run without an error',
@@ -25,11 +27,19 @@ describe('run test for apis.guru swaggers', () => {
       var results = [];
 
       for (var entry of apis) {
+        if (blacklistedUrls.includes(entry[0])) {
+          console.error(`URL ${0} is blacklisted and won't be processed`);
+          processed++;
+          continue;
+        }
+
         var apiObject = entry[1];
         for (var version in apiObject.versions) {
-          console.info(`Progress: ${processed} of ${metrics.numSpecs}`);
-
           var versionObject = apiObject.versions[version];
+
+          console.info(`Progress: ${processed} of ${metrics.numSpecs}`);
+          console.info(`Parsing ${entry[0]}...`);
+
           const timeOut = new Promise((_, reject) =>
             setTimeout(() => reject(new Error('Timed out')), 10000)
           );
@@ -44,9 +54,8 @@ describe('run test for apis.guru swaggers', () => {
             })
             .catch((reason) => {
               console.error(
-                `Parsing failed for API: ${versionObject.swaggerYamlUrl}`
+                `Parsing failed for API: ${versionObject.swaggerYamlUrl}\n${reason}`
               );
-              console.error(reason);
               processed++;
             });
         }
