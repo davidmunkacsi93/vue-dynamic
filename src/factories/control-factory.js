@@ -67,7 +67,6 @@ export default class ControlFactory {
 
     var properties;
     var requiredProperties = [];
-    console.log(schema);
     if (schema.$ref) {
       var schemaRefEntry = Object.entries(schemas).find(
         (entry) => entry[0] === getLastURLSegment(schema.$ref)

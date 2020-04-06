@@ -5,7 +5,6 @@ class ApiIntegrationService {
   async integrateNewAPI(url) {
     return SwaggerParser.validate(url)
       .then(async (parsedSpecification) => {
-        console.log(parsedSpecification);
         return OpenApiParser.processSpecification(parsedSpecification);
       })
       .catch((reason) => {

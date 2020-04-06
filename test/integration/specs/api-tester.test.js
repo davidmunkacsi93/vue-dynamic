@@ -25,24 +25,31 @@ describe('run test for apis.guru swaggers', () => {
       var results = [];
 
       for (var api in apis) {
+        if (processed === 100) break;
         var apiObject = apis[api];
         for (var version in apiObject.versions) {
           console.log(`Progress: ${processed} of ${metrics.numSpecs}`);
 
           var versionObject = apiObject.versions[version];
-          try {
-            const result = await ApiIntegrationService.integrateNewAPI(
-              versionObject.swaggerYamlUrl
-            );
-            results.push(result);
-          } catch (error) {
-            failedApis.push({
-              api: api,
-              version: version,
-              error: error
+
+          await Promise.race([
+            ApiIntegrationService.integrateNewAPI(versionObject.swaggerYamlUrl),
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error('Timed out')), 30000)
+            )
+          ])
+            .then((result) => {
+              results.push(result);
+              processed++;
+            })
+            .catch((reason) => {
+              failedApis.push({
+                api: api,
+                version: version,
+                error: reason
+              });
+              processed++;
             });
-          }
-          processed++;
         }
       }
 

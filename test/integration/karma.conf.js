@@ -46,18 +46,16 @@ module.exports = function (config) {
     reporters: ['progress'],
 
     port: 9876,
-
     colors: true,
-
     logLevel: config.LOG_INFO,
-
     autoWatch: true,
-
     browsers: ['Chrome'],
     // browsers: ['Chrome', 'Firefox', 'SafariPrivate'],
-
     singleRun: false,
+    concurrency: Infinity,
 
-    concurrency: Infinity
+    browserDisconnectTimeot: 300000,
+    browserNoActivityTimeout: 300000,
+    processKillTimeout: 300000
   });
 };

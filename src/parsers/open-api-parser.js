@@ -18,7 +18,6 @@ export default class OpenApiParser {
     var schemas = specification.components
       ? specification.components.schemas
       : specification.definitions;
-    console.log(Object.keys(schemas).length);
 
     var dynamicComponents = DynamicComponentFactory.createDynamicComponents(
       specification.paths,
