@@ -45,6 +45,9 @@
 <script>
 import { required, url } from 'vuelidate/lib/validators';
 import { ADD_API_KEY } from '../types/action-types';
+import ApiKeysRepository from '../repositories/api-keys-repository';
+import EventBus from '../utils/event-bus';
+import { API_KEY_ADDED } from '../types/event-types';
 
 export default {
   data() {
@@ -82,7 +85,10 @@ export default {
         type: this.form.type,
         url: this.form.url
       };
-      this.$store.dispatch(ADD_API_KEY, payload);
+      ApiKeysRepository.addApiKey(payload).then(() => {
+        EventBus.$emit(API_KEY_ADDED);
+        this.clearForm();
+      });
     },
     getValidationClass(fieldName) {
       if (!this.$v) return;
@@ -93,6 +99,13 @@ export default {
           'md-invalid': field.$invalid && field.$dirty
         };
       }
+    },
+    clearForm() {
+      this.$v.$reset();
+      var formFields = Object.keys(this.form);
+      formFields.forEach((field) => {
+        this.form[field] = null;
+      });
     },
     validateForm() {
       this.$v.$touch();

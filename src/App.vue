@@ -75,6 +75,8 @@ import NavigationBar from './components/NavigationBar.vue';
 
 import routes from './routes';
 
+import ConfigurationRepository from './repositories/configuration-repository';
+
 import ApiBootstrapper from './api-bootstrapper';
 
 import { getCurrentScreenClass } from './utils/responsive-utils';
@@ -122,16 +124,21 @@ export default {
       this.onWindowResize();
     });
 
-    let isBootstrapped = Boolean(localStorage.getItem('is-bootstrapped'));
-    if (!isBootstrapped) {
-      ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
-      localStorage.setItem('is-bootstrapped', 'true');
-    }
-
     this.screenClass = getCurrentScreenClass();
     this.$store.dispatch(LOAD_MAIN_LAYOUT, this.screenClass);
-    this.$store.dispatch(LOAD_APIS);
-    this.$store.dispatch(LOAD_API_KEYS);
+
+    ConfigurationRepository.initializeConfigurations().then(() => {
+      ConfigurationRepository.isApplicationBootstrapped().then((result) => {
+        console.log(result);
+        if (!result) {
+          ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
+          ConfigurationRepository.setBootstrapped().then(() => {
+            this.$store.dispatch(LOAD_APIS);
+            this.$store.dispatch(LOAD_API_KEYS);
+          });
+        }
+      });
+    });
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onWindowResize);

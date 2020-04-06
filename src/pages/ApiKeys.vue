@@ -25,16 +25,37 @@
 <script>
 import ApiKeyForm from '../components/ApiKeyForm';
 import DynamicTable from '../components/DynamicTable';
+import ApiKeysRepository from '../repositories/api-keys-repository';
+import EventBus from '../utils/event-bus';
+import { API_KEY_ADDED } from '../types/event-types';
 
 export default {
   components: { ApiKeyForm, DynamicTable },
+  created() {
+    EventBus.$on(API_KEY_ADDED, this.loadApiKeys);
+  },
+  beforeDestroy() {
+    EventBus.$off(API_KEY_ADDED, this.loadApiKeys);
+  },
   beforeMount() {
-    this.apiKeys = this.$store.state.apiKeys.apiKeys;
+    this.loadApiKeys();
   },
   data() {
     return {
       apiKeys: []
     };
+  },
+  methods: {
+    loadApiKeys() {
+      ApiKeysRepository.loadApiKeys()
+
+        .then((apiKeys) => {
+          this.apiKeys = apiKeys;
+        })
+        .catch((reject) => {
+          console.error(reject);
+        });
+    }
   }
 };
 </script>

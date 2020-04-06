@@ -1,4 +1,5 @@
 import { ADD_NEW_API, ADD_API_KEY } from './types/action-types';
+import ApiKeysRepository from './repositories/api-keys-repository';
 
 const apiList = [
   'https://api.apis.guru/v2/specs/apis.guru/2.0.1/swagger.yaml',
@@ -71,12 +72,10 @@ class ApiBootstrapper {
     });
   }
   bootstrapApiKeys(store) {
-    apiKeys.forEach((apiKey) => {
-      store.dispatch(ADD_API_KEY, apiKey);
-    });
+    ApiKeysRepository.addApiKeys(apiKeys);
   }
   bootstrap(store, apiIntegrationService) {
-    this.bootstrapApis(store, apiIntegrationService);
+    // this.bootstrapApis(store, apiIntegrationService);
     this.bootstrapApiKeys(store);
   }
 }
