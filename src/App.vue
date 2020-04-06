@@ -75,6 +75,8 @@ import NavigationBar from './components/NavigationBar.vue';
 
 import routes from './routes';
 
+import DbApi from './apis/db-api';
+
 import ApiBootstrapper from './api-bootstrapper';
 
 import { getCurrentScreenClass } from './utils/responsive-utils';
@@ -121,6 +123,8 @@ export default {
       window.addEventListener('resize', this.onWindowResize);
       this.onWindowResize();
     });
+
+    DbApi.initializeDb();
 
     let isBootstrapped = Boolean(localStorage.getItem('is-bootstrapped'));
     if (!isBootstrapped) {

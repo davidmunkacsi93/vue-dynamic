@@ -17,6 +17,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "dexie": "^2.0.4",
     "minimist": ">=1.2.5",
     "swagger-parser": "^9.0.1",
     "uuid": "^7.0.2",
