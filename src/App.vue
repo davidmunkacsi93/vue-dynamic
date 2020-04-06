@@ -75,7 +75,7 @@ import NavigationBar from './components/NavigationBar.vue';
 
 import routes from './routes';
 
-import DbApi from './apis/db-api';
+import ConfigurationRepository from './repositories/configuration-repository';
 
 import ApiBootstrapper from './api-bootstrapper';
 
@@ -124,12 +124,13 @@ export default {
       this.onWindowResize();
     });
 
-    DbApi.initializeDb();
+    ConfigurationRepository.initializeConfigurations();
 
-    let isBootstrapped = Boolean(localStorage.getItem('is-bootstrapped'));
+    let isBootstrapped = ConfigurationRepository.isApplicationBootstrapped();
+    console.log(isBootstrapped);
     if (!isBootstrapped) {
-      ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
-      localStorage.setItem('is-bootstrapped', 'true');
+      // ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
+      ConfigurationRepository.setBootstrapped();
     }
 
     this.screenClass = getCurrentScreenClass();
