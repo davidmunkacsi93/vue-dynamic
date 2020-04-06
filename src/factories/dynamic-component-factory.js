@@ -4,7 +4,7 @@ import DynamicSearchFormFactory from '../factories/dynamic-search-form-factory';
 import { FORM, SEARCH_FORM } from '../types/layout-item-types';
 
 export default class DynamicComponentFactory {
-  static createDynamicComponents(apiPaths, apiModels) {
+  static createDynamicComponents(apiPaths, schemas) {
     var dynamicComponents = [];
     var supportedHttpMethods = ['get', 'post', 'put', 'delete'];
 
@@ -28,7 +28,7 @@ export default class DynamicComponentFactory {
               path,
               httpMethod,
               apiMethod,
-              apiModels
+              schemas
             );
             break;
           case SEARCH_FORM:
