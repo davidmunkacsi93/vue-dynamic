@@ -8,6 +8,11 @@ db.version(1).stores(schema);
 
 export default class ApiKeysRepository {
   static async addApiKeys(apiKeys) {
+    console.log(apiKeys);
     db.apiKeys.bulkAdd(apiKeys);
+  }
+
+  static async loadApiKeys() {
+    return this.db.apiKeys.toArray();
   }
 }
