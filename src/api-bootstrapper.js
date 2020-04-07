@@ -75,7 +75,6 @@ class ApiBootstrapper {
         continue;
       }
     }
-    console.log(apiModels);
 
     await ApiModelRepository.addApiModels(apiModels);
   }

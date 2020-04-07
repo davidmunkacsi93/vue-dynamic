@@ -33,6 +33,16 @@ export default {
   components: {
     ApiTabContent
   },
+  props: {
+    apiModel: {
+      required: true,
+      type: Object
+    },
+    dynamicComponents: {
+      required: true,
+      type: Array
+    }
+  },
   data() {
     return {
       currentApiId: 0,
@@ -41,7 +51,6 @@ export default {
       apiLayout: [],
       apiLayoutByTags: {},
       tags: [],
-      apiModel: {},
 
       apiVersion: null,
       baseURL: null,
@@ -50,6 +59,8 @@ export default {
     };
   },
   created() {
+    console.log(this.apiModel);
+    console.log(this.dynamicComponents);
     window.addEventListener('resize', this.onWindowResize);
   },
 
