@@ -24,14 +24,10 @@ class DynamicComponentRepository {
   }
 
   async getDynamicComponentsByApiModelId(apiModelId) {
-    console.log(apiModelId);
-
-    var result = await db.dynamicComponents
+    return db.dynamicComponents
       .where('apiModelId')
       .equals(apiModelId)
       .toArray();
-    console.log(result);
-    return result;
   }
 }
 

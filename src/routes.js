@@ -15,13 +15,7 @@ export default [
   },
   {
     path: '/api/:id',
-    component: ApiContent,
-    props: async (route) => ({
-      apiModel: await ApiModelRepository.getApiModelById(route.params.id),
-      dynamicComponents: await DynamicComponentRepository.getDynamicComponentsByApiModelId(
-        route.params.id
-      )
-    })
+    component: ApiContent
   },
   {
     path: '/apiKeys',

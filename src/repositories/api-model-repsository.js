@@ -26,10 +26,7 @@ class ApiModelRepository {
   }
 
   async getApiModelById(apiModelId) {
-    console.log(apiModelId);
-    const result = await db.apiModels.get(apiModelId);
-    console.log(result);
-    return result;
+    return db.apiModels.get(apiModelId);
   }
 
   async getApiModels() {
