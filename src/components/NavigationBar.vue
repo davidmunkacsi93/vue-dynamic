@@ -10,7 +10,11 @@
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
-          <md-list-item :to="api.apiPath" v-for="api in apis" :key="api.id">
+          <md-list-item
+            :to="apiPath + '/' + api.id"
+            v-for="api in apis"
+            :key="api.id"
+          >
             <span>{{ api.title }} - {{ api.apiVersion }}</span>
           </md-list-item>
         </md-list>
@@ -40,7 +44,7 @@ import {
   DISABLE_EDIT_MODE_MAIN_LAYOUT
 } from '../types/action-types';
 import EventBus from '../utils/event-bus';
-import { API_ADDED } from '../types/event-types';
+import { API_ADDED, COMPACT, LAYOUT_UPDATED } from '../types/event-types';
 export default {
   props: {
     apis: {
@@ -50,6 +54,7 @@ export default {
   },
   data() {
     return {
+      apiPath: '/api',
       addApiPath: '/addApi',
       apiKeysPath: '/apiKeys',
       homePath: '/'
@@ -89,6 +94,8 @@ export default {
         setTimeout(() => {
           this.$store.dispatch(DISABLE_EDIT_MODE_MAIN_LAYOUT);
         }, 50);
+        EventBus.$emit(COMPACT);
+        EventBus.$emit(LAYOUT_UPDATED);
       }, 25);
     }
   }
