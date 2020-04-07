@@ -7,8 +7,11 @@ var schema = IndexedDbSchemaProvider.getSchema();
 db.version(1).stores(schema);
 
 class ControlRepository {
-  async addControls(controls) {
-    db.controls.bulkAdd(controls);
+  async addControls(dynamicComponentId, controls) {
+    for (var control of controls) {
+      control.dynamicComponentId = dynamicComponentId;
+      db.controls.add(control);
+    }
   }
 }
 

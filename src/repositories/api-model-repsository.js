@@ -1,5 +1,6 @@
 import Dexie from 'dexie';
 import IndexedDbSchemaProvider from '../providers/indexed-db-schema-provider';
+import DynamicComponentRepository from '../repositories/dynamic-component-repository';
 import { DB_NAME } from '../types/constants';
 
 const db = new Dexie(DB_NAME);
@@ -8,11 +9,21 @@ db.version(1).stores(schema);
 
 class ApiModelRepository {
   async addApiModel(apiModel) {
-    db.apiModels.add(apiModel);
+    var dynamicComponents = apiModel.dynamicComponents;
+    delete apiModel.dynamicComponents;
+
+    db.apiModels.add(apiModel).then((apiModelId) => {
+      DynamicComponentRepository.addDynamicComponents(
+        apiModelId,
+        dynamicComponents
+      );
+    });
   }
 
   async addApiModels(apiModels) {
-    db.apiModels.bulkAdd(apiModels);
+    for (var apiModel of apiModels) {
+      this.addApiModel(apiModel);
+    }
   }
 
   async getApiModels() {

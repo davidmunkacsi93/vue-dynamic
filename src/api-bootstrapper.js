@@ -77,7 +77,7 @@ class ApiBootstrapper {
     }
     console.log(apiModels);
 
-    const result = await ApiModelRepository.addApiModels(apiModels);
+    await ApiModelRepository.addApiModels(apiModels);
   }
   async bootstrapApiKeys() {
     ApiKeyRepository.addApiKeys(apiKeys);

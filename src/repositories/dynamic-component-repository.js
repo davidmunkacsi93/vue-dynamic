@@ -1,5 +1,6 @@
 import Dexie from 'dexie';
 import IndexedDbSchemaProvider from '../providers/indexed-db-schema-provider';
+import ControlRepository from '../repositories/control-repository';
 import { DB_NAME } from '../types/constants';
 
 const db = new Dexie(DB_NAME);
@@ -7,8 +8,19 @@ var schema = IndexedDbSchemaProvider.getSchema();
 db.version(1).stores(schema);
 
 class DynamicComponentRepository {
-  async addDynamicComponents(dynamicComponents) {
-    db.dynamicComponents.bulkAdd(dynamicComponents);
+  async addDynamicComponent(apiModelId, dynamicComponent) {
+    var controls = dynamicComponent.controls;
+    dynamicComponent.apiModelId = apiModelId;
+    delete dynamicComponent.controls;
+    db.dynamicComponents.add(dynamicComponent).then((dynamicComponentId) => {
+      ControlRepository.addControls(dynamicComponentId, controls);
+    });
+  }
+
+  async addDynamicComponents(apiModelId, dynamicComponents) {
+    for (var dynamicComponent of dynamicComponents) {
+      this.addDynamicComponent(apiModelId, dynamicComponent);
+    }
   }
 }
 
