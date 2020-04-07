@@ -185,7 +185,7 @@ import {
   REQUEST_FAILED,
   REQUEST_STARTED
 } from '../types/event-types';
-import ApiKeysRepository from '../repositories/api-keys-repository';
+import ApiKeyRepository from '../repositories/api-keys-repository';
 
 export default {
   mixins: [validationMixin],
@@ -317,7 +317,7 @@ export default {
     },
 
     async getApiKeyData(baseUrl) {
-      var entry = await ApiKeysRepository.getApiKeyByUrl(baseUrl);
+      var entry = await ApiKeyRepository.getApiKeyByUrl(baseUrl);
       console.log(entry);
       if (!entry) return null;
 

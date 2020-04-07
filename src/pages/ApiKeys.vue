@@ -25,7 +25,7 @@
 <script>
 import ApiKeyForm from '../components/ApiKeyForm';
 import DynamicTable from '../components/DynamicTable';
-import ApiKeysRepository from '../repositories/api-keys-repository';
+import ApiKeyRepository from '../repositories/api-keys-repository';
 import EventBus from '../utils/event-bus';
 import { API_KEY_ADDED } from '../types/event-types';
 
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     loadApiKeys() {
-      ApiKeysRepository.loadApiKeys()
+      ApiKeyRepository.loadApiKeys()
 
         .then((apiKeys) => {
           this.apiKeys = apiKeys;

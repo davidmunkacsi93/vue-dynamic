@@ -6,7 +6,7 @@ const db = new Dexie(DB_NAME);
 var schema = IndexedDbSchemaProvider.getSchema();
 db.version(1).stores(schema);
 
-class ApiKeysRepository {
+class ApiKeyRepository {
   async addApiKeys(apiKeys) {
     db.apiKeys.bulkAdd(apiKeys);
   }
@@ -24,7 +24,7 @@ class ApiKeysRepository {
   }
 }
 
-const instance = new ApiKeysRepository();
+const instance = new ApiKeyRepository();
 Object.freeze(instance);
 
 export default instance;
