@@ -10,7 +10,6 @@ db.version(1).stores(schema);
 class ApiModelRepository {
   async addApiModel(apiModel) {
     var dynamicComponents = apiModel.dynamicComponents;
-    delete apiModel.dynamicComponents;
 
     db.apiModels.add(apiModel).then((apiModelId) => {
       DynamicComponentRepository.addDynamicComponents(

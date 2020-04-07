@@ -11,7 +11,7 @@ class DynamicComponentRepository {
   async addDynamicComponent(apiModelId, dynamicComponent) {
     var controls = dynamicComponent.controls;
     dynamicComponent.apiModelId = apiModelId;
-    delete dynamicComponent.controls;
+
     db.dynamicComponents.add(dynamicComponent).then((dynamicComponentId) => {
       ControlRepository.addControls(dynamicComponentId, controls);
     });
