@@ -76,6 +76,8 @@ import DynamicSearchForm from '../components/DynamicSearchForm';
 import ControlRepository from '../repositories/control-repository';
 
 import { FORM, HEADER, SEARCH_FORM } from '../types/layout-item-types';
+import { AUTO_SIZE_COMPLETED } from '../types/event-types';
+import EventBus from '../utils/event-bus';
 
 export default {
   components: {
@@ -105,17 +107,37 @@ export default {
     };
   },
   created() {
-    this.dynamicComponents.forEach(async (dynamicComponent) => {
-      ControlRepository.getControlsByDynamicComponentId(
-        dynamicComponent.id
-      ).then((controls) => {
-        dynamicComponent.controls = controls;
-        this.innerDynamicComponents.push(dynamicComponent);
-      });
-    });
+    this.fetchControlsForDynamicComponents();
+    EventBus.$on(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
+  },
+  beforeDestroy() {
+    EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
   },
   methods: {
-    fetchControlsForDynamicComponent(dynamicComponentId) {}
+    fetchControlsForDynamicComponents(dynamicComponentId) {
+      this.dynamicComponents.forEach(async (dynamicComponent) => {
+        ControlRepository.getControlsByDynamicComponentId(
+          dynamicComponent.id
+        ).then((controls) => {
+          dynamicComponent.controls = controls;
+          this.innerDynamicComponents.push(dynamicComponent);
+        });
+      });
+    },
+    onAutoSizeCompleted(payload) {
+      var index = this.innerDynamicComponents.findIndex(
+        (component) => component.uuid == payload.uuid
+      );
+
+      if (!index) return;
+
+      this.innerDynamicComponents[index].x = payload.x;
+      this.innerDynamicComponents[index].y = payload.y;
+      this.innerDynamicComponents[index].h = payload.h;
+      this.innerDynamicComponents[index].w = payload.w;
+      this.innerDynamicComponents[index].initialized = true;
+      this.innerDynamicComponents[index].static = true;
+    }
   }
 };
 </script>

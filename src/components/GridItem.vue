@@ -4,7 +4,8 @@ import EventBus from '../utils/event-bus.js';
 import {
   COMPACT,
   UPDATE_WIDTH,
-  SCREEN_CLASS_CHANGED
+  SCREEN_CLASS_CHANGED,
+  AUTO_SIZE_COMPLETED
 } from '../types/event-types';
 import { SET_API_ITEM_SIZE, SET_CONTENT_HEIGHT } from '../types/action-types';
 
@@ -122,7 +123,7 @@ export default {
         w: pos.w,
         h: pos.h
       };
-      EventBus.$emit(AUTO_SIZE_COMPLETE, payload);
+      EventBus.$emit(AUTO_SIZE_COMPLETED, payload);
     }
   }
 };

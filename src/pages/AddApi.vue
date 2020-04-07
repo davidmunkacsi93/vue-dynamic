@@ -29,7 +29,6 @@
   </div>
 </template>
 <script>
-import { ADD_NEW_API } from '../types/action-types';
 import { API_ADDED } from '../types/event-types';
 
 import ApiModelRepository from '../repositories/api-model-repsository';
