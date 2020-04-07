@@ -129,7 +129,7 @@ export default {
     ConfigurationRepository.initializeConfigurations().then(() => {
       ConfigurationRepository.isApplicationBootstrapped().then((result) => {
         if (!result) {
-          ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
+          ApiBootstrapper.bootstrap(this.$apiIntegrationService);
           ConfigurationRepository.setBootstrapped().then(() => {
             this.$store.dispatch(LOAD_APIS);
           });

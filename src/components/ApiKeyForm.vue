@@ -45,7 +45,7 @@
 <script>
 import { required, url } from 'vuelidate/lib/validators';
 import { ADD_API_KEY } from '../types/action-types';
-import ApiKeyRepository from '../repositories/api-keys-repository';
+import ApiKeyRepository from '../repositories/api-key-repository';
 import EventBus from '../utils/event-bus';
 import { API_KEY_ADDED } from '../types/event-types';
 

@@ -25,7 +25,7 @@
 <script>
 import ApiKeyForm from '../components/ApiKeyForm';
 import DynamicTable from '../components/DynamicTable';
-import ApiKeyRepository from '../repositories/api-keys-repository';
+import ApiKeyRepository from '../repositories/api-key-repository';
 import EventBus from '../utils/event-bus';
 import { API_KEY_ADDED } from '../types/event-types';
 

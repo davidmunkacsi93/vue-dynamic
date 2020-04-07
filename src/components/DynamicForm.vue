@@ -185,7 +185,7 @@ import {
   REQUEST_FAILED,
   REQUEST_STARTED
 } from '../types/event-types';
-import ApiKeyRepository from '../repositories/api-keys-repository';
+import ApiKeyRepository from '../repositories/api-key-repository';
 
 export default {
   mixins: [validationMixin],
