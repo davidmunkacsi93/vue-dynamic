@@ -84,8 +84,7 @@ import { getCurrentScreenClass } from './utils/responsive-utils';
 import {
   LOAD_MAIN_LAYOUT,
   LOAD_APIS,
-  SET_SCREEN_CLASS,
-  LOAD_API_KEYS
+  SET_SCREEN_CLASS
 } from './types/action-types';
 import { CONTENT, MENU, NAVIGATION_BAR } from './types/layout-item-types';
 
@@ -129,12 +128,10 @@ export default {
 
     ConfigurationRepository.initializeConfigurations().then(() => {
       ConfigurationRepository.isApplicationBootstrapped().then((result) => {
-        console.log(result);
         if (!result) {
           ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
           ConfigurationRepository.setBootstrapped().then(() => {
             this.$store.dispatch(LOAD_APIS);
-            this.$store.dispatch(LOAD_API_KEYS);
           });
         }
       });
