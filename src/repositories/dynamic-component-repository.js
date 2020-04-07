@@ -22,6 +22,13 @@ class DynamicComponentRepository {
       this.addDynamicComponent(apiModelId, dynamicComponent);
     }
   }
+
+  async getDynamicComponentsByApiModelId(apiModelId) {
+    return db.dynamicComponents
+      .where('apiModelId')
+      .equals(apiModelId)
+      .toArray();
+  }
 }
 
 const instance = new DynamicComponentRepository();
