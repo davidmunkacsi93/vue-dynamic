@@ -46,7 +46,7 @@
               />
               <navigation-bar
                 v-else-if="item.type === NAVIGATION_BAR"
-                :hidden="item.hidden"
+                :apis="apis"
               ></navigation-bar>
             </grid-item>
           </template>
@@ -112,6 +112,7 @@ export default {
     return {
       screenClass: null,
       mainLayout: [],
+      apis: [],
       CONTENT,
       MENU,
       NAVIGATION_BAR

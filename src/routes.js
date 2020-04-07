@@ -11,7 +11,7 @@ export default [
     component: Home
   },
   {
-    path: '/api/:apiId',
+    path: '/api/:id',
     name: API_ROUTE_NAME,
     component: ApiContent
   },

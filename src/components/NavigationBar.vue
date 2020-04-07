@@ -1,34 +1,26 @@
 <template>
-  <div
-    ref="navigationBar"
-    class="full-control navigation-bar"
-    :class="{ hidden: hidden, visible: !hidden }"
-  >
+  <div ref="navigationBar" class="full-control navigation-bar">
     <h3 ref="navigationTitle" class="md-title">Navigation</h3>
     <md-list ref="navigationList">
       <md-list-item :to="homePath">
         <md-icon>home</md-icon>
         <span class="md-list-item-text">Home</span>
       </md-list-item>
-      <md-list-item md-expand @click="onExpand" v-if="availableApis.length > 0">
+      <md-list-item md-expand @click="onExpand" v-if="apis.length > 0">
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
-          <md-list-item
-            :to="api.apiPath"
-            v-for="api in availableApis"
-            :key="api.apiId"
-          >
+          <md-list-item :to="api.apiPath" v-for="api in apis" :key="api.id">
             <span>{{ api.title }} - {{ api.apiVersion }}</span>
           </md-list-item>
         </md-list>
       </md-list-item>
 
-      <md-list-item v-if="availableApis.length === 0">
+      <md-list-item v-if="apis.length === 0">
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
       </md-list-item>
-      <md-list-item :to="apiKeys">
+      <md-list-item :to="apiKeysPath">
         <md-icon>vpn_key</md-icon>
         <span class="md-list-item-text">API keys</span>
       </md-list-item>
@@ -48,18 +40,18 @@ import {
   DISABLE_EDIT_MODE_MAIN_LAYOUT
 } from '../types/action-types';
 import EventBus from '../utils/event-bus';
-import { API_ADDED, LAYOUT_UPDATED, COMPACT } from '../types/event-types';
+import { API_ADDED } from '../types/event-types';
 export default {
   props: {
-    hidden: {
+    apis: {
       required: true,
-      type: Boolean
+      type: Array
     }
   },
   data() {
     return {
       addApiPath: '/addApi',
-      apiKeys: '/apiKeys',
+      apiKeysPath: '/apiKeys',
       homePath: '/'
     };
   },
@@ -73,11 +65,6 @@ export default {
   mounted() {
     this.setNavigationBarHeight();
     window.addEventListener('resize', this.setNavigationBarHeight);
-  },
-  computed: {
-    ...mapState({
-      availableApis: (state) => state.apiLayouts.apis
-    })
   },
   methods: {
     onApiAdded() {
@@ -102,8 +89,6 @@ export default {
         setTimeout(() => {
           this.$store.dispatch(DISABLE_EDIT_MODE_MAIN_LAYOUT);
         }, 50);
-        EventBus.$emit(COMPACT);
-        EventBus.$emit(LAYOUT_UPDATED);
       }, 25);
     }
   }
@@ -114,17 +99,5 @@ export default {
 .navigation-bar {
   height: 100%;
   padding: 10px;
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
-}
-
-.visible {
-  visibility: visible;
-  opacity: 1;
-  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 }
 </style>
