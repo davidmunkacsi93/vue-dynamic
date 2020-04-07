@@ -114,22 +114,23 @@ export default {
     EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
   },
   methods: {
-    fetchControlsForDynamicComponents(dynamicComponentId) {
-      this.dynamicComponents.forEach(async (dynamicComponent) => {
-        ControlRepository.getControlsByDynamicComponentId(
+    async fetchControlsForDynamicComponents(dynamicComponentId) {
+      var result = [];
+      for (var dynamicComponent of this.dynamicComponents) {
+        const controls = await ControlRepository.getControlsByDynamicComponentId(
           dynamicComponent.id
-        ).then((controls) => {
-          dynamicComponent.controls = controls;
-          this.innerDynamicComponents.push(dynamicComponent);
-        });
-      });
+        );
+        dynamicComponent.controls = controls;
+        result.push(dynamicComponent);
+      }
+      this.innerDynamicComponents = result;
     },
     onAutoSizeCompleted(payload) {
       var index = this.innerDynamicComponents.findIndex(
         (component) => component.uuid == payload.uuid
       );
 
-      if (!index) return;
+      if (index < 0) return;
 
       this.innerDynamicComponents[index].x = payload.x;
       this.innerDynamicComponents[index].y = payload.y;
