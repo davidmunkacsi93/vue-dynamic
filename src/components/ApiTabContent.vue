@@ -1,7 +1,7 @@
 <template>
   <api-layout
     ref="apiLayout"
-    :layout="innerApiLayout"
+    :layout.sync="innerApiLayout"
     :col-num="12"
     :rowHeight="30"
     :margin="[3, 3]"
@@ -84,7 +84,7 @@ export default {
     DynamicSearchForm
   },
   props: {
-    apiLayout: {
+    dynamicComponents: {
       required: true,
       type: Array
     },
@@ -99,7 +99,7 @@ export default {
       HEADER: HEADER,
       SEARCH_FORM: SEARCH_FORM,
 
-      innerApiLayout: []
+      innerDynamicComponents: []
     };
   },
   mounted() {

@@ -17,7 +17,7 @@
         :md-label="tag"
       >
         <api-tab-content
-          :apiLayout="apiLayoutByTags[tag]"
+          :dynamicComponents="dynamicComponentsByTags[tag]"
           :baseURL="innerApiModel.serverURL"
         ></api-tab-content>
       </md-tab>
@@ -52,8 +52,8 @@ export default {
   data() {
     return {
       innerApiModel: {},
-      apiLayout: [],
-      apiLayoutByTags: {},
+      innerDynamicComponents: [],
+      dynamicComponentsByTags: {},
       tags: []
     };
   },
@@ -113,33 +113,36 @@ export default {
       DynamicComponentRepository.getDynamicComponentsByApiModelId(
         apiModelId
       ).then((dynamicComponents) => {
-        this.apiLayout = dynamicComponents;
+        this.dynamicComponents = dynamicComponents;
         this.setTags();
       });
     },
 
     setTags() {
-      this.tags = this.getTags(this.apiLayout);
+      this.tags = this.getTags(this.dynamicComponents);
       this.tags.forEach((tag) => {
-        this.apiLayoutByTags[tag] = this.apiLayout.filter((layoutItem) => {
-          if (!layoutItem.tags) return false;
+        this.dynamicComponentsByTags[tag] = this.dynamicComponents.filter(
+          (dynamicComponent) => {
+            if (!dynamicComponent.tags) return false;
 
-          return layoutItem.tags.includes(tag);
-        });
+            return dynamicComponent.tags.includes(tag);
+          }
+        );
       });
 
-      var notTagged = this.apiLayout.filter(
-        (layoutItem) => !layoutItem.tags || layoutItem.tags.length === 0
+      var notTagged = this.dynamicComponents.filter(
+        (dynamicComponent) =>
+          !dynamicComponent.tags || dynamicComponent.tags.length === 0
       );
       if (notTagged && notTagged.length > 0) {
         let otherTagKey = 'Other';
         this.tags.push(otherTagKey);
-        this.apiLayoutByTags[otherTagKey] = notTagged;
+        this.dynamicComponentsByTags[otherTagKey] = notTagged;
       }
     },
 
-    getTags(apiLayout) {
-      var taggedItems = apiLayout
+    getTags(dynamicComponents) {
+      var taggedItems = dynamicComponents
         .map((layoutItem) => layoutItem.tags)
         .filter((tags) => tags);
       if (!taggedItems || taggedItems.length === 0) return [];
