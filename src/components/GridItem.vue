@@ -13,12 +13,10 @@ export default {
   extends: GridItem,
   created: function () {
     EventBus.$on(COMPACT, this.onCompact);
-    EventBus.$on(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$on(UPDATE_WIDTH, this.onUpdateWidth);
   },
   beforeDestroy: function () {
     EventBus.$off(COMPACT, this.onCompact);
-    EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
   },
   props: {
@@ -48,9 +46,7 @@ export default {
     onCompact() {
       this.compact();
     },
-    onScreenClassChanged() {
-      // TODO: Do we even need this?
-    },
+
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
     },
@@ -119,13 +115,14 @@ export default {
         );
       }
 
-      this.$store.dispatch(SET_API_ITEM_SIZE, {
+      var payload = {
         uuid: this.uuid,
         x: this.innerX,
         y: this.innerY,
         w: pos.w,
         h: pos.h
-      });
+      };
+      EventBus.$emit(AUTO_SIZE_COMPLETE, payload);
     }
   }
 };

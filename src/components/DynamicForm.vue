@@ -318,7 +318,6 @@ export default {
 
     async getApiKeyData(baseUrl) {
       var entry = await ApiKeyRepository.getApiKeyByUrl(baseUrl);
-      console.log(entry);
       if (!entry) return null;
 
       return entry;
