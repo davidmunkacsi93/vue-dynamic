@@ -12,10 +12,10 @@ const apiList = [
   'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-rotoballer-premium-news/1.0/swagger.yaml',
   'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-scores/1.0/swagger.yaml',
   'https://api.apis.guru/v2/specs/sportsdata.io/nba-v3-stats/1.0/swagger.yaml',
-  'https://api.apis.guru/v2/specs/corona-virus-stats.herokuapp.com/v1/swagger.yaml',
-  'https://api.apis.guru/v2/specs/github.com/9.0.0/openapi.yaml',
-  'https://api.apis.guru/v2/specs/github.com/v3/swagger.yaml',
-  'https://api.apis.guru/v2/specs/gitlab.com/v3/swagger.yaml'
+  'https://api.apis.guru/v2/specs/corona-virus-stats.herokuapp.com/v1/swagger.yaml'
+  // 'https://api.apis.guru/v2/specs/github.com/9.0.0/openapi.yaml',
+  // 'https://api.apis.guru/v2/specs/github.com/v3/swagger.yaml',
+  // 'https://api.apis.guru/v2/specs/gitlab.com/v3/swagger.yaml'
 ];
 
 const apiKeys = [
@@ -75,7 +75,7 @@ class ApiBootstrapper {
     ApiKeysRepository.addApiKeys(apiKeys);
   }
   bootstrap(store, apiIntegrationService) {
-    // this.bootstrapApis(store, apiIntegrationService);
+    this.bootstrapApis(store, apiIntegrationService);
     this.bootstrapApiKeys(store);
   }
 }
