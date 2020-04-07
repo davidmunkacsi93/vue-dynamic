@@ -69,6 +69,7 @@ class ApiBootstrapper {
     for (let url of apiList) {
       try {
         const apiModel = await apiIntegrationService.integrateNewAPI(url);
+        apiModels.push(apiModel);
       } catch (err) {
         console.error(err);
         continue;
