@@ -63,7 +63,7 @@ export default {
       this.previousH = this.innerH;
 
       let newSize = this.$slots.default[0].elm.getBoundingClientRect();
-      newSize.height = newSize.height + 75;
+      newSize.height = newSize.height + 100;
       let pos = this.calcWH(newSize.height, newSize.width);
 
       if (pos.w < this.minW) {

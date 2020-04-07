@@ -76,7 +76,11 @@ import DynamicSearchForm from '../components/DynamicSearchForm';
 import ControlRepository from '../repositories/control-repository';
 
 import { FORM, HEADER, SEARCH_FORM } from '../types/layout-item-types';
-import { AUTO_SIZE_COMPLETED } from '../types/event-types';
+import {
+  AUTO_SIZE_COMPLETED,
+  COMPACT_COMPLETED,
+  COMPACT
+} from '../types/event-types';
 import EventBus from '../utils/event-bus';
 
 export default {
@@ -109,9 +113,11 @@ export default {
   created() {
     this.fetchControlsForDynamicComponents();
     EventBus.$on(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
+    EventBus.$on(COMPACT_COMPLETED, this.onCompactCompleted);
   },
   beforeDestroy() {
     EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
+    EventBus.$off(COMPACT_COMPLETED, this.onCompactCompleted);
   },
   methods: {
     async fetchControlsForDynamicComponents(dynamicComponentId) {
@@ -126,6 +132,7 @@ export default {
       this.innerDynamicComponents = result;
     },
     onAutoSizeCompleted(payload) {
+      console.log('Auto sized..');
       var index = this.innerDynamicComponents.findIndex(
         (component) => component.uuid == payload.uuid
       );
@@ -138,6 +145,19 @@ export default {
       this.innerDynamicComponents[index].w = payload.w;
       this.innerDynamicComponents[index].initialized = true;
       this.innerDynamicComponents[index].static = true;
+    },
+
+    onCompactCompleted(payload) {
+      console.log('Compacted...');
+      payload.forEach((dynamicComponent) => {
+        var index = this.innerDynamicComponents.findIndex(
+          (component) => component.uuid == dynamicComponent.uuid
+        );
+
+        if (index < 0) return;
+        this.innerDynamicComponents[index].x = dynamicComponent.x;
+        this.innerDynamicComponents[index].y = dynamicComponent.y;
+      });
     }
   }
 };

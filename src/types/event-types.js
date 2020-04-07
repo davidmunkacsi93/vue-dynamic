@@ -2,6 +2,7 @@ export const API_ADDED = 'apiAdded';
 export const API_KEY_ADDED = 'apiKeyAdded';
 export const AUTO_SIZE_COMPLETED = 'autoSizeCompleted';
 export const COMPACT = 'compact';
+export const COMPACT_COMPLETED = 'compactCompleted';
 export const DYNAMIC_CONTENT_HEIGHT_UPDATED = 'dynamicContentHeightUpdated';
 export const LAYOUT_UPDATED = 'layoutUpdated';
 export const REQUEST_FAILED = 'requestFailed';
