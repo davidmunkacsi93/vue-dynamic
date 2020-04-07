@@ -85,12 +85,14 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     var apiModelId = parseInt(to.params.id);
-    this.fetchData(apiModelId);
-    if (this.apiModel) {
-      next();
-    } else {
-      next('/');
-    }
+    ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
+      if (apiModel) {
+        this.fetchData(apiModelId);
+        next();
+      } else {
+        next('/');
+      }
+    });
   },
 
   beforeRouteLeave(to, from, next) {
