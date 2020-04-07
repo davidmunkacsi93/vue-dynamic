@@ -10,6 +10,10 @@ class ApiModelRepository {
   async addApiModel(apiModel) {
     db.apiModels.add(apiModel);
   }
+
+  async getApiModels() {
+    return db.apiModels.toArray();
+  }
 }
 
 const instance = new ApiModelRepository();

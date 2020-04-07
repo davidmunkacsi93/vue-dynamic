@@ -75,6 +75,7 @@ import NavigationBar from './components/NavigationBar.vue';
 
 import routes from './routes';
 
+import ApiModelRepository from './repositories/api-model-repsository';
 import ConfigurationRepository from './repositories/configuration-repository';
 
 import ApiBootstrapper from './api-bootstrapper';
@@ -132,8 +133,10 @@ export default {
         if (!result) {
           ApiBootstrapper.bootstrap(this.$apiIntegrationService);
           ConfigurationRepository.setBootstrapped().then(() => {
-            this.$store.dispatch(LOAD_APIS);
+            this.loadApiModels();
           });
+        } else {
+          this.loadApiModels();
         }
       });
     });
@@ -151,6 +154,12 @@ export default {
         this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
         this.loadMainLayout();
       }
+    },
+    loadApiModels() {
+      ApiModelRepository.getApiModels().then((apiModels) => {
+        console.log(apiModels);
+        this.apis = apiModels;
+      });
     },
     loadMainLayout() {
       this.mainLayout = this.$store.state.mainLayout.mainLayouts[
