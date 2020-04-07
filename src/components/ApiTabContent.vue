@@ -73,6 +73,8 @@ import DynamicComponent from '../components/DynamicComponent';
 import DynamicForm from '../components/DynamicForm';
 import DynamicSearchForm from '../components/DynamicSearchForm';
 
+import ControlRepository from '../repositories/control-repository';
+
 import { FORM, HEADER, SEARCH_FORM } from '../types/layout-item-types';
 
 export default {
@@ -102,8 +104,18 @@ export default {
       innerDynamicComponents: []
     };
   },
-  mounted() {
-    this.innerDynamicComponents = this.dynamicComponents;
+  created() {
+    this.dynamicComponents.forEach(async (dynamicComponent) => {
+      ControlRepository.getControlsByDynamicComponentId(
+        dynamicComponent.id
+      ).then((controls) => {
+        dynamicComponent.controls = controls;
+        this.innerDynamicComponents.push(dynamicComponent);
+      });
+    });
+  },
+  methods: {
+    fetchControlsForDynamicComponent(dynamicComponentId) {}
   }
 };
 </script>

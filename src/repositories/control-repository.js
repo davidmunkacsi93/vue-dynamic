@@ -13,6 +13,13 @@ class ControlRepository {
       db.controls.add(control);
     }
   }
+
+  async getControlsByDynamicComponentId(dynamicComponentId) {
+    return db.controls
+      .where('dynamicComponentId')
+      .equals(dynamicComponentId)
+      .toArray();
+  }
 }
 
 const instance = new ControlRepository();
