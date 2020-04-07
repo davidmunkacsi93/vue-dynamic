@@ -70,25 +70,27 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (!vm.$store.state.apiLayouts.apis) next('/addApi');
+    var apiModelId = parseInt(to.params.id);
 
-      vm.currentApiId = to.params.apiId;
-      vm.$store.dispatch(LOAD_API_LAYOUT, vm.currentApiId);
-      vm.loadCurrentApiLayout();
+    ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
+      if (apiModel) {
+        next((vm) => {
+          vm.fetchData(apiModelId);
+        });
+      } else {
+        next('/');
+      }
     });
   },
 
   beforeRouteUpdate(to, from, next) {
-    if (!this.$store.state.apiLayouts.apis) {
-      next('/addApi');
+    var apiModelId = parseInt(to.params.id);
+    this.fetchData(apiModelId);
+    if (this.apiModel) {
+      next();
+    } else {
+      next('/');
     }
-
-    this.currentApiId = to.params.apiId;
-    this.$store.dispatch(SAVE_API_LAYOUT);
-    this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
-    this.loadCurrentApiLayout();
-    next();
   },
 
   beforeRouteLeave(to, from, next) {
@@ -97,11 +99,17 @@ export default {
 
   methods: {
     fetchData(apiModelId) {
+      this.fetchModel(apiModelId);
+      this.fetchDynamicComponents(apiModelId);
+    },
+
+    fetchModel(apiModelId) {
       ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
         this.innerApiModel = apiModel;
-        console.log(this.innerApiModel);
       });
+    },
 
+    fetchDynamicComponents(apiModelId) {
       DynamicComponentRepository.getDynamicComponentsByApiModelId(
         apiModelId
       ).then((dynamicComponents) => {
@@ -109,7 +117,7 @@ export default {
         this.setTags();
       });
     },
-    
+
     setTags() {
       this.tags = this.getTags(this.apiLayout);
       this.tags.forEach((tag) => {
