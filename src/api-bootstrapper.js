@@ -64,19 +64,26 @@ const apiKeys = [
 ];
 
 class ApiBootstrapper {
-  bootstrapApis(apiIntegrationService) {
-    apiList.forEach((url) => {
-      apiIntegrationService.integrateNewAPI(url).then((apiModel) => {
-        ApiModelRepository.addApiModel(apiModel);
-      });
-    });
+  async bootstrapApis(apiIntegrationService) {
+    var apiModels = [];
+    for (let url of apiList) {
+      try {
+        const apiModel = await apiIntegrationService.integrateNewAPI(url);
+      } catch (err) {
+        console.error(err);
+        continue;
+      }
+    }
+    console.log(apiModels);
+
+    const result = await ApiModelRepository.addApiModels(apiModels);
   }
-  bootstrapApiKeys() {
+  async bootstrapApiKeys() {
     ApiKeyRepository.addApiKeys(apiKeys);
   }
-  bootstrap(apiIntegrationService) {
-    this.bootstrapApis(apiIntegrationService);
-    this.bootstrapApiKeys();
+  async bootstrap(apiIntegrationService) {
+    await this.bootstrapApis(apiIntegrationService);
+    await this.bootstrapApiKeys();
   }
 }
 

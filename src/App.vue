@@ -131,9 +131,10 @@ export default {
     ConfigurationRepository.initializeConfigurations().then(() => {
       ConfigurationRepository.isApplicationBootstrapped().then((result) => {
         if (!result) {
-          ApiBootstrapper.bootstrap(this.$apiIntegrationService);
-          ConfigurationRepository.setBootstrapped().then(() => {
-            this.loadApiModels();
+          ApiBootstrapper.bootstrap(this.$apiIntegrationService).then(() => {
+            ConfigurationRepository.setBootstrapped().then(() => {
+              this.loadApiModels();
+            });
           });
         } else {
           this.loadApiModels();
@@ -157,7 +158,6 @@ export default {
     },
     loadApiModels() {
       ApiModelRepository.getApiModels().then((apiModels) => {
-        console.log(apiModels);
         this.apis = apiModels;
       });
     },

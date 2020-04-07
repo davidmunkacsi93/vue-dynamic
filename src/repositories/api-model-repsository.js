@@ -11,6 +11,10 @@ class ApiModelRepository {
     db.apiModels.add(apiModel);
   }
 
+  async addApiModels(apiModels) {
+    db.apiModels.bulkAdd(apiModels);
+  }
+
   async getApiModels() {
     return db.apiModels.toArray();
   }

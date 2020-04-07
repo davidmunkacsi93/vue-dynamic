@@ -6,13 +6,13 @@
         <md-icon>home</md-icon>
         <span class="md-list-item-text">Home</span>
       </md-list-item>
-      <md-list-item md-expand @click="onExpand" v-if="apis.length > 0">
+      <md-list-item md-expand @click="onExpand" v-if="availableApis.length > 0">
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
           <md-list-item
             :to="apiPath + '/' + api.id"
-            v-for="api in apis"
+            v-for="api in availableApis"
             :key="api.id"
           >
             <span>{{ api.title }} - {{ api.apiVersion }}</span>
@@ -20,7 +20,7 @@
         </md-list>
       </md-list-item>
 
-      <md-list-item v-if="apis.length === 0">
+      <md-list-item v-if="availableApis.length === 0">
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
       </md-list-item>
@@ -43,8 +43,11 @@ import {
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
   DISABLE_EDIT_MODE_MAIN_LAYOUT
 } from '../types/action-types';
-import EventBus from '../utils/event-bus';
 import { API_ADDED, COMPACT, LAYOUT_UPDATED } from '../types/event-types';
+
+import EventBus from '../utils/event-bus';
+import ApiModelRepository from '../repositories/api-model-repsository';
+
 export default {
   props: {
     apis: {
@@ -54,6 +57,7 @@ export default {
   },
   data() {
     return {
+      availableApis: [],
       apiPath: '/api',
       addApiPath: '/addApi',
       apiKeysPath: '/apiKeys',
@@ -73,7 +77,10 @@ export default {
   },
   methods: {
     onApiAdded() {
-      this.setNavigationBarHeight();
+      ApiModelRepository.getApiModels().then((apiModels) => {
+        this.availableApis = apiModels;
+        this.setNavigationBarHeight();
+      });
     },
     onExpand() {
       this.setNavigationBarHeight();
@@ -97,6 +104,12 @@ export default {
         EventBus.$emit(COMPACT);
         EventBus.$emit(LAYOUT_UPDATED);
       }, 25);
+    }
+  },
+  watch: {
+    apis: function (val) {
+      this.availableApis = val;
+      this.apis = val;
     }
   }
 };

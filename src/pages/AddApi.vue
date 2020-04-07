@@ -32,6 +32,8 @@
 import { ADD_NEW_API } from '../types/action-types';
 import { API_ADDED } from '../types/event-types';
 
+import ApiModelRepository from '../repositories/api-model-repsository';
+
 import EventBus from '../utils/event-bus';
 
 export default {
@@ -53,11 +55,12 @@ export default {
       this.$apiIntegrationService
         .integrateNewAPI(this.specificationURL)
         .then((apiModel) => {
-          this.$store.dispatch(ADD_NEW_API, apiModel);
-          this.apiTitle = apiModel.title;
-          this.loading = false;
-          this.apiCreated = true;
-          EventBus.$emit(API_ADDED);
+          ApiModelRepository.addApiModel(apiModel).then(() => {
+            this.apiTitle = apiModel.title;
+            this.loading = false;
+            this.apiCreated = true;
+            EventBus.$emit(API_ADDED);
+          });
         })
         .catch((reason) => {
           this.loading = false;
