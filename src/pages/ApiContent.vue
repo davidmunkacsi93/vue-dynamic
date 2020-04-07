@@ -113,15 +113,15 @@ export default {
       DynamicComponentRepository.getDynamicComponentsByApiModelId(
         apiModelId
       ).then((dynamicComponents) => {
-        this.dynamicComponents = dynamicComponents;
+        this.innerDynamicComponents = dynamicComponents;
         this.setTags();
       });
     },
 
     setTags() {
-      this.tags = this.getTags(this.dynamicComponents);
+      this.tags = this.getTags(this.innerDynamicComponents);
       this.tags.forEach((tag) => {
-        this.dynamicComponentsByTags[tag] = this.dynamicComponents.filter(
+        this.dynamicComponentsByTags[tag] = this.innerDynamicComponents.filter(
           (dynamicComponent) => {
             if (!dynamicComponent.tags) return false;
 
@@ -130,7 +130,7 @@ export default {
         );
       });
 
-      var notTagged = this.dynamicComponents.filter(
+      var notTagged = this.innerDynamicComponents.filter(
         (dynamicComponent) =>
           !dynamicComponent.tags || dynamicComponent.tags.length === 0
       );
