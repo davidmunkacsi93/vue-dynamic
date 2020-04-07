@@ -46,7 +46,7 @@
               />
               <navigation-bar
                 v-else-if="item.type === NAVIGATION_BAR"
-                :hidden="item.hidden"
+                :apis="apis"
               ></navigation-bar>
             </grid-item>
           </template>
@@ -75,6 +75,7 @@ import NavigationBar from './components/NavigationBar.vue';
 
 import routes from './routes';
 
+import ApiModelRepository from './repositories/api-model-repsository';
 import ConfigurationRepository from './repositories/configuration-repository';
 
 import ApiBootstrapper from './api-bootstrapper';
@@ -84,8 +85,7 @@ import { getCurrentScreenClass } from './utils/responsive-utils';
 import {
   LOAD_MAIN_LAYOUT,
   LOAD_APIS,
-  SET_SCREEN_CLASS,
-  LOAD_API_KEYS
+  SET_SCREEN_CLASS
 } from './types/action-types';
 import { CONTENT, MENU, NAVIGATION_BAR } from './types/layout-item-types';
 
@@ -113,6 +113,7 @@ export default {
     return {
       screenClass: null,
       mainLayout: [],
+      apis: [],
       CONTENT,
       MENU,
       NAVIGATION_BAR
@@ -129,13 +130,14 @@ export default {
 
     ConfigurationRepository.initializeConfigurations().then(() => {
       ConfigurationRepository.isApplicationBootstrapped().then((result) => {
-        console.log(result);
         if (!result) {
-          ApiBootstrapper.bootstrap(this.$store, this.$apiIntegrationService);
-          ConfigurationRepository.setBootstrapped().then(() => {
-            this.$store.dispatch(LOAD_APIS);
-            this.$store.dispatch(LOAD_API_KEYS);
+          ApiBootstrapper.bootstrap(this.$apiIntegrationService).then(() => {
+            ConfigurationRepository.setBootstrapped().then(() => {
+              this.loadApiModels();
+            });
           });
+        } else {
+          this.loadApiModels();
         }
       });
     });
@@ -153,6 +155,11 @@ export default {
         this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
         this.loadMainLayout();
       }
+    },
+    loadApiModels() {
+      ApiModelRepository.getApiModels().then((apiModels) => {
+        this.apis = apiModels;
+      });
     },
     loadMainLayout() {
       this.mainLayout = this.$store.state.mainLayout.mainLayouts[

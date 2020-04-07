@@ -3,6 +3,9 @@ import ApiContent from './pages/ApiContent.vue';
 import Home from './pages/Home.vue';
 import ApiKeys from './pages/ApiKeys.vue';
 
+import ApiModelRepository from './repositories/api-model-repsository';
+import DynamicComponentRepository from './repositories/dynamic-component-repository';
+
 export const API_ROUTE_NAME = 'api';
 
 export default [
@@ -11,18 +14,15 @@ export default [
     component: Home
   },
   {
-    path: '/api/:apiId',
-    name: API_ROUTE_NAME,
+    path: '/api/:id',
     component: ApiContent
   },
   {
     path: '/apiKeys',
-    name: 'apiKeys',
     component: ApiKeys
   },
   {
     path: '/addApi',
-    name: 'addApi',
     component: AddApi
   }
 ];

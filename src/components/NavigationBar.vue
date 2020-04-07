@@ -1,9 +1,5 @@
 <template>
-  <div
-    ref="navigationBar"
-    class="full-control navigation-bar"
-    :class="{ hidden: hidden, visible: !hidden }"
-  >
+  <div ref="navigationBar" class="full-control navigation-bar">
     <h3 ref="navigationTitle" class="md-title">Navigation</h3>
     <md-list ref="navigationList">
       <md-list-item :to="homePath">
@@ -15,9 +11,9 @@
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
           <md-list-item
-            :to="api.apiPath"
+            :to="apiPath + '/' + api.id"
             v-for="api in availableApis"
-            :key="api.apiId"
+            :key="api.id"
           >
             <span>{{ api.title }} - {{ api.apiVersion }}</span>
           </md-list-item>
@@ -28,7 +24,7 @@
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
       </md-list-item>
-      <md-list-item :to="apiKeys">
+      <md-list-item :to="apiKeysPath">
         <md-icon>vpn_key</md-icon>
         <span class="md-list-item-text">API keys</span>
       </md-list-item>
@@ -47,19 +43,24 @@ import {
   ENABLE_EDIT_MODE_MAIN_LAYOUT,
   DISABLE_EDIT_MODE_MAIN_LAYOUT
 } from '../types/action-types';
+import { API_ADDED, COMPACT, LAYOUT_UPDATED } from '../types/event-types';
+
 import EventBus from '../utils/event-bus';
-import { API_ADDED, LAYOUT_UPDATED, COMPACT } from '../types/event-types';
+import ApiModelRepository from '../repositories/api-model-repsository';
+
 export default {
   props: {
-    hidden: {
+    apis: {
       required: true,
-      type: Boolean
+      type: Array
     }
   },
   data() {
     return {
+      availableApis: [],
+      apiPath: '/api',
       addApiPath: '/addApi',
-      apiKeys: '/apiKeys',
+      apiKeysPath: '/apiKeys',
       homePath: '/'
     };
   },
@@ -74,14 +75,12 @@ export default {
     this.setNavigationBarHeight();
     window.addEventListener('resize', this.setNavigationBarHeight);
   },
-  computed: {
-    ...mapState({
-      availableApis: (state) => state.apiLayouts.apis
-    })
-  },
   methods: {
     onApiAdded() {
-      this.setNavigationBarHeight();
+      ApiModelRepository.getApiModels().then((apiModels) => {
+        this.availableApis = apiModels;
+        this.setNavigationBarHeight();
+      });
     },
     onExpand() {
       this.setNavigationBarHeight();
@@ -106,6 +105,12 @@ export default {
         EventBus.$emit(LAYOUT_UPDATED);
       }, 25);
     }
+  },
+  watch: {
+    apis: function (val) {
+      this.availableApis = val;
+      this.apis = val;
+    }
   }
 };
 </script>
@@ -114,17 +119,5 @@ export default {
 .navigation-bar {
   height: 100%;
   padding: 10px;
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
-}
-
-.visible {
-  visibility: visible;
-  opacity: 1;
-  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 }
 </style>

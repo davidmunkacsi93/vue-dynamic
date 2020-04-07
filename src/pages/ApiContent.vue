@@ -1,21 +1,24 @@
 <template>
   <div ref="apiContent" class="api-content">
     <div ref="title" class="md-title">
-      <h1>{{ title }} - {{ apiVersion }}</h1>
+      <h1>{{ innerApiModel.title }} - {{ innerApiModel.apiVersion }}</h1>
     </div>
-    <div class="md-subtitle" v-if="description">
-      <h3>{{ description }}</h3>
+    <div class="md-subtitle" v-if="innerApiModel.description">
+      <h3>{{ innerApiModel.description }}</h3>
     </div>
-    <md-tabs md-dynamic-height :md-active-tab="tags[0] + '-' + currentApiId">
+    <md-tabs
+      md-dynamic-height
+      :md-active-tab="tags[0] + '-' + innerApiModel.id"
+    >
       <md-tab
         v-for="tag in tags"
-        :key="tag + '-' + currentApiId"
-        :id="tag + '-' + currentApiId"
+        :key="tag + '-' + innerApiModel.id"
+        :id="tag + '-' + innerApiModel.id"
         :md-label="tag"
       >
         <api-tab-content
-          :apiLayout="apiLayoutByTags[tag]"
-          :baseURL="baseURL"
+          :dynamicComponents="dynamicComponentsByTags[tag]"
+          :baseURL="innerApiModel.serverURL"
         ></api-tab-content>
       </md-tab>
     </md-tabs>
@@ -29,24 +32,29 @@ import { getCurrentScreenClass } from '../utils/responsive-utils';
 import EventBus from '../utils/event-bus';
 import { SCREEN_CLASS_CHANGED } from '../types/event-types';
 
+import ApiModelRepository from '../repositories/api-model-repsository';
+import DynamicComponentRepository from '../repositories/dynamic-component-repository';
+
 export default {
   components: {
     ApiTabContent
   },
+  props: {
+    apiModel: {
+      required: false,
+      type: Object
+    },
+    dynamicComponents: {
+      required: false,
+      type: Array
+    }
+  },
   data() {
     return {
-      currentApiId: 0,
-      rowHeight: 30,
-
-      apiLayout: [],
-      apiLayoutByTags: {},
-      tags: [],
-      apiModel: {},
-
-      apiVersion: null,
-      baseURL: null,
-      description: null,
-      title: null
+      innerApiModel: {},
+      innerDynamicComponents: [],
+      dynamicComponentsByTags: {},
+      tags: []
     };
   },
   created() {
@@ -58,84 +66,85 @@ export default {
   },
 
   mounted() {
-    this.currentApiId = this.$router.currentRoute.params.apiId;
-    this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
-    this.onWindowResize();
-    this.loadCurrentApiLayout();
+    var apiModelId = parseInt(this.$router.currentRoute.params.id);
   },
 
   beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (!vm.$store.state.apiLayouts.apis) next('/addApi');
+    var apiModelId = parseInt(to.params.id);
 
-      vm.currentApiId = to.params.apiId;
-      vm.$store.dispatch(LOAD_API_LAYOUT, vm.currentApiId);
-      vm.loadCurrentApiLayout();
+    ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
+      if (apiModel) {
+        next((vm) => {
+          vm.fetchData(apiModelId);
+        });
+      } else {
+        next('/');
+      }
     });
   },
 
   beforeRouteUpdate(to, from, next) {
-    if (!this.$store.state.apiLayouts.apis) {
-      next('/addApi');
-    }
-
-    this.currentApiId = to.params.apiId;
-    this.$store.dispatch(SAVE_API_LAYOUT);
-    this.$store.dispatch(LOAD_API_LAYOUT, this.currentApiId);
-    this.loadCurrentApiLayout();
-    next();
+    var apiModelId = parseInt(to.params.id);
+    ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
+      if (apiModel) {
+        this.fetchData(apiModelId);
+        next();
+      } else {
+        next('/');
+      }
+    });
   },
 
   beforeRouteLeave(to, from, next) {
-    this.$store.dispatch(SAVE_API_LAYOUT);
     next();
   },
 
   methods: {
-    onWindowResize() {
-      var currentScreenClass = getCurrentScreenClass();
-
-      var screenClassChanged = this.screenClass !== currentScreenClass;
-      if (screenClassChanged) {
-        this.screenClass = currentScreenClass;
-        this.$store.dispatch(SAVE_API_LAYOUT);
-        this.loadCurrentApiLayout();
-        EventBus.$emit(SCREEN_CLASS_CHANGED);
-      }
+    fetchData(apiModelId) {
+      this.fetchModel(apiModelId);
+      this.fetchDynamicComponents(apiModelId);
     },
 
-    loadCurrentApiLayout() {
-      var currentApiId = this.$store.state.apiLayouts.currentApiId;
+    fetchModel(apiModelId) {
+      ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
+        this.innerApiModel = apiModel;
+      });
+    },
 
-      this.apiModel = this.$store.state.apiLayouts.apis[currentApiId];
-      this.apiLayout = this.apiModel.apiLayouts[this.screenClass];
+    fetchDynamicComponents(apiModelId) {
+      DynamicComponentRepository.getDynamicComponentsByApiModelId(
+        apiModelId
+      ).then((dynamicComponents) => {
+        this.innerDynamicComponents = dynamicComponents;
+        this.setTags();
+      });
+    },
 
-      this.tags = this.getTags(this.apiLayout);
+    setTags() {
+      this.tags = this.getTags(this.innerDynamicComponents);
       this.tags.forEach((tag) => {
-        this.apiLayoutByTags[tag] = this.apiLayout.filter((layoutItem) => {
-          if (!layoutItem.tags) return false;
+        this.dynamicComponentsByTags[tag] = this.innerDynamicComponents.filter(
+          (dynamicComponent) => {
+            if (!dynamicComponent.tags) return false;
 
-          return layoutItem.tags.includes(tag);
-        });
+            return dynamicComponent.tags.includes(tag);
+          }
+        );
       });
 
-      var notTagged = this.apiLayout.filter(
-        (layoutItem) => !layoutItem.tags || layoutItem.tags.length === 0
+      var notTagged = this.innerDynamicComponents.filter(
+        (dynamicComponent) =>
+          !dynamicComponent.tags || dynamicComponent.tags.length === 0
       );
       if (notTagged && notTagged.length > 0) {
         let otherTagKey = 'Other';
         this.tags.push(otherTagKey);
-        this.apiLayoutByTags[otherTagKey] = notTagged;
+        this.dynamicComponentsByTags[otherTagKey] = notTagged;
       }
-
-      this.apiVersion = this.apiModel.apiVersion;
-      this.baseURL = this.apiModel.serverURL;
-      this.description = this.apiModel.description;
-      this.title = this.apiModel.title;
     },
 
-    getTags(apiLayout) {
-      var taggedItems = apiLayout
+    getTags(dynamicComponents) {
+      var taggedItems = dynamicComponents
         .map((layoutItem) => layoutItem.tags)
         .filter((tags) => tags);
       if (!taggedItems || taggedItems.length === 0) return [];

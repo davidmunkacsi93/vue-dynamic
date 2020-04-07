@@ -1,7 +1,6 @@
 import DynamicComponentFactory from '../../../../src/factories/dynamic-component-factory';
 import OpenApiParser from '../../../../src/parsers/open-api-parser.js';
 import OpenApiInformationProvider from '../../../../src/providers/open-api-information-provider.js';
-import DefaultApiLayoutFactory from '../../../../src/factories/default-api-layout-factory';
 
 describe('Tests for OpenApiParser processSpecification: ', () => {
   it('throws error, when specification cannot be determined', () => {
@@ -72,44 +71,7 @@ describe('Tests for OpenApiParser processSpecification: ', () => {
     ).toThrowError();
   });
 
-  it('throws error, when default api layout factory throws error.', () => {
-    var apiInformation = {
-      apiVersion: '3.0',
-      title: 'API',
-      description: 'Description'
-    };
-    spyOn(OpenApiInformationProvider, 'getApiInformation').and.returnValue(
-      apiInformation
-    );
-
-    var serverInformation = {
-      serverURL: 'https://virtserver.com',
-      serverDescription: 'Description'
-    };
-    spyOn(OpenApiInformationProvider, 'getServerInformation').and.returnValue(
-      serverInformation
-    );
-
-    var dynamicComponents = [{ component: {} }];
-    spyOn(DynamicComponentFactory, 'createDynamicComponents').and.returnValue(
-      dynamicComponents
-    );
-
-    spyOn(DefaultApiLayoutFactory, 'getDefaultApiLayout').and.throwError();
-
-    var specification = {
-      openApi: '3.0',
-      info: {},
-      components: {
-        schemas: {}
-      }
-    };
-    expect(() =>
-      OpenApiParser.processSpecification(specification)
-    ).toThrowError();
-  });
-
-  it('throws error, when default api layout factory throws error.', () => {
+  it('creates valid dynamic components.', () => {
     var apiInformation = {
       apiVersion: '3.0'
     };
@@ -130,14 +92,6 @@ describe('Tests for OpenApiParser processSpecification: ', () => {
       dynamicComponents
     );
 
-    var defaultLayout = [
-      { x: 0, y: 0 },
-      { x: 0, y: 0 }
-    ];
-    spyOn(DefaultApiLayoutFactory, 'getDefaultApiLayout').and.returnValue(
-      defaultLayout
-    );
-
     var specification = {
       openApi: '3.0',
       info: {},
@@ -152,9 +106,6 @@ describe('Tests for OpenApiParser processSpecification: ', () => {
     expect(result.serverURL).toBe(serverInformation.serverURL);
     expect(result.serverDescription).toBe(serverInformation.serverDescription);
     expect(result.dynamicComponents).toBe(dynamicComponents);
-    Object.keys(result.apiLayouts).forEach((screenClass) =>
-      expect(result.apiLayouts[screenClass]).toBe(defaultLayout)
-    );
     expect(result.compacted).toBe(false);
   });
 });

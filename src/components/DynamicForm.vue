@@ -185,6 +185,7 @@ import {
   REQUEST_FAILED,
   REQUEST_STARTED
 } from '../types/event-types';
+import ApiKeyRepository from '../repositories/api-key-repository';
 
 export default {
   mixins: [validationMixin],
@@ -246,10 +247,10 @@ export default {
     SWITCH: SWITCH
   }),
   methods: {
-    callEndpoint() {
+    async callEndpoint() {
       EventBus.$emit(REQUEST_STARTED, { uuid: this.uuid });
-      var configuration = this.createRequestConfiguration();
-      console.log(configuration);
+      var configuration = await this.createRequestConfiguration();
+
       this.$http
         .request(configuration)
         .then((response) => {
@@ -268,10 +269,10 @@ export default {
           EventBus.$emit(REQUEST_FAILED, payload);
         });
     },
-    createRequestConfiguration() {
+    async createRequestConfiguration() {
       var params = {};
       var headers = {};
-      var apiKeyData = this.getApiKeyData(this.baseURL);
+      var apiKeyData = await this.getApiKeyData(this.baseURL);
 
       if (apiKeyData) {
         if (apiKeyData.type === 'header') {
@@ -315,10 +316,8 @@ export default {
       return configuration;
     },
 
-    getApiKeyData(baseUrl) {
-      var entry = this.$store.state.apiKeys.apiKeys.find(
-        (item) => item.url === baseUrl
-      );
+    async getApiKeyData(baseUrl) {
+      var entry = await ApiKeyRepository.getApiKeyByUrl(baseUrl);
       if (!entry) return null;
 
       return entry;

@@ -1,7 +1,7 @@
 <template>
   <api-layout
     ref="apiLayout"
-    :layout="innerApiLayout"
+    :layout.sync="innerDynamicComponents"
     :col-num="12"
     :rowHeight="30"
     :margin="[3, 3]"
@@ -12,53 +12,53 @@
     :vertical-compact="true"
     :use-css-transforms="true"
   >
-    <template v-for="item in innerApiLayout">
+    <template v-for="dynamicComponent in innerDynamicComponents">
       <grid-item
-        :x="item.x"
-        :y="item.y"
-        :w="item.w"
-        :h="item.h"
-        :i="item.i"
+        :x="dynamicComponent.x"
+        :y="dynamicComponent.y"
+        :w="dynamicComponent.w"
+        :h="dynamicComponent.h"
+        :i="dynamicComponent.i"
         :margin="[3, 3]"
         :rowHeight="30"
-        :isDraggable="item.isDraggable"
-        :isResizable="item.isResizable"
-        :initialized="item.initialized"
-        :static="item.static"
-        :key="item.i"
-        :uuid="item.uuid"
+        :isDraggable="dynamicComponent.isDraggable"
+        :isResizable="dynamicComponent.isResizable"
+        :initialized="dynamicComponent.initialized"
+        :static="dynamicComponent.static"
+        :key="dynamicComponent.i"
+        :uuid="dynamicComponent.uuid"
       >
         <dynamic-component
-          :type="item.type"
+          :type="dynamicComponent.type"
           :baseURL="baseURL"
-          :controls="item.controls"
-          :description="item.description"
-          :httpMethod="item.httpMethod"
-          :initialized="item.initialized"
-          :path="item.path"
-          :uuid="item.uuid"
+          :controls="dynamicComponent.controls"
+          :description="dynamicComponent.description"
+          :httpMethod="dynamicComponent.httpMethod"
+          :initialized="dynamicComponent.initialized"
+          :path="dynamicComponent.path"
+          :uuid="dynamicComponent.uuid"
         >
           <dynamic-form
-            v-if="item.type === FORM"
+            v-if="dynamicComponent.type === FORM"
             :type="FORM"
             :baseURL="baseURL"
-            :controls="item.controls"
-            :description="item.description"
-            :httpMethod="item.httpMethod"
-            :initialized="item.initialized"
-            :path="item.path"
-            :uuid="item.uuid"
+            :controls="dynamicComponent.controls"
+            :description="dynamicComponent.description"
+            :httpMethod="dynamicComponent.httpMethod"
+            :initialized="dynamicComponent.initialized"
+            :path="dynamicComponent.path"
+            :uuid="dynamicComponent.uuid"
           ></dynamic-form>
           <dynamic-search-form
-            v-else-if="item.type === SEARCH_FORM"
-            :type="item.type"
+            v-else-if="dynamicComponent.type === SEARCH_FORM"
+            :type="dynamicComponent.type"
             :baseURL="baseURL"
-            :controls="item.controls"
-            :description="item.description"
-            :httpMethod="item.httpMethod"
-            :initialized="item.initialized"
-            :path="item.path"
-            :uuid="item.uuid"
+            :controls="dynamicComponent.controls"
+            :description="dynamicComponent.description"
+            :httpMethod="dynamicComponent.httpMethod"
+            :initialized="dynamicComponent.initialized"
+            :path="dynamicComponent.path"
+            :uuid="dynamicComponent.uuid"
           ></dynamic-search-form>
         </dynamic-component>
       </grid-item>
@@ -73,7 +73,15 @@ import DynamicComponent from '../components/DynamicComponent';
 import DynamicForm from '../components/DynamicForm';
 import DynamicSearchForm from '../components/DynamicSearchForm';
 
+import ControlRepository from '../repositories/control-repository';
+
 import { FORM, HEADER, SEARCH_FORM } from '../types/layout-item-types';
+import {
+  AUTO_SIZE_COMPLETED,
+  COMPACT_COMPLETED,
+  COMPACT
+} from '../types/event-types';
+import EventBus from '../utils/event-bus';
 
 export default {
   components: {
@@ -84,7 +92,7 @@ export default {
     DynamicSearchForm
   },
   props: {
-    apiLayout: {
+    dynamicComponents: {
       required: true,
       type: Array
     },
@@ -99,11 +107,58 @@ export default {
       HEADER: HEADER,
       SEARCH_FORM: SEARCH_FORM,
 
-      innerApiLayout: []
+      innerDynamicComponents: []
     };
   },
-  mounted() {
-    this.innerApiLayout = this.apiLayout;
+  created() {
+    this.fetchControlsForDynamicComponents();
+    EventBus.$on(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
+    EventBus.$on(COMPACT_COMPLETED, this.onCompactCompleted);
+  },
+  beforeDestroy() {
+    EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
+    EventBus.$off(COMPACT_COMPLETED, this.onCompactCompleted);
+  },
+  methods: {
+    async fetchControlsForDynamicComponents(dynamicComponentId) {
+      var result = [];
+      for (var dynamicComponent of this.dynamicComponents) {
+        const controls = await ControlRepository.getControlsByDynamicComponentId(
+          dynamicComponent.id
+        );
+        dynamicComponent.controls = controls;
+        result.push(dynamicComponent);
+      }
+      this.innerDynamicComponents = result;
+    },
+    onAutoSizeCompleted(payload) {
+      console.log('Auto sized..');
+      var index = this.innerDynamicComponents.findIndex(
+        (component) => component.uuid == payload.uuid
+      );
+
+      if (index < 0) return;
+
+      this.innerDynamicComponents[index].x = payload.x;
+      this.innerDynamicComponents[index].y = payload.y;
+      this.innerDynamicComponents[index].h = payload.h;
+      this.innerDynamicComponents[index].w = payload.w;
+      this.innerDynamicComponents[index].initialized = true;
+      this.innerDynamicComponents[index].static = true;
+    },
+
+    onCompactCompleted(payload) {
+      console.log('Compacted...');
+      payload.forEach((dynamicComponent) => {
+        var index = this.innerDynamicComponents.findIndex(
+          (component) => component.uuid == dynamicComponent.uuid
+        );
+
+        if (index < 0) return;
+        this.innerDynamicComponents[index].x = dynamicComponent.x;
+        this.innerDynamicComponents[index].y = dynamicComponent.y;
+      });
+    }
   }
 };
 </script>

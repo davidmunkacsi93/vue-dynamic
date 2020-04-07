@@ -2,7 +2,7 @@
 import GridLayout from 'vue-grid-layout';
 import GridLayoutBase from '../components/GridLayoutBase';
 import EventBus from '../utils/event-bus.js';
-import { SCREEN_CLASS_CHANGED } from '../types/event-types';
+import { SCREEN_CLASS_CHANGED, COMPACT_COMPLETED } from '../types/event-types';
 import { SET_API_LAYOUT_ITEMS } from '../types/action-types';
 
 export default {
@@ -23,11 +23,11 @@ export default {
       });
     },
     compactLayout() {
-      if (this.layout.length <= 0 || this.layout.compacted) return;
+      if (this.layout.length <= 0) return;
 
       var compactedLayout = this.compact(this.layout);
       var correctedLayout = this.correctBounds(compactedLayout);
-      this.$store.dispatch(SET_API_LAYOUT_ITEMS, correctedLayout);
+      EventBus.$emit(COMPACT_COMPLETED, compactedLayout);
     },
 
     compact(layout) {

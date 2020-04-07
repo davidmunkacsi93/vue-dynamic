@@ -2,6 +2,7 @@ import ControlFactory from '../factories/control-factory';
 import DynamicFormFactory from '../factories/dynamic-form-factory';
 import DynamicSearchFormFactory from '../factories/dynamic-search-form-factory';
 import { FORM, SEARCH_FORM } from '../types/layout-item-types';
+import { v1 as uuid } from 'uuid';
 
 export default class DynamicComponentFactory {
   static createDynamicComponents(apiPaths, schemas) {
@@ -57,8 +58,11 @@ export default class DynamicComponentFactory {
         });
       }
     }
+
+    this.addApiLayoutProperties(dynamicComponents);
     return dynamicComponents;
   }
+
   static getDynamicComponentType(httpMethod, apiMethod) {
     if (httpMethod === 'get') {
       var responseOk = apiMethod.responses['200'];
@@ -80,5 +84,20 @@ export default class DynamicComponentFactory {
     } else {
       throw new Error(`${httpMethod} - not supported HTTP method.`);
     }
+  }
+
+  static addApiLayoutProperties(dynamicComponents) {
+    dynamicComponents.forEach((dynamicComponent, index) => {
+      dynamicComponent.w = 3;
+      dynamicComponent.h = 6;
+      dynamicComponent.x = (index % 3) * 3;
+      dynamicComponent.y = (index + 2) * 6;
+      dynamicComponent.i = index;
+      dynamicComponent.uuid = uuid();
+      dynamicComponent.isDraggable = true;
+      dynamicComponent.isResizable = true;
+      dynamicComponent.initialized = false;
+      dynamicComponent.static = false;
+    });
   }
 }

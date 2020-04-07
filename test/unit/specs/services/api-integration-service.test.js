@@ -13,24 +13,9 @@ describe('Tests for api-integration-service integrateNewApi function:', () => {
     });
   });
 
-  it('must throw an error, when swagger parsing fails.', async () => {
-    spyOn(SwaggerParser, 'validate').and.returnValue(
-      Promise.resolve({ swagger: '2.0.' })
-    );
-
-    spyOn(SwaggerParser, 'parse').and.callFake(() => {
-      throw new Error('Parsing failed');
-    });
-
-    ApiIntegrationService.integrateNewAPI('URL').catch((reason) => {
-      expect(reason.message).toBe('Error: Parsing failed');
-    });
-  });
-
   it('must throw an error, when OpenAPI parser throws an error.', async () => {
     const swagger = { swagger: '2.0.' };
     spyOn(SwaggerParser, 'validate').and.returnValue(Promise.resolve(swagger));
-    spyOn(SwaggerParser, 'parse').and.returnValue(Promise.resolve(swagger));
     spyOn(OpenApiParser, 'processSpecification').and.throwError(
       'Parsing failed'
     );
@@ -45,7 +30,6 @@ describe('Tests for api-integration-service integrateNewApi function:', () => {
   it('must throw an error, when OpenAPI parser throws an error.', async () => {
     const swagger = { swagger: '2.0.' };
     spyOn(SwaggerParser, 'validate').and.returnValue(Promise.resolve(swagger));
-    spyOn(SwaggerParser, 'parse').and.returnValue(Promise.resolve(swagger));
 
     var uiModel = {
       specificationVersion: '2.0'

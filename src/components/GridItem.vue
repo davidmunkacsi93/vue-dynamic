@@ -4,7 +4,8 @@ import EventBus from '../utils/event-bus.js';
 import {
   COMPACT,
   UPDATE_WIDTH,
-  SCREEN_CLASS_CHANGED
+  SCREEN_CLASS_CHANGED,
+  AUTO_SIZE_COMPLETED
 } from '../types/event-types';
 import { SET_API_ITEM_SIZE, SET_CONTENT_HEIGHT } from '../types/action-types';
 
@@ -13,12 +14,10 @@ export default {
   extends: GridItem,
   created: function () {
     EventBus.$on(COMPACT, this.onCompact);
-    EventBus.$on(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$on(UPDATE_WIDTH, this.onUpdateWidth);
   },
   beforeDestroy: function () {
     EventBus.$off(COMPACT, this.onCompact);
-    EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
     EventBus.$off(UPDATE_WIDTH, this.onUpdateWidth);
   },
   props: {
@@ -48,9 +47,7 @@ export default {
     onCompact() {
       this.compact();
     },
-    onScreenClassChanged() {
-      // TODO: Do we even need this?
-    },
+
     onUpdateWidth() {
       this.updateWidth(window.innerWidth);
     },
@@ -66,7 +63,7 @@ export default {
       this.previousH = this.innerH;
 
       let newSize = this.$slots.default[0].elm.getBoundingClientRect();
-      newSize.height = newSize.height + 75;
+      newSize.height = newSize.height + 100;
       let pos = this.calcWH(newSize.height, newSize.width);
 
       if (pos.w < this.minW) {
@@ -119,13 +116,14 @@ export default {
         );
       }
 
-      this.$store.dispatch(SET_API_ITEM_SIZE, {
+      var payload = {
         uuid: this.uuid,
         x: this.innerX,
         y: this.innerY,
         w: pos.w,
         h: pos.h
-      });
+      };
+      EventBus.$emit(AUTO_SIZE_COMPLETED, payload);
     }
   }
 };
