@@ -18,4 +18,8 @@ export default class ApiKeysRepository {
   static async addApiKey(apiKey) {
     db.apiKeys.add(apiKey);
   }
+
+  static async getApiKeyByUrl(url) {
+    return db.apiKeys.where('url').equals(url).first();
+  }
 }
