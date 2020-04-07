@@ -3,7 +3,7 @@ export default class IndexedDbSchemaProvider {
     return {
       configurations: '++id,name,value',
       apiKeys: '++id,apiKey,parameterName,type,url',
-      apiLayouts:
+      apiModels:
         '++id,specificationVersion,apiVersion,title,serverDescription,serverURL,dynamicComponents,apiLayouts,compacted,apiPath'
     };
   }
