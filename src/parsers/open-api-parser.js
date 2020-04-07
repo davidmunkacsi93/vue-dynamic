@@ -1,6 +1,5 @@
 import DynamicComponentFactory from '../factories/dynamic-component-factory';
 import OpenApiInformationProvider from '../providers/open-api-information-provider';
-import DefaultApiLayoutFactory from '../factories/default-api-layout-factory';
 
 export default class OpenApiParser {
   static processSpecification(specification) {
@@ -24,22 +23,11 @@ export default class OpenApiParser {
       schemas
     );
 
-    var defaultLayout = DefaultApiLayoutFactory.getDefaultApiLayout(
-      dynamicComponents
-    );
-
     var apiUIModel = {
       specificationVersion,
       ...apiInformation,
       ...serverInformation,
       dynamicComponents,
-      apiLayouts: {
-        xxs: defaultLayout,
-        xs: defaultLayout,
-        sm: defaultLayout,
-        md: defaultLayout,
-        lg: defaultLayout
-      },
       compacted: false
     };
     return apiUIModel;
