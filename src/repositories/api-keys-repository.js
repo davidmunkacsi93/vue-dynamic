@@ -6,20 +6,25 @@ const db = new Dexie(DB_NAME);
 var schema = IndexedDbSchemaProvider.getSchema();
 db.version(1).stores(schema);
 
-export default class ApiKeysRepository {
-  static async addApiKeys(apiKeys) {
+class ApiKeysRepository {
+  async addApiKeys(apiKeys) {
     db.apiKeys.bulkAdd(apiKeys);
   }
 
-  static async loadApiKeys() {
+  async loadApiKeys() {
     return db.apiKeys.toArray();
   }
 
-  static async addApiKey(apiKey) {
+  async addApiKey(apiKey) {
     db.apiKeys.add(apiKey);
   }
 
-  static async getApiKeyByUrl(url) {
+  async getApiKeyByUrl(url) {
     return db.apiKeys.where('url').equals(url).first();
   }
 }
+
+const instance = new ApiKeysRepository();
+Object.freeze(instance);
+
+export default instance;

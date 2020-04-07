@@ -7,8 +7,8 @@ const db = new Dexie(DB_NAME);
 var schema = IndexedDbSchemaProvider.getSchema();
 db.version(1).stores(schema);
 
-export default class ConfigurationRepository {
-  static async initializeConfigurations() {
+class ConfigurationRepository {
+  async initializeConfigurations() {
     const configuration = await db.configurations
       .where('name')
       .equals(IS_BOOTSTRAPPED_CONFIGURATION_NAME)
@@ -22,7 +22,7 @@ export default class ConfigurationRepository {
     }
   }
 
-  static async isApplicationBootstrapped() {
+  async isApplicationBootstrapped() {
     const configuration = await db.configurations
       .where('name')
       .equals(IS_BOOTSTRAPPED_CONFIGURATION_NAME)
@@ -31,10 +31,14 @@ export default class ConfigurationRepository {
     return configuration.value;
   }
 
-  static async setBootstrapped() {
+  async setBootstrapped() {
     db.configurations
       .where('name')
       .equals(IS_BOOTSTRAPPED_CONFIGURATION_NAME)
       .modify({ value: true });
   }
 }
+
+const instance = new ConfigurationRepository();
+Object.freeze(instance);
+export default instance;
