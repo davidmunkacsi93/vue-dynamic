@@ -384,19 +384,25 @@ export default {
       }
     },
 
-    onDisableEditMode() {
+    onDisableEditMode(payload) {
+      if (this.uuid != payload.uuid) return;
+
       this.innerControls.forEach((control) => {
         control.static = true;
       });
     },
 
-    onEnableEditMode() {
+    onEnableEditMode(payload) {
+      if (this.uuid != payload.uuid) return;
+
       this.innerControls.forEach((control) => {
         control.static = false;
       });
     },
 
-    onSaveFormLayout() {
+    onSaveFormLayout(payload) {
+      if (this.uuid != payload.uuid) return;
+
       ControlRepository.updateControls(this.innerControls);
     },
 
