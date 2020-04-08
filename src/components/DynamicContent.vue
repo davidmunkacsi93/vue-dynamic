@@ -29,7 +29,7 @@ export default {
     setParentHeight() {
       if (!this.$parent) return;
 
-      this.$parent.setContentHeightAuto();
+      this.$parent.autoSize();
     }
   }
 };

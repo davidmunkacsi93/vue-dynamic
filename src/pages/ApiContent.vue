@@ -69,12 +69,12 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    this.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT);
     var apiModelId = parseInt(to.params.id);
 
     ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
       if (apiModel) {
         next((vm) => {
+          vm.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT);
           vm.fetchData(apiModelId);
         });
       } else {

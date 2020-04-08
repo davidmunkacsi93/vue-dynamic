@@ -86,7 +86,8 @@ import {
 import {
   DISABLE_EDIT_MODE_API_LAYOUT,
   ENABLE_EDIT_MODE_API_LAYOUT,
-  SAVE_API_LAYOUT
+  SAVE_API_LAYOUT,
+  SET_CONTENT_HEIGHT
 } from '../types/action-types';
 import EventBus from '../utils/event-bus';
 
@@ -143,6 +144,7 @@ export default {
         result.push(dynamicComponent);
       }
       this.innerDynamicComponents = result;
+      EventBus.$emit(SET_CONTENT_HEIGHT);
     },
 
     onAutoSizeCompleted(payload) {
