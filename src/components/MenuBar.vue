@@ -60,6 +60,7 @@ import EventBus from '../utils/event-bus';
 export default {
   computed: {
     ...mapState({
+      isApiLayoutEditable: (state) => state.apiLayout.isEditModeActive,
       isMainLayoutEditable: (state) => state.mainLayout.isEditModeActive
     })
   },
@@ -70,11 +71,12 @@ export default {
   },
   methods: {
     editApiLayout() {
-      EventBus.$emit(ENABLE_EDIT_MODE_API_LAYOUT);
+      this.$store.dispatch(ENABLE_EDIT_MODE_API_LAYOUT);
     },
     saveApiLayout() {
-      EventBus.$emit(DISABLE_EDIT_MODE_API_LAYOUT);
-      EventBus.$emit(SAVE_API_LAYOUT);
+      this.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT).then(() => {
+        EventBus.$emit(SAVE_API_LAYOUT);
+      });
     },
     editMainLayout() {
       this.$store.dispatch(ENABLE_EDIT_MODE_MAIN_LAYOUT);
