@@ -133,7 +133,6 @@ export default {
       this.innerDynamicComponents = result;
     },
     onAutoSizeCompleted(payload) {
-      console.log('Auto sized..');
       var index = this.innerDynamicComponents.findIndex(
         (component) => component.uuid == payload.uuid
       );

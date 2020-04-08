@@ -55,11 +55,11 @@ import {
 } from '../types/action-types';
 
 import { API_ROUTE_NAME } from '../routes.js';
+import EventBus from '../utils/event-bus';
 
 export default {
   computed: {
     ...mapState({
-      isApiLayoutEditable: (state) => state.apiLayouts.isEditModeActive,
       isMainLayoutEditable: (state) => state.mainLayout.isEditModeActive
     })
   },
@@ -70,11 +70,11 @@ export default {
   },
   methods: {
     editApiLayout() {
-      this.$store.dispatch(ENABLE_EDIT_MODE_API_LAYOUT);
+      EventBus.$emit(ENABLE_EDIT_MODE_API_LAYOUT);
     },
     saveApiLayout() {
-      this.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT);
-      this.$store.dispatch(SAVE_API_LAYOUT);
+      EventBus.$emit(DISABLE_EDIT_MODE_API_LAYOUT);
+      EventBus.$emit(SAVE_API_LAYOUT);
     },
     editMainLayout() {
       this.$store.dispatch(ENABLE_EDIT_MODE_MAIN_LAYOUT);
