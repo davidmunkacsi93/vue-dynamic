@@ -115,10 +115,16 @@ export default {
     this.fetchControlsForDynamicComponents();
     EventBus.$on(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
     EventBus.$on(COMPACT_COMPLETED, this.onCompactCompleted);
+    EventBus.$on(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
+    EventBus.$on(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
+    EventBus.$on(SAVE_API_LAYOUT, this.onSaveApiLayout);
   },
   beforeDestroy() {
     EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
     EventBus.$off(COMPACT_COMPLETED, this.onCompactCompleted);
+    EventBus.$off(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
+    EventBus.$off(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
+    EventBus.$off(SAVE_API_LAYOUT, this.onSaveApiLayout);
   },
   methods: {
     async fetchControlsForDynamicComponents(dynamicComponentId) {
@@ -132,6 +138,7 @@ export default {
       }
       this.innerDynamicComponents = result;
     },
+
     onAutoSizeCompleted(payload) {
       var index = this.innerDynamicComponents.findIndex(
         (component) => component.uuid == payload.uuid
@@ -162,6 +169,18 @@ export default {
         this.innerDynamicComponents[index].x = dynamicComponent.x;
         this.innerDynamicComponents[index].y = dynamicComponent.y;
       });
+    },
+
+    onEditModeDisabled() {
+      console.log('Disabled...');
+    },
+
+    onEditModeEnabled() {
+      console.log('Enabled...');
+    },
+
+    onSaveApiLayout() {
+      console.log('Saving...');
     }
   }
 };

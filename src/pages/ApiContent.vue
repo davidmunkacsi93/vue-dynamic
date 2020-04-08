@@ -63,16 +63,10 @@ export default {
     };
   },
   created() {
-    EventBus.$on(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
-    EventBus.$on(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
-    EventBus.$on(SAVE_API_LAYOUT, this.onSaveApiLayout);
     window.addEventListener('resize', this.onWindowResize);
   },
 
   beforeDestroy() {
-    EventBus.$off(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
-    EventBus.$off(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
-    EventBus.$off(SAVE_API_LAYOUT, this.onSaveApiLayout);
     window.removeEventListener('resize', this.onWindowResize);
   },
 
@@ -111,18 +105,6 @@ export default {
   },
 
   methods: {
-    onEditModeDisabled() {
-      console.log('Disabled...');
-    },
-
-    onEditModeEnabled() {
-      console.log('Enabled...');
-    },
-
-    onSaveApiLayout() {
-      console.log('Saving...');
-    },
-
     fetchData(apiModelId) {
       this.fetchModel(apiModelId);
       this.fetchDynamicComponents(apiModelId);
