@@ -25,16 +25,8 @@
   </div>
 </template>
 <script>
-import {
-  LOAD_API_LAYOUT,
-  SAVE_API_LAYOUT,
-  DISABLE_EDIT_MODE_API_LAYOUT,
-  ENABLE_EDIT_MODE_API_LAYOUT
-} from '../types/action-types';
-
 import ApiTabContent from '../components/ApiTabContent';
 import { getCurrentScreenClass } from '../utils/responsive-utils';
-import EventBus from '../utils/event-bus';
 import { SCREEN_CLASS_CHANGED } from '../types/event-types';
 
 import ApiModelRepository from '../repositories/api-model-repsository';

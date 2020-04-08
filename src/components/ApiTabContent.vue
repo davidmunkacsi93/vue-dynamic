@@ -82,6 +82,12 @@ import {
   COMPACT_COMPLETED,
   COMPACT
 } from '../types/event-types';
+
+import {
+  DISABLE_EDIT_MODE_API_LAYOUT,
+  ENABLE_EDIT_MODE_API_LAYOUT,
+  SAVE_API_LAYOUT
+} from '../types/action-types';
 import EventBus from '../utils/event-bus';
 
 export default {
@@ -159,7 +165,6 @@ export default {
     },
 
     onCompactCompleted(payload) {
-      console.log('Compacted...');
       payload.forEach((dynamicComponent) => {
         var index = this.innerDynamicComponents.findIndex(
           (component) => component.uuid == dynamicComponent.uuid
@@ -172,15 +177,21 @@ export default {
     },
 
     onEditModeDisabled() {
-      console.log('Disabled...');
+      this.innerDynamicComponents.forEach((dynamicComponent) => {
+        dynamicComponent.static = true;
+      });
     },
 
     onEditModeEnabled() {
-      console.log('Enabled...');
+      this.innerDynamicComponents.forEach((dynamicComponent) => {
+        dynamicComponent.static = false;
+      });
     },
 
     onSaveApiLayout() {
-      console.log('Saving...');
+      DynamicComponentRepository.updateDynamicComponents(
+        this.innerDynamicComponents
+      );
     }
   }
 };
