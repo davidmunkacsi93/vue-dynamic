@@ -31,6 +31,8 @@ import { SCREEN_CLASS_CHANGED } from '../types/event-types';
 
 import ApiModelRepository from '../repositories/api-model-repsository';
 import DynamicComponentRepository from '../repositories/dynamic-component-repository';
+import EventBus from '../utils/event-bus';
+import { DISABLE_EDIT_MODE_API_LAYOUT } from '../types/action-types';
 
 export default {
   components: {
@@ -67,6 +69,7 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
+    this.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT);
     var apiModelId = parseInt(to.params.id);
 
     ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
@@ -81,7 +84,9 @@ export default {
   },
 
   beforeRouteUpdate(to, from, next) {
+    this.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT);
     var apiModelId = parseInt(to.params.id);
+
     ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
       if (apiModel) {
         this.fetchData(apiModelId);
@@ -93,6 +98,8 @@ export default {
   },
 
   beforeRouteLeave(to, from, next) {
+    this.$store.dispatch(DISABLE_EDIT_MODE_API_LAYOUT);
+
     next();
   },
 
