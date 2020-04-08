@@ -29,6 +29,11 @@
 <script>
 export default {
   methods: {
+    enableEditMode() {
+      var payload = {
+        uuid: this.uuid
+      };
+    },
     removeGridItem() {
       // TODO: Implement remove grid item.
     }

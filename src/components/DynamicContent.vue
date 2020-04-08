@@ -28,7 +28,7 @@ export default {
   methods: {
     setParentHeight() {
       if (!this.$parent) return;
-
+      console.log(this.$parent);
       this.$parent.autoSize();
     }
   }

@@ -109,7 +109,7 @@ export default class ControlFactory {
       control.isDraggable = true;
       control.isResizable = true;
       control.initialized = false;
-      control.static = false;
+      control.static = true;
     });
   }
 
