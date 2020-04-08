@@ -74,6 +74,7 @@ import DynamicForm from '../components/DynamicForm';
 import DynamicSearchForm from '../components/DynamicSearchForm';
 
 import ControlRepository from '../repositories/control-repository';
+import DynamicComponentRepository from '../repositories/dynamic-component-repository';
 
 import { FORM, HEADER, SEARCH_FORM } from '../types/layout-item-types';
 import {
@@ -145,6 +146,10 @@ export default {
       this.innerDynamicComponents[index].w = payload.w;
       this.innerDynamicComponents[index].initialized = true;
       this.innerDynamicComponents[index].static = true;
+
+      DynamicComponentRepository.updateDynamicComponent(
+        this.innerDynamicComponents[index]
+      );
     },
 
     onCompactCompleted(payload) {

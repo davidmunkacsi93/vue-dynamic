@@ -23,6 +23,10 @@ class DynamicComponentRepository {
     }
   }
 
+  async updateDynamicComponent(dynamicComponent) {
+    return db.dynamicComponents.update(dynamicComponent.id, dynamicComponent);
+  }
+
   async getDynamicComponentsByApiModelId(apiModelId) {
     return db.dynamicComponents
       .where('apiModelId')
