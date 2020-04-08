@@ -183,9 +183,14 @@ import EventBus from '../utils/event-bus';
 import {
   REQUEST_SUCCESSFUL,
   REQUEST_FAILED,
-  REQUEST_STARTED
+  REQUEST_STARTED,
+  ENABLE_EDIT_MODE_FORM,
+  DISABLE_EDIT_MODE_FORM,
+  SAVE_FORM_LAYOUT
 } from '../types/event-types';
+
 import ApiKeyRepository from '../repositories/api-key-repository';
+import ControlRepository from '../repositories/control-repository';
 
 export default {
   mixins: [validationMixin],
@@ -223,6 +228,10 @@ export default {
     return { form: this.createValidationRules(this.innerControls) };
   },
   created() {
+    EventBus.$on(DISABLE_EDIT_MODE_FORM, this.onDisableEditMode);
+    EventBus.$on(ENABLE_EDIT_MODE_FORM, this.onEnableEditMode);
+    EventBus.$on(SAVE_FORM_LAYOUT, this.onSaveFormLayout);
+
     this.innerControls = this.controls;
     this.innerControls.forEach((control) => {
       if (control.element === CHIPS) {
@@ -231,6 +240,11 @@ export default {
         this.$set(this.form, control.label, null);
       }
     });
+  },
+  beforeDestroy() {
+    EventBus.$off(DISABLE_EDIT_MODE_FORM, this.onDisableEditMode);
+    EventBus.$off(ENABLE_EDIT_MODE_FORM, this.onEnableEditMode);
+    EventBus.$off(SAVE_FORM_LAYOUT, this.onSaveFormLayout);
   },
   data: () => ({
     form: {},
@@ -369,6 +383,29 @@ export default {
         };
       }
     },
+
+    onDisableEditMode(payload) {
+      if (this.uuid != payload.uuid) return;
+
+      this.innerControls.forEach((control) => {
+        control.static = true;
+      });
+    },
+
+    onEnableEditMode(payload) {
+      if (this.uuid != payload.uuid) return;
+
+      this.innerControls.forEach((control) => {
+        control.static = false;
+      });
+    },
+
+    onSaveFormLayout(payload) {
+      if (this.uuid != payload.uuid) return;
+
+      ControlRepository.updateControls(this.innerControls);
+    },
+
     validateForm() {
       this.$v.$touch();
 

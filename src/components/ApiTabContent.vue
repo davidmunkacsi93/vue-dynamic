@@ -74,6 +74,7 @@ import DynamicForm from '../components/DynamicForm';
 import DynamicSearchForm from '../components/DynamicSearchForm';
 
 import ControlRepository from '../repositories/control-repository';
+import DynamicComponentRepository from '../repositories/dynamic-component-repository';
 
 import { FORM, HEADER, SEARCH_FORM } from '../types/layout-item-types';
 import {
@@ -81,6 +82,13 @@ import {
   COMPACT_COMPLETED,
   COMPACT
 } from '../types/event-types';
+
+import {
+  DISABLE_EDIT_MODE_API_LAYOUT,
+  ENABLE_EDIT_MODE_API_LAYOUT,
+  SAVE_API_LAYOUT,
+  SET_CONTENT_HEIGHT
+} from '../types/action-types';
 import EventBus from '../utils/event-bus';
 
 export default {
@@ -114,10 +122,16 @@ export default {
     this.fetchControlsForDynamicComponents();
     EventBus.$on(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
     EventBus.$on(COMPACT_COMPLETED, this.onCompactCompleted);
+    EventBus.$on(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
+    EventBus.$on(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
+    EventBus.$on(SAVE_API_LAYOUT, this.onSaveApiLayout);
   },
   beforeDestroy() {
     EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
     EventBus.$off(COMPACT_COMPLETED, this.onCompactCompleted);
+    EventBus.$off(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
+    EventBus.$off(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
+    EventBus.$off(SAVE_API_LAYOUT, this.onSaveApiLayout);
   },
   methods: {
     async fetchControlsForDynamicComponents(dynamicComponentId) {
@@ -130,9 +144,10 @@ export default {
         result.push(dynamicComponent);
       }
       this.innerDynamicComponents = result;
+      EventBus.$emit(SET_CONTENT_HEIGHT);
     },
+
     onAutoSizeCompleted(payload) {
-      console.log('Auto sized..');
       var index = this.innerDynamicComponents.findIndex(
         (component) => component.uuid == payload.uuid
       );
@@ -145,10 +160,13 @@ export default {
       this.innerDynamicComponents[index].w = payload.w;
       this.innerDynamicComponents[index].initialized = true;
       this.innerDynamicComponents[index].static = true;
+
+      DynamicComponentRepository.updateDynamicComponent(
+        this.innerDynamicComponents[index]
+      );
     },
 
     onCompactCompleted(payload) {
-      console.log('Compacted...');
       payload.forEach((dynamicComponent) => {
         var index = this.innerDynamicComponents.findIndex(
           (component) => component.uuid == dynamicComponent.uuid
@@ -158,6 +176,24 @@ export default {
         this.innerDynamicComponents[index].x = dynamicComponent.x;
         this.innerDynamicComponents[index].y = dynamicComponent.y;
       });
+    },
+
+    onEditModeDisabled() {
+      this.innerDynamicComponents.forEach((dynamicComponent) => {
+        dynamicComponent.static = true;
+      });
+    },
+
+    onEditModeEnabled() {
+      this.innerDynamicComponents.forEach((dynamicComponent) => {
+        dynamicComponent.static = false;
+      });
+    },
+
+    onSaveApiLayout() {
+      DynamicComponentRepository.updateDynamicComponents(
+        this.innerDynamicComponents
+      );
     }
   }
 };

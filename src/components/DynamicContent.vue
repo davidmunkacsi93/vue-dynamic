@@ -28,8 +28,8 @@ export default {
   methods: {
     setParentHeight() {
       if (!this.$parent) return;
-
-      this.$parent.setContentHeightAuto();
+      console.log(this.$parent);
+      this.$parent.autoSize();
     }
   }
 };

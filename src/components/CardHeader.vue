@@ -17,6 +17,14 @@
       </md-button>
 
       <md-menu-content>
+        <md-menu-item v-if="!isEditModeEnabled" @click="enableEditMode">
+          <span>Edit Form Layout</span>
+          <md-icon>edit</md-icon>
+        </md-menu-item>
+        <md-menu-item v-if="isEditModeEnabled" @click="saveFormLayout">
+          <span>Save Form Layout</span>
+          <md-icon>save</md-icon>
+        </md-menu-item>
         <md-menu-item @click="removeGridItem">
           <span>Remove</span>
           <md-icon>clear</md-icon>
@@ -27,8 +35,38 @@
 </template>
 
 <script>
+import EventBus from '../utils/event-bus';
+import {
+  SAVE_FORM_LAYOUT,
+  DISABLE_EDIT_MODE_FORM,
+  ENABLE_EDIT_MODE_FORM
+} from '../types/event-types';
 export default {
+  data() {
+    return {
+      isEditModeEnabled: false
+    };
+  },
   methods: {
+    enableEditMode() {
+      this.isEditModeEnabled = true;
+
+      var payload = {
+        uuid: this.uuid
+      };
+
+      EventBus.$emit(ENABLE_EDIT_MODE_FORM, payload);
+    },
+    saveFormLayout() {
+      this.isEditModeEnabled = false;
+
+      var payload = {
+        uuid: this.uuid
+      };
+
+      EventBus.$emit(DISABLE_EDIT_MODE_FORM, payload);
+      EventBus.$emit(SAVE_FORM_LAYOUT, payload);
+    },
     removeGridItem() {
       // TODO: Implement remove grid item.
     }
