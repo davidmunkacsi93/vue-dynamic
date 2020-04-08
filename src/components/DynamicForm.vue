@@ -188,7 +188,9 @@ import {
   DISABLE_EDIT_MODE_FORM,
   SAVE_FORM_LAYOUT
 } from '../types/event-types';
+
 import ApiKeyRepository from '../repositories/api-key-repository';
+import ControlRepository from '../repositories/control-repository';
 
 export default {
   mixins: [validationMixin],
@@ -395,7 +397,7 @@ export default {
     },
 
     onSaveFormLayout() {
-      
+      ControlRepository.updateControls(this.innerControls);
     },
 
     validateForm() {

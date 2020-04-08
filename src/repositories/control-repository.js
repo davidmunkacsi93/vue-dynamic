@@ -20,6 +20,16 @@ class ControlRepository {
       .equals(dynamicComponentId)
       .toArray();
   }
+
+  async updateControl(control) {
+    db.controls.update(control.id, control);
+  }
+
+  async updateControls(controls) {
+    controls.forEach((control) => {
+      this.updateControl(control);
+    });
+  }
 }
 
 const instance = new ControlRepository();
