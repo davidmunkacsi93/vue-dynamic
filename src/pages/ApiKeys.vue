@@ -53,7 +53,7 @@ export default {
           this.apiKeys = apiKeys;
         })
         .catch((reject) => {
-          console.error(reject);
+          throw new Error(reject);
         });
     }
   }
