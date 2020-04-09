@@ -11,5 +11,6 @@ export const REQUEST_FAILED = 'requestFailed';
 export const REQUEST_STARTED = 'requestStarted';
 export const REQUEST_SUCCESSFUL = 'requestSuccessful';
 export const SAVE_FORM_LAYOUT = 'saveFormLayout';
+export const SAVE_FORM_LAYOUTS = 'saveFormLayouts';
 export const SCREEN_CLASS_CHANGED = 'screenClassChanged';
 export const UPDATE_WIDTH = 'updateWidth';

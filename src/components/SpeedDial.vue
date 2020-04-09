@@ -6,7 +6,7 @@
 
     <md-speed-dial-content class="speed-dial-content">
       <md-button
-        @click="saveApiLayout"
+        @click="saveFormLayouts"
         v-show="$route.name === API_ROUTE_NAME && saveFormsRequired"
       >
         <md-icon>save</md-icon>

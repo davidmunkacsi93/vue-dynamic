@@ -396,7 +396,7 @@ export default {
     onEnableEditMode(payload) {
       if (this.uuid != payload.uuid) return;
 
-      this.$store.dispatch(SAVE_FORMS_REQUIRED);
+      this.$store.dispatch(SAVE_FORMS_REQUIRED, true);
 
       this.innerControls.forEach((control) => {
         control.static = false;

@@ -21,8 +21,8 @@ const mutations = {
     state.isEditModeActive = true;
     EventBus.$emit(ENABLE_EDIT_MODE_API_LAYOUT);
   },
-  saveFormsRequired(state) {
-    state.saveFormsRequired = true;
+  saveFormsRequired(state, required) {
+    state.saveFormsRequired = required;
   }
 };
 
@@ -33,8 +33,8 @@ const actions = {
   enableEditModeApiLayout({ commit }) {
     commit(ENABLE_EDIT_MODE_API_LAYOUT);
   },
-  saveFormsRequired({ commit }) {
-    commit(SAVE_FORMS_REQUIRED);
+  saveFormsRequired({ commit }, required) {
+    commit(SAVE_FORMS_REQUIRED, required);
   }
 };
 
