@@ -1,31 +1,31 @@
 <template>
   <md-speed-dial class="md-fixed md-bottom-right" md-direction="top">
-    <md-speed-dial-target>
+    <md-speed-dial-target class="speed-dial-target">
       <md-icon>edit</md-icon>
     </md-speed-dial-target>
 
-    <md-speed-dial-content>
+    <md-speed-dial-content class="speed-dial-content">
       <md-button
         @click="editApiLayout"
         v-show="$route.name === API_ROUTE_NAME && !isApiLayoutEditable"
       >
-        <span>Edit API Layout</span>
         <md-icon>edit</md-icon>
+        <span>Edit API Layout</span>
       </md-button>
       <md-button
         @click="saveApiLayout"
         v-show="$route.name === API_ROUTE_NAME && isApiLayoutEditable"
       >
-        <span>Save API Layout</span>
         <md-icon>save</md-icon>
+        <span>Save API Layout</span>
       </md-button>
       <md-button @click="editMainLayout" v-show="!isMainLayoutEditable">
-        <span>Edit Main Layout</span>
         <md-icon>edit</md-icon>
+        <span>Edit Main Layout</span>
       </md-button>
       <md-button @click="saveMainLayout" v-show="isMainLayoutEditable">
-        <span>Save Main Layout</span>
         <md-icon>save</md-icon>
+        <span>Save Main Layout</span>
       </md-button>
     </md-speed-dial-content>
   </md-speed-dial>
@@ -39,4 +39,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.speed-dial-target {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+}
+
+.speed-dial-content {
+  position: fixed;
+  bottom: 70px;
+  right: 15px;
+}
+</style>
