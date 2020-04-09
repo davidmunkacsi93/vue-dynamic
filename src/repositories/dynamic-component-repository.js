@@ -23,8 +23,23 @@ class DynamicComponentRepository {
     }
   }
 
-  async removeDynamicComponentByUuid(uuid) {
+  async getDynamicComponentsByApiModelId(apiModelId) {
+    return db.dynamicComponents
+      .where('apiModelId')
+      .equals(apiModelId)
+      .toArray();
+  }
 
+  async getDynamicComponentByUuid(uuid) {
+    return db.dynamicComponents.where('uuid').equals(uuid).first();
+  }
+
+  async deleteDynamicComponentByUuid(uuid) {
+    const dynamicComponent = await this.getDynamicComponentByUuid(uuid);
+
+    db.dynamicComponents.delete(dynamicComponent.id).then(() => {
+      ControlRepository.deleteControlsByDynamicComponentId(dynamicComponent.id);
+    });
   }
 
   async updateDynamicComponent(dynamicComponent) {
@@ -35,13 +50,6 @@ class DynamicComponentRepository {
     dynamicComponents.forEach((dynamicComponent) => {
       this.updateDynamicComponent(dynamicComponent);
     });
-  }
-
-  async getDynamicComponentsByApiModelId(apiModelId) {
-    return db.dynamicComponents
-      .where('apiModelId')
-      .equals(apiModelId)
-      .toArray();
   }
 }
 

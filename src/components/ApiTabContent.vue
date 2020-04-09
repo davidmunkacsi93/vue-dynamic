@@ -87,7 +87,8 @@ import {
   DISABLE_EDIT_MODE_API_LAYOUT,
   ENABLE_EDIT_MODE_API_LAYOUT,
   SAVE_API_LAYOUT,
-  SET_CONTENT_HEIGHT
+  SET_CONTENT_HEIGHT,
+  REMOVE_FORM
 } from '../types/action-types';
 import EventBus from '../utils/event-bus';
 
@@ -124,6 +125,7 @@ export default {
     EventBus.$on(COMPACT_COMPLETED, this.onCompactCompleted);
     EventBus.$on(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
     EventBus.$on(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
+    EventBus.$on(REMOVE_FORM, this.onRemoveForm);
     EventBus.$on(SAVE_API_LAYOUT, this.onSaveApiLayout);
   },
   beforeDestroy() {
@@ -131,6 +133,7 @@ export default {
     EventBus.$off(COMPACT_COMPLETED, this.onCompactCompleted);
     EventBus.$off(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
     EventBus.$off(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
+    EventBus.$off(REMOVE_FORM, this.onRemoveForm);
     EventBus.$off(SAVE_API_LAYOUT, this.onSaveApiLayout);
   },
   methods: {
@@ -188,6 +191,17 @@ export default {
       this.innerDynamicComponents.forEach((dynamicComponent) => {
         dynamicComponent.static = false;
       });
+    },
+
+    onRemoveForm(uuid) {
+      var componentIndex = this.innerDynamicComponents.findIndex(
+        (dynamicComponent) => dynamicComponent.uuid === uuid
+      );
+
+      if (componentIndex < 0) return;
+
+      this.innerDynamicComponents.splice(componentIndex, 1);
+      DynamicComponentRepository.deleteDynamicComponentByUuid(uuid);
     },
 
     onSaveApiLayout() {

@@ -7,6 +7,7 @@ export const DISABLE_EDIT_MODE_FORM = 'disableEditModeForm';
 export const DYNAMIC_CONTENT_HEIGHT_UPDATED = 'dynamicContentHeightUpdated';
 export const ENABLE_EDIT_MODE_FORM = 'enableEditModeForm';
 export const LAYOUT_UPDATED = 'layoutUpdated';
+export const REMOVE_COMPONENT = 'removeComponent';
 export const REQUEST_FAILED = 'requestFailed';
 export const REQUEST_STARTED = 'requestStarted';
 export const REQUEST_SUCCESSFUL = 'requestSuccessful';
