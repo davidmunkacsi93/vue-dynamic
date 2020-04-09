@@ -17,7 +17,8 @@ export default {
   computed: {
     ...mapState({
       isApiLayoutEditable: (state) => state.apiLayout.isEditModeActive,
-      isMainLayoutEditable: (state) => state.mainLayout.isEditModeActive
+      isMainLayoutEditable: (state) => state.mainLayout.isEditModeActive,
+      saveFormsRequired: (state) => state.apiLayout.saveFormsRequired
     })
   },
   data() {

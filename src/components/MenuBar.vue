@@ -11,6 +11,13 @@
           </md-button>
           <md-menu-content>
             <md-menu-item
+              @click="saveApiLayout"
+              v-show="$route.name === API_ROUTE_NAME && saveFormsRequired"
+            >
+              <span>Save Forms</span>
+              <md-icon>save</md-icon>
+            </md-menu-item>
+            <md-menu-item
               @click="editApiLayout"
               v-show="$route.name === API_ROUTE_NAME && !isApiLayoutEditable"
             >

@@ -191,6 +191,7 @@ import {
 
 import ApiKeyRepository from '../repositories/api-key-repository';
 import ControlRepository from '../repositories/control-repository';
+import { SAVE_FORMS_REQUIRED } from '../types/action-types';
 
 export default {
   mixins: [validationMixin],
@@ -394,6 +395,8 @@ export default {
 
     onEnableEditMode(payload) {
       if (this.uuid != payload.uuid) return;
+
+      this.$store.dispatch(SAVE_FORMS_REQUIRED);
 
       this.innerControls.forEach((control) => {
         control.static = false;
