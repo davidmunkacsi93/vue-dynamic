@@ -34,6 +34,8 @@ import DynamicComponentRepository from '../repositories/dynamic-component-reposi
 import EventBus from '../utils/event-bus';
 import { DISABLE_EDIT_MODE_API_LAYOUT } from '../types/action-types';
 
+const OTHER_TAG_KEY = 'Other';
+
 export default {
   components: {
     ApiTabContent
@@ -126,13 +128,17 @@ export default {
 
     setTags() {
       this.tags = this.getTags(this.innerDynamicComponents);
+      console.log(this.tags);
+
       this.tags.forEach((tag) => {
-        this.dynamicComponentsByTags[tag] = this.innerDynamicComponents.filter(
-          (dynamicComponent) => {
+        this.$set(
+          this.dynamicComponentsByTags,
+          tag,
+          this.innerDynamicComponents.filter((dynamicComponent) => {
             if (!dynamicComponent.tags) return false;
 
             return dynamicComponent.tags.includes(tag);
-          }
+          })
         );
       });
 
@@ -141,9 +147,7 @@ export default {
           !dynamicComponent.tags || dynamicComponent.tags.length === 0
       );
       if (notTagged && notTagged.length > 0) {
-        let otherTagKey = 'Other';
-        this.tags.push(otherTagKey);
-        this.dynamicComponentsByTags[otherTagKey] = notTagged;
+        this.$set(this.dynamicComponentsByTags, OTHER_TAG_KEY, notTagged);
       }
     },
 
@@ -151,14 +155,24 @@ export default {
       var taggedItems = dynamicComponents
         .map((layoutItem) => layoutItem.tags)
         .filter((tags) => tags);
-      if (!taggedItems || taggedItems.length === 0) return [];
+      if (!taggedItems || taggedItems.length === 0) return [OTHER_TAG_KEY];
 
-      return taggedItems
+      var tags = taggedItems
         .filter((tags) => tags)
         .reduce((acc, val) => [...acc, ...val])
         .filter(
           (value, index, collection) => collection.indexOf(value) === index
         );
+
+      var hasNotTaggedItems = dynamicComponents.some(
+        (dynamicComponent) =>
+          !dynamicComponent.tags || dynamicComponent.tags.length === 0
+      );
+      if (hasNotTaggedItems) {
+        tags.push(OTHER_TAG_KEY);
+      }
+
+      return tags;
     }
   }
 };
