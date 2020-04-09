@@ -186,7 +186,8 @@ import {
   REQUEST_STARTED,
   ENABLE_EDIT_MODE_FORM,
   DISABLE_EDIT_MODE_FORM,
-  SAVE_FORM_LAYOUT
+  SAVE_FORM_LAYOUT,
+  SAVE_FORM_LAYOUTS
 } from '../types/event-types';
 
 import ApiKeyRepository from '../repositories/api-key-repository';
@@ -232,6 +233,7 @@ export default {
     EventBus.$on(DISABLE_EDIT_MODE_FORM, this.onDisableEditMode);
     EventBus.$on(ENABLE_EDIT_MODE_FORM, this.onEnableEditMode);
     EventBus.$on(SAVE_FORM_LAYOUT, this.onSaveFormLayout);
+    EventBus.$on(SAVE_FORM_LAYOUTS, this.onSaveFormLayouts);
 
     this.innerControls = this.controls;
     this.innerControls.forEach((control) => {
@@ -246,6 +248,7 @@ export default {
     EventBus.$off(DISABLE_EDIT_MODE_FORM, this.onDisableEditMode);
     EventBus.$off(ENABLE_EDIT_MODE_FORM, this.onEnableEditMode);
     EventBus.$off(SAVE_FORM_LAYOUT, this.onSaveFormLayout);
+    EventBus.$off(SAVE_FORM_LAYOUTS, this.onSaveFormLayouts);
   },
   data: () => ({
     form: {},
@@ -405,6 +408,14 @@ export default {
 
     onSaveFormLayout(payload) {
       if (this.uuid != payload.uuid) return;
+
+      ControlRepository.updateControls(this.innerControls);
+    },
+
+    onSaveFormLayouts() {
+      this.innerControls.forEach((control) => {
+        control.static = true;
+      });
 
       ControlRepository.updateControls(this.innerControls);
     },
