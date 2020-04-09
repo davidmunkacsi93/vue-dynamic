@@ -14,15 +14,14 @@ Install dependencies: ```npm install```
 
 ## Start
 
-```
-npm start
-```
+```npm start```
 
 ## Build
 
 Create production build: ```npm build```
 
 ## Tests
+
 Integration tests: ```npm run integration```
 Unit tests: ```npm run unit```
 
