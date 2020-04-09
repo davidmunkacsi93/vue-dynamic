@@ -17,7 +17,9 @@
         class="md-layout-item md-size-100"
         :model="apiKeys"
       ></dynamic-table>
-      <api-key-form class="md-layout-item md-size-50"></api-key-form>
+      <api-key-form
+        class="md-layout-item md-size-50 md-small-size-100"
+      ></api-key-form>
     </div>
   </div>
 </template>
