@@ -2,11 +2,16 @@
   <div ref="navigationBar" class="full-control navigation-bar">
     <h3 ref="navigationTitle" class="md-title">Navigation</h3>
     <md-list ref="navigationList">
-      <md-list-item :to="homePath">
+      <md-list-item :to="homePath" @click="closeExpandable">
         <md-icon>home</md-icon>
         <span class="md-list-item-text">Home</span>
       </md-list-item>
-      <md-list-item md-expand @click="onExpand" v-if="availableApis.length > 0">
+      <md-list-item
+        md-expand
+        :md-expanded.sync="apisExpanded"
+        @click="onExpand"
+        v-if="availableApis.length > 0"
+      >
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
         <md-list slot="md-expand">
@@ -14,6 +19,7 @@
             :to="apiPath + '/' + api.id"
             v-for="api in availableApis"
             :key="api.id"
+            @click="closeExpandable"
           >
             <span>{{ api.title }} - {{ api.apiVersion }}</span>
           </md-list-item>
@@ -24,11 +30,11 @@
         <md-icon>list</md-icon>
         <span class="md-list-item-text">My APIs</span>
       </md-list-item>
-      <md-list-item :to="apiKeysPath">
+      <md-list-item :to="apiKeysPath" @click="closeExpandable">
         <md-icon>vpn_key</md-icon>
         <span class="md-list-item-text">API keys</span>
       </md-list-item>
-      <md-list-item :to="addApiPath">
+      <md-list-item :to="addApiPath" @click="closeExpandable">
         <md-icon>http</md-icon>
         <span class="md-list-item-text">Add API</span>
       </md-list-item>
@@ -57,6 +63,8 @@ export default {
   },
   data() {
     return {
+      apisExpanded: false,
+
       availableApis: [],
       apiPath: '/api',
       addApiPath: '/addApi',
@@ -76,6 +84,10 @@ export default {
     window.addEventListener('resize', this.setNavigationBarHeight);
   },
   methods: {
+    closeExpandable() {
+      this.apisExpanded = false;
+      this.setNavigationBarHeight();
+    },
     onApiAdded() {
       ApiModelRepository.getApiModels().then((apiModels) => {
         this.availableApis = apiModels;

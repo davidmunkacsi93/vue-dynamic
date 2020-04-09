@@ -137,5 +137,7 @@ export default {
 
 .vue-grid-item > .vue-resizable-handle {
   z-index: 2;
+  height: 25%;
+  width: 20%;
 }
 </style>

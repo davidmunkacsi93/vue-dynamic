@@ -53,6 +53,7 @@
         </grid-layout-base>
       </md-app-content>
     </md-app>
+    <speed-dial></speed-dial>
   </div>
 </template>
 
@@ -72,6 +73,7 @@ import GridItem from './components/GridItem.vue';
 import GridLayoutBase from './components/GridLayoutBase.vue';
 import MenuBar from './components/MenuBar.vue';
 import NavigationBar from './components/NavigationBar.vue';
+import SpeedDial from './components/SpeedDial.vue';
 
 import routes from './routes';
 
@@ -107,7 +109,8 @@ export default {
     GridItem,
     GridLayoutBase,
     MenuBar,
-    NavigationBar
+    NavigationBar,
+    SpeedDial
   },
   data() {
     return {
