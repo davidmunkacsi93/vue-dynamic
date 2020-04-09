@@ -23,6 +23,10 @@ class DynamicComponentRepository {
     }
   }
 
+  async removeDynamicComponentByUuid(uuid) {
+
+  }
+
   async updateDynamicComponent(dynamicComponent) {
     db.dynamicComponents.update(dynamicComponent.id, dynamicComponent);
   }
