@@ -1,5 +1,5 @@
 <template>
-  <md-table>
+  <md-table class="dynamic-table">
     <draggable v-model="headers" tag="tr">
       <md-table-head
         class="color-green"
@@ -40,6 +40,11 @@ export default {
 </script>
 
 <style>
+.dynamic-table {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .color-green {
   color: #ffffff !important;
   background: #212121;
