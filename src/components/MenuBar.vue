@@ -43,10 +43,10 @@
 </template>
 
 <script>
-import ActionsBase from '../components/ActionsBase';
+import ActionsMixin from '../components/ActionsMixin';
 
 export default {
-  mixins: [ActionsBase],
+  mixins: [ActionsMixin],
   props: {
     type: {
       type: String,
