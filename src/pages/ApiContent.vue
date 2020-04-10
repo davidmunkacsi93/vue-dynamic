@@ -89,8 +89,9 @@ export default {
 
     ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
       if (apiModel) {
-        this.fetchData(apiModelId);
-        next();
+        this.fetchData(apiModelId).then(() => {
+          next();
+        });
       } else {
         next('/');
       }
@@ -104,24 +105,33 @@ export default {
   },
 
   methods: {
-    fetchData(apiModelId) {
-      this.fetchModel(apiModelId);
-      this.fetchDynamicComponents(apiModelId);
+    async fetchData(apiModelId) {
+      this.resetData();
+      return this.fetchModel(apiModelId).then(() => {
+        return this.fetchDynamicComponents(apiModelId);
+      });
     },
 
     fetchModel(apiModelId) {
-      ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
+      return ApiModelRepository.getApiModelById(apiModelId).then((apiModel) => {
         this.innerApiModel = apiModel;
       });
     },
 
-    fetchDynamicComponents(apiModelId) {
-      DynamicComponentRepository.getDynamicComponentsByApiModelId(
+    async fetchDynamicComponents(apiModelId) {
+      return DynamicComponentRepository.getDynamicComponentsByApiModelId(
         apiModelId
       ).then((dynamicComponents) => {
         this.innerDynamicComponents = dynamicComponents;
         this.setTags();
       });
+    },
+
+    resetData() {
+      this.tags = [];
+      this.innerApiModel = {};
+      this.innerDynamicComponents = {};
+      this.dynamicComponentsByTags = {};
     },
 
     setTags() {
