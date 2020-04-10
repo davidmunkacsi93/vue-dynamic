@@ -52,12 +52,6 @@ export default {
       this.updateWidth(window.innerWidth);
     },
 
-    setContentHeightAuto() {
-      let newSize = this.$slots.default[0].elm.getBoundingClientRect();
-      let pos = this.calcWH(newSize.height, newSize.width);
-      this.$store.dispatch(SET_CONTENT_HEIGHT, pos.h);
-    },
-
     autoSize() {
       this.previousW = this.innerW;
       this.previousH = this.innerH;
