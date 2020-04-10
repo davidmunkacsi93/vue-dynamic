@@ -104,7 +104,7 @@ export default {
         var navigationListHeight = this.$refs.navigationList.$el.clientHeight;
         var navigationBarHeight = navigationTitleHeight + navigationListHeight;
         navigationBarGridItem.innerH =
-          Math.ceil(navigationBarHeight / navigationBarGridItem.rowHeight) + 1;
+          Math.ceil(navigationBarHeight / navigationBarGridItem.rowHeight) + 2;
         this.$store.dispatch(ENABLE_EDIT_MODE_MAIN_LAYOUT);
         this.$store.dispatch(
           SET_NAVIGATION_BAR_HEIGHT,
@@ -130,6 +130,6 @@ export default {
 <style>
 .navigation-bar {
   height: 100%;
-  padding: 10px;
+  padding: 10px 10px 0px 10px;
 }
 </style>

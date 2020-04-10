@@ -87,7 +87,8 @@ import {
   DISABLE_EDIT_MODE_API_LAYOUT,
   ENABLE_EDIT_MODE_API_LAYOUT,
   SAVE_API_LAYOUT,
-  SET_CONTENT_HEIGHT
+  SET_CONTENT_HEIGHT,
+  REMOVE_FORM
 } from '../types/action-types';
 import EventBus from '../utils/event-bus';
 
@@ -119,31 +120,42 @@ export default {
     };
   },
   created() {
-    this.fetchControlsForDynamicComponents();
-    EventBus.$on(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
-    EventBus.$on(COMPACT_COMPLETED, this.onCompactCompleted);
-    EventBus.$on(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
-    EventBus.$on(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
-    EventBus.$on(SAVE_API_LAYOUT, this.onSaveApiLayout);
+    const self = this;
+    self.fetchControlsForDynamicComponents();
+    EventBus.$on(AUTO_SIZE_COMPLETED, self.onAutoSizeCompleted);
+    EventBus.$on(COMPACT_COMPLETED, self.onCompactCompleted);
+    EventBus.$on(DISABLE_EDIT_MODE_API_LAYOUT, self.onEditModeDisabled);
+    EventBus.$on(ENABLE_EDIT_MODE_API_LAYOUT, self.onEditModeEnabled);
+    EventBus.$on(REMOVE_FORM, self.onRemoveForm);
+    EventBus.$on(SAVE_API_LAYOUT, self.onSaveApiLayout);
+  },
+  mounted() {
+    console.log('Mounted');
+    console.log(this);
   },
   beforeDestroy() {
     EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
     EventBus.$off(COMPACT_COMPLETED, this.onCompactCompleted);
     EventBus.$off(DISABLE_EDIT_MODE_API_LAYOUT, this.onEditModeDisabled);
     EventBus.$off(ENABLE_EDIT_MODE_API_LAYOUT, this.onEditModeEnabled);
+    EventBus.$off(REMOVE_FORM, this.onRemoveForm);
     EventBus.$off(SAVE_API_LAYOUT, this.onSaveApiLayout);
   },
   methods: {
-    async fetchControlsForDynamicComponents(dynamicComponentId) {
+    async fetchControlsForDynamicComponents() {
       var result = [];
-      for (var dynamicComponent of this.dynamicComponents) {
+      const self = this;
+      console.log(self.dynamicComponents);
+
+      for (var dynamicComponent of self.dynamicComponents) {
         const controls = await ControlRepository.getControlsByDynamicComponentId(
           dynamicComponent.id
         );
         dynamicComponent.controls = controls;
         result.push(dynamicComponent);
       }
-      this.innerDynamicComponents = result;
+      console.log(result);
+      self.innerDynamicComponents = result;
       EventBus.$emit(SET_CONTENT_HEIGHT);
     },
 
@@ -190,10 +202,26 @@ export default {
       });
     },
 
+    onRemoveForm(uuid) {
+      var componentIndex = this.innerDynamicComponents.findIndex(
+        (dynamicComponent) => dynamicComponent.uuid === uuid
+      );
+
+      if (componentIndex < 0) return;
+
+      this.innerDynamicComponents.splice(componentIndex, 1);
+      DynamicComponentRepository.deleteDynamicComponentByUuid(uuid);
+    },
+
     onSaveApiLayout() {
       DynamicComponentRepository.updateDynamicComponents(
         this.innerDynamicComponents
       );
+    }
+  },
+  watch: {
+    dynamicComponents: function (val) {
+      this.innerDynamicComponents = val;
     }
   }
 };

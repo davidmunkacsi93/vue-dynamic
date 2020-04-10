@@ -1,5 +1,5 @@
 <template>
-  <md-speed-dial class="md-fixed md-bottom-right" md-direction="top">
+  <md-speed-dial class="md-fixed md-bottom-left" md-direction="top">
     <md-speed-dial-target class="speed-dial-target">
       <md-icon>edit</md-icon>
     </md-speed-dial-target>
@@ -45,17 +45,3 @@ export default {
   mixins: [ActionsMixin]
 };
 </script>
-
-<style>
-.speed-dial-target {
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-}
-
-.speed-dial-content {
-  position: fixed;
-  bottom: 70px;
-  right: 15px;
-}
-</style>
