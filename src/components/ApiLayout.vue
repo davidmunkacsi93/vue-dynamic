@@ -30,6 +30,12 @@ export default {
       EventBus.$emit(COMPACT_COMPLETED, compactedLayout);
     },
 
+    setStaticForLayoutItems(value) {
+      this.layout.forEach((layoutItem) => {
+        layoutItem.static = value;
+      });
+    },
+
     compact(layout) {
       const compactedItems = [];
       const sorted = this.sortLayoutItemsByRowCol(layout);
@@ -88,14 +94,13 @@ export default {
           l.x = 0;
           l.w = this.cols;
         }
-        if (!l.static) corrected.push(l);
-        else {
-          while (this.getFirstCollision(corrected, l)) {
-            l.y++;
-          }
+
+        while (this.getFirstCollision(corrected, l)) {
+          l.y++;
         }
+        corrected.push(l);
       }
-      return layout;
+      return corrected;
     }
   }
 };
