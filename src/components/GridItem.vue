@@ -7,7 +7,7 @@ import {
   SCREEN_CLASS_CHANGED,
   AUTO_SIZE_COMPLETED
 } from '../types/event-types';
-import { SET_API_ITEM_SIZE, SET_CONTENT_HEIGHT } from '../types/action-types';
+import { SET_API_ITEM_SIZE } from '../types/action-types';
 
 export default {
   name: 'GridItem',
