@@ -138,7 +138,6 @@ export default {
 
     setTags() {
       this.tags = this.getTags(this.innerDynamicComponents);
-      console.log(this.tags);
 
       this.tags.forEach((tag) => {
         this.$set(

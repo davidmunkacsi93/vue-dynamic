@@ -129,10 +129,6 @@ export default {
     EventBus.$on(REMOVE_FORM, self.onRemoveForm);
     EventBus.$on(SAVE_API_LAYOUT, self.onSaveApiLayout);
   },
-  mounted() {
-    console.log('Mounted');
-    console.log(this);
-  },
   beforeDestroy() {
     EventBus.$off(AUTO_SIZE_COMPLETED, this.onAutoSizeCompleted);
     EventBus.$off(COMPACT_COMPLETED, this.onCompactCompleted);
@@ -145,7 +141,6 @@ export default {
     async fetchControlsForDynamicComponents() {
       var result = [];
       const self = this;
-      console.log(self.dynamicComponents);
 
       for (var dynamicComponent of self.dynamicComponents) {
         const controls = await ControlRepository.getControlsByDynamicComponentId(
@@ -154,7 +149,6 @@ export default {
         dynamicComponent.controls = controls;
         result.push(dynamicComponent);
       }
-      console.log(result);
       self.innerDynamicComponents = result;
       EventBus.$emit(SET_CONTENT_HEIGHT);
     },
