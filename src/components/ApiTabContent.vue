@@ -4,7 +4,7 @@
     :layout.sync="innerDynamicComponents"
     :col-num="12"
     :rowHeight="30"
-    :margin="[3, 3]"
+    :margin="[15, 15]"
     :is-draggable="true"
     :is-resizable="true"
     :is-mirrored="false"
