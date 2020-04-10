@@ -41,6 +41,8 @@ import {
   DISABLE_EDIT_MODE_FORM,
   ENABLE_EDIT_MODE_FORM
 } from '../types/event-types';
+import { REMOVE_FORM } from '../types/action-types';
+
 export default {
   data() {
     return {
@@ -68,7 +70,7 @@ export default {
       EventBus.$emit(SAVE_FORM_LAYOUT, payload);
     },
     removeGridItem() {
-      // TODO: Implement remove grid item.
+      EventBus.$emit(REMOVE_FORM, this.uuid);
     }
   },
   props: {

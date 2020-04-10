@@ -14,6 +14,16 @@ class ControlRepository {
     }
   }
 
+  async deleteControlsByDynamicComponentId(dynamicComponentId) {
+    const controls = await this.getControlsByDynamicComponentId(
+      dynamicComponentId
+    );
+
+    controls.forEach((control) => {
+      db.controls.delete(control.id);
+    });
+  }
+
   async getControlsByDynamicComponentId(dynamicComponentId) {
     return db.controls
       .where('dynamicComponentId')
