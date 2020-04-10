@@ -2,38 +2,40 @@
 import GridLayout from 'vue-grid-layout';
 import GridLayoutBase from '../components/GridLayoutBase';
 import EventBus from '../utils/event-bus.js';
-import { SCREEN_CLASS_CHANGED, COMPACT_COMPLETED } from '../types/event-types';
+import {
+  SCREEN_CLASS_CHANGED,
+  COMPACT_COMPLETED,
+  COMPACT
+} from '../types/event-types';
 import { SET_API_LAYOUT_ITEMS } from '../types/action-types';
 
 export default {
   mixins: [GridLayoutBase, GridLayout],
   created: function () {
     EventBus.$on(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
+    EventBus.$on(COMPACT, this.onCompact);
   },
   beforeDestroy: function () {
     EventBus.$off(SCREEN_CLASS_CHANGED, this.onScreenClassChanged);
+    EventBus.$off(COMPACT, this.onCompact);
   },
   mounted() {
     this.$forceNextTick(() => this.compactLayout());
   },
   methods: {
     onScreenClassChanged() {
-      this.$forceNextTick(() => {
-        this.compactLayout();
-      });
+      this.$forceNextTick(() => this.compactLayout());
+    },
+    onCompact() {
+      this.$forceNextTick(() => this.compactLayout());
     },
     compactLayout() {
+      console.log('Compact');
       if (this.layout.length <= 0) return;
 
-      var compactedLayout = this.compact(this.layout);
-      var correctedLayout = this.correctBounds(compactedLayout);
+      var correctedLayout = this.correctBounds(this.layout);
+      var compactedLayout = this.compact(correctedLayout);
       EventBus.$emit(COMPACT_COMPLETED, compactedLayout);
-    },
-
-    setStaticForLayoutItems(value) {
-      this.layout.forEach((layoutItem) => {
-        layoutItem.static = value;
-      });
     },
 
     compact(layout) {
@@ -55,7 +57,9 @@ export default {
 
     compactItem(compactedItems, l) {
       let collides;
+      collides = this.getFirstCollision(compactedItems, l);
       while ((collides = this.getFirstCollision(compactedItems, l))) {
+        console.log(collides);
         l.y = collides.y + collides.h;
       }
       return l;
@@ -69,10 +73,15 @@ export default {
 
     collides(l1, l2) {
       if (l1 === l2) return false;
+
       if (l1.x + l1.w <= l2.x) return false;
+
       if (l1.x >= l2.x + l2.w) return false;
+
       if (l1.y + l1.h <= l2.y) return false;
+
       if (l1.y >= l2.y + l2.h) return false;
+
       return true;
     },
 

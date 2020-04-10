@@ -113,7 +113,6 @@ export default {
         setTimeout(() => {
           this.$store.dispatch(DISABLE_EDIT_MODE_MAIN_LAYOUT);
         }, 50);
-        EventBus.$emit(COMPACT);
         EventBus.$emit(LAYOUT_UPDATED);
       }, 25);
     }
