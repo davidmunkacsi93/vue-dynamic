@@ -91,7 +91,7 @@ import {
 } from './types/action-types';
 import { CONTENT, MENU, NAVIGATION_BAR } from './types/layout-item-types';
 import EventBus from './utils/event-bus';
-import { SCREEN_CLASS_CHANGED } from './types/event-types';
+import { SCREEN_CLASS_CHANGED, AUTO_SIZE_COMPLETED } from './types/event-types';
 
 Vue.use(VueForceNextTick);
 Vue.use(VueMaterial);
@@ -158,7 +158,6 @@ export default {
       if (screenClassChanged) {
         this.screenClass = currentScreenClass;
         this.$store.dispatch(SET_SCREEN_CLASS, this.screenClass);
-        console.log(SCREEN_CLASS_CHANGED);
         EventBus.$emit(SCREEN_CLASS_CHANGED);
         this.loadMainLayout();
       }

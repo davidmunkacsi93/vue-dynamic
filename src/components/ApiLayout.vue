@@ -30,12 +30,10 @@ export default {
       this.$forceNextTick(() => this.compactLayout());
     },
     compactLayout() {
-      console.log('Compact');
       if (this.layout.length <= 0) return;
-
-      var correctedLayout = this.correctBounds(this.layout);
-      var compactedLayout = this.compact(correctedLayout);
-      EventBus.$emit(COMPACT_COMPLETED, compactedLayout);
+      var compactedLayout = this.compact(this.layout);
+      var correctedLayout = this.correctBounds(compactedLayout);
+      EventBus.$emit(COMPACT_COMPLETED, correctedLayout);
     },
 
     compact(layout) {
@@ -59,7 +57,6 @@ export default {
       let collides;
       collides = this.getFirstCollision(compactedItems, l);
       while ((collides = this.getFirstCollision(compactedItems, l))) {
-        console.log(collides);
         l.y = collides.y + collides.h;
       }
       return l;

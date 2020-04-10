@@ -152,7 +152,6 @@ export default {
       self.innerDynamicComponents = result;
       EventBus.$emit(SET_CONTENT_HEIGHT);
       EventBus.$emit(COMPACT);
-      console.log('Compacted');
     },
 
     onAutoSizeCompleted(payload) {
@@ -169,10 +168,11 @@ export default {
       this.innerDynamicComponents[index].initialized = true;
       this.innerDynamicComponents[index].static = true;
 
-
       DynamicComponentRepository.updateDynamicComponent(
         this.innerDynamicComponents[index]
       );
+
+      EventBus.$emit(COMPACT);
     },
 
     onCompactCompleted(payload) {
@@ -184,6 +184,10 @@ export default {
         if (index < 0) return;
         this.innerDynamicComponents[index].x = dynamicComponent.x;
         this.innerDynamicComponents[index].y = dynamicComponent.y;
+
+        DynamicComponentRepository.updateDynamicComponent(
+          this.innerDynamicComponents[index]
+        );
       });
     },
 
