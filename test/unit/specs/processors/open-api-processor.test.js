@@ -1,5 +1,5 @@
 import DynamicComponentFactory from '../../../../src/factories/dynamic-component-factory';
-import OpenApiProcessor from '../../../../src/processors/open-api-processorjs';
+import OpenApiProcessor from '../../../../src/processors/open-api-processor.js';
 import OpenApiInformationProvider from '../../../../src/providers/open-api-information-provider.js';
 
 describe('Tests for OpenApiProcessor processSpecification: ', () => {
