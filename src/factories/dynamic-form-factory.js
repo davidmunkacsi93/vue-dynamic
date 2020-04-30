@@ -29,8 +29,6 @@ export default class DynamicFormFactory {
         schema,
         schemas
       );
-    } else {
-      throw new Error(`Could not generate dynamic form for endpoint ${path}`);
     }
 
     if (controls.length > 0) {

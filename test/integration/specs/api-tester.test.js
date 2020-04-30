@@ -23,6 +23,7 @@ describe('run test for apis.guru swaggers', () => {
       const metrics = metricsResponse.data;
 
       var processed = 1;
+      var endpoints = 0;
       var failedApis = [];
       var results = [];
 
@@ -51,20 +52,32 @@ describe('run test for apis.guru swaggers', () => {
             .then((result) => {
               results.push(result);
               processed++;
+              if (result.dynamicComponents && result.dynamicComponents.length) {
+                endpoints = endpoints + result.dynamicComponents.length;
+              }
             })
             .catch((reason) => {
               console.error(
                 `Parsing failed for API: ${versionObject.swaggerYamlUrl}\n${reason}`
               );
+              failedApis.push(apiObject);
               processed++;
             });
         }
       }
 
-      console.info(`Succesful: ${results.length}`);
+      console.info(`Succesful API integration: ${results.length}`);
+      console.info(`Succesful endpoint creation: ${endpoints}`);
       console.info(`Failed: ${failedApis.length}`);
       console.info(
-        `Precision: ${Math.round((results.length / metrics.numSpecs) * 100)}%`
+        `Precision APIs: ${Math.round(
+          (results.length / metrics.numSpecs) * 100
+        )}%`
+      );
+      console.info(
+        `Precision endpoints: ${Math.round(
+          (endpoints / metrics.numEndpoints) * 100
+        )}%`
       );
     },
     MAX_SAFE_TIMEOUT
