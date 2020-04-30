@@ -1,10 +1,10 @@
 import DynamicComponentFactory from '../../../../src/factories/dynamic-component-factory';
-import OpenApiParser from '../../../../src/parsers/open-api-parser.js';
+import OpenApiProcessor from '../../../../src/processors/open-api-processorjs';
 import OpenApiInformationProvider from '../../../../src/providers/open-api-information-provider.js';
 
-describe('Tests for OpenApiParser processSpecification: ', () => {
+describe('Tests for OpenApiProcessor processSpecification: ', () => {
   it('throws error, when specification cannot be determined', () => {
-    expect(() => OpenApiParser.processSpecification()).toThrowError();
+    expect(() => OpenApiProcessor.processSpecification()).toThrowError();
   });
 
   it('throws error, when provider throws error.', () => {
@@ -14,7 +14,7 @@ describe('Tests for OpenApiParser processSpecification: ', () => {
       openApi: '3.0'
     };
     expect(() =>
-      OpenApiParser.processSpecification(specification)
+      OpenApiProcessor.processSpecification(specification)
     ).toThrowError();
   });
 
@@ -35,7 +35,7 @@ describe('Tests for OpenApiParser processSpecification: ', () => {
       info: {}
     };
     expect(() =>
-      OpenApiParser.processSpecification(specification)
+      OpenApiProcessor.processSpecification(specification)
     ).toThrowError();
   });
 
@@ -67,7 +67,7 @@ describe('Tests for OpenApiParser processSpecification: ', () => {
       }
     };
     expect(() =>
-      OpenApiParser.processSpecification(specification)
+      OpenApiProcessor.processSpecification(specification)
     ).toThrowError();
   });
 
@@ -99,7 +99,7 @@ describe('Tests for OpenApiParser processSpecification: ', () => {
         schemas: {}
       }
     };
-    var result = OpenApiParser.processSpecification(specification);
+    var result = OpenApiProcessor.processSpecification(specification);
     expect(result.apiVersion).toBe(apiInformation.apiVersion);
     expect(result.title).toBe(apiInformation.title);
     expect(result.description).toBe(apiInformation.description);

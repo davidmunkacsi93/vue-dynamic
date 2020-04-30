@@ -1,7 +1,7 @@
 import DynamicComponentFactory from '../factories/dynamic-component-factory';
 import OpenApiInformationProvider from '../providers/open-api-information-provider';
 
-export default class OpenApiParser {
+export default class OpenApiProcessor {
   static processSpecification(specification) {
     if (!specification) {
       throw new Error('Specification cannot be determined.');

@@ -1,5 +1,5 @@
 import SwaggerParser from 'swagger-parser';
-import OpenApiParser from '../parsers/open-api-parser.js';
+import OpenApiProcessor from '../processors/open-api-processor.js';
 
 class ApiIntegrationService {
   async integrateNewAPI(url) {
@@ -7,13 +7,19 @@ class ApiIntegrationService {
       setTimeout(() => reject(new Error('Timed out')), 10000)
     );
 
-    return Promise.race([SwaggerParser.validate(url), timeOut], {
-      dereference: {
-        circular: false
-      }
-    })
+    return Promise.race(
+      [
+        SwaggerParser.validate(url, {
+          dereference: {
+            circular: false
+          }
+        }),
+        timeOut
+      ],
+      {}
+    )
       .then(async (parsedSpecification) => {
-        return OpenApiParser.processSpecification(parsedSpecification);
+        return OpenApiProcessor.processSpecification(parsedSpecification);
       })
       .catch((reason) => {
         throw new Error(reason);

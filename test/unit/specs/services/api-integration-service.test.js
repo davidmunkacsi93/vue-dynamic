@@ -1,5 +1,5 @@
 import SwaggerParser from 'swagger-parser';
-import OpenApiParser from '../../../../src/parsers/open-api-parser.js';
+import OpenApiProcessor from '../../../../src/processors/open-api-processor.js';
 import ApiIntegrationService from '../../../../src/services/api-integration-service';
 
 describe('Tests for api-integration-service integrateNewApi function:', () => {
@@ -13,10 +13,10 @@ describe('Tests for api-integration-service integrateNewApi function:', () => {
     });
   });
 
-  it('must throw an error, when OpenAPI parser throws an error.', async () => {
+  it('must throw an error, when OpenAPI processor throws an error.', async () => {
     const swagger = { swagger: '2.0.' };
     spyOn(SwaggerParser, 'validate').and.returnValue(Promise.resolve(swagger));
-    spyOn(OpenApiParser, 'processSpecification').and.throwError(
+    spyOn(OpenApiProcessor, 'processSpecification').and.throwError(
       'Parsing failed'
     );
 
@@ -27,14 +27,14 @@ describe('Tests for api-integration-service integrateNewApi function:', () => {
     );
   });
 
-  it('must throw an error, when OpenAPI parser throws an error.', async () => {
+  it('must throw an error, when OpenAPI processor throws an error.', async () => {
     const swagger = { swagger: '2.0.' };
     spyOn(SwaggerParser, 'validate').and.returnValue(Promise.resolve(swagger));
 
     var uiModel = {
       specificationVersion: '2.0'
     };
-    spyOn(OpenApiParser, 'processSpecification').and.returnValue(uiModel);
+    spyOn(OpenApiProcessor, 'processSpecification').and.returnValue(uiModel);
 
     const result = await ApiIntegrationService.integrateNewAPI('URL');
     expect(result).toEqual(uiModel);
