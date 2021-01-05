@@ -18,7 +18,7 @@
     "integration": "karma start --no-colors ./test/integration/karma.conf.js > ./test/integration/logs/integration_test_$(date \"+%s\").log"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "dexie": "^2.0.4",
     "minimist": ">=1.2.5",
